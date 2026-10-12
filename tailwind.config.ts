@@ -9,26 +9,35 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          dark: "#0A0F1D",
-          darker: "#060913",
-          card: "#121A2F",
-          cardHover: "#182340",
-          border: "#202C4B",
-          gold: "#F59E0B",
-          goldLight: "#FCD34D",
-          orange: "#F97316",
+          base: "#0B0C0E",        // Volcanic Slate Canvas
+          surface: "#131518",     // Structured Surface Panel
+          surfaceHover: "#1B1E22",
+          border: "rgba(255, 255, 255, 0.08)",
+          borderHover: "rgba(255, 255, 255, 0.16)",
+          accent: "#D97706",      // Single Signature Solar Ochre
+          accentLight: "#F59E0B",
+          accentDark: "#B45309",
+          muted: "#7A818C",       // Muted Technical Slate
+          light: "#F4F5F6",       // Crisp Chalk White
+          // Backward-compat aliases mapped strictly to disciplined palette
+          dark: "#0B0C0E",
+          darker: "#060708",
+          card: "#131518",
+          cardHover: "#1B1E22",
+          gold: "#D97706",
+          orange: "#D97706",
+          sky: "#9CA3AF",
           green: "#10B981",
-          sky: "#38BDF8",
-          muted: "#94A3B8",
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Impact", "sans-serif"],
+        sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Oswald", "sans-serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 25px rgba(245, 158, 11, 0.25)",
-        card: "0 10px 30px -5px rgba(0, 0, 0, 0.5)",
+        solar: "0 0 35px rgba(217, 119, 6, 0.22)",
+        subtle: "0 10px 40px rgba(0, 0, 0, 0.7)",
       },
     },
   },

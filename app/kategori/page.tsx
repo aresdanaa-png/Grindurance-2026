@@ -1,175 +1,215 @@
 import Link from 'next/link';
-import { Award, Clock, MapPin, Bike, ShieldCheck, ChevronRight, Sparkles } from 'lucide-react';
+import { Clock, MapPin, ArrowUpRight, Compass, ShieldCheck } from 'lucide-react';
 
 export default function KategoriPage() {
   const categoriesList = [
     {
-      id: '60',
-      name: 'Urban Gravel 60++ KM',
-      badge: 'Fun Gravel Ride',
-      badgeColor: 'bg-sky-500/20 text-sky-300 border-sky-500/40',
-      cot: '5–6 Jam',
-      start: '07:00 WIB',
-      elevation: '±350 m+',
-      pitstop: 'CP#6 (Wajib 30 Menit)',
-      prolog: 'Tidak Ada',
-      tracking: 'Opsional (Rekomendasi Komoot / Strava)',
-      description: 'Format rekreasi yang memadukan aspal perkotaan Cibubur dan lintasan tanah pedesaan Jonggol. Sangat ramah untuk pemula, sepeda lipat, hybrid, dan penikmat gowes santai.',
-      priceMedal: 'Rp 250.000',
-      priceJersey: 'Rp 300.000',
+      id: '200',
+      name: 'Ultra Gravel 200++ KM',
+      badge: 'Tier 01 // Ultra Endurance',
+      isPremier: true,
+      cot: '18 Jam',
+      start: '05:30 WIB (Wave 1)',
+      elevation: '+3,180 m+',
+      pitstop: 'CP#4 Jonggol (Wajib 30 Menit)',
+      prolog: 'Wajib 30 KM Subuh (03:00 - 05:00 WIB)',
+      tracking: 'Wajib Live Tracking (Traccar / Strava)',
+      description: 'Format ketahanan ultra murni bagi pesepeda jarak jauh berpengalaman. Melewati malam dan jalur makadam Gunung Batu serta tanjakan ekstrem Sukamakmur.',
+      priceMedal: 'Rp 400.000',
+      priceJersey: 'Rp 450.000',
+    },
+    {
+      id: '150',
+      name: 'Cross Gravel 150++ KM',
+      badge: 'Tier 02 // Cross Gran Fondo',
+      isPremier: false,
+      cot: '14 Jam',
+      start: '05:30 WIB (Wave 1)',
+      elevation: '+2,100 m+',
+      pitstop: 'CP#4 Jonggol (Wajib 30 Menit)',
+      prolog: 'Wajib 30 KM Subuh (03:00 - 05:00 WIB)',
+      tracking: 'Wajib Live Tracking',
+      description: 'Jarak klasik veteran endurance yang menguji efisiensi tenaga di jalan aspal kelupas dan perbukitan Jonggol selatan sebelum loop kembali ke Sentul.',
+      priceMedal: 'Rp 400.000',
+      priceJersey: 'Rp 450.000',
+    },
+    {
+      id: '120_PAIR',
+      name: 'Amazing Race 120 KM (Pair & Single)',
+      badge: 'Tier 03 // Competitive Race',
+      isPremier: false,
+      cot: '10 Jam',
+      start: '06:00 WIB (Wave 2)',
+      elevation: '+1,450 m+',
+      pitstop: 'CP#4 Jonggol (Wajib 30 Menit)',
+      prolog: 'Tidak Ada Prolog',
+      tracking: 'Wajib Aktif (RaceRoute.id / Strava)',
+      description: 'Satu-satunya kategori kompetitif resmi dengan perebutan podium Top 3. Mendukung registrasi tandem Pair Mix 2 Pax (Pria & Wanita) dengan handicap waktu khusus.',
+      priceMedal: 'Single: Rp 400.000 // Pair: Rp 700.000',
+      priceJersey: 'Single: Rp 450.000 // Pair: Rp 750.000',
     },
     {
       id: '80',
       name: 'Urban Gravel 80++ KM',
-      badge: 'Fun Gravel Ride',
-      badgeColor: 'bg-sky-500/20 text-sky-300 border-sky-500/40',
-      cot: '7–8 Jam',
-      start: '07:00 WIB',
-      elevation: '±550 m+',
-      pitstop: 'CP#6 (Wajib 30 Menit)',
-      prolog: 'Tidak Ada',
-      tracking: 'Opsional',
+      badge: 'Tier 04 // Weekend Challenge',
+      isPremier: false,
+      cot: '8 Jam',
+      start: '07:00 WIB (Wave 3)',
+      elevation: '+750 m+',
+      pitstop: 'CP#6 Sodong Springs (Wajib 30 Menit)',
+      prolog: 'Tidak Ada Prolog',
+      tracking: 'Opsional (Rekomendasi Komoot / Strava)',
       description: 'Eksplorasi jarak menengah melintasi persawahan Cileungsi dan perbukitan Jonggol timur. Cocok untuk pesepeda akhir pekan yang ingin meningkatkan jarak jelajah.',
       priceMedal: 'Rp 300.000',
       priceJersey: 'Rp 350.000',
     },
     {
-      id: '120',
-      name: 'Amazing Race 120++ KM',
-      badge: 'Competitive Race (Podium)',
-      badgeColor: 'bg-brand-gold/20 text-brand-gold border-brand-gold/40',
-      cot: '9–10 Jam',
-      start: '06:00 WIB',
-      elevation: '±950 m+',
-      pitstop: 'CP#4 (Wajib 30 Menit)',
-      prolog: 'Tidak Ada',
-      tracking: 'Wajib Aktif (RaceRoute.id / Strava)',
-      description: 'Satu-satunya kategori kompetitif resmi dengan perebutan podium Top 3 Fastest (Men, Women, Master 50+, Pair Mix). Membutuhkan strategi kecepatan dan manajemen energi yang solid.',
-      priceMedal: 'Rp 400.000 (Single) / Rp 700.000 (Pair)',
-      priceJersey: 'Rp 450.000 (Single) / Rp 750.000 (Pair)',
-    },
-    {
-      id: '150',
-      name: 'Cross Gravel 150++ KM',
-      badge: 'Cross / Gran Fondo',
-      badgeColor: 'bg-brand-orange/20 text-brand-orange border-brand-orange/40',
-      cot: '13–14 Jam',
-      start: '05:30 WIB',
-      elevation: '±1.300 m+',
-      pitstop: 'CP#4 (Wajib 30 Menit)',
-      prolog: 'Wajib 30 KM Subuh (03:00 - 05:00 WIB)',
-      tracking: 'Wajib Aktif',
-      description: 'Tantangan endurance melintasi tanjakan Sukamakmur-Cariu dan segmen makadam bebatuan lepas kaki Gunung Batu. Menguji ketahanan fisik dan navigasi.',
-      priceMedal: 'Rp 400.000',
-      priceJersey: 'Rp 450.000',
-    },
-    {
-      id: '200',
-      name: 'Ultra Gravel 200++ KM',
-      badge: 'Ultra-Endurance (Night Ride)',
-      badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
-      cot: '16–18 Jam',
-      start: '05:30 WIB',
-      elevation: '±1.700 m+',
-      pitstop: 'CP#4 (Wajib 30 Menit)',
-      prolog: 'Wajib 30 KM Subuh (03:00 - 05:00 WIB)',
-      tracking: 'Wajib Aktif',
-      description: 'Kasta tertinggi ketahanan mandiri. Ujian fisik ekstrem dengan navigasi malam musim hujan menembus pelosok Bogor timur dan Sentul kembali ke Cibubur.',
-      priceMedal: 'Rp 400.000',
-      priceJersey: 'Rp 450.000',
+      id: '60',
+      name: 'Urban Gravel 60++ KM',
+      badge: 'Tier 05 // Entry Level',
+      isPremier: false,
+      cot: '6 Jam',
+      start: '07:00 WIB (Wave 3)',
+      elevation: '+450 m+',
+      pitstop: 'CP#6 Sodong Springs (Wajib 30 Menit)',
+      prolog: 'Tidak Ada Prolog',
+      tracking: 'Opsional',
+      description: 'Format rekreasi yang memadukan aspal perkotaan Cibubur dan lintasan tanah pedesaan Jonggol. Sangat ramah untuk pemula, sepeda lipat, hybrid, dan penikmat gowes santai.',
+      priceMedal: 'Rp 250.000',
+      priceJersey: 'Rp 300.000',
     },
     {
       id: 'VIRTUAL',
-      name: 'Virtual Ride Nasional (19 Chapter)',
-      badge: 'Virtual Challenge',
-      badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
-      cot: 'Fleksibel (Sesuai Kategori Pilihan)',
-      start: 'Minggu Event',
-      elevation: 'Tantangan Outdoor Mandiri',
-      pitstop: 'Mandiri di Rute Lokal Masing-masing',
-      prolog: 'Tidak Ada',
-      tracking: 'Wajib Sinkronisasi Strava (Anti-Indoor)',
-      description: 'Bagi seluruh anggota GX-ID di 19 Chapter se-Indonesia. Bersepeda di kota Anda masing-masing, tersinkronisasi otomatis via Strava Webhook, medali fisik dikirimkan via DHS Logistik.',
+      name: 'Virtual Ride Nasional',
+      badge: 'Tier 06 // Nationwide (19 Chapters)',
+      isPremier: false,
+      cot: 'Fleksibel H-Event',
+      start: 'Waktu Mandiri (Outdoor GPS)',
+      elevation: 'Sesuai Rute Mandiri',
+      pitstop: 'Mandiri',
+      prolog: 'Tidak Ada Prolog',
+      tracking: 'Wajib Sinkronisasi Strava Webhook',
+      description: 'Dibuka untuk seluruh anggota GX-ID se-Indonesia dari 19 chapter regional di luar Jabodetabek. Medali finisher resmi dan jersey dikirim langsung via DHS Logistik.',
       priceMedal: 'Rp 200.000',
       priceJersey: 'Rp 250.000',
     },
   ];
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto space-y-12">
-      {/* Header */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-wider">
-          <Award className="w-3.5 h-3.5" />
-          5 Kategori Jarak + 1 Virtual Ride
+    <div className="bg-brand-base text-brand-light font-sans py-14 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-12">
+        
+        {/* Header Section */}
+        <div className="border-b border-brand-border pb-8">
+          <span className="font-mono text-xs text-brand-accent uppercase tracking-widest block mb-2">
+            GX-ID OFFICIAL SPEC SHEET // 2026 EDITION
+          </span>
+          <h1 className="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white">
+            PANDUAN KATEGORI & RUTE
+          </h1>
+          <p className="mt-3 text-sm sm:text-base text-brand-muted max-w-3xl leading-relaxed">
+            Perbandingan teknis komprehensif 5 kategori jarak offline ditambah 1 format daring nasional. 
+            Setiap kategori dirancang dengan profil elevasi, batas waktu (COT), dan aturan pitstop tersendiri.
+          </p>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-          Detail Kategori & <span className="gradient-gold-text">Spesifikasi Rute</span>
-        </h1>
-        <p className="text-sm text-slate-400 max-w-xl mx-auto">
-          Pilih kategori yang sesuai dengan target kebugaran dan pengalaman ketahanan bersepeda Anda.
-        </p>
-      </div>
 
-      {/* Grid Kategori */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {categoriesList.map((cat) => (
-          <div
-            key={cat.id}
-            className="bg-brand-card p-6 sm:p-7 rounded-3xl border border-brand-border flex flex-col justify-between hover:border-slate-700 transition-all space-y-6"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <span className={`text-[11px] font-black uppercase px-2.5 py-1 rounded-lg border ${cat.badgeColor}`}>
-                  {cat.badge}
-                </span>
-                <span className="text-xs text-slate-500 font-semibold">Start: {cat.start}</span>
+        {/* Spec Sheet Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono">
+          {categoriesList.map((cat) => (
+            <div
+              key={cat.id}
+              className={`border ${
+                cat.isPremier ? 'border-brand-accent/60' : 'border-brand-border'
+              } bg-brand-surface p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-brand-borderHover transition-all`}
+            >
+              <div className="space-y-4">
+                <div className="flex items-center justify-between text-xs">
+                  <span className={`px-2 py-0.5 border ${
+                    cat.isPremier 
+                      ? 'border-brand-accent/40 bg-brand-base text-brand-accent font-bold' 
+                      : 'border-brand-border bg-brand-base text-brand-muted'
+                  }`}>
+                    {cat.badge}
+                  </span>
+                  <span className="text-brand-muted">{cat.start}</span>
+                </div>
+
+                <div>
+                  <h3 className="font-display text-2xl sm:text-3xl font-bold text-white uppercase">
+                    {cat.name}
+                  </h3>
+                  <p className="font-sans text-xs text-brand-muted mt-2 leading-relaxed">
+                    {cat.description}
+                  </p>
+                </div>
+
+                {/* Technical Table */}
+                <div className="border-t border-brand-border pt-4 space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-brand-muted">Batas Waktu (COT):</span>
+                    <span className="text-white font-bold">{cat.cot}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-brand-muted">Total Elevasi:</span>
+                    <span className="text-white font-bold">{cat.elevation}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-brand-muted">Ketentuan Pitstop:</span>
+                    <span className="text-white">{cat.pitstop}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-brand-muted">Syarat Prolog:</span>
+                    <span className={cat.prolog.includes('Wajib') ? 'text-brand-accent font-bold' : 'text-zinc-500'}>
+                      {cat.prolog}
+                    </span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-brand-muted">Live Tracking:</span>
+                    <span className="text-white">{cat.tracking}</span>
+                  </div>
+                </div>
+
+                {/* Price Matrix */}
+                <div className="border-t border-brand-border pt-4 flex items-center justify-between text-xs">
+                  <div>
+                    <span className="text-[10px] text-brand-muted block uppercase">Medal Saja</span>
+                    <span className="text-white font-bold">{cat.priceMedal}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] text-brand-accent block uppercase">Medal & Jersey</span>
+                    <span className="text-brand-accent font-bold">{cat.priceJersey}</span>
+                  </div>
+                </div>
               </div>
 
-              <h3 className="text-2xl font-black text-white">{cat.name}</h3>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">{cat.description}</p>
-
-              <div className="mt-5 grid grid-cols-2 gap-3 bg-brand-dark/70 p-4 rounded-2xl border border-brand-border/60 text-xs">
-                <div>
-                  <span className="text-[10px] text-slate-500 block">Batas Waktu (COT)</span>
-                  <span className="font-bold text-white flex items-center gap-1 mt-0.5">
-                    <Clock className="w-3.5 h-3.5 text-brand-gold" /> {cat.cot}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-500 block">Estimasi Elevasi</span>
-                  <span className="font-bold text-white flex items-center gap-1 mt-0.5">
-                    <Bike className="w-3.5 h-3.5 text-brand-orange" /> {cat.elevation}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-500 block">Pitstop Wajib</span>
-                  <span className="font-bold text-slate-300 mt-0.5 block">{cat.pitstop}</span>
-                </div>
-                <div>
-                  <span className="text-[10px] text-slate-500 block">Syarat Prolog Subuh</span>
-                  <span className={`font-bold mt-0.5 block ${cat.prolog.includes('Wajib') ? 'text-red-400' : 'text-slate-400'}`}>
-                    {cat.prolog}
-                  </span>
-                </div>
+              <div className="pt-2">
+                <Link
+                  href={`/daftar?category=${cat.id}`}
+                  className="w-full py-3 border border-brand-border hover:border-brand-accent bg-zinc-900 hover:bg-brand-accent text-white hover:text-brand-base font-display font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all"
+                >
+                  <span>Daftar Kategori Ini</span>
+                  <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                </Link>
               </div>
             </div>
+          ))}
+        </div>
 
-            <div className="pt-4 border-t border-brand-border flex items-center justify-between">
-              <div>
-                <span className="text-[10px] text-slate-500 block">Harga Medal Saja / Medal & Jersey</span>
-                <span className="text-sm font-black text-brand-gold">{cat.priceMedal} / {cat.priceJersey}</span>
-              </div>
-              <Link
-                href="/daftar"
-                className="px-5 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-brand-gold to-brand-orange text-brand-dark hover:brightness-110 shadow-glow flex items-center gap-1 transition-all"
-              >
-                <span>Pilih</span>
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
+        {/* Technical Notice Strip */}
+        <div className="border border-brand-border bg-brand-surface p-6 font-mono text-xs text-brand-muted space-y-2">
+          <div className="text-white font-bold uppercase flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-brand-accent" />
+            <span>Aturan Teknis Sepeda & Aksesoris Musim Hujan:</span>
           </div>
-        ))}
+          <p className="font-sans leading-relaxed text-xs">
+            1. Ban minimal yang diizinkan adalah 35mm (sangat direkomendasikan 38–45c untuk segmen makadam Sodong).
+            <br />
+            2. Wajib membawa wet lube, ban dalam/tubeless plug kit cadangan, lampu depan ganda (satu cadangan), dan lampu belakang merah steady non-flashing.
+            <br />
+            3. Peserta wanita, remaja usia $\le 17$ tahun, dan tim Pair Mix (Pria & Wanita) berhak atas potongan Meal Coupon senilai Rp 50.000 yang dipotong otomatis saat checkout.
+          </p>
+        </div>
+
       </div>
     </div>
   );
