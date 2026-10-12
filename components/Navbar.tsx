@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Compass, Menu, X, Shield, Award, Users } from 'lucide-react';
+import { Compass, Menu, X, Shield, Award, Users, ShieldCheck, Timer } from 'lucide-react';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+          <nav className="hidden lg:flex items-center gap-5 text-sm font-medium text-slate-300">
             <Link href="/" className="hover:text-brand-gold transition-colors">
               Beranda
             </Link>
@@ -35,18 +35,29 @@ export default function Navbar() {
               <Award className="w-4 h-4 text-brand-gold" />
               Kategori & Rute
             </Link>
+            <Link href="/peserta" className="hover:text-brand-gold transition-colors flex items-center gap-1.5">
+              <Users className="w-4 h-4 text-emerald-400" />
+              Start List
+            </Link>
             <Link href="/peraturan" className="hover:text-brand-gold transition-colors flex items-center gap-1.5">
               <Shield className="w-4 h-4 text-brand-orange" />
               Regulasi
             </Link>
             <Link href="/cek-bib" className="hover:text-brand-gold transition-colors flex items-center gap-1.5">
-              <Users className="w-4 h-4 text-brand-sky" />
-              Cek Nomor BIB
+              <span>Cek BIB</span>
+            </Link>
+            <Link href="/scrutineering" className="hover:text-brand-gold transition-colors flex items-center gap-1.5 text-xs font-mono bg-zinc-800/80 px-2.5 py-1 rounded-md border border-zinc-700">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+              Scrutineering
+            </Link>
+            <Link href="/checkpoint" className="hover:text-brand-gold transition-colors flex items-center gap-1.5 text-xs font-mono bg-zinc-800/80 px-2.5 py-1 rounded-md border border-zinc-700">
+              <Timer className="w-3.5 h-3.5 text-brand-sky" />
+              Pitstop 300%
             </Link>
           </nav>
 
           {/* Action Button */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <Link
               href="/daftar"
               className="px-5 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-gold to-brand-orange text-brand-dark hover:brightness-110 shadow-glow transition-all active:scale-95"
@@ -56,7 +67,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Hamburger Button */}
-          <div className="flex md:hidden">
+          <div className="flex lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-card transition-colors"
@@ -70,7 +81,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-brand-card/95 border-b border-brand-border px-4 py-4 space-y-3 backdrop-blur-xl">
+        <div className="lg:hidden bg-brand-card/95 border-b border-brand-border px-4 py-4 space-y-3 backdrop-blur-xl">
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
@@ -86,6 +97,13 @@ export default function Navbar() {
             Kategori & Rute
           </Link>
           <Link
+            href="/peserta"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-cardHover font-medium text-brand-gold"
+          >
+            Start List (Rider Roster)
+          </Link>
+          <Link
             href="/peraturan"
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-cardHover font-medium"
@@ -98,6 +116,20 @@ export default function Navbar() {
             className="block px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-cardHover font-medium"
           >
             Cek Nomor BIB
+          </Link>
+          <Link
+            href="/scrutineering"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-cardHover font-medium font-mono text-xs"
+          >
+            Scrutineering Desk (Panitia)
+          </Link>
+          <Link
+            href="/checkpoint"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-brand-cardHover font-medium font-mono text-xs"
+          >
+            Pitstop 300% Calculator
           </Link>
           <div className="pt-2">
             <Link

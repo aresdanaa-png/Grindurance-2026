@@ -41,13 +41,23 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/peserta" className="hover:text-brand-gold transition-colors text-slate-200">
+                  Start List (Rider Roster)
+                </Link>
+              </li>
+              <li>
                 <Link href="/peraturan" className="hover:text-brand-gold transition-colors">
                   Aturan Balap & Pitstop Wajib
                 </Link>
               </li>
               <li>
-                <Link href="/daftar" className="hover:text-brand-gold transition-colors">
-                  Pendaftaran Peserta
+                <Link href="/scrutineering" className="hover:text-brand-gold transition-colors text-xs font-mono text-amber-400">
+                  Scrutineering Desk (Panitia)
+                </Link>
+              </li>
+              <li>
+                <Link href="/checkpoint" className="hover:text-brand-gold transition-colors text-xs font-mono text-brand-sky">
+                  Kalkulator Pitstop 300%
                 </Link>
               </li>
               <li>
