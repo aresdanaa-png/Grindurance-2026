@@ -834,7 +834,7 @@ export default function RegistrationPage() {
                   Selamat Datang di <span className="gradient-gold-text">Grindurance 2026!</span>
                 </h2>
                 <p className="text-sm text-slate-400 mt-2">
-                  Invoice <span className="font-mono text-white font-bold">{createdOrder.order_id}</span> telah lunas.
+                  Invoice <span className="font-sans font-bold text-white tracking-wider">{createdOrder.order_id}</span> telah lunas.
                 </p>
               </div>
 
@@ -868,7 +868,7 @@ export default function RegistrationPage() {
                   Status: Menunggu Pembayaran
                 </span>
                 <h3 className="text-xl font-black text-white mt-1">
-                  Tagihan Pesanan: <span className="font-mono">{createdOrder.order_id}</span>
+                  Tagihan Pesanan: <span className="font-sans font-bold tracking-wider text-brand-gold">{createdOrder.order_id}</span>
                 </h3>
                 <p className="text-xs text-slate-400 mt-1">
                   Selesaikan pembayaran sebesar <span className="text-white font-bold">Rp {Number(createdOrder.net_amount).toLocaleString('id-ID')}</span> untuk mengaktifkan nomor BIB Anda.

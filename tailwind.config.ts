@@ -9,35 +9,34 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          base: "#0B0C0E",        // Volcanic Slate Canvas
-          surface: "#131518",     // Structured Surface Panel
-          surfaceHover: "#1B1E22",
-          border: "rgba(255, 255, 255, 0.08)",
-          borderHover: "rgba(255, 255, 255, 0.16)",
-          accent: "#D97706",      // Single Signature Solar Ochre
-          accentLight: "#F59E0B",
-          accentDark: "#B45309",
-          muted: "#7A818C",       // Muted Technical Slate
-          light: "#F4F5F6",       // Crisp Chalk White
-          // Backward-compat aliases mapped strictly to disciplined palette
-          dark: "#0B0C0E",
-          darker: "#060708",
-          card: "#131518",
-          cardHover: "#1B1E22",
-          gold: "#D97706",
-          orange: "#D97706",
+          base: "#0D0E11",        // Sleek athletic dark canvas
+          surface: "#15171C",     // Deep athletic surface card
+          surfaceHover: "#1D2027",
+          border: "rgba(255, 255, 255, 0.12)",
+          borderHover: "rgba(255, 255, 255, 0.24)",
+          accent: "#F59E0B",      // Electric Sunburst Amber
+          accentDark: "#D97706",
+          muted: "#9CA3AF",       // Sleek contemporary grey
+          light: "#F3F4F6",       // Crisp white
+          // Aliases mapped cleanly
+          dark: "#0D0E11",
+          darker: "#08090A",
+          card: "#15171C",
+          cardHover: "#1D2027",
+          gold: "#F59E0B",
+          orange: "#F59E0B",
           sky: "#9CA3AF",
           green: "#10B981",
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "Plus Jakarta Sans", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "Oswald", "sans-serif"],
-        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
+        mono: ["var(--font-sans)", "Plus Jakarta Sans", "sans-serif"], // Zero monospace: safely maps to sleek proportional sans
       },
       boxShadow: {
-        solar: "0 0 35px rgba(217, 119, 6, 0.22)",
-        subtle: "0 10px 40px rgba(0, 0, 0, 0.7)",
+        solar: "0 0 35px rgba(245, 158, 11, 0.35)",
+        card: "0 10px 30px rgba(0, 0, 0, 0.7)",
       },
     },
   },

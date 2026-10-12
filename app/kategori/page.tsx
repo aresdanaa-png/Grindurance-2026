@@ -100,84 +100,84 @@ export default function KategoriPage() {
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header Section */}
-        <div className="border-b border-brand-border pb-8">
-          <span className="font-mono text-xs text-brand-accent uppercase tracking-widest block mb-2">
+        <div className="border-b border-brand-border/60 pb-8">
+          <span className="font-sans font-bold text-xs text-brand-gold uppercase tracking-widest block mb-2">
             GX-ID OFFICIAL SPEC SHEET // 2026 EDITION
           </span>
-          <h1 className="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white">
+          <h1 className="font-display italic text-4xl sm:text-6xl font-black uppercase tracking-tight text-white">
             PANDUAN KATEGORI & RUTE
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-brand-muted max-w-3xl leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-3xl leading-relaxed font-sans">
             Perbandingan teknis komprehensif 5 kategori jarak offline ditambah 1 format daring nasional. 
             Setiap kategori dirancang dengan profil elevasi, batas waktu (COT), dan aturan pitstop tersendiri.
           </p>
         </div>
 
         {/* Spec Sheet Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-mono">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 font-sans">
           {categoriesList.map((cat) => (
             <div
               key={cat.id}
-              className={`border ${
-                cat.isPremier ? 'border-brand-accent/60' : 'border-brand-border'
-              } bg-brand-surface p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-brand-borderHover transition-all`}
+              className={`rounded-2xl border ${
+                cat.isPremier ? 'border-brand-gold/60 bg-gradient-to-b from-brand-card to-zinc-950' : 'border-zinc-800 bg-brand-card'
+              } p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-brand-gold/50 transition-all`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between text-xs">
-                  <span className={`px-2 py-0.5 border ${
+                  <span className={`px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider ${
                     cat.isPremier 
-                      ? 'border-brand-accent/40 bg-brand-base text-brand-accent font-bold' 
-                      : 'border-brand-border bg-brand-base text-brand-muted'
+                      ? 'bg-brand-gold text-brand-dark' 
+                      : 'border border-zinc-700 bg-zinc-900 text-slate-300'
                   }`}>
                     {cat.badge}
                   </span>
-                  <span className="text-brand-muted">{cat.start}</span>
+                  <span className="text-slate-400 text-xs font-semibold">{cat.start}</span>
                 </div>
 
                 <div>
-                  <h3 className="font-display text-2xl sm:text-3xl font-bold text-white uppercase">
+                  <h3 className="font-display italic text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
                     {cat.name}
                   </h3>
-                  <p className="font-sans text-xs text-brand-muted mt-2 leading-relaxed">
+                  <p className="font-sans text-xs text-slate-400 mt-2 leading-relaxed">
                     {cat.description}
                   </p>
                 </div>
 
                 {/* Technical Table */}
-                <div className="border-t border-brand-border pt-4 space-y-2 text-xs">
+                <div className="border-t border-zinc-800/80 pt-4 space-y-2.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-brand-muted">Batas Waktu (COT):</span>
+                    <span className="text-slate-400">Batas Waktu (COT):</span>
                     <span className="text-white font-bold">{cat.cot}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-brand-muted">Total Elevasi:</span>
+                    <span className="text-slate-400">Total Elevasi:</span>
                     <span className="text-white font-bold">{cat.elevation}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-brand-muted">Ketentuan Pitstop:</span>
-                    <span className="text-white">{cat.pitstop}</span>
+                    <span className="text-slate-400">Ketentuan Pitstop:</span>
+                    <span className="text-white font-semibold">{cat.pitstop}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-brand-muted">Syarat Prolog:</span>
-                    <span className={cat.prolog.includes('Wajib') ? 'text-brand-accent font-bold' : 'text-zinc-500'}>
+                    <span className="text-slate-400">Syarat Prolog:</span>
+                    <span className={cat.prolog.includes('Wajib') ? 'text-brand-gold font-bold' : 'text-slate-500'}>
                       {cat.prolog}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-brand-muted">Live Tracking:</span>
-                    <span className="text-white">{cat.tracking}</span>
+                    <span className="text-slate-400">Live Tracking:</span>
+                    <span className="text-white font-semibold">{cat.tracking}</span>
                   </div>
                 </div>
 
                 {/* Price Matrix */}
-                <div className="border-t border-brand-border pt-4 flex items-center justify-between text-xs">
+                <div className="border-t border-zinc-800/80 pt-4 flex items-center justify-between text-xs">
                   <div>
-                    <span className="text-[10px] text-brand-muted block uppercase">Medal Saja</span>
-                    <span className="text-white font-bold">{cat.priceMedal}</span>
+                    <span className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">Medal Saja</span>
+                    <span className="text-white font-bold text-sm">{cat.priceMedal}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-brand-accent block uppercase">Medal & Jersey</span>
-                    <span className="text-brand-accent font-bold">{cat.priceJersey}</span>
+                    <span className="text-[10px] text-brand-gold block uppercase font-bold tracking-wider">Medal & Jersey</span>
+                    <span className="text-brand-gold font-black text-sm">{cat.priceJersey}</span>
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function KategoriPage() {
               <div className="pt-2">
                 <Link
                   href={`/daftar?category=${cat.id}`}
-                  className="w-full py-3 border border-brand-border hover:border-brand-accent bg-zinc-900 hover:bg-brand-accent text-white hover:text-brand-base font-display font-bold uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all"
+                  className="w-full py-3.5 rounded-xl bg-zinc-900 hover:bg-brand-gold text-white hover:text-brand-dark border border-zinc-700 hover:border-brand-gold font-display italic font-black uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
                 >
                   <span>Daftar Kategori Ini</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -196,17 +196,17 @@ export default function KategoriPage() {
         </div>
 
         {/* Technical Notice Strip */}
-        <div className="border border-brand-border bg-brand-surface p-6 font-mono text-xs text-brand-muted space-y-2">
-          <div className="text-white font-bold uppercase flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-brand-accent" />
+        <div className="rounded-2xl border border-zinc-800 bg-brand-card p-6 font-sans text-xs text-slate-400 space-y-2">
+          <div className="text-white font-bold uppercase tracking-wider flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-brand-gold" />
             <span>Aturan Teknis Sepeda & Aksesoris Musim Hujan:</span>
           </div>
-          <p className="font-sans leading-relaxed text-xs">
+          <p className="leading-relaxed text-xs text-slate-400">
             1. Ban minimal yang diizinkan adalah 35mm (sangat direkomendasikan 38–45c untuk segmen makadam Sodong).
             <br />
             2. Wajib membawa wet lube, ban dalam/tubeless plug kit cadangan, lampu depan ganda (satu cadangan), dan lampu belakang merah steady non-flashing.
             <br />
-            3. Peserta wanita, remaja usia $\le 17$ tahun, dan tim Pair Mix (Pria & Wanita) berhak atas potongan Meal Coupon senilai Rp 50.000 yang dipotong otomatis saat checkout.
+            3. Peserta wanita, remaja usia ≤ 17 tahun, dan tim Pair Mix (Pria & Wanita) berhak atas potongan Meal Coupon senilai Rp 50.000 yang dipotong otomatis saat checkout.
           </p>
         </div>
 

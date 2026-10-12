@@ -25,7 +25,7 @@ export default function HomePage() {
       wave: '07:00 WIB',
       tag: 'ENTRY LEVEL & HYBRID',
       photo: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=800&auto=format&fit=crop',
-      price: 'Rp 250k / Rp 300k',
+      price: 'Rp 250.000 / Rp 300.000',
       desc: 'Lintasan tanah pedesaan Jonggol & aspal Cibubur. Sangat ramah pemula, sepeda lipat, dan gowes santai.',
     },
     {
@@ -38,7 +38,7 @@ export default function HomePage() {
       wave: '07:00 WIB',
       tag: 'WEEKEND CHALLENGE',
       photo: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?q=80&w=800&auto=format&fit=crop',
-      price: 'Rp 300k / Rp 350k',
+      price: 'Rp 300.000 / Rp 350.000',
       desc: 'Menjelajahi persawahan Cileungsi dan makadam Pemandian Sodong. Etape peningkatan jarak ideal.',
     },
     {
@@ -64,7 +64,7 @@ export default function HomePage() {
       wave: '05:30 WIB',
       tag: 'WAJIB PROLOG 30 KM',
       photo: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
-      price: 'Rp 400k / Rp 450k',
+      price: 'Rp 400.000 / Rp 450.000',
       desc: 'Tantangan klasik veteran endurance menembus tanjakan Sukamakmur dan turunan teknis berbatu.',
     },
     {
@@ -77,7 +77,7 @@ export default function HomePage() {
       wave: '05:30 WIB',
       tag: 'THE PINNACLE // NIGHT NAV',
       photo: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop',
-      price: 'Rp 400k / Rp 450k',
+      price: 'Rp 400.000 / Rp 450.000',
       desc: 'Kategori puncak ketahanan fisik dan navigasi malam. Loop penuh Jonggol–Sukamakmur–Sentul.',
     },
   ];
@@ -107,7 +107,7 @@ export default function HomePage() {
           {/* Top Athletic Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/60 border border-white/20 backdrop-blur-md">
             <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B] animate-ping" />
-            <span className="text-xs font-mono font-bold tracking-widest text-[#F59E0B] uppercase">
+            <span className="text-xs font-bold tracking-widest text-[#F59E0B] uppercase">
               GX-ID ANNIVERSARY EDITION // DESEMBER 2026
             </span>
           </div>
@@ -124,7 +124,7 @@ export default function HomePage() {
           </div>
 
           {/* Subtext */}
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed font-sans font-normal">
+          <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed font-normal">
             Tantangan ketahanan sepeda gravel dan ultra-cycling mandiri di lintasan Jonggol–Sukamakmur–Sentul. 
             Jelajahi makadam batu lepas dan aspal kelupas di musim hujan bersama ribuan pesepeda dari 19 Chapter se-Indonesia.
           </p>
@@ -133,7 +133,7 @@ export default function HomePage() {
           <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
             <Link
               href="/daftar"
-              className="px-9 py-4 rounded-md font-display uppercase tracking-wider text-base font-bold bg-[#F59E0B] hover:bg-[#D97706] text-black shadow-[0_0_35px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 active:scale-95"
+              className="px-9 py-4 rounded font-display uppercase tracking-wider text-base font-bold bg-[#F59E0B] hover:bg-[#D97706] text-black shadow-[0_0_35px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 active:scale-95"
             >
               <span>GET YOUR SPOT // DAFTAR SEKARANG</span>
               <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
@@ -141,7 +141,7 @@ export default function HomePage() {
 
             <a
               href="#kategori"
-              className="px-8 py-4 rounded-md font-display uppercase tracking-wider text-sm font-bold bg-black/50 hover:bg-black/80 text-white border border-white/20 backdrop-blur-md flex items-center justify-center gap-2 transition-colors"
+              className="px-8 py-4 rounded font-display uppercase tracking-wider text-sm font-bold bg-black/50 hover:bg-black/80 text-white border border-white/20 backdrop-blur-md flex items-center justify-center gap-2 transition-colors"
             >
               <span>EXPLORE 5 RACES</span>
               <ChevronDown className="w-4 h-4" />
@@ -149,7 +149,7 @@ export default function HomePage() {
           </div>
 
           {/* Meal Coupon Incentive Ribbon */}
-          <div className="inline-flex items-center gap-3 p-3 rounded-lg bg-black/70 border border-white/15 backdrop-blur-md text-xs font-mono text-slate-300">
+          <div className="inline-flex items-center gap-3 p-3 rounded-lg bg-black/70 border border-white/15 backdrop-blur-md text-xs font-medium text-slate-300">
             <Sparkles className="w-4 h-4 text-[#F59E0B] shrink-0" />
             <span>
               <strong className="text-white">Meal Coupon Rp 50.000 Otomatis:</strong> Untuk wanita, remaja $\le 17$ tahun, dan tim Pair Mix.
@@ -169,14 +169,14 @@ export default function HomePage() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
           <div>
-            <span className="font-mono text-xs font-bold text-[#F59E0B] uppercase tracking-widest block mb-1">
+            <span className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest block mb-1">
               // OFFICIAL CATEGORY SPECIFICATIONS
             </span>
             <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white italic">
               PILIH JARAK TANTANGAN ANDA
             </h2>
           </div>
-          <p className="font-sans text-xs sm:text-sm text-slate-400 max-w-md">
+          <p className="text-xs sm:text-sm text-slate-400 max-w-md font-medium">
             Mulai dari etape 60 km pemula hingga 200 km ultra dengan navigasi malam dan elevasi tembus +3.180 meter.
           </p>
         </div>
@@ -202,12 +202,12 @@ export default function HomePage() {
                   <span className="font-display text-lg font-black text-[#F59E0B] block leading-none italic">
                     {c.km}
                   </span>
-                  <span className="text-[9px] font-mono font-bold text-slate-300 uppercase block">
+                  <span className="text-[9px] font-bold text-slate-300 uppercase block tracking-wider">
                     {c.subtitle}
                   </span>
                 </div>
 
-                <div className="absolute bottom-2 right-3 font-mono text-[10px] text-slate-300 bg-black/60 px-2 py-0.5 rounded">
+                <div className="absolute bottom-2 right-3 text-[10px] font-semibold text-slate-300 bg-black/60 px-2 py-0.5 rounded">
                   {c.elevation}
                 </div>
               </div>
@@ -224,7 +224,7 @@ export default function HomePage() {
                 </div>
 
                 {/* Quick Spec List */}
-                <div className="border-t border-white/10 pt-3 space-y-1.5 font-mono text-[11px]">
+                <div className="border-t border-white/10 pt-3 space-y-1.5 text-[11px]">
                   <div className="flex justify-between text-slate-400">
                     <span>Wave Start:</span>
                     <span className="text-white font-bold">{c.wave}</span>
@@ -257,21 +257,21 @@ export default function HomePage() {
         {/* Virtual Ride Banner */}
         <div className="p-6 rounded-lg bg-gradient-to-r from-[#171920] to-[#121318] border border-white/15 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#F59E0B] uppercase">
+            <div className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] uppercase tracking-wider">
               <Compass className="w-4 h-4" />
               <span>VIRTUAL RIDE NASIONAL // 19 CHAPTERS SE-INDONESIA</span>
             </div>
             <h3 className="font-display text-2xl font-bold uppercase text-white tracking-tight">
               Gowes Dari Kota Anda Sendiri Via Strava Webhook
             </h3>
-            <p className="text-xs text-slate-400 max-w-xl font-sans">
+            <p className="text-xs text-slate-400 max-w-xl">
               Bagi anggota GX-ID di luar Jabodetabek. Selesaikan jarak tantangan di rute lokal Anda, 
               validasi otomatis via Strava, dan medali resmi dikirim ke rumah Anda via DHS Logistik.
             </p>
           </div>
 
           <div className="shrink-0 flex items-center gap-3">
-            <div className="text-right font-mono text-xs hidden sm:block">
+            <div className="text-right text-xs hidden sm:block">
               <span className="text-slate-400 block">Biaya Registrasi:</span>
               <span className="text-[#F59E0B] font-bold text-base">Rp 200.000</span>
             </div>
@@ -325,31 +325,31 @@ export default function HomePage() {
 
             {/* Right Column: Narrative */}
             <div className="lg:col-span-6 space-y-6">
-              <span className="font-mono text-xs font-bold text-[#F59E0B] uppercase tracking-widest block">
+              <span className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest block">
                 // THE ATHLETE LOUNGE & COMMUNITY DNA
               </span>
               <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white italic">
                 DIBANGUN OLEH KOMUNITAS, UNTUK KEBERSAMAAN
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed font-sans">
+              <p className="text-sm text-slate-300 leading-relaxed">
                 Gravel Grindurance bukan sekadar angka kilometer di atas kertas. Ini adalah perayaan 
                 persahabatan 80.000 pesepeda dari 19 Chapter se-Indonesia. 
               </p>
 
-              <div className="space-y-4 font-mono text-xs text-slate-300">
+              <div className="space-y-4 text-xs text-slate-300">
                 <div className="p-4 rounded-lg bg-black/50 border border-white/10 flex items-start gap-3">
                   <Coffee className="w-5 h-5 text-[#F59E0B] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-white block font-sans text-sm">ABEEY Coffee & Eatery (Basecamp & Lounge)</strong>
-                    <span>Titik start dan pemulihan finisher. Nikmati hidangan lokal, kombucha sehat, dan sharing rute bersama teman satu komunitas.</span>
+                    <strong className="text-white block text-sm">ABEEY Coffee & Eatery (Basecamp & Lounge)</strong>
+                    <span className="text-slate-400">Titik start dan pemulihan finisher. Nikmati hidangan lokal, kombucha sehat, dan sharing rute bersama teman satu komunitas.</span>
                   </div>
                 </div>
 
                 <div className="p-4 rounded-lg bg-black/50 border border-white/10 flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-[#F59E0B] shrink-0 mt-0.5" />
                   <div>
-                    <strong className="text-white block font-sans text-sm">Akses Ramah Sepeda: Stasiun LRT Harjamukti</strong>
-                    <span>Hanya beberapa langkah dari venue start. Sepeda lipat maupun road/gravel bike diizinkan masuk gerbong kereta LRT Jabodebek.</span>
+                    <strong className="text-white block text-sm">Akses Ramah Sepeda: Stasiun LRT Harjamukti</strong>
+                    <span className="text-slate-400">Hanya beberapa langkah dari venue start. Sepeda lipat maupun road/gravel bike diizinkan masuk gerbong kereta LRT Jabodebek.</span>
                   </div>
                 </div>
               </div>
@@ -357,7 +357,7 @@ export default function HomePage() {
               <div className="pt-2">
                 <Link
                   href="/peserta"
-                  className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#F59E0B] hover:underline"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#F59E0B] hover:underline"
                 >
                   <span>Cek Rider Roster & Teman Skuad Anda &rarr;</span>
                 </Link>
@@ -377,7 +377,7 @@ export default function HomePage() {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
           <div>
-            <span className="font-mono text-xs font-bold text-[#F59E0B] uppercase tracking-widest block mb-1">
+            <span className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest block mb-1">
               // RACE OPERATION RIGOR
             </span>
             <h2 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white italic">
@@ -386,18 +386,18 @@ export default function HomePage() {
           </div>
           <Link
             href="/peraturan"
-            className="font-mono text-xs text-[#F59E0B] hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-[#F59E0B] hover:underline flex items-center gap-1"
           >
             <span>Baca Regulasi Lengkap Athlete Guide &rarr;</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
           
           <div className="p-6 rounded-lg bg-[#15171C] border border-white/10 space-y-3">
-            <span className="text-[#F59E0B] font-bold block text-sm">01 / PROLOG 30 KM SUBUR</span>
+            <span className="text-[#F59E0B] font-bold block text-sm">01 / PROLOG 30 KM SUBUH</span>
             <h4 className="font-display text-lg font-bold text-white uppercase">Wajib Untuk 150 & 200 KM</h4>
-            <p className="font-sans text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed">
               Peserta kategori 150 km dan 200 km wajib menempuh minimal 30 km mandiri antara pukul 03:00–05:00 WIB. 
               Track GPS diverifikasi panitia di Meja Scrutineering sebelum wave start dilepas.
             </p>
@@ -406,7 +406,7 @@ export default function HomePage() {
           <div className="p-6 rounded-lg bg-[#15171C] border border-white/10 space-y-3">
             <span className="text-[#F59E0B] font-bold block text-sm">02 / MANDATORY 30-MIN PITSTOP</span>
             <h4 className="font-display text-lg font-bold text-white uppercase">Penalti Waktu 300%</h4>
-            <p className="font-sans text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed">
               Wajib istirahat minimal 30 menit di CP#4 Jonggol atau CP#6 Sodong demi keselamatan musim hujan. 
               Keberangkatan dini dikenakan denda penalti waktu 300% dari sisa menit yang dilanggar.
             </p>
@@ -415,7 +415,7 @@ export default function HomePage() {
           <div className="p-6 rounded-lg bg-[#15171C] border border-white/10 space-y-3">
             <span className="text-[#F59E0B] font-bold block text-sm">03 / EMERGENCY MEDICAL BACKUP</span>
             <h4 className="font-display text-lg font-bold text-white uppercase">SPGDT RS Hermina Cibubur</h4>
-            <p className="font-sans text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-400 leading-relaxed">
               Dukungan ambulans gawat darurat dan tim medis siaga. Nomor darurat SPGDT RS Hermina Cibubur (021-828-1234) 
               wajib disimpan di telepon genggam setiap atlet.
             </p>
@@ -430,13 +430,13 @@ export default function HomePage() {
       {/* 5. FINAL HIGH-ENERGY CALL TO ACTION */}
       {/* ========================================================================= */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-gradient-to-b from-[#0D0E11] to-black text-center space-y-6">
-        <span className="font-mono text-xs font-bold text-[#F59E0B] uppercase tracking-widest block">
+        <span className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest block">
           KUOTA TERBATAS // AMBIL NOMOR BIB ANDA SEKARANG
         </span>
         <h2 className="font-display text-4xl sm:text-7xl font-black uppercase tracking-tight text-white italic drop-shadow-md">
           BERANI TAKLUKKAN MEDAN JONGGOL?
         </h2>
-        <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto font-sans leading-relaxed">
+        <p className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed">
           Pilih paket Medal Saja atau Medal & Jersey resmi GX-ID Anniversary Edition. 
           Pendaftaran ditutup saat kuota gelombang terpenuhi.
         </p>

@@ -90,62 +90,62 @@ export default function PesertaPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-base text-brand-light py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] py-12 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Header Section */}
-        <div className="border-b border-brand-border pb-8">
-          <div className="font-mono text-xs text-brand-accent uppercase tracking-widest mb-2 flex items-center gap-2">
+        <div className="border-b border-white/10 pb-8">
+          <div className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest mb-2 flex items-center gap-2">
             <Compass className="w-3.5 h-3.5" />
             <span>OFFICIAL START LIST // RIDER ROSTER 2026</span>
           </div>
-          <h1 className="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white">
+          <h1 className="font-display text-4xl sm:text-6xl font-black uppercase tracking-tight text-white italic">
             ROSTER ATLET & WAVE ALLOCATION
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-brand-muted max-w-3xl leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-3xl leading-relaxed">
             Daftar peserta terkonfirmasi, alokasi gelombang start (Wave 1 / 2 / 3), status verifikasi 
             prolog 30 km (03:00–05:00 WIB), serta representasi 19 Chapter Regional GX-ID se-Indonesia.
           </p>
 
           {/* Stats Bar */}
           {stats && (
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 border-t border-l border-brand-border font-mono">
-              <div className="border-r border-b border-brand-border p-4 bg-brand-surface">
-                <span className="text-[10px] text-brand-muted uppercase tracking-widest block">Total Atlet Masuk</span>
+            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 border-t border-l border-white/10">
+              <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Total Atlet Masuk</span>
                 <span className="font-display text-3xl font-bold text-white mt-1 block">
                   {stats.total}
                 </span>
-                <span className="text-[11px] text-brand-muted mt-0.5 block">
+                <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
                   {stats.male} Pria • {stats.female} Wanita
                 </span>
               </div>
 
-              <div className="border-r border-b border-brand-border p-4 bg-brand-surface">
-                <span className="text-[10px] text-brand-muted uppercase tracking-widest block">120K Pair Mix</span>
-                <span className="font-display text-3xl font-bold text-brand-accent mt-1 block">
+              <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">120K Pair Mix</span>
+                <span className="font-display text-3xl font-bold text-[#F59E0B] mt-1 block">
                   {stats.pair_teams} Tim
                 </span>
-                <span className="text-[11px] text-brand-muted mt-0.5 block">
+                <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
                   Format Tandem 2 Pax
                 </span>
               </div>
 
-              <div className="border-r border-b border-brand-border p-4 bg-brand-surface">
-                <span className="text-[10px] text-brand-muted uppercase tracking-widest block">Prolog 30K Lolos</span>
+              <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Prolog 30K Lolos</span>
                 <span className="font-display text-3xl font-bold text-white mt-1 block">
-                  {stats.prolog_passed} <span className="text-xs text-brand-muted">/ {stats.prolog_required_total}</span>
+                  {stats.prolog_passed} <span className="text-xs text-slate-400">/ {stats.prolog_required_total}</span>
                 </span>
-                <span className="text-[11px] text-brand-muted mt-0.5 block">
+                <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
                   Kategori 150K & 200K
                 </span>
               </div>
 
-              <div className="border-r border-b border-brand-border p-4 bg-brand-surface">
-                <span className="text-[10px] text-brand-muted uppercase tracking-widest block">Basecamp Start</span>
+              <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Basecamp Start</span>
                 <span className="font-display text-xl font-bold text-white mt-2 block">
                   ABEEY COFFEE
                 </span>
-                <span className="text-[11px] text-brand-muted mt-0.5 block">
+                <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
                   LRT Harjamukti, Cibubur
                 </span>
               </div>
@@ -154,22 +154,22 @@ export default function PesertaPage() {
         </div>
 
         {/* Search & Category Filter Bar */}
-        <div className="space-y-4 font-mono">
+        <div className="space-y-4">
           <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-muted" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
                 placeholder="Cari No. BIB, Nama Rider, atau Chapter..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-brand-surface border border-brand-border rounded-sm pl-10 pr-4 py-2.5 text-xs text-white placeholder-brand-muted focus:outline-none focus:border-brand-accent transition-colors font-mono"
+                className="w-full bg-[#15171C] border border-white/10 rounded pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#F59E0B] transition-colors"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-muted hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -179,13 +179,13 @@ export default function PesertaPage() {
             <div className="flex items-center gap-3">
               <Link
                 href="/scrutineering"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-sm text-xs font-mono font-semibold border border-brand-border bg-brand-surface hover:bg-brand-surfaceHover text-white transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded text-xs font-semibold border border-white/10 bg-[#15171C] hover:bg-[#1D2027] text-white transition-colors"
               >
                 <span>Scrutineering Desk</span>
               </Link>
               <Link
                 href="/daftar"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-sm text-xs font-display font-bold uppercase tracking-wider bg-brand-accent hover:bg-brand-accentDark text-brand-base shadow-solar transition-all"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded text-xs font-display font-bold uppercase tracking-wider bg-[#F59E0B] hover:bg-[#D97706] text-black shadow-sm transition-all"
               >
                 <span>Daftar Rider</span>
                 <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -194,15 +194,15 @@ export default function PesertaPage() {
           </div>
 
           {/* Category Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none border-b border-brand-border">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none border-b border-white/10">
             {CATEGORY_TABS.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setSelectedCategory(tab.id)}
-                className={`px-3 py-1.5 text-xs font-mono tracking-wider whitespace-nowrap transition-all ${
+                className={`px-3.5 py-1.5 text-xs font-bold tracking-wider uppercase whitespace-nowrap transition-all rounded ${
                   selectedCategory === tab.id
-                    ? 'bg-brand-accent text-brand-base font-bold'
-                    : 'bg-brand-surface text-brand-muted hover:text-white hover:bg-brand-surfaceHover border border-brand-border'
+                    ? 'bg-[#F59E0B] text-black'
+                    : 'bg-[#15171C] text-slate-400 hover:text-white hover:bg-[#1D2027] border border-white/10'
                 }`}
               >
                 {tab.label}
@@ -212,17 +212,17 @@ export default function PesertaPage() {
         </div>
 
         {/* Start List Table */}
-        <div className="border border-brand-border bg-brand-surface overflow-hidden shadow-subtle">
+        <div className="border border-white/10 bg-[#15171C] rounded-lg overflow-hidden shadow-xl">
           {loading ? (
-            <div className="py-20 text-center font-mono">
-              <div className="w-8 h-8 border-2 border-brand-border border-t-brand-accent rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-xs text-brand-muted">Memuat Roster Atlet GX-ID...</p>
+            <div className="py-20 text-center">
+              <div className="w-8 h-8 border-2 border-white/10 border-t-[#F59E0B] rounded-full animate-spin mx-auto mb-4" />
+              <p className="text-xs text-slate-400">Memuat Roster Atlet GX-ID...</p>
             </div>
           ) : roster.length === 0 ? (
-            <div className="py-20 text-center space-y-2 font-mono">
-              <Users className="w-10 h-10 text-brand-muted mx-auto" />
+            <div className="py-20 text-center space-y-2">
+              <Users className="w-10 h-10 text-slate-600 mx-auto" />
               <p className="text-sm font-semibold text-white">Tidak ada atlet ditemukan</p>
-              <p className="text-xs text-brand-muted">
+              <p className="text-xs text-slate-400">
                 Sesuaikan kata kunci pencarian atau pilih kategori lain.
               </p>
             </div>
@@ -230,43 +230,43 @@ export default function PesertaPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-brand-border bg-brand-base font-mono text-[11px] tracking-wider text-brand-muted uppercase">
-                    <th className="py-3 px-4 font-semibold">BIB #</th>
-                    <th className="py-3 px-4 font-semibold">Nama Rider / Skuad</th>
-                    <th className="py-3 px-4 font-semibold">Kategori & Wave</th>
-                    <th className="py-3 px-4 font-semibold">Chapter Regional</th>
-                    <th className="py-3 px-4 font-semibold">Paket</th>
-                    <th className="py-3 px-4 font-semibold">Status Scrutineering</th>
-                    <th className="py-3 px-4 font-semibold text-right">Plat BIB</th>
+                  <tr className="border-b border-white/10 bg-[#0D0E11] text-[11px] tracking-wider text-slate-400 uppercase font-bold">
+                    <th className="py-3.5 px-4">BIB #</th>
+                    <th className="py-3.5 px-4">Nama Rider / Skuad</th>
+                    <th className="py-3.5 px-4">Kategori & Wave</th>
+                    <th className="py-3.5 px-4">Chapter Regional</th>
+                    <th className="py-3.5 px-4">Paket</th>
+                    <th className="py-3.5 px-4">Status Scrutineering</th>
+                    <th className="py-3.5 px-4 text-right">Plat BIB</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-brand-border font-mono">
+                <tbody className="divide-y divide-white/10">
                   {roster.map((rider) => (
                     <tr
                       key={rider.id}
-                      className="hover:bg-brand-surfaceHover/80 transition-colors group"
+                      className="hover:bg-[#1D2027]/80 transition-colors group"
                     >
                       {/* BIB Number */}
-                      <td className="py-3.5 px-4 font-mono">
-                        <span className="inline-block px-2 py-0.5 border border-brand-accent/40 bg-brand-base text-brand-accent font-bold tracking-widest">
+                      <td className="py-3.5 px-4 font-bold tabular-nums">
+                        <span className="inline-block px-2.5 py-0.5 border border-[#F59E0B]/50 bg-black text-[#F59E0B] font-bold tracking-wider rounded">
                           #{rider.bib_number}
                         </span>
                       </td>
 
                       {/* Rider Name */}
                       <td className="py-3.5 px-4">
-                        <div className="font-bold text-white group-hover:text-brand-accent transition-colors font-sans text-sm">
+                        <div className="font-bold text-white group-hover:text-[#F59E0B] transition-colors text-sm">
                           {rider.full_name}
                         </div>
                         {rider.partner_name && (
-                          <div className="flex items-center gap-1 mt-0.5 text-xs text-brand-accent font-medium">
-                            <span className="border border-brand-accent/30 px-1 py-0.2 text-[10px] uppercase">
+                          <div className="flex items-center gap-1 mt-0.5 text-xs text-[#F59E0B] font-semibold">
+                            <span className="border border-[#F59E0B]/40 px-1 py-0.2 text-[10px] uppercase rounded">
                               Pair
                             </span>
                             <span>& {rider.partner_name}</span>
                           </div>
                         )}
-                        <span className="text-[10px] text-brand-muted block mt-0.5">
+                        <span className="text-[11px] text-slate-400 block mt-0.5 font-medium">
                           {rider.gender === 'female' ? 'Wanita' : 'Pria'} • Ukuran: {rider.jersey_size}
                         </span>
                       </td>
@@ -276,23 +276,23 @@ export default function PesertaPage() {
                         <div className="font-semibold text-white">
                           {rider.category_name}
                         </div>
-                        <div className="flex items-center gap-1.5 text-[11px] text-brand-muted mt-0.5">
-                          <Clock className="w-3 h-3 text-brand-accent" />
+                        <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mt-0.5 font-medium tabular-nums">
+                          <Clock className="w-3 h-3 text-[#F59E0B]" />
                           <span>{rider.wave_start_time}</span>
                         </div>
                       </td>
 
                       {/* Chapter */}
-                      <td className="py-3.5 px-4 font-sans text-xs text-brand-muted">
+                      <td className="py-3.5 px-4 text-xs text-slate-300 font-medium">
                         {rider.community_chapter}
                       </td>
 
                       {/* Package */}
                       <td className="py-3.5 px-4 text-xs">
                         {rider.package_type === 'MEDAL_JERSEY' ? (
-                          <span className="text-brand-accent font-medium">Medal & Jersey</span>
+                          <span className="text-[#F59E0B] font-bold">Medal & Jersey</span>
                         ) : (
-                          <span className="text-brand-muted">Medal Saja</span>
+                          <span className="text-slate-400 font-medium">Medal Saja</span>
                         )}
                       </td>
 
@@ -300,18 +300,18 @@ export default function PesertaPage() {
                       <td className="py-3.5 px-4 text-xs">
                         {rider.prologue_required ? (
                           rider.prologue_status === 'PASSED' ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 border border-white/20 bg-white/5 text-white text-[10px] uppercase tracking-wider">
-                              <CheckCircle2 className="w-3 h-3" />
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 border border-white/20 bg-white/5 text-white text-[10px] uppercase tracking-wider font-bold rounded">
+                              <CheckCircle2 className="w-3 h-3 text-white" />
                               Prolog Lolos
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 border border-brand-accent/40 bg-brand-accent/10 text-brand-accent text-[10px] uppercase tracking-wider">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 border border-[#F59E0B]/40 bg-[#F59E0B]/10 text-[#F59E0B] text-[10px] uppercase tracking-wider font-bold rounded">
                               <AlertTriangle className="w-3 h-3" />
                               Prolog Pending
                             </span>
                           )
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 border border-brand-border bg-brand-base text-brand-muted text-[10px] uppercase tracking-wider">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 border border-white/10 bg-black/40 text-slate-300 text-[10px] uppercase tracking-wider font-medium rounded">
                             Confirmed
                           </span>
                         )}
@@ -321,7 +321,7 @@ export default function PesertaPage() {
                       <td className="py-3.5 px-4 text-right">
                         <button
                           onClick={() => setSelectedRiderForBib(rider)}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 border border-brand-border hover:border-brand-accent hover:text-brand-accent text-brand-muted text-[11px] font-semibold transition-colors"
+                          className="inline-flex items-center gap-1 px-3 py-1 rounded border border-white/15 hover:border-[#F59E0B] hover:text-[#F59E0B] text-slate-300 text-[11px] font-bold transition-colors"
                         >
                           <Eye className="w-3 h-3" />
                           <span>Plat</span>
@@ -338,22 +338,22 @@ export default function PesertaPage() {
         {/* Modal Digital Bike Plate BIB */}
         {selectedRiderForBib && (
           <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-brand-surface border border-brand-border max-w-xl w-full p-6 relative space-y-6 shadow-2xl font-mono">
+            <div className="bg-[#15171C] border border-white/15 max-w-xl w-full p-6 rounded-lg relative space-y-6 shadow-2xl">
               <button
                 onClick={() => setSelectedRiderForBib(null)}
-                className="absolute top-4 right-4 p-2 text-brand-muted hover:text-white border border-brand-border bg-brand-base transition-colors"
+                className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white border border-white/10 bg-black rounded transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
 
               <div className="text-center space-y-1">
-                <span className="text-[10px] text-brand-accent uppercase tracking-widest block">
+                <span className="text-[10px] text-[#F59E0B] uppercase tracking-widest font-bold block">
                   DIGITAL BIKE PLATE VOUCHER
                 </span>
-                <h3 className="font-display text-2xl font-bold text-white uppercase">
+                <h3 className="font-display text-2xl font-bold text-white uppercase italic">
                   BIB #{selectedRiderForBib.bib_number}
                 </h3>
-                <p className="text-xs text-brand-muted font-sans">
+                <p className="text-xs text-slate-400">
                   {selectedRiderForBib.full_name} • {selectedRiderForBib.community_chapter}
                 </p>
               </div>
@@ -371,18 +371,18 @@ export default function PesertaPage() {
                 />
               </div>
 
-              <div className="border border-brand-border bg-brand-base p-3 text-xs text-brand-muted space-y-1">
+              <div className="border border-white/10 bg-black/60 p-3.5 rounded text-xs text-slate-300 space-y-1">
                 <div className="flex justify-between">
                   <span>Wave Start:</span>
                   <span className="text-white font-bold">{selectedRiderForBib.wave_start_time}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Start Venue:</span>
-                  <span className="text-white">ABEEY Coffee (LRT Harjamukti)</span>
+                  <span className="text-white font-medium">ABEEY Coffee (LRT Harjamukti)</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Paket:</span>
-                  <span className="text-brand-accent font-bold">
+                  <span className="text-[#F59E0B] font-bold">
                     {selectedRiderForBib.package_type === 'MEDAL_JERSEY' ? 'Medal & Jersey' : 'Medal Saja'}
                   </span>
                 </div>
@@ -390,7 +390,7 @@ export default function PesertaPage() {
 
               <button
                 onClick={() => setSelectedRiderForBib(null)}
-                className="w-full py-2.5 border border-brand-border bg-zinc-900 hover:bg-zinc-800 text-white font-mono text-xs uppercase tracking-wider transition-colors"
+                className="w-full py-2.5 rounded border border-white/10 bg-black hover:bg-zinc-900 text-white text-xs uppercase tracking-wider font-bold transition-colors"
               >
                 Tutup Jendela
               </button>

@@ -117,7 +117,7 @@ export default function BibCard({
 
         {/* NOMOR DADA BESAR (MAIN BIB DISPLAY) */}
         <div className="py-4 text-center">
-          <div className="text-6xl sm:text-7xl font-black tracking-tight text-slate-950 font-mono">
+          <div className="text-7xl sm:text-8xl font-black tracking-tighter text-slate-950 font-display italic">
             {bibNumber}
           </div>
 
@@ -170,8 +170,8 @@ export default function BibCard({
         </div>
 
         {/* FOOTER KARTU MEDIS */}
-        <div className="mt-3 pt-2 border-t border-slate-200 flex items-center justify-between text-[9px] text-slate-500">
-          <span className="font-mono">ID: {registrationCode}</span>
+        <div className="mt-3 pt-2 border-t border-slate-200 flex items-center justify-between text-[10px] text-slate-500">
+          <span className="font-sans font-semibold tracking-wider">ID: {registrationCode}</span>
           <span className="flex items-center gap-1 font-bold text-slate-700">
             <ShieldAlert className="w-3 h-3 text-red-600" />
             SPGDT HERMINA: 0815-1965-6133

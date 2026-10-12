@@ -125,7 +125,7 @@ export default function CekBibPage() {
                       </div>
                       <h4 className="text-lg font-bold text-white">{p.full_name}</h4>
                       <p className="text-xs text-slate-400">
-                        Kode: <span className="font-mono text-slate-300">{p.registration_code}</span> | Kategori: {p.category?.name}
+                        Kode: <span className="font-sans font-bold tracking-wider text-slate-300">{p.registration_code}</span> | Kategori: {p.category?.name}
                       </p>
                       <p className="text-xs text-slate-400">
                         Tagihan sebesar <span className="text-white font-bold">Rp {Number(p.order?.net_amount || 0).toLocaleString('id-ID')}</span> belum terverifikasi lunas sehingga nomor BIB belum diterbitkan.

@@ -105,12 +105,12 @@ export default function PeraturanPage() {
             <span>Prolog 30 KM (Khusus 150 & 200 KM)</span>
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">
-            Peserta kategori Cross 150 km & Ultra 200 km **wajib menempuh $\ge$ 30 km gowes mandiri** sebelum registrasi ulang di venue start resmi.
+            Peserta kategori Cross 150 km & Ultra 200 km **wajib menempuh ≥ 30 km gowes mandiri** sebelum registrasi ulang di venue start resmi.
           </p>
           <ul className="text-xs text-slate-400 space-y-1 list-disc list-inside">
             <li>Waktu tempuh prolog: Antara 03:00 – 05:00 WIB dini hari.</li>
             <li>Validasi dilakukan via track log GPS / Cyclocomp di meja scrutineering subuh.</li>
-            <li>Gagal memenuhi jarak prolog $\rightarrow$ **DENY START** (tidak diizinkan flag off).</li>
+            <li>Gagal memenuhi jarak prolog → **DENY START** (tidak diizinkan flag off).</li>
           </ul>
         </div>
 
@@ -188,7 +188,7 @@ export default function PeraturanPage() {
         <div className="bg-brand-dark/80 p-4 rounded-xl border border-brand-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <span className="text-[11px] text-slate-400 block">WhatsApp Siaga Medis 24 Jam:</span>
-            <span className="text-lg font-black text-red-400 font-mono">0815 1965 6133</span>
+            <span className="text-lg font-black text-red-400 font-sans tracking-wider">0815 1965 6133</span>
           </div>
           <a
             href="https://wa.me/6281519656133"

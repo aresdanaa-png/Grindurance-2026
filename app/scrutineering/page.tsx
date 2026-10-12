@@ -160,28 +160,28 @@ export default function ScrutineeringPage() {
         {/* Ops Header */}
         <div className="border-b border-brand-border/60 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold uppercase mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-sans font-bold uppercase mb-2">
               <ShieldCheck className="w-4 h-4" />
               Race Operations — Scrutineering Desk
             </div>
-            <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
+            <h1 className="font-display italic text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
               Meja Inspeksi <span className="text-brand-gold">& Prolog 30 KM</span>
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1 font-mono">
+            <p className="text-xs sm:text-sm text-slate-400 mt-1 font-sans">
               Venue: ABEEY Coffee Lounge • LRT Harjamukti Cibubur | Waktu: 03:00–05:00 WIB
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="bg-zinc-900 border border-brand-border/60 px-4 py-2 rounded-xl text-right">
-              <span className="text-[10px] font-mono text-slate-400 block uppercase">Status Wave Clearance</span>
-              <span className="text-lg font-black font-mono text-emerald-400">
-                {clearedCount} Lolos <span className="text-xs text-slate-500">/ {candidates.length}</span>
+              <span className="text-[10px] font-sans font-semibold text-slate-400 block uppercase">Status Wave Clearance</span>
+              <span className="text-xl font-black font-display italic text-emerald-400">
+                {clearedCount} Lolos <span className="text-xs font-sans text-slate-500">/ {candidates.length}</span>
               </span>
             </div>
             <Link
               href="/peserta"
-              className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold font-mono text-slate-200 border border-zinc-700 transition-colors"
+              className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold font-sans text-slate-200 border border-zinc-700 transition-colors uppercase tracking-wider"
             >
               Start List Roster
             </Link>
@@ -195,10 +195,10 @@ export default function ScrutineeringPage() {
           <div className="lg:col-span-5 space-y-4">
             <div className="bg-brand-card/90 border border-brand-border/60 rounded-2xl p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300">
+                <h3 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-300">
                   Antrean Atlet Scrutineering
                 </h3>
-                <span className="text-[11px] font-mono text-brand-gold">
+                <span className="text-[11px] font-sans font-bold text-brand-gold">
                   {waitingCount} Menunggu
                 </span>
               </div>
@@ -211,7 +211,7 @@ export default function ScrutineeringPage() {
                   placeholder="Cari No. BIB / Nama..."
                   value={searchBib}
                   onChange={(e) => setSearchBib(e.target.value)}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 font-mono focus:outline-none focus:border-brand-gold"
+                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 font-sans focus:outline-none focus:border-brand-gold"
                 />
               </div>
 
@@ -234,32 +234,32 @@ export default function ScrutineeringPage() {
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-xs font-bold text-brand-gold bg-black px-1.5 py-0.5 rounded border border-brand-gold/30">
+                          <span className="font-display italic text-sm font-black text-brand-gold bg-black px-1.5 py-0.5 rounded border border-brand-gold/30">
                             #{c.bib}
                           </span>
-                          <span className="font-bold text-sm text-white">{c.name}</span>
+                          <span className="font-bold text-sm text-white font-sans">{c.name}</span>
                         </div>
-                        <div className="text-[11px] text-slate-400 font-mono">
+                        <div className="text-[11px] text-slate-400 font-sans font-medium">
                           {c.category} • {c.wave}
                         </div>
-                        <div className="text-[10px] text-slate-500">
+                        <div className="text-[10px] text-slate-500 font-sans">
                           {c.chapter}
                         </div>
                       </div>
 
                       <div className="text-right">
                         {c.clearance_status === 'CLEARED' ? (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/30">
                             <CheckCircle2 className="w-3 h-3" />
                             LOLOS
                           </span>
                         ) : c.clearance_status === 'DNS' ? (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-md border border-rose-500/30">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-md border border-rose-500/30">
                             <XCircle className="w-3 h-3" />
                             REJECTED
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/30">
+                          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/30">
                             <Clock className="w-3 h-3" />
                             CEK FISIK
                           </span>
@@ -280,24 +280,24 @@ export default function ScrutineeringPage() {
                 <div className="flex items-start justify-between border-b border-brand-border/60 pb-4">
                   <div>
                     <div className="flex items-center gap-3">
-                      <span className="text-2xl font-black font-mono text-brand-gold">
+                      <span className="text-3xl font-black font-display italic text-brand-gold">
                         BIB #{selectedRider.bib}
                       </span>
-                      <h2 className="text-xl font-bold text-white">{selectedRider.name}</h2>
+                      <h2 className="text-xl font-bold text-white font-sans">{selectedRider.name}</h2>
                     </div>
-                    <p className="text-xs font-mono text-slate-400 mt-1">
+                    <p className="text-xs font-sans text-slate-400 mt-1 font-medium">
                       {selectedRider.category} • {selectedRider.wave} • {selectedRider.chapter}
                     </p>
                   </div>
 
                   <div>
                     {selectedRider.clearance_status === 'CLEARED' ? (
-                      <span className="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-bold inline-flex items-center gap-1.5">
+                      <span className="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs font-sans font-bold inline-flex items-center gap-1.5 uppercase tracking-wider">
                         <CheckCircle2 className="w-4 h-4" />
                         CLEARED FOR START
                       </span>
                     ) : (
-                      <span className="px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs font-mono font-bold inline-flex items-center gap-1.5">
+                      <span className="px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs font-sans font-bold inline-flex items-center gap-1.5 uppercase tracking-wider">
                         <AlertTriangle className="w-4 h-4" />
                         INSPEKSI DIPERLUKAN
                       </span>
@@ -314,25 +314,25 @@ export default function ScrutineeringPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4 text-brand-gold" />
-                      <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200">
+                      <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-200">
                         1. Verifikasi Prolog 30 KM (Mandiri 03:00–05:00 WIB)
                       </h4>
                     </div>
-                    <span className="text-[11px] font-mono text-slate-400">
+                    <span className="text-[11px] font-sans font-bold text-slate-400">
                       {selectedRider.prologue_required ? 'WAJIB (150K & 200K)' : 'TIDAK WAJIB'}
                     </span>
                   </div>
 
                   {selectedRider.prologue_required ? (
                     <div className="space-y-3">
-                      <p className="text-xs text-slate-400 leading-relaxed">
+                      <p className="text-xs text-slate-400 leading-relaxed font-sans">
                         Cek rekaman GPS Strava / Garmin / Wahoo peserta sebelum jam 05:00 WIB di ABEEY Coffee. 
                         Jarak minimal wajib adalah <strong>30.0 km</strong>.
                       </p>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
                         <div>
-                          <label className="text-[11px] font-mono text-slate-400 block mb-1">
+                          <label className="text-[11px] font-sans font-bold text-slate-400 block mb-1">
                             Jarak Tempuh GPS Tercatat (KM):
                           </label>
                           <input
@@ -340,18 +340,18 @@ export default function ScrutineeringPage() {
                             step="0.1"
                             value={prologKmInput}
                             onChange={(e) => setPrologKmInput(e.target.value)}
-                            className="w-full bg-black border border-zinc-700 rounded-lg px-3 py-2 text-sm font-mono text-white focus:outline-none focus:border-brand-gold"
+                            className="w-full bg-black border border-zinc-700 rounded-lg px-3 py-2 text-base font-display italic font-bold text-white focus:outline-none focus:border-brand-gold"
                           />
                         </div>
 
                         <div className="pt-4 sm:pt-0">
                           {parseFloat(prologKmInput) >= 30.0 ? (
-                            <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono flex items-center gap-2">
+                            <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-sans font-semibold flex items-center gap-2">
                               <CheckCircle2 className="w-4 h-4 shrink-0" />
-                              <span>Memenuhi syarat ($\ge$ 30 km). Prolog Valid!</span>
+                              <span>Memenuhi syarat (≥ 30 km). Prolog Valid!</span>
                             </div>
                           ) : (
-                            <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono flex items-center gap-2">
+                            <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-sans font-semibold flex items-center gap-2">
                               <XCircle className="w-4 h-4 shrink-0" />
                               <span>Kurang dari 30.0 km! Tidak memenuhi syarat prolog.</span>
                             </div>
@@ -360,7 +360,7 @@ export default function ScrutineeringPage() {
                       </div>
                     </div>
                   ) : (
-                    <p className="text-xs text-slate-500 italic">
+                    <p className="text-xs text-slate-500 italic font-sans">
                       Kategori ini tidak memiliki syarat prolog 30 km. Langsung lanjutkan ke inspeksi perlengkapan.
                     </p>
                   )}
@@ -370,12 +370,12 @@ export default function ScrutineeringPage() {
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <Lightbulb className="w-4 h-4 text-brand-orange" />
-                    <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-200">
+                    <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-200">
                       2. Standar Keselamatan & Perlengkapan Wajib (Scrutineering)
                     </h4>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-mono">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-sans">
                     <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
                       <input
                         type="checkbox"
@@ -443,7 +443,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkTyreWidth(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Rekomendasi Ban ($\ge$ 38c, optimal 45c untuk makadam Sodong)</span>
+                      <span className="text-slate-200">Rekomendasi Ban (≥ 38c, optimal 45c untuk makadam Sodong)</span>
                     </label>
                   </div>
                 </div>
@@ -451,7 +451,7 @@ export default function ScrutineeringPage() {
                 {/* Section 3: Notes & Action Button */}
                 <div className="space-y-4 pt-2 border-t border-brand-border/60">
                   <div>
-                    <label className="text-[11px] font-mono text-slate-400 block mb-1">
+                    <label className="text-[11px] font-sans font-bold text-slate-400 block mb-1">
                       Catatan Tambahan Marshall (Opsional):
                     </label>
                     <input
@@ -459,14 +459,14 @@ export default function ScrutineeringPage() {
                       placeholder="Contoh: Lampu cadangan baterai baru, stiker scrutineering #04 ditempel di fork kiri..."
                       value={marshallNote}
                       onChange={(e) => setMarshallNote(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 font-mono focus:outline-none focus:border-brand-gold"
+                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 font-sans focus:outline-none focus:border-brand-gold"
                     />
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3">
                     <button
                       onClick={handleApproveClearance}
-                      className="flex-1 py-3 px-4 rounded-xl font-bold font-mono text-xs uppercase tracking-wider bg-brand-gold hover:brightness-110 text-brand-dark shadow-glow transition-all flex items-center justify-center gap-2"
+                      className="flex-1 py-3 px-4 rounded-xl font-bold font-sans text-xs uppercase tracking-wider bg-brand-gold hover:brightness-110 text-brand-dark shadow-glow transition-all flex items-center justify-center gap-2"
                     >
                       <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
                       Setujui & Terbitkan Izin Start (Wave Clearance)
@@ -475,7 +475,7 @@ export default function ScrutineeringPage() {
                       onClick={() => {
                         alert(`BIB #${selectedRider.bib} ditandai butuh perbaikan perlengkapan sebelum 05:00 WIB.`);
                       }}
-                      className="py-3 px-4 rounded-xl font-mono text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-slate-300 border border-zinc-700 transition-colors"
+                      className="py-3 px-4 rounded-xl font-sans text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-slate-300 border border-zinc-700 transition-colors uppercase tracking-wider"
                     >
                       Tahan (Pending Gear)
                     </button>
