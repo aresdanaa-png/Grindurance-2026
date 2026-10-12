@@ -7,6 +7,7 @@ import {
   MapPin, Check, QrCode
 } from 'lucide-react';
 import { Category, PackageType, JerseySize, Gender, Order, Participant } from '@/lib/types';
+import BibCard from '@/components/BibCard';
 
 export default function RegistrationPage() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -837,25 +838,21 @@ export default function RegistrationPage() {
                 </p>
               </div>
 
-              {/* Kartu Nomor BIB yang Diterbitkan */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto pt-2">
+              {/* Kartu Nomor BIB Balap Resmi (Interactive & Downloadable) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto pt-4">
                 {createdParticipants.map((p) => (
-                  <div key={p.id} className="bg-brand-dark p-5 rounded-2xl border border-brand-gold/40 text-left relative overflow-hidden">
-                    <div className="text-[10px] uppercase font-bold text-brand-gold mb-1">
-                      {p.rider_role === 'PAIR_RIDER_2' ? 'Rider 2 (Partner)' : 'Rider 1'}
-                    </div>
-                    <div className="text-sm font-bold text-white truncate">{p.full_name}</div>
-                    <div className="mt-4 flex items-baseline justify-between">
-                      <span className="text-xs text-slate-500">Nomor BIB:</span>
-                      <span className="text-3xl font-black text-brand-gold font-mono tracking-wider">
-                        #{p.bib_number}
-                      </span>
-                    </div>
-                    <div className="mt-2 pt-2 border-t border-brand-border/40 text-[10px] text-slate-500 flex justify-between">
-                      <span>Kode Reg: {p.registration_code}</span>
-                      <span className="text-emerald-400 font-bold">LUNAS</span>
-                    </div>
-                  </div>
+                  <BibCard
+                    key={p.id}
+                    bibNumber={p.bib_number || 'PENDING'}
+                    fullName={p.full_name}
+                    categoryName={selectedCategory?.name || 'Gravel Grindurance'}
+                    distanceKm={selectedCategory?.distance_km || 0}
+                    riderRole={p.rider_role}
+                    bloodType={p.blood_type}
+                    communityChapter={p.community_chapter}
+                    qrHash={p.qr_checkin_hash || undefined}
+                    registrationCode={p.registration_code}
+                  />
                 ))}
               </div>
 
