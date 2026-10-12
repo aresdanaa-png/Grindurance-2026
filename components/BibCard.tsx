@@ -12,6 +12,7 @@ interface BibCardProps {
   distanceKm: number;
   riderRole?: string;
   bloodType?: string;
+  medicalNotes?: string;
   communityChapter?: string;
   qrHash?: string;
   registrationCode: string;
@@ -24,6 +25,7 @@ export default function BibCard({
   distanceKm,
   riderRole = 'SINGLE',
   bloodType = '-',
+  medicalNotes,
   communityChapter = 'Umum',
   qrHash,
   registrationCode,
@@ -140,10 +142,15 @@ export default function BibCard({
             <div className="text-[11px] font-bold text-slate-600 truncate">
               {communityChapter}
             </div>
-            <div className="flex items-center gap-2 pt-1 text-[10px] font-semibold text-slate-500">
+            <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[10px] font-semibold text-slate-500">
               <span className="bg-slate-100 border border-slate-300 px-1.5 py-0.5 rounded">
                 GOL: {bloodType}
               </span>
+              {medicalNotes && medicalNotes !== 'Tidak Ada' && (
+                <span className="bg-red-50 text-red-700 border border-red-300 px-1.5 py-0.5 rounded font-bold truncate max-w-[120px]" title={medicalNotes}>
+                  ALERT: {medicalNotes}
+                </span>
+              )}
               {riderRole !== 'SINGLE' && (
                 <span className="bg-purple-100 text-purple-700 border border-purple-300 px-1.5 py-0.5 rounded font-bold">
                   {riderRole === 'PAIR_RIDER_1' ? 'PAIR 1' : 'PAIR 2'}

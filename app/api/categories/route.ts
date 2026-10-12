@@ -16,9 +16,23 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    const cotHoursMap: Record<string, number> = {
+      '60': 7.0,
+      '80': 9.0,
+      '120_SINGLE': 11.0,
+      '120_PAIR': 11.0,
+      '150': 15.0,
+      '200': 19.0,
+    };
+
+    const updatedCategories = (categories || []).map((cat) => ({
+      ...cat,
+      cot_hours: cotHoursMap[cat.id] ?? cat.cot_hours,
+    }));
+
     return NextResponse.json({
       success: true,
-      categories: categories || [],
+      categories: updatedCategories,
     });
   } catch (err: any) {
     return NextResponse.json(

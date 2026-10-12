@@ -26,11 +26,11 @@
 
 | Jarak | Format | Batas Waktu (COT) | Target Peserta |
 |---|---|---|---|
-| 60 km | Fun Gravel | 5–6 jam | Pemula, rekreasi, sepeda lipat, hybrid |
-| 80 km | Fun Gravel | 7–8 jam | Pesepeda akhir pekan |
-| 120 km | Race | 9–10 jam | Atlet amatir, pengejar podium |
-| 150 km | Cross Gravel | 13–14 jam | Veteran endurance |
-| 200 km | Ultra Gravel | 16+ jam | Spesialis ultra, navigasi malam |
+| 60 km | Fun Gravel | 6–7 jam | Pemula, rekreasi, sepeda lipat, hybrid |
+| 80 km | Fun Gravel | 8–9 jam | Pesepeda akhir pekan |
+| 120 km | Race | 10–11 jam | Atlet amatir, pengejar podium |
+| 150 km | Cross Gravel | 14–15 jam | Veteran endurance |
+| 200 km | Ultra Gravel | 17+ jam (19 jam) | Spesialis ultra, navigasi malam |
 
 ### Aturan khusus: Prolog 30 km (150 km & 200 km)
 
@@ -121,11 +121,9 @@ Ekspektasi: **lumpur tebal, licin, risiko hipotermia**. Panitia wajib menerbitka
 - **Offline buffering**: data disimpan lokal saat tidak ada sinyal, dikirim otomatis saat konektivitas kembali.
 - Peta pantau publik: **Live Tracking Board**.
 
-### Pitstop wajib
-- **Minimum istirahat 30 menit** di checkpoint tertentu:
-  - **CP#6** untuk Fun Gravel
-  - **CP#4** untuk Race & Ultra
-- Penalti jika dilanggar: **tambahan waktu 300%**.
+### Format Mandiri (Self-Supported)
+- Peserta bebas mengatur ritme istirahat dan nutrisi di sepanjang rute secara mandiri.
+- Dilarang keras menerima pengawalan mobil support pribadi atau bantuan feeding terlarang.
 
 ---
 
@@ -202,7 +200,7 @@ Referensi kemitraan: RSU Hermina Bekasi (di edisi GX-ID sebelumnya).
 ## 10. ESG
 
 - **Environment**: Zero Waste (dilarang buang botol/sachet; pelanggaran → diskualifikasi), dorong pakai LRT, donasi untuk bibit pohon/restorasi (green offset).
-- **Social**: pitstop wajib di warung desa untuk menggerakkan ekonomi lokal; Virtual Ride melibatkan UMKM daerah.
+- **Social**: perbekalan mandiri di warung desa untuk menggerakkan ekonomi lokal; Virtual Ride melibatkan UMKM daerah.
 - **Governance**: Technical Briefing Workshop sepekan sebelum balapan (navigasi, mekanik, medis, nutrisi, strategi cuaca).
 
 ---
@@ -216,11 +214,11 @@ Cocok ditempel sebagai konteks ke AI coding tool kalau mau membangun sistem pend
 ```json
 {
   "categories": [
-    { "id": "60",  "km": 60,  "type": "fun",   "cot_hours": [5, 6],   "start": "07:00", "tracking_required": false, "prologue_km": 0,  "pitstop_cp": 6 },
-    { "id": "80",  "km": 80,  "type": "fun",   "cot_hours": [7, 8],   "start": "07:00", "tracking_required": false, "prologue_km": 0,  "pitstop_cp": 6 },
-    { "id": "120", "km": 120, "type": "race",  "cot_hours": [9, 10],  "start": "06:00", "tracking_required": true,  "prologue_km": 0,  "pitstop_cp": 4 },
-    { "id": "150", "km": 150, "type": "cross", "cot_hours": [13, 14], "start": "05:30", "tracking_required": true,  "prologue_km": 30, "pitstop_cp": 4 },
-    { "id": "200", "km": 200, "type": "ultra", "cot_hours": [16, null], "start": "05:30", "tracking_required": true, "prologue_km": 30, "pitstop_cp": 4 }
+    { "id": "60",  "km": 60,  "type": "fun",   "cot_hours": [6, 7],   "start": "07:00", "tracking_required": false, "prologue_km": 0,  "pitstop_cp": 6 },
+    { "id": "80",  "km": 80,  "type": "fun",   "cot_hours": [8, 9],   "start": "07:00", "tracking_required": false, "prologue_km": 0,  "pitstop_cp": 6 },
+    { "id": "120", "km": 120, "type": "race",  "cot_hours": [10, 11],  "start": "06:00", "tracking_required": true,  "prologue_km": 0,  "pitstop_cp": 4 },
+    { "id": "150", "km": 150, "type": "cross", "cot_hours": [14, 15], "start": "05:30", "tracking_required": true,  "prologue_km": 30, "pitstop_cp": 4 },
+    { "id": "200", "km": 200, "type": "ultra", "cot_hours": [17, 19], "start": "05:30", "tracking_required": true,  "prologue_km": 30, "pitstop_cp": 4 }
   ],
   "pitstop_min_minutes": 30,
   "pitstop_penalty_multiplier": 3.0,

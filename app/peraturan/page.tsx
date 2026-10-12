@@ -73,9 +73,9 @@ export default function PeraturanPage() {
                 <td className="py-3.5 px-4 text-slate-400">Dihitung dari estimasi waktu segmen yang dipotong</td>
               </tr>
               <tr>
-                <td className="py-3.5 px-4 font-semibold text-white">Istirahat Pitstop &lt; 30 Menit</td>
-                <td className="py-3.5 px-4 font-bold text-red-400">3x Lipat Defisit Waktu (300%)</td>
-                <td className="py-3.5 px-4 text-slate-400">Setiap 1 menit kekurangan istirahat diganjar penalti 3 menit</td>
+                <td className="py-3.5 px-4 font-semibold text-white">Bantuan Kendaraan / Support Car Eksternal</td>
+                <td className="py-3.5 px-4 font-bold text-red-500">DQ (Diskualifikasi Langsung)</td>
+                <td className="py-3.5 px-4 text-slate-400">Dilarang menerima pengawalan pribadi atau feeding dari kendaraan khusus</td>
               </tr>
               <tr>
                 <td className="py-3.5 px-4 font-semibold text-white">Melewatkan 1 Checkpoint (CP)</td>
@@ -97,7 +97,7 @@ export default function PeraturanPage() {
         </div>
       </div>
 
-      {/* 3. SYARAT PROLOG 30 KM & PITSTOP WAJIB */}
+      {/* 3. SYARAT PROLOG 30 KM & PRINSIP MANDIRI */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-3">
           <div className="flex items-center gap-2 text-brand-orange font-bold text-base">
@@ -117,15 +117,15 @@ export default function PeraturanPage() {
         <div className="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-3">
           <div className="flex items-center gap-2 text-brand-gold font-bold text-base">
             <Navigation className="w-5 h-5" />
-            <span>Pitstop Wajib 30 Menit (Semua Kategori)</span>
+            <span>Format Mandiri (Self-Supported Expedition)</span>
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">
-            Untuk menjaga keselamatan dan pemulihan stamina di medan berat, peserta wajib berhenti (*dwell time*) minimal 30 menit di pos pitstop resmi:
+            Seluruh peserta wajib mengandalkan navigasi mandiri dan logistik swadaya di sepanjang rute:
           </p>
           <ul className="text-xs text-slate-400 space-y-1 list-disc list-inside">
-            <li>Kategori 50 km, 60 km, 80 km: **Pitstop Wajib di CP#6**.</li>
-            <li>Kategori 100 km, 120 km, 150 km, 200 km: **Pitstop Wajib di CP#4**.</li>
-            <li>Scan barcode fisik tersedia di lokasi pos sebagai bukti validasi waktu singgah.</li>
+            <li>Navigasi menggunakan file GPX resmi pada GPS bike computer atau ponsel.</li>
+            <li>Perbekalan makanan/minuman diperoleh secara mandiri di warung UMKM lokal warga.</li>
+            <li>Dilarang keras membuang sampah sembarangan di sepanjang jalur hutan & perbukitan.</li>
           </ul>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Oswald, Plus_Jakarta_Sans } from 'next/font/google';
+import localFont from 'next/font/local';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -18,6 +19,38 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+const nacelle = localFont({
+  src: [
+    {
+      path: '../public/fonts/Nacelle-Light.otf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Nacelle-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Nacelle-SemiBold.otf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Nacelle-Bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/Nacelle-Heavy.otf',
+      weight: '800',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-nacelle',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   title: 'GRAVEL GRINDURANCE 2026 — Anniversary Edition (GX-ID)',
   description: 'Ekspedisi balap sepeda ultra-endurance & gravel mandiri (unsupported) musim hujan. Melintasi loop Jonggol, Sukamakmur, dan Sentul.',
@@ -32,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="id" className="scroll-smooth">
       <body
-        className={`${plusJakartaSans.variable} ${oswald.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] antialiased selection:bg-[#F59E0B] selection:text-black`}
+        className={`${plusJakartaSans.variable} ${oswald.variable} ${nacelle.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] antialiased selection:bg-[#F59E0B] selection:text-black`}
       >
         <Navbar />
         <main className="flex-1 flex flex-col">

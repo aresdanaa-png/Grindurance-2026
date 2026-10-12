@@ -8,10 +8,9 @@ export default function KategoriPage() {
       name: 'Ultra Gravel 200++ KM',
       badge: 'Tier 01 // Ultra Endurance',
       isPremier: true,
-      cot: '18 Jam',
+      cot: '19 Jam',
       start: '05:30 WIB (Wave 1)',
       elevation: '+3,180 m+',
-      pitstop: 'CP#4 Jonggol (Wajib 30 Menit)',
       prolog: 'Wajib 30 KM Subuh (03:00 - 05:00 WIB)',
       tracking: 'Wajib Live Tracking (Traccar / Strava)',
       description: 'Format ketahanan ultra murni bagi pesepeda jarak jauh berpengalaman. Melewati malam dan jalur makadam Gunung Batu serta tanjakan ekstrem Sukamakmur.',
@@ -23,10 +22,9 @@ export default function KategoriPage() {
       name: 'Cross Gravel 150++ KM',
       badge: 'Tier 02 // Cross Gran Fondo',
       isPremier: false,
-      cot: '14 Jam',
+      cot: '15 Jam',
       start: '05:30 WIB (Wave 1)',
       elevation: '+2,100 m+',
-      pitstop: 'CP#4 Jonggol (Wajib 30 Menit)',
       prolog: 'Wajib 30 KM Subuh (03:00 - 05:00 WIB)',
       tracking: 'Wajib Live Tracking',
       description: 'Jarak klasik veteran endurance yang menguji efisiensi tenaga di jalan aspal kelupas dan perbukitan Jonggol selatan sebelum loop kembali ke Sentul.',
@@ -38,10 +36,9 @@ export default function KategoriPage() {
       name: 'Amazing Race 120 KM (Pair & Single)',
       badge: 'Tier 03 // Competitive Race',
       isPremier: false,
-      cot: '10 Jam',
+      cot: '11 Jam',
       start: '06:00 WIB (Wave 2)',
       elevation: '+1,450 m+',
-      pitstop: 'CP#4 Jonggol (Wajib 30 Menit)',
       prolog: 'Tidak Ada Prolog',
       tracking: 'Wajib Aktif (RaceRoute.id / Strava)',
       description: 'Satu-satunya kategori kompetitif resmi dengan perebutan podium Top 3. Mendukung registrasi tandem Pair Mix 2 Pax (Pria & Wanita) dengan handicap waktu khusus.',
@@ -53,10 +50,9 @@ export default function KategoriPage() {
       name: 'Urban Gravel 80++ KM',
       badge: 'Tier 04 // Weekend Challenge',
       isPremier: false,
-      cot: '8 Jam',
+      cot: '9 Jam',
       start: '07:00 WIB (Wave 3)',
       elevation: '+750 m+',
-      pitstop: 'CP#6 Sodong Springs (Wajib 30 Menit)',
       prolog: 'Tidak Ada Prolog',
       tracking: 'Opsional (Rekomendasi Komoot / Strava)',
       description: 'Eksplorasi jarak menengah melintasi persawahan Cileungsi dan perbukitan Jonggol timur. Cocok untuk pesepeda akhir pekan yang ingin meningkatkan jarak jelajah.',
@@ -68,10 +64,9 @@ export default function KategoriPage() {
       name: 'Urban Gravel 60++ KM',
       badge: 'Tier 05 // Entry Level',
       isPremier: false,
-      cot: '6 Jam',
+      cot: '7 Jam',
       start: '07:00 WIB (Wave 3)',
       elevation: '+450 m+',
-      pitstop: 'CP#6 Sodong Springs (Wajib 30 Menit)',
       prolog: 'Tidak Ada Prolog',
       tracking: 'Opsional',
       description: 'Format rekreasi yang memadukan aspal perkotaan Cibubur dan lintasan tanah pedesaan Jonggol. Sangat ramah untuk pemula, sepeda lipat, hybrid, dan penikmat gowes santai.',
@@ -86,7 +81,6 @@ export default function KategoriPage() {
       cot: 'Fleksibel H-Event',
       start: 'Waktu Mandiri (Outdoor GPS)',
       elevation: 'Sesuai Rute Mandiri',
-      pitstop: 'Mandiri',
       prolog: 'Tidak Ada Prolog',
       tracking: 'Wajib Sinkronisasi Strava Webhook',
       description: 'Dibuka untuk seluruh anggota GX-ID se-Indonesia dari 19 chapter regional di luar Jabodetabek. Medali finisher resmi dan jersey dikirim langsung via DHS Logistik.',
@@ -109,7 +103,7 @@ export default function KategoriPage() {
           </h1>
           <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-3xl leading-relaxed font-sans">
             Perbandingan teknis komprehensif 5 kategori jarak offline ditambah 1 format daring nasional. 
-            Setiap kategori dirancang dengan profil elevasi, batas waktu (COT), dan aturan pitstop tersendiri.
+            Setiap kategori dirancang dengan profil elevasi, batas waktu (COT), dan tantangan navigasi mandiri.
           </p>
         </div>
 
@@ -152,10 +146,6 @@ export default function KategoriPage() {
                   <div className="flex justify-between">
                     <span className="text-slate-400">Total Elevasi:</span>
                     <span className="text-white font-bold">{cat.elevation}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Ketentuan Pitstop:</span>
-                    <span className="text-white font-semibold">{cat.pitstop}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Syarat Prolog:</span>

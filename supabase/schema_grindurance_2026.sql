@@ -87,12 +87,12 @@ INSERT INTO categories (
     id, name, distance_km, category_type, is_pair, price_medal_only, price_medal_jersey,
     quota, cot_hours, wave_start_time, prologue_required_km, mandatory_pitstop_cp, tracking_required
 ) VALUES
-('60', 'Urban Gravel 60', 60, 'fun', false, 250000, 300000, 150, 6.0, '07:00:00', 0, 6, false),
-('80', 'Urban Gravel 80', 80, 'fun', false, 300000, 350000, 150, 8.0, '07:00:00', 0, 6, false),
-('120_SINGLE', 'Amazing Race 120 (Single)', 120, 'race', false, 400000, 450000, 100, 10.0, '06:00:00', 0, 4, true),
-('120_PAIR', 'Amazing Race 120 (Pair Mix 2 Pax)', 120, 'race', true, 700000, 750000, 30, 10.0, '06:00:00', 0, 4, true),
-('150', 'Cross Gravel 150', 150, 'cross', false, 400000, 450000, 75, 14.0, '05:30:00', 30, 4, true),
-('200', 'Ultra Gravel 200', 200, 'ultra', false, 400000, 450000, 50, 18.0, '05:30:00', 30, 4, true),
+('60', 'Urban Gravel 60', 60, 'fun', false, 250000, 300000, 150, 7.0, '07:00:00', 0, 6, false),
+('80', 'Urban Gravel 80', 80, 'fun', false, 300000, 350000, 150, 9.0, '07:00:00', 0, 6, false),
+('120_SINGLE', 'Amazing Race 120 (Single)', 120, 'race', false, 400000, 450000, 100, 11.0, '06:00:00', 0, 4, true),
+('120_PAIR', 'Amazing Race 120 (Pair Mix 2 Pax)', 120, 'race', true, 700000, 750000, 30, 11.0, '06:00:00', 0, 4, true),
+('150', 'Cross Gravel 150', 150, 'cross', false, 400000, 450000, 75, 15.0, '05:30:00', 30, 4, true),
+('200', 'Ultra Gravel 200', 200, 'ultra', false, 400000, 450000, 50, 19.0, '05:30:00', 30, 4, true),
 ('VIRTUAL', 'Virtual Ride Nasional', 0, 'virtual', false, 200000, 250000, 1000, NULL, NULL, 0, NULL, true)
 ON CONFLICT (id) DO UPDATE SET
     name = EXCLUDED.name,
@@ -152,8 +152,23 @@ CREATE TABLE IF NOT EXISTS participants (
     email VARCHAR(150) NOT NULL,
     phone_number VARCHAR(30) NOT NULL,
     emergency_contact_name VARCHAR(100) NOT NULL,
-    emergency_contact_phone VARCHAR(30) NOT NULL,
     blood_type VARCHAR(5) DEFAULT '-',
+    medical_notes TEXT DEFAULT NULL, -- Alergi obat, asma, riwayat kondisi darurat
+    religion VARCHAR(50) DEFAULT NULL, -- Agama / Kepercayaan
+    nik VARCHAR(20) DEFAULT NULL, -- NIK KTP (16 Digit)
+    
+    -- Alamat Lengkap & Wilayah Indonesia
+    address_detail TEXT DEFAULT NULL,
+    province_id VARCHAR(10) DEFAULT NULL,
+    province_name VARCHAR(100) DEFAULT NULL,
+    regency_id VARCHAR(10) DEFAULT NULL,
+    regency_name VARCHAR(100) DEFAULT NULL,
+    district_id VARCHAR(15) DEFAULT NULL,
+    district_name VARCHAR(100) DEFAULT NULL,
+    village_id VARCHAR(20) DEFAULT NULL,
+    village_name VARCHAR(100) DEFAULT NULL,
+    postal_code VARCHAR(10) DEFAULT NULL,
+    
     community_chapter VARCHAR(100) DEFAULT 'Umum',
     category_id VARCHAR(30) NOT NULL REFERENCES categories(id),
     jersey_size VARCHAR(10) DEFAULT '-', -- 'XS', 'S', 'M', 'L', 'XL', 'XXL'

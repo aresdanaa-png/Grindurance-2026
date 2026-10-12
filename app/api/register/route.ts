@@ -113,6 +113,13 @@ export async function POST(req: Request) {
         net_amount,
         payment_status: 'PENDING',
         payment_channel: null,
+        raw_payload: {
+          rider_1,
+          rider_2,
+          category_id,
+          package_type,
+          registered_at: new Date().toISOString(),
+        },
       })
       .select()
       .single();
@@ -126,61 +133,101 @@ export async function POST(req: Request) {
     }
 
     // 5. Tambahkan Peserta (Participants)
+    const buildParticipantObj = (rider: any, role: string, hasCoupon: boolean) => ({
+      order_id: newOrder.id,
+      registration_code: `GG26-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+      rider_role: role,
+      full_name: rider.full_name,
+      nik: rider.nik || null,
+      gender: rider.gender,
+      birth_date: rider.birth_date || null,
+      religion: rider.religion || null,
+      email: rider.email,
+      phone_number: rider.phone_number,
+      address_detail: rider.address_detail || null,
+      province_id: rider.province_id || null,
+      province_name: rider.province_name || null,
+      regency_id: rider.regency_id || null,
+      regency_name: rider.regency_name || null,
+      district_id: rider.district_id || null,
+      district_name: rider.district_name || null,
+      village_id: rider.village_id || null,
+      village_name: rider.village_name || null,
+      postal_code: rider.postal_code || null,
+      emergency_contact_name: rider.emergency_contact_name,
+      emergency_contact_phone: rider.emergency_contact_phone,
+      blood_type: rider.blood_type || '-',
+      medical_notes: rider.medical_notes || null,
+      community_chapter: rider.community_chapter || 'Umum',
+      category_id,
+      jersey_size: package_type === 'MEDAL_JERSEY' ? rider.jersey_size : '-',
+      has_meal_coupon: hasCoupon,
+      status: 'REGISTERED',
+      prologue_status: category.prologue_required_km > 0 ? 'WAITING_VERIFICATION' : 'NOT_REQUIRED',
+    });
+
     const participantsToInsert = [
-      {
-        order_id: newOrder.id,
-        registration_code: `GG26-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-        rider_role: category.is_pair ? 'PAIR_RIDER_1' : 'SINGLE',
-        full_name: rider_1.full_name,
-        gender: rider_1.gender,
-        birth_date: rider_1.birth_date || null,
-        email: rider_1.email,
-        phone_number: rider_1.phone_number,
-        emergency_contact_name: rider_1.emergency_contact_name,
-        emergency_contact_phone: rider_1.emergency_contact_phone,
-        blood_type: rider_1.blood_type || '-',
-        community_chapter: rider_1.community_chapter || 'Umum',
-        category_id,
-        jersey_size: package_type === 'MEDAL_JERSEY' ? rider_1.jersey_size : '-',
-        has_meal_coupon: rider_1_has_coupon,
-        status: 'REGISTERED',
-        prologue_status: category.prologue_required_km > 0 ? 'WAITING_VERIFICATION' : 'NOT_REQUIRED',
-      },
+      buildParticipantObj(rider_1, category.is_pair ? 'PAIR_RIDER_1' : 'SINGLE', rider_1_has_coupon),
     ];
 
     if (category.is_pair && rider_2) {
-      participantsToInsert.push({
-        order_id: newOrder.id,
-        registration_code: `GG26-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
-        rider_role: 'PAIR_RIDER_2',
-        full_name: rider_2.full_name,
-        gender: rider_2.gender,
-        birth_date: rider_2.birth_date || null,
-        email: rider_2.email,
-        phone_number: rider_2.phone_number,
-        emergency_contact_name: rider_2.emergency_contact_name,
-        emergency_contact_phone: rider_2.emergency_contact_phone,
-        blood_type: rider_2.blood_type || '-',
-        community_chapter: rider_2.community_chapter || 'Umum',
-        category_id,
-        jersey_size: package_type === 'MEDAL_JERSEY' ? rider_2.jersey_size : '-',
-        has_meal_coupon: rider_2_has_coupon,
-        status: 'REGISTERED',
-        prologue_status: category.prologue_required_km > 0 ? 'WAITING_VERIFICATION' : 'NOT_REQUIRED',
-      });
+      participantsToInsert.push(
+        buildParticipantObj(rider_2, 'PAIR_RIDER_2', rider_2_has_coupon)
+      );
     }
 
-    const { data: insertedParticipants, error: partError } = await supabase
+    // Coba insert dengan kolom lengkap
+    let insertedParticipants: any[] | null = null;
+    const { data: fullInsertData, error: fullInsertError } = await supabase
       .from('participants')
       .insert(participantsToInsert)
       .select();
 
-    if (partError) {
-      console.error('Error inserting participants:', partError);
-      return NextResponse.json(
-        { error: 'Gagal menyimpan data peserta: ' + partError.message },
-        { status: 500 }
-      );
+    if (fullInsertError) {
+      // Jika kolom belum ditambahkan di Supabase DB (PGRST204 / 42703 / column not found), fallback ke kolom dasar
+      const isColumnMissing =
+        fullInsertError.code === '42703' ||
+        fullInsertError.code === 'PGRST204' ||
+        fullInsertError.message?.toLowerCase().includes('column') ||
+        fullInsertError.message?.toLowerCase().includes('schema cache');
+
+      if (isColumnMissing) {
+        console.warn('Kolom baru belum ada di tabel Supabase, fallback ke skema dasar sambil simpan di raw_payload');
+        const fallbackParticipants = participantsToInsert.map((p) => {
+          const {
+            nik, address_detail, province_id, province_name, regency_id, regency_name,
+            district_id, district_name, village_id, village_name, postal_code, medical_notes, religion,
+            ...base
+          } = p as any;
+          return base;
+        });
+
+        const { data: fallbackData, error: fallbackError } = await supabase
+          .from('participants')
+          .insert(fallbackParticipants)
+          .select();
+
+        if (fallbackError) {
+          console.error('Fallback participant insert error:', fallbackError);
+          return NextResponse.json(
+            { error: 'Gagal menyimpan data peserta: ' + fallbackError.message },
+            { status: 500 }
+          );
+        }
+        // Gabungkan kembali data input untuk response frontend
+        insertedParticipants = (fallbackData || []).map((fb, idx) => ({
+          ...fb,
+          ...participantsToInsert[idx],
+        }));
+      } else {
+        console.error('Error inserting participants:', fullInsertError);
+        return NextResponse.json(
+          { error: 'Gagal menyimpan data peserta: ' + fullInsertError.message },
+          { status: 500 }
+        );
+      }
+    } else {
+      insertedParticipants = fullInsertData;
     }
 
     return NextResponse.json({

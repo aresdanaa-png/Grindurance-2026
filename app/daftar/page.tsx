@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 import { 
   Award, Shield, Users, CheckCircle2, ChevronRight, ChevronLeft, 
   Sparkles, AlertCircle, CreditCard, RefreshCw, Bike, Clock, 
-  MapPin, Check, QrCode
+  MapPin, Check, QrCode, HeartPulse, IdCard, BookOpen
 } from 'lucide-react';
 import { Category, PackageType, JerseySize, Gender, Order, Participant } from '@/lib/types';
 import BibCard from '@/components/BibCard';
+import IndonesiaAddressSelect, { AddressData } from '@/components/IndonesiaAddressSelect';
 
 export default function RegistrationPage() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -21,13 +22,26 @@ export default function RegistrationPage() {
   // Input Langkah 2 (Rider 1)
   const [rider1, setRider1] = useState({
     full_name: '',
+    nik: '',
     gender: 'male' as Gender,
     birth_date: '',
+    religion: 'Islam',
     email: '',
     phone_number: '',
+    address_detail: '',
+    province_id: '',
+    province_name: '',
+    regency_id: '',
+    regency_name: '',
+    district_id: '',
+    district_name: '',
+    village_id: '',
+    village_name: '',
+    postal_code: '',
     emergency_contact_name: '',
     emergency_contact_phone: '',
     blood_type: 'O',
+    medical_notes: '',
     community_chapter: 'GX-ID Jabodetabek',
     jersey_size: 'L' as JerseySize,
   });
@@ -35,13 +49,26 @@ export default function RegistrationPage() {
   // Input Langkah 2 (Rider 2 - Jika Pair)
   const [rider2, setRider2] = useState({
     full_name: '',
+    nik: '',
     gender: 'female' as Gender,
     birth_date: '',
+    religion: 'Islam',
     email: '',
     phone_number: '',
+    address_detail: '',
+    province_id: '',
+    province_name: '',
+    regency_id: '',
+    regency_name: '',
+    district_id: '',
+    district_name: '',
+    village_id: '',
+    village_name: '',
+    postal_code: '',
     emergency_contact_name: '',
     emergency_contact_phone: '',
     blood_type: 'B',
+    medical_notes: '',
     community_chapter: 'GX-ID Jabodetabek',
     jersey_size: 'M' as JerseySize,
   });
@@ -114,13 +141,33 @@ export default function RegistrationPage() {
   const handleProceedToReview = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
-    if (!rider1.full_name || !rider1.email || !rider1.phone_number || !rider1.emergency_contact_phone) {
-      setErrorMessage('Mohon lengkapi semua data wajib Rider 1.');
+    
+    // Validasi Rider 1
+    if (!rider1.full_name || !rider1.nik || !rider1.email || !rider1.phone_number || !rider1.emergency_contact_phone) {
+      setErrorMessage('Mohon lengkapi semua data wajib Rider 1 (Termasuk NIK dan Kontak Darurat).');
       return;
     }
+    if (rider1.nik.trim().length !== 16) {
+      setErrorMessage('Nomor NIK Rider 1 harus terdiri dari 16 digit angka sesuai KTP.');
+      return;
+    }
+    if (!rider1.province_id || !rider1.regency_id || !rider1.district_id || !rider1.address_detail) {
+      setErrorMessage('Mohon lengkapi alamat domisili Rider 1 (Provinsi, Kab/Kota, Kecamatan, dan Alamat Detail).');
+      return;
+    }
+
+    // Validasi Rider 2 (Jika Pair)
     if (selectedCategory?.is_pair) {
-      if (!rider2.full_name || !rider2.email || !rider2.phone_number || !rider2.emergency_contact_phone) {
+      if (!rider2.full_name || !rider2.nik || !rider2.email || !rider2.phone_number || !rider2.emergency_contact_phone) {
         setErrorMessage('Mohon lengkapi semua data wajib Rider 2 (Partner).');
+        return;
+      }
+      if (rider2.nik.trim().length !== 16) {
+        setErrorMessage('Nomor NIK Rider 2 harus terdiri dari 16 digit angka sesuai KTP.');
+        return;
+      }
+      if (!rider2.province_id || !rider2.regency_id || !rider2.district_id || !rider2.address_detail) {
+        setErrorMessage('Mohon lengkapi alamat domisili Rider 2 (Provinsi, Kab/Kota, Kecamatan, dan Alamat Detail).');
         return;
       }
     }
@@ -368,12 +415,6 @@ export default function RegistrationPage() {
                               <span className="text-slate-600">| Start: {cat.wave_start_time.slice(0, 5)} WIB</span>
                             )}
                           </div>
-                          {cat.mandatory_pitstop_cp && (
-                            <div className="flex items-center gap-1.5 text-slate-300">
-                              <MapPin className="w-3.5 h-3.5 text-brand-orange" />
-                              <span>Pitstop Wajib CP#{cat.mandatory_pitstop_cp} (30 Menit)</span>
-                            </div>
-                          )}
                         </div>
                       </div>
 
@@ -430,16 +471,17 @@ export default function RegistrationPage() {
           </div>
 
           {/* FORM RIDER 1 */}
-          <div className="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-4">
+          <div className="bg-brand-card p-6 sm:p-7 rounded-2xl border border-brand-border space-y-5">
             <div className="flex items-center justify-between border-b border-brand-border/60 pb-3">
               <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Users className="w-5 h-5 text-brand-gold" />
+                <Users className="w-5 h-5 text-[#FA6D0B]" />
                 {selectedCategory?.is_pair ? 'Data Rider 1 (Kapten Tim)' : 'Data Peserta'}
               </h3>
               <span className="text-xs text-slate-400">* Wajib diisi</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Bagian 1: Identitas Pribadi */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="text-xs text-slate-300 font-semibold block mb-1">Nama Lengkap Sesuai KTP *</label>
                 <input
@@ -448,8 +490,45 @@ export default function RegistrationPage() {
                   value={rider1.full_name}
                   onChange={(e) => setRider1({ ...rider1, full_name: e.target.value })}
                   placeholder="Contoh: Budi Pratama"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                 />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs text-slate-300 font-semibold">NIK No (16 Digit) *</label>
+                  <span className={`text-[10px] font-mono ${rider1.nik.length === 16 ? 'text-emerald-400 font-bold' : 'text-slate-500'}`}>
+                    {rider1.nik.length}/16
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  required
+                  maxLength={16}
+                  value={rider1.nik}
+                  onChange={(e) => setRider1({ ...rider1, nik: e.target.value.replace(/\D/g, '') })}
+                  placeholder="Contoh: 320117XXXXXXXXXX"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs font-mono tracking-wider focus:border-[#FA6D0B] focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs text-slate-300 font-semibold block mb-1">Agama / Kepercayaan *</label>
+                <select
+                  required
+                  value={rider1.religion}
+                  onChange={(e) => setRider1({ ...rider1, religion: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                >
+                  <option value="Islam">Islam</option>
+                  <option value="Kristen Protestan">Kristen Protestan</option>
+                  <option value="Katolik">Katolik</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Buddha">Buddha</option>
+                  <option value="Khonghucu">Khonghucu</option>
+                  <option value="Penghayat Kepercayaan">Penghayat Kepercayaan</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
               </div>
 
               <div>
@@ -457,7 +536,7 @@ export default function RegistrationPage() {
                 <select
                   value={rider1.gender}
                   onChange={(e) => setRider1({ ...rider1, gender: e.target.value as Gender })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                 >
                   <option value="male">Laki-laki</option>
                   <option value="female">Perempuan (Berhak Kupon Makan Rp 50.000)</option>
@@ -471,7 +550,7 @@ export default function RegistrationPage() {
                   required
                   value={rider1.birth_date}
                   onChange={(e) => setRider1({ ...rider1, birth_date: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                 />
               </div>
 
@@ -483,7 +562,7 @@ export default function RegistrationPage() {
                   value={rider1.email}
                   onChange={(e) => setRider1({ ...rider1, email: e.target.value })}
                   placeholder="nama@email.com"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                 />
               </div>
 
@@ -495,7 +574,7 @@ export default function RegistrationPage() {
                   value={rider1.phone_number}
                   onChange={(e) => setRider1({ ...rider1, phone_number: e.target.value })}
                   placeholder="08123456789"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                 />
               </div>
 
@@ -506,31 +585,7 @@ export default function RegistrationPage() {
                   value={rider1.community_chapter}
                   onChange={(e) => setRider1({ ...rider1, community_chapter: e.target.value })}
                   placeholder="Contoh: GX-ID Bogor / Umum"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs text-slate-300 font-semibold block mb-1">Kontak Darurat (Nama & Hubungan) *</label>
-                <input
-                  type="text"
-                  required
-                  value={rider1.emergency_contact_name}
-                  onChange={(e) => setRider1({ ...rider1, emergency_contact_name: e.target.value })}
-                  placeholder="Contoh: Siti (Istri / Saudara)"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="text-xs text-slate-300 font-semibold block mb-1">No. HP Kontak Darurat *</label>
-                <input
-                  type="tel"
-                  required
-                  value={rider1.emergency_contact_phone}
-                  onChange={(e) => setRider1({ ...rider1, emergency_contact_phone: e.target.value })}
-                  placeholder="08987654321"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                 />
               </div>
 
@@ -540,7 +595,7 @@ export default function RegistrationPage() {
                   <select
                     value={rider1.jersey_size}
                     onChange={(e) => setRider1({ ...rider1, jersey_size: e.target.value as JerseySize })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                   >
                     <option value="XS">XS (Dada 86-90 cm)</option>
                     <option value="S">S (Dada 91-95 cm)</option>
@@ -551,27 +606,95 @@ export default function RegistrationPage() {
                   </select>
                 </div>
               )}
+            </div>
 
-              <div>
-                <label className="text-xs text-slate-300 font-semibold block mb-1">Golongan Darah</label>
-                <select
-                  value={rider1.blood_type}
-                  onChange={(e) => setRider1({ ...rider1, blood_type: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
-                >
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="AB">AB</option>
-                  <option value="O">O</option>
-                  <option value="-">Tidak Tahu / Belum Cek</option>
-                </select>
+            {/* Bagian 2: Alamat Lengkap & Wilayah Indonesia (Dropdown API Bertingkat) */}
+            <IndonesiaAddressSelect
+              prefixId="rider1-addr"
+              value={{
+                address_detail: rider1.address_detail,
+                province_id: rider1.province_id,
+                province_name: rider1.province_name,
+                regency_id: rider1.regency_id,
+                regency_name: rider1.regency_name,
+                district_id: rider1.district_id,
+                district_name: rider1.district_name,
+                village_id: rider1.village_id,
+                village_name: rider1.village_name,
+                postal_code: rider1.postal_code,
+              }}
+              onChange={(updated) => setRider1({ ...rider1, ...updated })}
+            />
+
+            {/* Bagian 3: Medis & Kontak Darurat */}
+            <div className="pt-2 border-t border-brand-border/60 space-y-3">
+              <label className="text-xs text-slate-200 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+                <HeartPulse className="w-3.5 h-3.5 text-red-500" />
+                Kesehatan & Kesiapsiagaan Medis Darurat (SPGDT RS Hermina Cibubur)
+              </label>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-xs text-slate-300 font-semibold block mb-1">Golongan Darah</label>
+                  <select
+                    value={rider1.blood_type}
+                    onChange={(e) => setRider1({ ...rider1, blood_type: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                  >
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="AB">AB</option>
+                    <option value="O">O</option>
+                    <option value="-">Tidak Tahu / Belum Cek</option>
+                  </select>
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label className="text-xs text-slate-300 font-semibold block mb-1">
+                    Alergi / Medic Alert (Catatan Medis Khusus)
+                  </label>
+                  <input
+                    type="text"
+                    value={rider1.medical_notes}
+                    onChange={(e) => setRider1({ ...rider1, medical_notes: e.target.value })}
+                    placeholder="Cth: Alergi Penisilin, Asma dingin, Hipertensi, atau ketik 'Tidak Ada'"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                  />
+                  <span className="text-[10px] text-slate-500 block mt-1">
+                    Informasi ini sangat penting untuk kesiapsiagaan tim medis di jalur balap.
+                  </span>
+                </div>
+
+                <div>
+                  <label className="text-xs text-slate-300 font-semibold block mb-1">Kontak Darurat (Nama & Hubungan) *</label>
+                  <input
+                    type="text"
+                    required
+                    value={rider1.emergency_contact_name}
+                    onChange={(e) => setRider1({ ...rider1, emergency_contact_name: e.target.value })}
+                    placeholder="Contoh: Siti (Istri / Saudara)"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs text-slate-300 font-semibold block mb-1">No. HP Kontak Darurat *</label>
+                  <input
+                    type="tel"
+                    required
+                    value={rider1.emergency_contact_phone}
+                    onChange={(e) => setRider1({ ...rider1, emergency_contact_phone: e.target.value })}
+                    placeholder="08987654321"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* FORM RIDER 2 (HANYA MUNCUL JIKA KATEGORI PAIR) */}
           {selectedCategory?.is_pair && (
-            <div className="bg-brand-card p-6 rounded-2xl border border-brand-border space-y-4">
+            <div className="bg-brand-card p-6 sm:p-7 rounded-2xl border border-brand-border space-y-5">
               <div className="flex items-center justify-between border-b border-brand-border/60 pb-3">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
                   <Users className="w-5 h-5 text-purple-400" />
@@ -580,7 +703,8 @@ export default function RegistrationPage() {
                 <span className="text-xs text-slate-400">* Wajib diisi</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Bagian 1: Identitas Pribadi Rider 2 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
                   <label className="text-xs text-slate-300 font-semibold block mb-1">Nama Lengkap Sesuai KTP *</label>
                   <input
@@ -589,8 +713,45 @@ export default function RegistrationPage() {
                     value={rider2.full_name}
                     onChange={(e) => setRider2({ ...rider2, full_name: e.target.value })}
                     placeholder="Contoh: Rina Kusuma"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                   />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs text-slate-300 font-semibold">NIK No (16 Digit) *</label>
+                    <span className={`text-[10px] font-mono ${rider2.nik.length === 16 ? 'text-emerald-400 font-bold' : 'text-slate-500'}`}>
+                      {rider2.nik.length}/16
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    required
+                    maxLength={16}
+                    value={rider2.nik}
+                    onChange={(e) => setRider2({ ...rider2, nik: e.target.value.replace(/\D/g, '') })}
+                    placeholder="Contoh: 320117XXXXXXXXXX"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs font-mono tracking-wider focus:border-[#FA6D0B] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs text-slate-300 font-semibold block mb-1">Agama / Kepercayaan *</label>
+                  <select
+                    required
+                    value={rider2.religion}
+                    onChange={(e) => setRider2({ ...rider2, religion: e.target.value })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                  >
+                    <option value="Islam">Islam</option>
+                    <option value="Kristen Protestan">Kristen Protestan</option>
+                    <option value="Katolik">Katolik</option>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Buddha">Buddha</option>
+                    <option value="Khonghucu">Khonghucu</option>
+                    <option value="Penghayat Kepercayaan">Penghayat Kepercayaan</option>
+                    <option value="Lainnya">Lainnya</option>
+                  </select>
                 </div>
 
                 <div>
@@ -598,7 +759,7 @@ export default function RegistrationPage() {
                   <select
                     value={rider2.gender}
                     onChange={(e) => setRider2({ ...rider2, gender: e.target.value as Gender })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                   >
                     <option value="female">Perempuan</option>
                     <option value="male">Laki-laki</option>
@@ -612,7 +773,7 @@ export default function RegistrationPage() {
                     required
                     value={rider2.birth_date}
                     onChange={(e) => setRider2({ ...rider2, birth_date: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                   />
                 </div>
 
@@ -624,7 +785,7 @@ export default function RegistrationPage() {
                     value={rider2.email}
                     onChange={(e) => setRider2({ ...rider2, email: e.target.value })}
                     placeholder="partner@email.com"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                   />
                 </div>
 
@@ -636,19 +797,18 @@ export default function RegistrationPage() {
                     value={rider2.phone_number}
                     onChange={(e) => setRider2({ ...rider2, phone_number: e.target.value })}
                     placeholder="08198765432"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-slate-300 font-semibold block mb-1">No. HP Kontak Darurat *</label>
+                  <label className="text-xs text-slate-300 font-semibold block mb-1">Komunitas / Chapter GX-ID</label>
                   <input
-                    type="tel"
-                    required
-                    value={rider2.emergency_contact_phone}
-                    onChange={(e) => setRider2({ ...rider2, emergency_contact_phone: e.target.value })}
-                    placeholder="08112233445"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                    type="text"
+                    value={rider2.community_chapter}
+                    onChange={(e) => setRider2({ ...rider2, community_chapter: e.target.value })}
+                    placeholder="Contoh: GX-ID Bogor / Umum"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                   />
                 </div>
 
@@ -658,7 +818,7 @@ export default function RegistrationPage() {
                     <select
                       value={rider2.jersey_size}
                       onChange={(e) => setRider2({ ...rider2, jersey_size: e.target.value as JerseySize })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
                     >
                       <option value="XS">XS (Dada 86-90 cm)</option>
                       <option value="S">S (Dada 91-95 cm)</option>
@@ -669,6 +829,86 @@ export default function RegistrationPage() {
                     </select>
                   </div>
                 )}
+              </div>
+
+              {/* Bagian 2: Alamat Lengkap & Wilayah Indonesia Rider 2 */}
+              <IndonesiaAddressSelect
+                prefixId="rider2-addr"
+                value={{
+                  address_detail: rider2.address_detail,
+                  province_id: rider2.province_id,
+                  province_name: rider2.province_name,
+                  regency_id: rider2.regency_id,
+                  regency_name: rider2.regency_name,
+                  district_id: rider2.district_id,
+                  district_name: rider2.district_name,
+                  village_id: rider2.village_id,
+                  village_name: rider2.village_name,
+                  postal_code: rider2.postal_code,
+                }}
+                onChange={(updated) => setRider2({ ...rider2, ...updated })}
+              />
+
+              {/* Bagian 3: Medis & Kontak Darurat Rider 2 */}
+              <div className="pt-2 border-t border-brand-border/60 space-y-3">
+                <label className="text-xs text-slate-200 font-bold flex items-center gap-1.5 uppercase tracking-wider">
+                  <HeartPulse className="w-3.5 h-3.5 text-red-500" />
+                  Kesehatan & Kesiapsiagaan Medis Darurat Rider 2
+                </label>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="text-xs text-slate-300 font-semibold block mb-1">Golongan Darah</label>
+                    <select
+                      value={rider2.blood_type}
+                      onChange={(e) => setRider2({ ...rider2, blood_type: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                    >
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="AB">AB</option>
+                      <option value="O">O</option>
+                      <option value="-">Tidak Tahu / Belum Cek</option>
+                    </select>
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <label className="text-xs text-slate-300 font-semibold block mb-1">
+                      Alergi / Medic Alert (Catatan Medis Khusus)
+                    </label>
+                    <input
+                      type="text"
+                      value={rider2.medical_notes}
+                      onChange={(e) => setRider2({ ...rider2, medical_notes: e.target.value })}
+                      placeholder="Cth: Alergi Makanan, Asma dingin, atau ketik 'Tidak Ada'"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-slate-300 font-semibold block mb-1">Kontak Darurat (Nama & Hubungan) *</label>
+                    <input
+                      type="text"
+                      required
+                      value={rider2.emergency_contact_name}
+                      onChange={(e) => setRider2({ ...rider2, emergency_contact_name: e.target.value })}
+                      placeholder="Contoh: Budi (Keluarga)"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-slate-300 font-semibold block mb-1">No. HP Kontak Darurat *</label>
+                    <input
+                      type="tel"
+                      required
+                      value={rider2.emergency_contact_phone}
+                      onChange={(e) => setRider2({ ...rider2, emergency_contact_phone: e.target.value })}
+                      placeholder="08112233445"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-dark border border-brand-border text-white text-xs focus:border-[#FA6D0B] focus:outline-none"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -743,6 +983,52 @@ export default function RegistrationPage() {
                 <div className="flex justify-between text-emerald-400 font-semibold">
                   <span>Insentif Kupon Makan (GX-ID Voucher)</span>
                   <span>- Rp {mealCouponDiscount.toLocaleString('id-ID')}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Verifikasi Data Identitas & Medis Peserta */}
+            <div className="py-4 border-b border-brand-border/60 space-y-3">
+              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                Ringkasan Identitas & Medis Peserta:
+              </span>
+              <div className="p-3.5 rounded-xl bg-brand-dark/90 border border-brand-border text-xs space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-white flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-[#FA6D0B]" />
+                    {rider1.full_name} ({rider1.gender === 'male' ? 'L' : 'P'})
+                  </span>
+                  <span className="font-mono text-slate-400">NIK: {rider1.nik}</span>
+                </div>
+                <div className="text-slate-400 text-[11px] leading-relaxed">
+                  <span className="text-slate-500 font-semibold">Alamat:</span> {rider1.address_detail}, {rider1.village_name ? `Desa/Kel. ${rider1.village_name}, ` : ''}Kec. {rider1.district_name}, {rider1.regency_name}, {rider1.province_name} {rider1.postal_code}
+                </div>
+                <div className="flex flex-wrap gap-4 text-[11px] text-slate-400 pt-1 border-t border-brand-border/40">
+                  <span><strong className="text-slate-300">Agama:</strong> {rider1.religion}</span>
+                  <span><strong className="text-slate-300">Gol. Darah:</strong> {rider1.blood_type}</span>
+                  <span><strong className="text-slate-300">Medic Alert:</strong> {rider1.medical_notes || 'Tidak Ada'}</span>
+                  <span><strong className="text-slate-300">Kontak Darurat:</strong> {rider1.emergency_contact_name} ({rider1.emergency_contact_phone})</span>
+                </div>
+              </div>
+
+              {selectedCategory?.is_pair && (
+                <div className="p-3.5 rounded-xl bg-brand-dark/90 border border-brand-border text-xs space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-white flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-purple-400" />
+                      {rider2.full_name} ({rider2.gender === 'male' ? 'L' : 'P'}) - Partner
+                    </span>
+                    <span className="font-mono text-slate-400">NIK: {rider2.nik}</span>
+                  </div>
+                  <div className="text-slate-400 text-[11px] leading-relaxed">
+                    <span className="text-slate-500 font-semibold">Alamat:</span> {rider2.address_detail}, {rider2.village_name ? `Desa/Kel. ${rider2.village_name}, ` : ''}Kec. {rider2.district_name}, {rider2.regency_name}, {rider2.province_name} {rider2.postal_code}
+                  </div>
+                  <div className="flex flex-wrap gap-4 text-[11px] text-slate-400 pt-1 border-t border-brand-border/40">
+                    <span><strong className="text-slate-300">Agama:</strong> {rider2.religion}</span>
+                    <span><strong className="text-slate-300">Gol. Darah:</strong> {rider2.blood_type}</span>
+                    <span><strong className="text-slate-300">Medic Alert:</strong> {rider2.medical_notes || 'Tidak Ada'}</span>
+                    <span><strong className="text-slate-300">Kontak Darurat:</strong> {rider2.emergency_contact_name} ({rider2.emergency_contact_phone})</span>
+                  </div>
                 </div>
               )}
             </div>
@@ -849,6 +1135,7 @@ export default function RegistrationPage() {
                     distanceKm={selectedCategory?.distance_km || 0}
                     riderRole={p.rider_role}
                     bloodType={p.blood_type}
+                    medicalNotes={p.medical_notes}
                     communityChapter={p.community_chapter}
                     qrHash={p.qr_checkin_hash || undefined}
                     registrationCode={p.registration_code}

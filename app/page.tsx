@@ -21,7 +21,7 @@ export default function HomePage() {
       subtitle: 'APEX SPRINT',
       title: 'Urban Gravel 60',
       elevation: '+450 m',
-      cot: '6 Jam',
+      cot: '7 Jam',
       wave: '07:00 WIB',
       tag: 'ENTRY LEVEL & HYBRID',
       photo: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=800&auto=format&fit=crop',
@@ -34,7 +34,7 @@ export default function HomePage() {
       subtitle: 'RIDGELINE RUSH',
       title: 'Urban Gravel 80',
       elevation: '+750 m',
-      cot: '8 Jam',
+      cot: '9 Jam',
       wave: '07:00 WIB',
       tag: 'WEEKEND CHALLENGE',
       photo: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?q=80&w=800&auto=format&fit=crop',
@@ -47,7 +47,7 @@ export default function HomePage() {
       subtitle: 'SUMMIT SEEKER',
       title: 'Amazing Race 120 (Pair & Single)',
       elevation: '+1,450 m',
-      cot: '10 Jam',
+      cot: '11 Jam',
       wave: '06:00 WIB',
       tag: 'RACE PODIUM & PAIR MIX',
       photo: 'https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?q=80&w=800&auto=format&fit=crop',
@@ -60,7 +60,7 @@ export default function HomePage() {
       subtitle: 'EPIC CROSS',
       title: 'Cross Gravel 150',
       elevation: '+2,100 m',
-      cot: '14 Jam',
+      cot: '15 Jam',
       wave: '05:30 WIB',
       tag: 'WAJIB PROLOG 30 KM',
       photo: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=800&auto=format&fit=crop',
@@ -73,7 +73,7 @@ export default function HomePage() {
       subtitle: 'GRINDURANCE ULTRA',
       title: 'Ultra Gravel 200',
       elevation: '+3,180 m',
-      cot: '18 Jam',
+      cot: '19 Jam',
       wave: '05:30 WIB',
       tag: 'THE PINNACLE // NIGHT NAV',
       photo: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop',
@@ -88,72 +88,128 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. CINEMATIC ATHLETIC HERO SECTION (NIKE TRAIL / CANYON STYLE) */}
       {/* ========================================================================= */}
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden border-b border-white/10">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden border-b border-orange-900/20">
         
         {/* Cinematic Action Photography Background */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2200&auto=format&fit=crop"
+            src="/hero.webp"
             alt="Gravel Grindurance Cyclist Action"
-            className="w-full h-full object-cover object-center filter brightness-[0.42] contrast-[1.15]"
+            className="w-full h-full object-cover object-center scale-[1.15] filter brightness-[0.78] contrast-[1.1] saturate-[1.2]"
+            style={{ transformOrigin: 'center center' }}
           />
-          {/* Subtle gradient vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0D0E11] via-[#0D0E11]/40 to-[#0D0E11]/80" />
+          {/* Soft dark gradient for contrast */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0D0E11] via-[#0D0E11]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0D0E11]/60 via-transparent to-transparent" />
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center sm:text-left w-full space-y-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 w-full flex flex-col items-center sm:items-start space-y-6">
           
-          {/* Top Athletic Badge */}
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-black/60 border border-white/20 backdrop-blur-md">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#F59E0B] animate-ping" />
-            <span className="text-xs font-bold tracking-widest text-[#F59E0B] uppercase">
-              GX-ID ANNIVERSARY EDITION // DESEMBER 2026
-            </span>
+          {/* 1. Event Graphic Title with Radial Fire Backlight & Kinetic Glow */}
+          <div className="relative w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] group">
+            {/* Ambient Radial Backlight Glow in exact logo orange */}
+            <div className="absolute -inset-4 sm:-inset-10 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.35)_0%,rgba(250,109,11,0.12)_45%,transparent_70%)] blur-2xl sm:blur-3xl opacity-90 -z-10 animate-pulse pointer-events-none" />
+            
+            <img
+              src="/nama_event.webp"
+              alt="Gravel Grindurance"
+              className="w-full h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)] drop-shadow-[0_0_55px_rgba(250,109,11,0.45)] transition-all duration-700 group-hover:scale-[1.015] group-hover:drop-shadow-[0_0_80px_rgba(250,109,11,0.7)]"
+            />
           </div>
 
-          {/* Monumental Kinetic Headline */}
-          <div className="space-y-2">
-            <h1 className="font-display text-5xl sm:text-7xl lg:text-9xl font-extrabold uppercase tracking-tight text-white leading-[0.92] italic drop-shadow-lg">
-              GRAVEL <br />
-              <span className="text-[#F59E0B]">GRINDURANCE</span> 2026
-            </h1>
-            <p className="font-display text-xl sm:text-3xl text-slate-300 uppercase tracking-wider font-semibold pt-2">
-              CONQUER THE CHASE. UNLEASH THE DIRT. REGISTER NOW.
+          {/* 2. Tagline (Guaranteed 1 Line) & Subtext */}
+          <div className="space-y-2 max-w-4xl text-center sm:text-left w-full">
+            <h2 className="font-display text-base sm:text-xl md:text-2xl lg:text-3xl text-white font-extrabold uppercase tracking-wider italic whitespace-nowrap overflow-hidden text-ellipsis">
+              UN-SUPPORTED RAIN SEASON EXPEDITION <span className="text-[#FA6D0B]">//</span> 60–200 KM
+            </h2>
+            <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed font-normal max-w-2xl">
+              Tantangan ketahanan mandiri musim hujan edisi perayaan komunitas GX-ID. Hadir dengan 5 kategori offline serta Virtual Ride nasional terintegrasi.
             </p>
           </div>
 
-          {/* Subtext */}
-          <p className="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed font-normal">
-            Tantangan ketahanan sepeda gravel dan ultra-cycling mandiri di lintasan Jonggol–Sukamakmur–Sentul. 
-            Jelajahi makadam batu lepas dan aspal kelupas di musim hujan bersama ribuan pesepeda dari 19 Chapter se-Indonesia.
-          </p>
-
-          {/* High-Energy Action Buttons */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+          {/* 3. Action Buttons (Styled Exactly Like Header CTA Pill) */}
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+            {/* Primary Action Button (REGISTER NOW — Solid Orange Pill) */}
             <Link
               href="/daftar"
-              className="px-9 py-4 rounded font-display uppercase tracking-wider text-base font-bold bg-[#F59E0B] hover:bg-[#D97706] text-black shadow-[0_0_35px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 active:scale-95"
+              className="group relative px-8 sm:px-9 py-3 rounded-full text-[13px] sm:text-sm font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] border border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,109,11,0.55)] flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95"
             >
-              <span>GET YOUR SPOT // DAFTAR SEKARANG</span>
-              <ArrowUpRight className="w-5 h-5 stroke-[2.5]" />
+              <span>REGISTER NOW // JOIN THE EXPEDITION</span>
+              <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
             </Link>
 
-            <a
-              href="#kategori"
-              className="px-8 py-4 rounded font-display uppercase tracking-wider text-sm font-bold bg-black/50 hover:bg-black/80 text-white border border-white/20 backdrop-blur-md flex items-center justify-center gap-2 transition-colors"
+            {/* Secondary Action Button (PANDUAN LOMBA & PERATURAN) */}
+            <Link
+              href="/peraturan"
+              className="group relative px-7 sm:px-8 py-3 rounded-full text-[13px] sm:text-sm font-bold uppercase tracking-wider text-white border border-[#FA6D0B]/60 hover:border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_20px_rgba(250,109,11,0.3)] overflow-hidden flex items-center justify-center gap-2.5"
             >
-              <span>EXPLORE 5 RACES</span>
-              <ChevronDown className="w-4 h-4" />
-            </a>
+              {/* Hover background fill */}
+              <span className="absolute inset-0 bg-[#FA6D0B] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
+              <span className="relative z-10 group-hover:text-black transition-colors duration-300">
+                PANDUAN LOMBA & PERATURAN
+              </span>
+              <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+            </Link>
           </div>
 
-          {/* Meal Coupon Incentive Ribbon */}
-          <div className="inline-flex items-center gap-3 p-3 rounded-lg bg-black/70 border border-white/15 backdrop-blur-md text-xs font-medium text-slate-300">
-            <Sparkles className="w-4 h-4 text-[#F59E0B] shrink-0" />
-            <span>
-              <strong className="text-white">Meal Coupon Rp 50.000 Otomatis:</strong> Untuk wanita, remaja $\le 17$ tahun, dan tim Pair Mix.
-            </span>
+          {/* 4. Running Text Ticker — Directly Under Buttons (70% Translucent Shadow Backdrop, Width Matches nama_event) */}
+          <div className="w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] mt-6 rounded-2xl bg-black/70 backdrop-blur-xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.7)] overflow-hidden py-3 px-2 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
+            <div className="animate-marquee flex items-center whitespace-nowrap text-xs sm:text-[13px] font-semibold tracking-widest uppercase text-slate-300">
+              {/* Set 1 */}
+              <div className="flex items-center">
+                <span>MINGGU KE-2 DESEMBER 2026</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>START & FINISH: ABEEY COFFEE & LRT HARJAMUKTI CIBUBUR</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>FORMAT: SELF-SUPPORTED · RAIN SEASON EXPEDITION</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>KATEGORI: 60 KM · 80 KM · 120 KM RACE · 150 KM CROSS · 200 KM ULTRA</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN & TIM PAIR MIX</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+              </div>
+
+              {/* Set 2 (Seamless Infinite Marquee Loop) */}
+              <div className="flex items-center" aria-hidden="true">
+                <span>MINGGU KE-2 DESEMBER 2026</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>START & FINISH: ABEEY COFFEE & LRT HARJAMUKTI CIBUBUR</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>FORMAT: SELF-SUPPORTED · RAIN SEASON EXPEDITION</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>KATEGORI: 60 KM · 80 KM · 120 KM RACE · 150 KM CROSS · 200 KM ULTRA</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN & TIM PAIR MIX</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+
+                <span>80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -404,11 +460,11 @@ export default function HomePage() {
           </div>
 
           <div className="p-6 rounded-lg bg-[#15171C] border border-white/10 space-y-3">
-            <span className="text-[#F59E0B] font-bold block text-sm">02 / MANDATORY 30-MIN PITSTOP</span>
-            <h4 className="font-display text-lg font-bold text-white uppercase">Penalti Waktu 300%</h4>
+            <span className="text-[#FA6D0B] font-bold block text-sm">02 / UN-SUPPORTED EXPEDITION</span>
+            <h4 className="font-display text-lg font-bold text-white uppercase">Prinsip Mandiri Penuh</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Wajib istirahat minimal 30 menit di CP#4 Jonggol atau CP#6 Sodong demi keselamatan musim hujan. 
-              Keberangkatan dini dikenakan denda penalti waktu 300% dari sisa menit yang dilanggar.
+              Dilarang membawa mobil pengawal (support car) atau bantuan feeding eksternal pribadi. 
+              Peserta mengandalkan logistik mandiri dan warung lokal di sepanjang rute untuk perbekalan.
             </p>
           </div>
 

@@ -61,6 +61,19 @@ export interface Participant {
   category_id: string;
   jersey_size: string;
   has_meal_coupon: boolean;
+  nik?: string;
+  address_detail?: string;
+  province_id?: string;
+  province_name?: string;
+  regency_id?: string;
+  regency_name?: string;
+  district_id?: string;
+  district_name?: string;
+  village_id?: string;
+  village_name?: string;
+  postal_code?: string;
+  medical_notes?: string;
+  religion?: string;
   status: 'REGISTERED' | 'PAID' | 'PROLOG_VERIFIED' | 'CHECKED_IN' | 'DNF' | 'FINISHER';
   prologue_status: 'NOT_REQUIRED' | 'WAITING_VERIFICATION' | 'PASSED' | 'REJECTED';
   qr_checkin_hash?: string | null;
@@ -71,13 +84,26 @@ export interface Participant {
 // Data input formulir pendaftaran
 export interface RiderFormData {
   full_name: string;
+  nik: string;
   gender: Gender;
   birth_date: string;
+  religion: string;
   email: string;
   phone_number: string;
+  address_detail: string;
+  province_id: string;
+  province_name: string;
+  regency_id: string;
+  regency_name: string;
+  district_id: string;
+  district_name: string;
+  village_id: string;
+  village_name: string;
+  postal_code: string;
   emergency_contact_name: string;
   emergency_contact_phone: string;
   blood_type: string;
+  medical_notes: string;
   community_chapter: string;
   jersey_size: JerseySize;
 }

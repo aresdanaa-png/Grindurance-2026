@@ -17,7 +17,7 @@ GX-ID (komunitas dengan 80.000+ anggota di 19 chapter regional) menyelenggarakan
 2. **Pendaftaran Tim PAIR (2 Pax):** Mendukung pendaftaran 2 pesepeda sekaligus dalam 1 invoice di kategori 120 km Race.
 3. **Hybrid Payment Engine:** Otomatisasi pembayaran via Midtrans (QRIS dinamis & VA) dengan fallback transfer manual + Dev Simulator untuk pengujian.
 4. **Insentif Meal Coupon Rp 50.000:** Diskon/kupon makan otomatis untuk wanita, remaja $\le 17$ tahun, dan tim Pair Mix.
-5. **Ultra-Endurance Rules:** Scrutineering syarat wajib "Prolog 30 km" (kategori 150 & 200 km) dan penalti pitstop 300% (istirahat min. 30 menit).
+5. **Ultra-Endurance Rules:** Scrutineering syarat wajib "Prolog 30 km" (kategori 150 & 200 km) dan etika balap mandiri tanpa support car eksternal (un-supported expedition).
 6. **Ops Logistics & Print Engine A3+:** Otomatisasi cetak imposisi A3 untuk nomor BIB, sertifikat finisher, nametag panitia, dan label kurir DHS Logistik.
 7. **Virtual Ride Strava Integration:** Validasi otomatis aktivitas outdoor melalui Strava Webhooks.
 
@@ -27,12 +27,12 @@ GX-ID (komunitas dengan 80.000+ anggota di 19 chapter regional) menyelenggarakan
 
 | ID | Kategori | Jarak | Sifat / Tipe | Harga Medal Saja | Harga Medal & Jersey | Kuota | COT | Wave Start | Aturan Khusus |
 |---|---|---|---|---|---|---|---|---|---|
-| `60` | Urban Gravel 60 | 60++ km | Fun Ride | Rp 250.000 | Rp 300.000 | 150 | 6 jam | 07:00 | Pitstop CP#6 (30 mnt) |
-| `80` | Urban Gravel 80 | 80++ km | Fun Ride | Rp 300.000 | Rp 350.000 | 150 | 8 jam | 07:00 | Pitstop CP#6 (30 mnt) |
-| `120_SINGLE` | Amazing Race 120 | 120++ km | **Race (Kompetisi)** | Rp 400.000 | Rp 450.000 | 100 | 10 jam | 06:00 | Awarding Top 3, Pitstop CP#4 |
-| `120_PAIR` | Amazing Race Pair Mix | 120++ km | **Race (2 Peserta)** | Rp 700.000 | Rp 750.000 | 30 tim | 10 jam | 06:00 | 2 Pax, Handicap Waktu |
-| `150` | Cross Gravel 150 | 150++ km | Cross / Grand Fondo | Rp 400.000 | Rp 450.000 | 75 | 14 jam | 05:30 | **Prolog 30 km**, Pitstop CP#4 |
-| `200` | Ultra Gravel 200 | 200++ km | Ultra Gravel | Rp 400.000 | Rp 450.000 | 50 | 18 jam | 05:30 | **Prolog 30 km**, Pitstop CP#4 |
+| `60` | Urban Gravel 60 | 60++ km | Fun Ride | Rp 250.000 | Rp 300.000 | 150 | 7 jam | 07:00 | Standard Fun Ride |
+| `80` | Urban Gravel 80 | 80++ km | Fun Ride | Rp 300.000 | Rp 350.000 | 150 | 9 jam | 07:00 | Standard Fun Ride |
+| `120_SINGLE` | Amazing Race 120 | 120++ km | **Race (Kompetisi)** | Rp 400.000 | Rp 450.000 | 100 | 11 jam | 06:00 | Awarding Top 3 |
+| `120_PAIR` | Amazing Race Pair Mix | 120++ km | **Race (2 Peserta)** | Rp 700.000 | Rp 750.000 | 30 tim | 11 jam | 06:00 | 2 Pax, Handicap Waktu |
+| `150` | Cross Gravel 150 | 150++ km | Cross / Grand Fondo | Rp 400.000 | Rp 450.000 | 75 | 15 jam | 05:30 | **Prolog 30 km** |
+| `200` | Ultra Gravel 200 | 200++ km | Ultra Gravel | Rp 400.000 | Rp 450.000 | 50 | 19 jam | 05:30 | **Prolog 30 km** |
 | `VIRTUAL` | Virtual Ride Nasional | Sesuai Pilihan | Virtual (Nasional) | Rp 200.000 | Rp 250.000 | 1.000 | Fleksibel | H-Event | Strava Webhook, Medali via DHS |
 
 ### Ketentuan Insentif Kupon Makan (Meal Coupon Rp 50.000):
@@ -56,8 +56,11 @@ GX-ID (komunitas dengan 80.000+ anggota di 19 chapter regional) menyelenggarakan
       │
       ▼
 2. Formulir Data Pendaftar (Wizard)
-   - Jika Single: Data Diri, No HP, Kontak Darurat, Komunitas, Ukuran Jersey (jika paket jersey)
-   - Jika Pair (2 Pax): Data Rider 1 (Kapten) + Data Rider 2 (Partner)
+   - Data Identitas: Nama KTP, **NIK (16 Digit)**, **Agama/Kepercayaan**, Jenis Kelamin, Tanggal Lahir
+   - **Alamat Lengkap (Cascading API Wilayah Indonesia)**: Provinsi, Kab/Kota, Kecamatan, Desa/Kelurahan, Kode Pos, Alamat Detail
+   - Kesehatan & Keselamatan: Golongan Darah, **Alergi / Medic Alert (SPGDT RS Hermina)**, Kontak Darurat (Nama & HP)
+   - Komunitas/Chapter & Ukuran Jersey (jika paket jersey)
+   - Jika Pair (2 Pax): Data lengkap Rider 1 (Kapten) + Rider 2 (Partner)
    - Cek kualifikasi Meal Coupon (otomatis jika wanita / <= 17 th / Pair Mix)
    - Centang Waiver Risiko & Persetujuan Data Pribadi
       │
