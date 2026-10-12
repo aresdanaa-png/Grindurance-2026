@@ -30,34 +30,33 @@ Dokumen ini berfungsi sebagai **penjaga konteks (guardrails)** agar pengerjaan t
   - [ ] Endpoint pembuatan transaksi (`/api/payment/create`).
   - [ ] Tampilan bayar (QRIS Dinamis & Virtual Account BCA/Mandiri/BRI/BNI).
   - [ ] Webhook Listener (`/api/payment/webhook`): Update status peserta `PAID` & terbitkan `bib_number`.
-- [ ] **1.4 Halaman Konfirmasi & E-Ticket BIB:**
-  - [ ] Halaman ringkasan sukses dengan Nomor BIB & QR Code unik untuk hari-H.
+- [x] **1.4 Halaman Konfirmasi & E-Ticket BIB:**
+  - [x] Halaman ringkasan sukses dengan Nomor BIB & QR Code unik untuk hari-H.
+  - [x] Pencarian mandiri e-Ticket & Plat BIB digital (`/cek-bib`).
 
 ---
 
-### [ ] FASE 2: Operational Logistics & Print Engine (A3+ Imposition)
-> *Tujuan:* Memanfaatkan aset unggulan Tour de Gunung Batu untuk kebutuhan operasional GX-ID skala nasional.
+### [x] FASE 2: World-Class Rider Roster & Start List (Bentang Jawa & Badlands Standard)
+> *Tujuan:* Menyajikan data atlet secara elegan, transparan, dan berstandar internasional.
 
-- [ ] **2.1 Imposisi A3+ Nomor BIB Peserta:**
-  - [ ] Generator layout cetak A3 (beberapa nomor BIB per lembar) siap setor ke percetakan.
-- [ ] **2.2 Imposisi A3+ Label Pengiriman Paket (DHS Logistik):**
-  - [ ] Cetak massal label pengiriman jersey & medali virtual (21 label/lembar A3).
-- [ ] **2.3 Generator Nametag Panitia & Marshall A3+:**
-  - [ ] ID card panitia per divisi (Medis, Sweeper, Marshall, Scrutineer).
-- [ ] **2.4 Scanner Check-in Hari-H:**
-  - [ ] Scanner kamera web panitia untuk memindai QR Code di meja registrasi ulang.
+- [x] **2.1 Official Start List / Rider Roster (`/peserta`):**
+  - [x] Filter multi-kategori (60K, 80K, 120K Single, 120K Pair Mix, 150K, 200K, Virtual).
+  - [x] Real-time search by Nama, No. BIB, atau Chapter Regional GX-ID.
+  - [x] Modal preview Plat Nomor Sepeda Digital (BIB Plate Voucher) dengan QR Check-in Hash.
+  - [x] Ticker metrik atlet terdaftar, rasio gender, tim Pair Mix, dan status prolog.
 
 ---
 
-### [ ] FASE 3: Endurance Rules & Scrutineering Lapangan
-> *Tujuan:* Mengakomodasi aturan khusus ultra-cycling (Prolog & Pitstop).
+### [x] FASE 3: Endurance Rules & Scrutineering Lapangan
+> *Tujuan:* Mengakomodasi aturan khusus ultra-cycling (Prolog 30 km & Penalti Pitstop 300%).
 
-- [ ] **3.1 Modul Meja Scrutineering (Prolog 30 km):**
-  - [ ] Interface panitia untuk memverifikasi track GPS peserta 150 km & 200 km (03:00–05:00 WIB).
-  - [ ] Flag status `PROLOG_PASSED` atau `PROLOG_REJECTED` (Deny Start).
-- [ ] **3.2 Modul Pencatatan Pitstop & Penalti 300%:**
-  - [ ] Input/sync timestamp kedatangan & keberangkatan di CP wajib (CP#4 / CP#6).
-  - [ ] Kalkulasi otomatis waktu istirahat minimal 30 menit & kalkulasi penalti.
+- [x] **3.1 Modul Meja Scrutineering (`/scrutineering`):**
+  - [x] Interface panitia ABEEY Coffee (03:00–05:00 WIB) untuk verifikasi rekaman GPS Prolog 30 km (Kategori 150 km & 200 km).
+  - [x] Checklist keselamatan teknis: Helm CE/CPSC, Lampu Depan Ganda (>500lm), Lampu Belakang Ganda (merah steady), Rompi Reflektif (EN ISO 20471), Tool Kit, Rekomendasi Ban (min 38c, optimal 45c), Kontak Darurat SPGDT RS Hermina Cibubur.
+  - [x] Terbitkan Izin Masuk Garis Start (*Wave Start Clearance*).
+- [x] **3.2 Modul Pencatatan Pitstop & Penalti 300% (`/checkpoint`):**
+  - [x] Kalkulasi waktu istirahat wajib minimal 30 menit di CP#4 Jonggol / CP#6 Sodong.
+  - [x] Deteksi otomatis keberangkatan dini dan penalti 300% dari sisa waktu yang dilanggar.
 
 ---
 
