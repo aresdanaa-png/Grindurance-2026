@@ -41,9 +41,13 @@ interface CategoryData {
   photo: string;
   priceMedal: string;
   priceJersey: string;
+  pairPriceMedal?: string;
+  pairPriceJersey?: string;
   desc: string;
   routeHighlights: string;
-  // SVG Elevation curve points: path d string and points
+  terrain: string;
+  gearTip: string;
+  isRace?: boolean;
   elevationPath: string;
   waypoints: { name: string; km: string; x: number; y: number }[];
 }
@@ -65,12 +69,14 @@ export default function HomePage() {
       wave: '07:00 WIB',
       tag: 'REKREASI & PEMULA',
       format: 'Fun Gravel / Non-Kompetitif',
-      specialRules: 'Ramah Sepeda Lipat, Hybrid & Pemula',
+      specialRules: 'Ramah Sepeda Lipat (Seli), Hybrid & Pemula',
       photo: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=1200&auto=format&fit=crop',
       priceMedal: 'Rp 250.000',
       priceJersey: 'Rp 300.000',
       desc: 'Lintasan tanah pedesaan Jonggol & aspal halus Cibubur. Sangat ideal bagi pesepeda yang baru pertama kali mencicipi gravel serta pengguna sepeda lipat.',
       routeHighlights: 'Cibubur Basecamp → Pasir Angin → Jonggol Lowland → ABEEY Coffee Finish',
+      terrain: 'Aspal Pinggiran Kota & Makadam Halus Pasir Angin',
+      gearTip: 'Ramah Sepeda Lipat (Seli 20"), Hybrid, & Gravel Pemula',
       elevationPath: 'M 0 100 Q 80 90, 160 85 T 320 60 T 480 80 T 640 45 T 800 95 L 800 130 L 0 130 Z',
       waypoints: [
         { name: 'START (ABEEY)', km: '0 KM', x: 20, y: 98 },
@@ -98,6 +104,8 @@ export default function HomePage() {
       priceJersey: 'Rp 350.000',
       desc: 'Menjelajahi persawahan Cileungsi dan makadam khas Pemandian Sodong. Etape peningkatan jarak ideal dengan rolling hills berirama dinamis.',
       routeHighlights: 'Cileungsi → Sodong Makadam → Klapanunggal Ridge → ABEEY Coffee Finish',
+      terrain: 'Rolling Hills, Persawahan Cileungsi & Makadam Pemandian Sodong',
+      gearTip: 'Rekomendasi Ban 38c+ · Joy of Riding & Scenic Gravel',
       elevationPath: 'M 0 105 Q 100 80, 200 65 T 400 40 T 550 70 T 680 30 T 800 100 L 800 130 L 0 130 Z',
       waypoints: [
         { name: 'START (ABEEY)', km: '0 KM', x: 20, y: 102 },
@@ -121,10 +129,15 @@ export default function HomePage() {
       format: 'Official Race (Top 3 Podium)',
       specialRules: 'Mendukung Tim PAIR Mix 2 Pax · Handicap Waktu · Live Tracking GPS',
       photo: 'https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?q=80&w=1200&auto=format&fit=crop',
-      priceMedal: 'Single: Rp 400k // Pair: Rp 700k',
-      priceJersey: 'Single: Rp 450k // Pair: Rp 750k',
-      desc: 'Kompetisi resmi dengan perebutan podium prestisius Top 3. Tanjakan koridor Jonggol–Sukamakmur dengan opsi tandem 2 pesepeda (Pair Mix) dalam satu perjuangan.',
+      priceMedal: 'Rp 400.000',
+      priceJersey: 'Rp 450.000',
+      pairPriceMedal: 'Rp 700.000',
+      pairPriceJersey: 'Rp 750.000',
+      desc: 'Satu-satunya kategori balap kompetitif resmi dengan perebutan podium Top 3. Menaklukkan tanjakan koridor Jonggol–Sukamakmur dengan opsi tandem 2 pesepeda (Pair Mix).',
       routeHighlights: 'Cibubur → Jonggol Ridge → Tanjakan Sukamakmur → Sentul Descent → ABEEY Coffee Finish',
+      terrain: 'Koridor Jonggol Ridge & Tanjakan Sukamakmur (+1.450 m)',
+      gearTip: 'Live Tracking RaceRoute.id Wajib · Perebutan Podium Top 3 · Opsi Tandem PAIR MIX',
+      isRace: true,
       elevationPath: 'M 0 110 Q 120 90, 240 60 T 420 20 T 560 65 T 700 35 T 800 105 L 800 130 L 0 130 Z',
       waypoints: [
         { name: 'START WAVE 1', km: '0 KM', x: 20, y: 108 },
@@ -153,6 +166,8 @@ export default function HomePage() {
       priceJersey: 'Rp 450.000',
       desc: 'Tantangan klasik veteran endurance menembus tanjakan ganda Sukamakmur dan turunan teknis berbatu di tengah guyuran musim hujan khas Jawa Barat.',
       routeHighlights: 'Prolog 30 km Subuh → Sukamakmur → Jonggol Loop → Puncak Dua → ABEEY Coffee Finish',
+      terrain: 'Tanjakan Ganda Sukamakmur, Jalur Batu Puncak Dua & Sentul Loop',
+      gearTip: 'Wajib Prolog 30 km (03:00–05:00 WIB) · Ban Min 38–40mm & Wet Lube',
       elevationPath: 'M 0 115 Q 100 85, 200 45 T 380 15 T 500 70 T 640 25 T 800 110 L 800 130 L 0 130 Z',
       waypoints: [
         { name: 'PROLOG CHECK', km: '0 KM', x: 20, y: 112 },
@@ -176,11 +191,13 @@ export default function HomePage() {
       tag: 'ULTRA GRAVEL // NIGHT NAV',
       format: 'Ultra Gravel Endurance',
       specialRules: 'Prolog 30 km · Night Navigation · Lampu Depan Ganda >500lm & Rompi Reflektif',
-      photo: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1200&auto=format&fit=crop',
+      photo: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop',
       priceMedal: 'Rp 400.000',
       priceJersey: 'Rp 450.000',
       desc: 'Kategori puncak ketahanan fisik, mental, dan navigasi malam mandiri. Loop penuh Jonggol–Sukamakmur–Babakan Madang–Sentul dengan total elevasi tembus +3.180 meter.',
       routeHighlights: 'Prolog 30 km → Jonggol → Sukamakmur Monster Pass → Sentul Loop → Malam ABEEY Coffee',
+      terrain: 'Loop Penuh 4 Wilayah · Monster Pass Sukamakmur · Sentul Extreme',
+      gearTip: 'Wajib Prolog 30 km · Night Nav: Lampu Depan >500lm & Rompi Reflektif',
       elevationPath: 'M 0 115 Q 90 80, 180 35 T 350 10 T 480 65 T 620 18 T 720 50 T 800 110 L 800 130 L 0 130 Z',
       waypoints: [
         { name: 'PROLOG 30K', km: '0 KM', x: 20, y: 112 },
@@ -209,6 +226,8 @@ export default function HomePage() {
       priceJersey: 'Rp 250.000',
       desc: 'Bagi 80.000+ anggota GX-ID di 19 Chapter se-Indonesia. Selesaikan jarak tantangan di kota domisili Anda, validasi via Strava Webhook, dan medali resmi dikirim ke rumah.',
       routeHighlights: '19 Chapter: Bandung, Surabaya, Medan, Bali, Jogja, Makassar, Semarang, Solo & Nasional',
+      terrain: 'Rute Domisili Lokal di 19 Regional Chapter GX-ID se-Indonesia',
+      gearTip: 'Outdoor GPS Validasi Otomatis via Strava Webhook · Medali via DHS Logistik',
       elevationPath: 'M 0 75 Q 100 60, 200 75 T 400 60 T 600 75 T 800 65 L 800 130 L 0 130 Z',
       waypoints: [
         { name: 'START LOKAL', km: 'Kota Anda', x: 20, y: 72 },
@@ -466,206 +485,160 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Telemetry & Cockpit Monolith Container */}
+        {/* THE CENTERPIECE: THE CLEAN ATHLETIC CARD (FOCUSED ON REGISTRANT POV) */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
-
-        {/* THE CENTERPIECE: FROSTED GLASS HUD & MONOLITH (TRANSLUCENT TO LET BG SHINE) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch bg-black/45 backdrop-blur-2xl border border-white/15 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.9)] p-5 sm:p-7">
+          <div className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-black/50 backdrop-blur-2xl rounded-2xl overflow-hidden p-6 sm:p-8 transition-all duration-500 border ${
+            currentCategory.isRace 
+              ? 'border-[#FA6D0B]/50 shadow-[0_20px_60px_rgba(250,109,11,0.2)]' 
+              : 'border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.8)]'
+          }`}>
           
-          {/* LEFT COLUMN (5 COLS): ATHLETIC MONOLITH PHOTOGRAPHY & WATERMARK */}
-          <div className="lg:col-span-5 relative min-h-[380px] lg:min-h-[520px] rounded-xl overflow-hidden group flex flex-col justify-between p-6 border border-white/10">
-            {/* Full-bleed Photo Background */}
+          {/* KOLOM KIRI (5 COLS): FOTO ATLETIS BERSIH DENGAN TITLE & STATUS */}
+          <div className="lg:col-span-5 relative min-h-[300px] sm:min-h-[360px] lg:min-h-[420px] rounded-xl overflow-hidden group flex flex-col justify-between p-6 border border-white/10">
+            {/* Background Image */}
             <img
               src={currentCategory.photo}
               alt={currentCategory.title}
               className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-90 contrast-110"
             />
-            
-            {/* Cinematic Gradient Vignette */}
+            {/* Gradient Vignette */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
 
-            {/* Giant Background Watermark (Nike Trail / Badlands Aesthetic) */}
-            <div className="absolute right-2 bottom-6 font-display font-black text-8xl sm:text-9xl text-white/[0.08] italic select-none pointer-events-none leading-none tracking-tighter">
-              {currentCategory.watermark}
-            </div>
-
-            {/* Top Badges */}
-            <div className="relative z-10 flex items-start justify-between gap-2">
-              <span className="px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-wider bg-black/80 backdrop-blur-md text-[#FA6D0B] border border-[#FA6D0B]/40 shadow-sm flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B]" />
-                {currentCategory.tag}
-              </span>
-
-              <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-black/70 backdrop-blur-md text-white border border-white/20">
-                {currentCategory.format}
-              </span>
-            </div>
-
-            {/* Bottom Monolith Caption */}
-            <div className="relative z-10 space-y-2 pt-20">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#FA6D0B]/60 text-[#FA6D0B]">
-                <Mountain className="w-3.5 h-3.5" />
-                <span className="text-xs font-black tracking-wider uppercase font-mono">
-                  {currentCategory.elevation} TOTAL GAIN
+            {/* Top Badge: Hanya 1 Badge Elegan */}
+            <div className="relative z-10">
+              {currentCategory.isRace ? (
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.6)]">
+                  <span>★</span>
+                  <span>OFFICIAL RACE · TOP 3 PODIUM &amp; PAIR MIX</span>
                 </span>
-              </div>
+              ) : currentCategory.id === '150' || currentCategory.id === '200' ? (
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-black/80 backdrop-blur-md text-amber-400 border border-amber-500/40">
+                  <span>⚠️</span>
+                  <span>WAJIB PROLOG 30 KM SUBUH</span>
+                </span>
+              ) : currentCategory.id === '60' ? (
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-black/80 backdrop-blur-md text-emerald-400 border border-emerald-500/40">
+                  <span>🚲</span>
+                  <span>RAMAH SEPEDA LIPAT (SELI) &amp; PEMULA</span>
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-black/80 backdrop-blur-md text-[#FA6D0B] border border-[#FA6D0B]/40">
+                  <span>●</span>
+                  <span>{currentCategory.tag}</span>
+                </span>
+              )}
+            </div>
+
+            {/* Bottom Caption: Judul Etape & Jarak */}
+            <div className="relative z-10 space-y-1.5 pt-12">
+              <span className="text-xs font-mono font-bold text-[#FA6D0B] tracking-widest uppercase block">
+                {currentCategory.subtitle} · {currentCategory.format.split('/')[0]}
+              </span>
               <h3 className="font-display text-3xl sm:text-4xl font-black uppercase text-white italic tracking-tight leading-none drop-shadow-md">
                 {currentCategory.title}
               </h3>
-              <p className="text-xs text-slate-300 font-medium line-clamp-2 leading-relaxed">
-                {currentCategory.desc}
-              </p>
             </div>
           </div>
 
-          {/* RIGHT COLUMN (7 COLS): GARMIN / WAHOO TELEMETRY HUD & ELEVATION CURVE */}
+          {/* KOLOM KANAN (7 COLS): HANYA 3 HAL ESENSIAL BAGI PENDAFTAR */}
           <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
             
-            {/* Stage Route & Corridor Subtitle */}
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span className="text-white font-semibold">{currentCategory.wave} WAVE START</span>
+            {/* 1. BARIS SPESIFIKASI KUNCI (MINIMALIST TELEMETRY BAR) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-xl bg-black/60 border border-white/10">
+              <div className="space-y-0.5">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Jarak</span>
+                <strong className="font-display text-base sm:text-lg font-black text-white italic">{currentCategory.km}</strong>
               </div>
-              <h4 className="font-display text-2xl sm:text-3xl font-extrabold text-white uppercase italic tracking-tight">
-                {currentCategory.subtitle} — {currentCategory.km}
-              </h4>
-              <p className="text-xs text-slate-300 font-medium">
-                <strong className="text-white">Lintasan:</strong> {currentCategory.routeHighlights}
+              <div className="space-y-0.5 border-l border-white/10 pl-3">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Total Elev</span>
+                <strong className="font-display text-base sm:text-lg font-black text-[#FA6D0B] italic">{currentCategory.elevation}</strong>
+              </div>
+              <div className="space-y-0.5 border-l border-white/10 pl-3">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Wave Start</span>
+                <strong className="font-display text-base sm:text-lg font-black text-white italic">{currentCategory.wave}</strong>
+              </div>
+              <div className="space-y-0.5 border-l border-white/10 pl-3">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Batas Waktu</span>
+                <strong className="font-display text-base sm:text-lg font-black text-white italic">{currentCategory.cot}</strong>
+              </div>
+            </div>
+
+            {/* 2. CERITA ETAPE & LINTASAN (RINGKAS & MENUSUK) */}
+            <div className="space-y-3">
+              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
+                {currentCategory.desc}
               </p>
-            </div>
-
-            {/* DYNAMIC ELEVATION PROFILE SVG (GARMIN COCKPIT HUD) */}
-            <div className="relative bg-black/60 rounded-xl border border-white/10 p-4 space-y-2">
-              <div className="flex items-center justify-between text-[11px] text-slate-400">
-                <div className="flex items-center gap-2">
-                  <TrendingUp className="w-3.5 h-3.5 text-[#FA6D0B]" />
-                  <span className="font-bold uppercase tracking-wider text-white">Profil Elevasi & Waypoint Checkpoint</span>
+              
+              <div className="p-3 rounded-lg bg-black/40 border border-white/10 space-y-1 text-xs">
+                <div className="flex items-start gap-2 text-slate-300">
+                  <span className="text-[#FA6D0B] font-bold font-mono shrink-0">LINTASAN:</span>
+                  <span>{currentCategory.routeHighlights}</span>
                 </div>
-                <span className="text-[#FA6D0B] font-mono font-bold">{currentCategory.elevation}</span>
-              </div>
-
-              {/* Elevation Wave Graphic */}
-              <div className="relative h-28 w-full overflow-hidden rounded bg-gradient-to-b from-[#1E2028]/40 to-transparent">
-                {/* Grid Lines */}
-                <div className="absolute inset-0 flex flex-col justify-between opacity-15 pointer-events-none">
-                  <div className="border-b border-dashed border-white w-full" />
-                  <div className="border-b border-dashed border-white w-full" />
-                  <div className="border-b border-dashed border-white w-full" />
-                </div>
-
-                {/* SVG Mountain Curve */}
-                <svg
-                  viewBox="0 0 800 130"
-                  className="w-full h-full preserve-3d"
-                  preserveAspectRatio="none"
-                >
-                  <defs>
-                    <linearGradient id="elevationGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#FA6D0B" stopOpacity="0.45" />
-                      <stop offset="100%" stopColor="#FA6D0B" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-                  
-                  {/* Fill Under Curve */}
-                  <path
-                    d={currentCategory.elevationPath}
-                    fill="url(#elevationGrad)"
-                  />
-                  
-                  {/* Glowing Stroke Curve */}
-                  <path
-                    d={currentCategory.elevationPath.replace(/ L 800 130 L 0 130 Z/, '')}
-                    fill="none"
-                    stroke="#FA6D0B"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    className="drop-shadow-[0_0_10px_rgba(250,109,11,0.7)]"
-                  />
-                </svg>
-
-                {/* Waypoint Markers */}
-                {currentCategory.waypoints.map((wp, idx) => (
-                  <div
-                    key={idx}
-                    className="absolute -translate-x-1/2 flex flex-col items-center pointer-events-none"
-                    style={{ left: `${(wp.x / 800) * 100}%`, top: `${Math.min(wp.y, 65)}px` }}
-                  >
-                    <span className="w-2 h-2 rounded-full bg-[#FA6D0B] border-2 border-white shadow-[0_0_8px_#FA6D0B]" />
-                    <span className="mt-1 px-1.5 py-0.5 rounded bg-black/90 text-[9px] font-bold text-slate-200 uppercase whitespace-nowrap border border-white/10 scale-90">
-                      {wp.name}
-                    </span>
+                {currentCategory.isRace ? (
+                  <div className="flex items-center gap-2 text-xs text-amber-300 font-medium pt-1 border-t border-white/10">
+                    <span>🏆</span>
+                    <span>Wajib Live Tracking via <strong>RaceRoute.id</strong> · Perebutan Podium Top 3 Putra, Putri, &amp; Tim Tandem Pair Mix.</span>
                   </div>
-                ))}
+                ) : (currentCategory.id === '150' || currentCategory.id === '200') ? (
+                  <div className="flex items-center gap-2 text-xs text-amber-300 font-medium pt-1 border-t border-white/10">
+                    <span>⚠️</span>
+                    <span>Wajib menyelesaikan <strong>Prolog 30 km mandiri (03:00–05:00 WIB)</strong> sebelum registrasi start.</span>
+                  </div>
+                ) : null}
               </div>
             </div>
 
-            {/* 4-TILES TELEMETRY HUD METRICS GRID */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3 rounded-lg bg-black/50 border border-white/10 space-y-1">
-                <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                  <Clock className="w-3.5 h-3.5 text-[#FA6D0B]" />
-                  <span>Wave Start</span>
-                </div>
-                <div className="font-display text-lg font-bold text-white italic">{currentCategory.wave}</div>
+            {/* 3. BIAYA & AKSI REGISTRASI LANGSUNG (SUPER CLEAR) */}
+            <div className="p-4 rounded-xl bg-gradient-to-r from-black/80 to-[#18191E]/90 border border-white/15 space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-2.5">
+                <span className="text-xs font-bold text-white uppercase tracking-wider font-mono">
+                  Biaya Pendaftaran Resmi
+                </span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 font-mono font-bold border border-emerald-500/30 w-fit">
+                  ✓ Subsidi Meal Coupon Rp 50.000 (Wanita / ≤17 Th / Pair Mix)
+                </span>
               </div>
 
-              <div className="p-3 rounded-lg bg-black/50 border border-white/10 space-y-1">
-                <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                  <Gauge className="w-3.5 h-3.5 text-[#FA6D0B]" />
-                  <span>Cut Off Time</span>
-                </div>
-                <div className="font-display text-lg font-bold text-white italic">{currentCategory.cot}</div>
-              </div>
-
-              <div className="p-3 rounded-lg bg-black/50 border border-white/10 space-y-1">
-                <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                  <Mountain className="w-3.5 h-3.5 text-[#FA6D0B]" />
-                  <span>Total Elev</span>
-                </div>
-                <div className="font-display text-lg font-bold text-[#FA6D0B] italic">{currentCategory.elevation}</div>
-              </div>
-
-              <div className="p-3 rounded-lg bg-black/50 border border-white/10 space-y-1">
-                <div className="flex items-center gap-1.5 text-slate-400 text-[10px] font-bold uppercase tracking-wider">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#FA6D0B]" />
-                  <span>Karakter</span>
-                </div>
-                <div className="font-display text-sm font-bold text-white truncate italic">{currentCategory.format.split('/')[0]}</div>
-              </div>
-            </div>
-
-            {/* DUAL-PACKAGE PRICING COMPARISON & MEAL COUPON INCENTIVE */}
-            <div className="p-4 rounded-xl bg-gradient-to-r from-black/70 to-[#1A1C22]/80 border border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold text-white uppercase tracking-wider">
-                    Pilihan Paket:
-                  </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">
-                    Meal Coupon Rp 50k Eligible*
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 text-xs sm:text-sm">
-                  <div>
-                    <span className="text-slate-400 text-[11px] block">Paket Medal Saja:</span>
-                    <strong className="text-white font-mono text-sm">{currentCategory.priceMedal}</strong>
+              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                {currentCategory.isRace ? (
+                  <div className="space-y-1.5 flex-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-300">Single Rider:</span>
+                      <span className="font-mono text-white font-bold">
+                        {currentCategory.priceMedal} <span className="text-slate-400 font-normal">(Medal)</span> / <strong className="text-[#FA6D0B]">{currentCategory.priceJersey}</strong> <span className="text-slate-400 font-normal">(+Jersey)</span>
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[#FA6D0B] font-semibold flex items-center gap-1.5">
+                        <span>Tim Pair Mix (2 Pax):</span>
+                        <span className="text-[9px] px-1 py-0.2 rounded bg-[#FA6D0B]/20 text-[#FA6D0B] font-mono">Hemat 100k</span>
+                      </span>
+                      <span className="font-mono text-white font-bold">
+                        {currentCategory.pairPriceMedal} <span className="text-slate-400 font-normal">(Medal)</span> / <strong className="text-[#FA6D0B]">{currentCategory.pairPriceJersey}</strong> <span className="text-slate-400 font-normal">(+Jersey)</span>
+                      </span>
+                    </div>
                   </div>
-                  <div className="h-6 w-px bg-white/10" />
-                  <div>
-                    <span className="text-[#FA6D0B] text-[11px] block font-semibold">Paket Medal + Jersey:</span>
-                    <strong className="text-[#FA6D0B] font-mono text-sm">{currentCategory.priceJersey}</strong>
+                ) : (
+                  <div className="flex items-center gap-4 text-xs sm:text-sm flex-1">
+                    <div>
+                      <span className="text-[10px] text-slate-400 block font-mono">Paket Medal Saja:</span>
+                      <strong className="text-white font-mono text-sm">{currentCategory.priceMedal}</strong>
+                    </div>
+                    <div className="h-6 w-px bg-white/15" />
+                    <div>
+                      <span className="text-[10px] text-[#FA6D0B] block font-mono font-semibold">Paket Medal + Jersey:</span>
+                      <strong className="text-[#FA6D0B] font-mono text-sm">{currentCategory.priceJersey}</strong>
+                    </div>
                   </div>
-                </div>
-              </div>
+                )}
 
-              {/* ACTION CTA BUTTON (MATCHES HERO STYLE) */}
-              <div className="shrink-0">
+                {/* Primary Registration Action CTA */}
                 <Link
                   href={`/daftar?category=${currentCategory.id}`}
-                  className="group relative px-6 py-3 rounded-full text-xs sm:text-[13px] font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] border border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_25px_rgba(250,109,11,0.5)] flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:scale-95"
+                  className="group relative px-7 py-3.5 rounded-full text-xs sm:text-[13px] font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] border border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,109,11,0.6)] flex items-center justify-center gap-2 transform hover:-translate-y-0.5 active:scale-95 shrink-0"
                 >
-                  <span>DAFTAR {currentCategory.km} SEKARANG</span>
+                  <span>DAFTAR SEKARANG</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
                 </Link>
               </div>
@@ -675,9 +648,9 @@ export default function HomePage() {
 
         </div>
 
-        </div>
+      </div>
 
-      </section>
+    </section>
 
 
       {/* ========================================================================= */}
