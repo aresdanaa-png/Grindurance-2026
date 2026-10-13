@@ -33,6 +33,7 @@ const config: Config = {
         sans: ["var(--font-sans)", "Plus Jakarta Sans", "system-ui", "sans-serif"],
         nacelle: ["var(--font-nacelle)", "sans-serif"],
         display: ["var(--font-display)", "Oswald", "sans-serif"],
+        typewriter: ["var(--font-typewriter)", "Courier New", "Courier", "monospace"],
         mono: ["var(--font-sans)", "Plus Jakarta Sans", "sans-serif"], // Zero monospace: safely maps to sleek proportional sans
       },
       boxShadow: {

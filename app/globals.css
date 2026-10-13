@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,6 +7,11 @@
 :root {
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   --font-display: 'Oswald', sans-serif;
+  --font-typewriter: 'Special Elite', 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+.font-typewriter {
+  font-family: 'Special Elite', 'Courier Prime', 'Courier New', Courier, monospace !important;
 }
 
 body {
