@@ -57,3 +57,46 @@ body {
   animation-play-state: paused;
 }
 
+/* Race Velocity Speed Patterns & Motion */
+@keyframes raceSpeedFlow {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-48px); }
+}
+
+@keyframes raceSpeedFlowReverse {
+  0% { transform: translateY(-48px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes racePulseGlow {
+  0%, 100% { opacity: 0.55; filter: drop-shadow(0 0 3px rgba(250, 109, 11, 0.4)); }
+  50% { opacity: 0.95; filter: drop-shadow(0 0 10px rgba(250, 109, 11, 0.9)); }
+}
+
+.animate-race-flow {
+  animation: raceSpeedFlow 2.5s linear infinite;
+}
+
+.animate-race-flow-fast {
+  animation: raceSpeedFlow 1.2s linear infinite;
+}
+
+.animate-race-flow-reverse {
+  animation: raceSpeedFlowReverse 2.5s linear infinite;
+}
+
+.animate-race-glow {
+  animation: racePulseGlow 2.5s ease-in-out infinite;
+}
+
+/* GPS Route Dash Animation */
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.animate-dash-flow {
+  animation: dashFlow 2.2s linear infinite;
+}
+
