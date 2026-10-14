@@ -396,7 +396,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. CINEMATIC ATHLETIC HERO SECTION (NIKE TRAIL / CANYON STYLE) */}
       {/* ========================================================================= */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative flex flex-col justify-start overflow-hidden">
         
         {/* Cinematic Action Photography Background with soft dissolve at the bottom */}
         <div 
@@ -418,7 +418,7 @@ export default function HomePage() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-10 w-full flex flex-col items-center sm:items-start space-y-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-3 sm:pb-4 w-full flex flex-col items-center sm:items-start space-y-4 sm:space-y-5">
           
           {/* 1. Event Graphic Title with Radial Fire Backlight & Kinetic Glow */}
           <div className="relative w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] group">
@@ -435,7 +435,7 @@ export default function HomePage() {
           {/* 2. Tagline (Guaranteed 1 Line) & Subtext */}
           <div className="space-y-2 max-w-4xl text-center sm:text-left w-full">
             <h2 className="font-display text-base sm:text-xl md:text-2xl lg:text-3xl text-white font-extrabold uppercase tracking-wider italic whitespace-nowrap overflow-hidden text-ellipsis">
-              UN-SUPPORTED RAIN SEASON EXPEDITION <span className="text-[#FA6D0B]">//</span> 60–200 KM
+              UN-SUPPORTED RAIN SEASON EXPEDITION <span className="text-[#FA6D0B] font-black">·</span> 60–200 KM
             </h2>
             <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed font-normal max-w-2xl">
               Tantangan ketahanan mandiri musim hujan edisi perayaan komunitas GX-ID. Hadir dengan 5 kategori offline serta Virtual Ride nasional terintegrasi.
@@ -443,13 +443,13 @@ export default function HomePage() {
           </div>
 
           {/* 3. Action Buttons (Styled Exactly Like Header CTA Pill) */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+          <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
             {/* Primary Action Button (REGISTER NOW — Solid Orange Pill) */}
             <Link
               href="/daftar"
               className="group relative px-8 sm:px-9 py-3 rounded-full text-[13px] sm:text-sm font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] border border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,109,11,0.55)] flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95"
             >
-              <span>REGISTER NOW // JOIN THE EXPEDITION</span>
+              <span>REGISTER NOW · JOIN THE EXPEDITION</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
             </Link>
 
@@ -461,21 +461,21 @@ export default function HomePage() {
               {/* Hover background fill */}
               <span className="absolute inset-0 bg-[#FA6D0B] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               <span className="relative z-10 group-hover:text-black transition-colors duration-300">
-                PANDUAN LOMBA & PERATURAN
+                PANDUAN LOMBA &amp; PERATURAN
               </span>
               <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
             </Link>
           </div>
 
           {/* 4. Running Text Ticker — Directly Under Buttons */}
-          <div className="w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] mt-6 rounded-2xl bg-black/70 backdrop-blur-xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.7)] overflow-hidden py-3 px-2 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
+          <div className="w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] mt-3.5 sm:mt-4 rounded-2xl bg-black/70 backdrop-blur-xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.7)] overflow-hidden py-3 px-2 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
             <div className="animate-marquee flex items-center whitespace-nowrap text-xs sm:text-[13px] font-semibold tracking-widest uppercase text-slate-300">
               {/* Set 1 */}
               <div className="flex items-center">
-                <span>MINGGU KE-2 DESEMBER 2026</span>
+                <span>MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>START & FINISH: ABEEY COFFEE & LRT HARJAMUKTI CIBUBUR</span>
+                <span>START &amp; FINISH: ABEEY COFFEE &amp; LRT HARJAMUKTI CIBUBUR</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP</span>
@@ -490,7 +490,7 @@ export default function HomePage() {
                 <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN & TIM PAIR MIX</span>
+                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN &amp; TIM PAIR MIX</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID</span>
@@ -499,10 +499,10 @@ export default function HomePage() {
 
               {/* Set 2 */}
               <div className="flex items-center" aria-hidden="true">
-                <span>MINGGU KE-2 DESEMBER 2026</span>
+                <span>MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>START & FINISH: ABEEY COFFEE & LRT HARJAMUKTI CIBUBUR</span>
+                <span>START &amp; FINISH: ABEEY COFFEE &amp; LRT HARJAMUKTI CIBUBUR</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP</span>
@@ -517,7 +517,7 @@ export default function HomePage() {
                 <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN & TIM PAIR MIX</span>
+                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN &amp; TIM PAIR MIX</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID</span>
@@ -530,6 +530,39 @@ export default function HomePage() {
 
       </section>
 
+      {/* ========================================================================= */}
+      {/* 1.5 FULL-BLEED OFFICIAL EVENT TELEMETRY STRIP (PURE TYPOGRAPHY - DATE & VENUE FOCUS) */}
+      {/* ========================================================================= */}
+      <div className="relative z-20 w-full border-y border-white/10 bg-black/60 backdrop-blur-md shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 py-4 sm:py-5">
+            
+            {/* Segment 1: Waktu & Tanggal Gelaran Resmi */}
+            <div className="py-2.5 md:py-0 md:pr-10 lg:pr-14 flex flex-col justify-center">
+              <span className="text-[10px] sm:text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block leading-none mb-1.5">
+                OFFICIAL RACE DATE · MINGGU KE-2
+              </span>
+              <span className="font-display text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-white italic tracking-wider leading-none block">
+                MINGGU, 13 DESEMBER 2026
+              </span>
+            </div>
+
+            {/* Segment 2: Lokasi Start & Finish Staging Arena */}
+            <div className="py-2.5 md:py-0 md:pl-10 lg:pl-14 flex flex-col justify-center">
+              <span className="text-[10px] sm:text-xs font-mono font-bold text-slate-400 uppercase tracking-widest block leading-none mb-1.5">
+                START &amp; FINISH ARENA
+              </span>
+              <span className="font-display text-xl sm:text-2xl lg:text-3xl font-black uppercase text-white italic tracking-wide leading-none block">
+                ABEEY COFFEE &amp; EATERY, CIBUBUR
+              </span>
+              <span className="text-xs sm:text-sm text-slate-400 font-mono mt-1 block">
+                Akses Terintegrasi Stasiun LRT Harjamukti
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
 
       {/* ========================================================================= */}
       {/* 2. HYBRID COCKPIT TELEMETRY & ATHLETIC MONOLITHS (NIKE TRAIL X GARMIN HUD) */}
@@ -538,7 +571,7 @@ export default function HomePage() {
         
         {/* Cinematic Action Cyclist Motion Background (pesepeda.webp) - MIDDLE IMAGE: Solo Aero Cyclist */}
         <div 
-          className="absolute -top-72 -bottom-96 inset-x-0 z-0 pointer-events-none overflow-hidden"
+          className="absolute -top-96 sm:-top-[420px] -bottom-72 inset-x-0 z-0 pointer-events-none overflow-hidden"
           style={{
             maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, black 22%, black 85%, transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, black 22%, black 85%, transparent 100%)'
@@ -547,7 +580,7 @@ export default function HomePage() {
           <img
             src="/pesepeda.webp"
             alt="Grindurance Gravel Cyclist Solo In Motion"
-            className="w-full h-full object-cover object-[center_35%] lg:object-[70%_25%] opacity-90 filter contrast-120 saturate-125 brightness-100"
+            className="w-full h-full object-cover object-[center_20%] lg:object-[70%_12%] opacity-90 filter contrast-120 saturate-125 brightness-100"
           />
           {/* Seamless gradient overlays for extreme typographic legibility without cutting off the bottom */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E11] via-transparent to-transparent" />
@@ -802,13 +835,13 @@ export default function HomePage() {
                     }}
                   />
 
-                  {/* HEADER JUDUL TEGAS (PURE TYPOGRAPHY, TANPA ICON) */}
+                  {/* HEADER JUDUL TEGAS (PURE TYPOGRAPHY) */}
                   <div className="relative z-10 flex items-center justify-between border-b border-white/10 pb-2.5 shrink-0">
                     <h4 className="font-display text-lg sm:text-xl lg:text-2xl font-black uppercase text-white italic tracking-wider leading-none">
                       {currentCategory.id === 'VIRTUAL' ? 'VIRTUAL RIDE ROUTE' : `${currentCategory.km} ROUTE`}
                     </h4>
-                    <span className="text-[9px] sm:text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-white/[0.06] text-[#FA6D0B] border border-white/10 uppercase tracking-widest">
-                      GPS // ELEVATION
+                    <span className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
+                      GPS &amp; ELEVATION
                     </span>
                   </div>
 
@@ -935,8 +968,8 @@ export default function HomePage() {
 
               </div>
 
-              {/* KOLOM KANAN (7 COLS): TATA LETAK DATA & TELEMETRI SEJAJAR DENGAN KOTAK RUTE */}
-              <div className="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
+              {/* KOLOM KANAN (7 COLS): TATA LETAK DATA & TELEMETRI DENGAN FROSTED CARD ELEGAN */}
+              <div className="lg:col-span-7 rounded-xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 flex flex-col justify-between shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
                 
                 {/* 1. Header Etape */}
                 <div>
@@ -1040,7 +1073,7 @@ export default function HomePage() {
                 {/* 3. Narasi Deskripsi Jalur & Karakteristik Etape */}
                 <div className="space-y-1.5">
                   <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                    KARAKTERISTIK ETAPE //
+                    KARAKTERISTIK ETAPE
                   </span>
                   <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                     {currentCategory.desc}
@@ -1050,7 +1083,7 @@ export default function HomePage() {
                 {/* 4. Surface Breakdown (Komposisi Permukaan Jalur) */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-slate-400 uppercase tracking-wider font-semibold">KOMPOSISI MEDAN //</span>
+                    <span className="text-slate-400 uppercase tracking-wider font-semibold">KOMPOSISI MEDAN</span>
                     <span className="text-slate-300">
                       <span className="text-[#FA6D0B] font-bold">{currentCategory.surfaceBreakdown.asphalt}</span> Aspal ·{' '}
                       <span className="text-white font-bold">{currentCategory.surfaceBreakdown.gravel}</span> Makadam ·{' '}
@@ -1071,7 +1104,7 @@ export default function HomePage() {
                   {/* Row 1: Section label + status/countdown */}
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 mb-3">
                     <span className="text-[11px] font-mono font-black uppercase tracking-widest text-[#FA6D0B]">
-                      BIAYA PENDAFTARAN //
+                      BIAYA PENDAFTARAN
                     </span>
                     {earlyBirdCountdown.active ? (
                       <div className="flex items-center gap-2">
@@ -1112,9 +1145,14 @@ export default function HomePage() {
                         </span>
                         <span className="text-[9px] font-mono text-slate-500">s/d 15 Nov 2025</span>
                         {earlyBirdCountdown.active ? (
-                          <span className="text-[8px] font-mono font-black uppercase px-2 py-0.5 rounded-full bg-[#FA6D0B] text-black tracking-widest ml-auto">AKTIF</span>
+                          <span className="text-[9px] font-mono font-bold uppercase text-[#FA6D0B] tracking-wider ml-auto flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
+                            AKTIF
+                          </span>
                         ) : (
-                          <span className="text-[8px] font-mono font-bold uppercase px-2 py-0.5 rounded-full border border-white/10 text-slate-500 tracking-widest ml-auto">SELESAI</span>
+                          <span className="text-[9px] font-mono font-bold uppercase text-slate-500 tracking-wider ml-auto">
+                            SELESAI
+                          </span>
                         )}
                       </div>
 
@@ -1155,17 +1193,20 @@ export default function HomePage() {
                     </div>
 
                     {/* SEPARATOR */}
-                    <div className="hidden sm:flex items-center px-3.5 text-[#FA6D0B]/40 font-mono font-black text-sm select-none">//</div>
+                    <div className="hidden sm:block w-[1px] bg-white/10 my-2 self-stretch" />
 
                     {/* REGULAR TIER */}
-                    <div className={`flex-1 py-3 sm:pl-2 sm:pr-5 border-t sm:border-t-0 border-white/10 sm:border-r border-white/10 ${earlyBirdCountdown.active ? 'opacity-60 hover:opacity-90 transition-opacity' : ''}`}>
+                    <div className={`flex-1 py-3 sm:pl-4 sm:pr-5 border-t sm:border-t-0 border-white/10 sm:border-r border-white/10 ${earlyBirdCountdown.active ? 'opacity-60 hover:opacity-90 transition-opacity' : ''}`}>
                       <div className="flex items-center gap-2 mb-2">
                         <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${!earlyBirdCountdown.active ? 'text-[#FA6D0B]' : 'text-white'}`}>
                           REGULAR
                         </span>
                         <span className="text-[9px] font-mono text-slate-400">16 Nov – H-Event</span>
                         {!earlyBirdCountdown.active && (
-                          <span className="text-[8px] font-mono font-black uppercase px-2 py-0.5 rounded-full bg-[#FA6D0B] text-black tracking-widest ml-auto">AKTIF</span>
+                          <span className="text-[9px] font-mono font-bold uppercase text-[#FA6D0B] tracking-wider ml-auto flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
+                            AKTIF
+                          </span>
                         )}
                       </div>
 
@@ -1202,7 +1243,7 @@ export default function HomePage() {
                     {/* CTA + VOUCHER */}
                     <div className="flex flex-col justify-between gap-3 sm:pl-5 pt-3 sm:pt-0 border-t sm:border-t-0 border-white/10 sm:w-[175px] shrink-0">
                       <div>
-                        <div className="text-[9px] font-mono font-black uppercase tracking-widest text-[#FA6D0B] mb-1">VOUCHER SUBSIDI //</div>
+                        <div className="text-[9px] font-mono font-black uppercase tracking-widest text-[#FA6D0B] mb-1">VOUCHER SUBSIDI</div>
                         <p className="text-[10px] font-mono text-slate-300 leading-relaxed">
                           Hemat <strong className="text-white font-bold">Rp 50.000</strong> untuk Wanita · ≤17 Th · Pair Mix.<br />
                           <span className="text-slate-400 text-[9px]">Gunakan kupon saat checkout.</span>
@@ -1231,7 +1272,7 @@ export default function HomePage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-400 uppercase tracking-wider font-semibold">
-                    CHECKPOINT &amp; PITSTOP ETAPE // {currentCategory.km}
+                    CHECKPOINT &amp; PITSTOP ETAPE ({currentCategory.km})
                   </span>
                   <span className="text-[10px] text-[#FA6D0B] font-bold uppercase tracking-wider">
                     {currentCategory.id === '150' || currentCategory.id === '200' ? 'WAJIB PITSTOP 30 MENIT' : 'SMART GEOFENCING'}
@@ -1245,12 +1286,12 @@ export default function HomePage() {
                     return (
                       <div 
                         key={sIdx}
-                        className={`p-2.5 rounded-lg border text-left flex flex-col justify-between ${
+                        className={`p-3 rounded-xl border text-left flex flex-col justify-between backdrop-blur-sm shadow-sm ${
                           isPitstop 
                             ? 'bg-[#FA6D0B]/10 border-[#FA6D0B]/50' 
                             : isKOM
                             ? 'bg-[#FA6D0B]/10 border-[#FA6D0B]/50'
-                            : 'bg-black/40 border-white/10'
+                            : 'bg-black/50 border-white/10'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-1">
@@ -1270,9 +1311,9 @@ export default function HomePage() {
               </div>
 
               {/* Safety & Protocol Box (Pure Typography, Icon-free) */}
-              <div className="p-3.5 rounded-lg bg-black/40 border border-white/10 space-y-1.5 text-xs">
+              <div className="p-4 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 space-y-1.5 text-xs">
                 <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                  REGULASI TEKNIS &amp; PROTOKOL //
+                  REGULASI TEKNIS &amp; PROTOKOL
                 </span>
                 <div className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                   {currentCategory.isRace ? (
@@ -1302,7 +1343,7 @@ export default function HomePage() {
         
         {/* Dynamic Action Tandem Cyclists Background (pesepeda2.webp) - 3RD BOTTOM IMAGE */}
         <div 
-          className="absolute top-64 sm:top-72 bottom-0 inset-x-0 z-0 pointer-events-none overflow-hidden"
+          className="absolute top-8 sm:top-12 bottom-0 inset-x-0 z-0 pointer-events-none overflow-hidden"
           style={{
             maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 14%, black 35%, black 85%, transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 14%, black 35%, black 85%, transparent 100%)'
@@ -1311,10 +1352,10 @@ export default function HomePage() {
           <img
             src="/pesepeda2.webp"
             alt="Grindurance Gravel Cyclists Tandem In Motion"
-            className="w-full h-full object-cover object-[center_20%] lg:object-[75%_15%] opacity-90 filter contrast-120 saturate-125 brightness-100"
+            className="w-full h-full object-cover object-[center_10%] lg:object-[75%_8%] opacity-90 filter contrast-120 saturate-125 brightness-100"
           />
           {/* Seamless dark gradient overlays - smooth top fade-in from dark pause and bottom dissolve */}
-          <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#090A0D] via-[#090A0D]/80 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#090A0D] via-[#090A0D]/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#090A0D]/90 via-[#090A0D]/55 to-[#090A0D]/25" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#090A0D] via-transparent to-transparent" />
         </div>
@@ -1338,15 +1379,10 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="border-l-2 md:border-l-0 md:border-r-2 border-[#FA6D0B] pl-4 md:pl-0 md:pr-4 py-0.5 max-w-md md:text-right space-y-3">
+            <div className="border-l-2 md:border-l-0 md:border-r-2 border-[#FA6D0B] pl-4 md:pl-0 md:pr-4 py-0.5 max-w-md md:text-right">
               <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                 Sistem pendaftaran dua opsi: pilih paket <strong className="text-white">Medal Saja</strong> untuk esensi tantangan mandiri, atau upgrade ke paket <strong className="text-white">Medal &amp; Jersey</strong> resmi GX-ID buatan Pollride (+Rp 50.000). Seluruh paket mencakup perlengkapan hari-H.
               </p>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/[0.03] text-xs font-mono uppercase text-slate-300">
-                <span className="text-white font-bold">2 OPSI PAKET</span>
-                <span className="text-[#FA6D0B] select-none">//</span>
-                <span>TARIF TRANSPARAN</span>
-              </div>
             </div>
           </div>
 
@@ -1626,10 +1662,9 @@ export default function HomePage() {
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
             <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 text-[#FA6D0B] text-[10px] font-mono font-bold uppercase tracking-widest">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>RUNDOWN RESMI // OPERASIONAL BALAPAN</span>
-              </div>
+              <span className="text-sm sm:text-base font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
+                RUNDOWN RESMI // OPERASIONAL BALAPAN
+              </span>
               <h2 className="font-nacelle text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
                 EVENT TIMELINE &amp; WAVE DISPATCH
               </h2>
@@ -1661,7 +1696,7 @@ export default function HomePage() {
               }`}
             >
               <Flag className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>RACE DAY (HARI-H) // MINGGU</span>
+              <span>RACE DAY (HARI-H) // MINGGU, 13 DES 2026</span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                 activeScheduleTab === 'raceday' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
               }`}>
@@ -1678,7 +1713,7 @@ export default function HomePage() {
               }`}
             >
               <Calendar className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>PRA-EVENT (H-1) // SABTU</span>
+              <span>PRA-EVENT (H-1) // SABTU, 12 DES 2026</span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                 activeScheduleTab === 'praevent' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
               }`}>
@@ -1714,7 +1749,7 @@ export default function HomePage() {
                   <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
                   <div>
                     <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                      VENUE UTAMA: ABEEY COFFEE &amp; EATERY, HARJAMUKTI
+                      VENUE UTAMA: ABEEY COFFEE &amp; EATERY, HARJAMUKTI — MINGGU, 13 DESEMBER 2026
                     </span>
                     <span className="text-[11px] text-slate-400">
                       Titik Kumpul Start &amp; Finish Terintegrasi Stasiun LRT Harjamukti Cibubur
