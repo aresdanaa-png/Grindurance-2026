@@ -1329,7 +1329,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row-reverse md:items-end justify-between gap-6 border-b border-white/10 pb-8">
             <div className="flex flex-col items-start md:items-end space-y-3">
               <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-sans pr-0 md:pr-7 lg:pr-9">
-                PARTICIPANT PACKAGES · 2026 EDITION
+                PARTICIPANT PACKAGES // 2026 EDITION
               </span>
               <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[560px] group">
                 {/* Ambient Radial Backlight Glow in exact brand orange */}
@@ -1342,10 +1342,18 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="border-l-2 md:border-l-0 md:border-r-2 border-[#FA6D0B] pl-4 md:pl-0 md:pr-4 py-0.5 max-w-md md:text-right">
-              <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
-                Sistem pendaftaran dua opsi: pilih paket <strong className="text-white">Medal Saja</strong> untuk esensi tantangan mandiri, atau upgrade ke paket <strong className="text-white">Medal &amp; Jersey</strong> resmi GX-ID buatan Pollride (+Rp 50.000). Seluruh paket mencakup perlengkapan hari-H.
-              </p>
+            <div className="flex flex-col items-start space-y-3.5 max-w-md">
+              {/* UI DNA: Pill Capsule from user design */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/15 bg-black/40 backdrop-blur-sm">
+                <span className="text-xs font-bold text-white uppercase tracking-wider">2 OPSI PAKET</span>
+                <span className="text-[#FA6D0B] font-bold text-xs">//</span>
+                <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider">TARIF TRANSPARAN</span>
+              </div>
+              <div className="border-l-2 md:border-l-0 md:border-r-2 border-[#FA6D0B] pl-4 md:pl-0 md:pr-4 py-0.5 md:text-right w-full">
+                <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
+                  Sistem pendaftaran dua opsi: pilih paket <strong className="text-white">Medal Saja</strong> untuk esensi tantangan mandiri, atau upgrade ke paket <strong className="text-white">Medal &amp; Jersey</strong> resmi GX-ID buatan Pollride (+Rp 50.000). Seluruh paket mencakup perlengkapan hari-H.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -1364,32 +1372,29 @@ export default function HomePage() {
             </span>
           </div>
 
-          {/* DUAL PACKAGE COMPARISON (Clean Side-by-Side Split) */}
+          {/* DUAL PACKAGE COMPARISON (Exact 1:1 Match with User UI DNA) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Tier 1: Medal Only */}
-            <div className="relative overflow-hidden p-6 sm:p-7 rounded-xl border border-white/10 bg-black/60 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
-              {/* Top hairline accent bar */}
-              <div className="absolute top-0 inset-x-0 h-[2px] bg-white/15" />
-
+            <div className="p-7 sm:p-8 rounded-2xl border border-white/10 bg-[#0E0F13]/90 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-widest">
+                  <div className="flex items-center gap-2.5">
+                    <span className="px-3 py-1 rounded-full border border-white/20 text-white text-[11px] font-sans font-bold uppercase tracking-wider">
                       OPSI 01
                     </span>
-                    <span className="text-white/20 font-black">·</span>
-                    <span className="text-xs font-sans font-bold text-white uppercase tracking-wider">
+                    <span className="text-[#FA6D0B] font-bold text-xs tracking-wider">//</span>
+                    <span className="text-white text-xs font-sans font-bold uppercase tracking-wider">
                       ESENSIAL
                     </span>
                   </div>
-                  <span className="text-[10px] font-sans text-slate-400 font-bold uppercase tracking-wider">
-                    STANDAR FINISHER
+                  <span className="text-xs font-sans text-slate-400 font-semibold uppercase tracking-wider">
+                    TARIF DASAR KATEGORI
                   </span>
                 </div>
                 
                 <div>
-                  <h3 className="font-display italic text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-white tracking-tight leading-none">
+                  <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
                     PAKET MEDAL ONLY
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
@@ -1397,7 +1402,7 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/10 space-y-3 text-xs sm:text-[13px] text-slate-300 font-sans">
+                <div className="pt-6 border-t border-white/10 space-y-3.5 text-xs sm:text-[13px] text-slate-300 font-sans">
                   <div className="flex items-start gap-3">
                     <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)</span>
@@ -1421,52 +1426,32 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="pt-5 border-t border-white/10 flex items-end justify-between">
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-sans font-bold text-slate-400 uppercase tracking-widest block leading-none">
-                    TARIF DASAR
-                  </span>
-                  <div className="flex items-baseline gap-1.5 pt-1">
-                    <span className="text-[11px] font-sans font-bold text-slate-400 leading-none">MULAI</span>
-                    <span className="font-display italic font-black text-2xl sm:text-3xl text-white leading-none">
-                      RP 250.000
-                    </span>
-                  </div>
-                </div>
-                <div className="text-right pb-0.5">
-                  <span className="text-xs font-sans font-bold text-slate-300 uppercase tracking-wider block">
-                    TERMASUK FASILITAS HARI-H
-                  </span>
-                  <span className="text-[10px] font-sans text-slate-500 uppercase tracking-wider block mt-0.5">
-                    OFFLINE 60–200 KM · VIRTUAL RP 200.000
-                  </span>
-                </div>
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-sans">
+                <span className="text-slate-400 font-medium uppercase tracking-wider">MULAI DARI RP 200.000</span>
+                <span className="text-white font-bold uppercase tracking-wider">TERMASUK FASILITAS HARI-H</span>
               </div>
             </div>
 
             {/* Tier 2: Medal & Jersey */}
-            <div className="relative overflow-hidden p-6 sm:p-7 rounded-xl border-2 border-[#FA6D0B] bg-gradient-to-b from-black/85 via-black/75 to-[#160e07]/90 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_50px_rgba(250,109,11,0.22)] transition-all duration-300">
-              {/* Glowing Top Indicator Bar */}
-              <div className="absolute top-0 inset-x-0 h-[3px] bg-[#FA6D0B] shadow-[0_0_24px_#FA6D0B]" />
-
+            <div className="p-7 sm:p-8 rounded-2xl border-2 border-[#FA6D0B] bg-[#0E0F13]/90 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_45px_rgba(250,109,11,0.18)] transition-all duration-300">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded bg-[#FA6D0B] text-black text-[10px] font-sans font-black uppercase tracking-widest shadow-[0_0_12px_rgba(250,109,11,0.5)]">
+                  <div className="flex items-center gap-2.5">
+                    <span className="px-3 py-1 rounded-full bg-[#FA6D0B] text-black text-[11px] font-sans font-black uppercase tracking-wider">
                       OPSI 02
                     </span>
-                    <span className="text-[#FA6D0B] font-black">·</span>
-                    <span className="text-xs font-sans font-black text-white uppercase tracking-wider">
+                    <span className="text-[#FA6D0B] font-bold text-xs tracking-wider">//</span>
+                    <span className="text-white text-xs font-sans font-bold uppercase tracking-wider">
                       REKOMENDASI LENGKAP
                     </span>
                   </div>
-                  <span className="text-[10px] font-sans font-bold text-[#FA6D0B] uppercase tracking-wider">
-                    HEMAT RP 300.000
+                  <span className="text-xs font-sans font-bold text-[#FA6D0B] uppercase tracking-wider">
+                    HANYA +RP 50.000 / PAX
                   </span>
                 </div>
                 
                 <div>
-                  <h3 className="font-display italic text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-white tracking-tight leading-none">
+                  <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
                     PAKET MEDAL &amp; JERSEY RESMI
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
@@ -1474,15 +1459,10 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/10 space-y-3 text-xs sm:text-[13px] text-slate-300 font-sans">
-                  <div className="flex items-start gap-3 p-2.5 -mx-2.5 rounded-lg bg-[#FA6D0B]/10 border border-[#FA6D0B]/30 font-bold text-white">
+                <div className="pt-6 border-t border-white/10 space-y-3.5 text-xs sm:text-[13px] text-slate-300 font-sans">
+                  <div className="flex items-start gap-3 font-bold text-white">
                     <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
-                    <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                      <span>Official Anniversary Aero Jersey by Pollride</span>
-                      <span className="text-[10px] font-sans font-extrabold uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black self-start sm:self-auto">
-                        SENILAI RP 350.000
-                      </span>
-                    </div>
+                    <span>Official Anniversary Aero Jersey by Pollride (Senilai Rp 350.000)</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
@@ -1503,48 +1483,28 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="pt-5 border-t border-white/10 flex items-end justify-between">
-                <div className="space-y-0.5">
-                  <span className="text-[10px] font-sans font-bold text-[#FA6D0B] uppercase tracking-widest block leading-none">
-                    UPGRADE RESMI
-                  </span>
-                  <div className="flex items-baseline gap-1.5 pt-1">
-                    <span className="font-display italic font-black text-2xl sm:text-3xl text-[#FA6D0B] leading-none">
-                      +RP 50.000
-                    </span>
-                    <span className="text-xs font-sans font-bold text-slate-400 uppercase leading-none">
-                      / PAX
-                    </span>
-                  </div>
-                </div>
-                <div className="text-right pb-0.5">
-                  <span className="text-xs font-sans font-black text-[#FA6D0B] uppercase tracking-wider block">
-                    BEST SELLER EDITION
-                  </span>
-                  <span className="text-[10px] font-sans text-slate-400 uppercase tracking-wider block mt-0.5">
-                    SUBSIDI KOMUNITAS GX-ID
-                  </span>
-                </div>
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-sans">
+                <span className="text-slate-400 font-medium uppercase tracking-wider">SUBSIDI KOMUNITAS GX-ID</span>
+                <span className="text-[#FA6D0B] font-bold uppercase tracking-wider">BEST SELLER EDITION</span>
               </div>
             </div>
 
           </div>
 
-          {/* RPC COLLECTION & HANDLING FEE NOTICE BANNER */}
-          <div className="rounded-xl border border-white/10 bg-gradient-to-r from-black/80 via-[#121318]/90 to-black/80 p-5 sm:p-6 backdrop-blur-md relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FA6D0B]" />
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pl-2 sm:pl-3">
-              <div className="space-y-2 max-w-2xl">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-white/10 text-white text-[10px] font-sans font-bold uppercase tracking-widest">
+          {/* RPC COLLECTION & HANDLING FEE NOTICE BANNER (Harmonized with UI DNA) */}
+          <div className="rounded-2xl border border-white/10 bg-[#0E0F13]/90 p-5 sm:p-6 backdrop-blur-md relative overflow-hidden">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-2.5 max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-black/40">
+                  <span className="text-white text-[11px] font-sans font-bold uppercase tracking-wider">
                     LOGISTIK RACE PACK (RPC)
                   </span>
-                  <span className="text-[#FA6D0B] font-black">·</span>
-                  <span className="text-xs font-sans font-bold text-[#FA6D0B] uppercase tracking-wider">
+                  <span className="text-[#FA6D0B] font-bold text-xs">//</span>
+                  <span className="text-slate-300 text-[11px] font-sans font-semibold uppercase tracking-wider">
                     DUA OPSI PENGAMBILAN
                   </span>
                 </div>
-                <h4 className="font-display italic text-lg sm:text-xl font-black uppercase text-white tracking-tight">
+                <h4 className="font-display text-lg sm:text-xl font-black uppercase text-white tracking-tight">
                   PENGAMBILAN MANDIRI SAAT RPC DAY ATAU OPSI HANDLING FEE
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
@@ -1552,8 +1512,8 @@ export default function HomePage() {
                 </p>
               </div>
 
-              <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 min-w-[260px]">
-                <div className="p-3.5 rounded-lg bg-black/50 border border-white/10 flex items-center justify-between gap-3">
+              <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 min-w-[280px]">
+                <div className="p-3.5 rounded-xl bg-black/50 border border-white/10 flex items-center justify-between gap-3">
                   <div>
                     <span className="text-[10px] font-sans font-bold text-slate-400 uppercase tracking-widest block">
                       RPC DAY MANDIRI
@@ -1565,7 +1525,7 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <div className="p-3.5 rounded-lg bg-[#FA6D0B]/10 border border-[#FA6D0B]/30 flex items-center justify-between gap-3">
+                <div className="p-3.5 rounded-xl bg-[#FA6D0B]/10 border border-[#FA6D0B]/30 flex items-center justify-between gap-3">
                   <div>
                     <span className="text-[10px] font-sans font-bold text-[#FA6D0B] uppercase tracking-widest block">
                       OPSI HANDLING FEE
@@ -1771,7 +1731,7 @@ export default function HomePage() {
               }`}
             >
               <Flag className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>RACE DAY (HARI-H) · MINGGU, 13 DES 2026</span>
+              <span>RACE DAY (HARI-H) // MINGGU, 13 DES 2026</span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                 activeScheduleTab === 'raceday' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
               }`}>
@@ -1788,7 +1748,7 @@ export default function HomePage() {
               }`}
             >
               <Calendar className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>RPC DAY &amp; PRA-EVENT · MINGGU, 6 DES 2026</span>
+              <span>RPC DAY &amp; PRA-EVENT // MINGGU, 6 DES 2026</span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                 activeScheduleTab === 'praevent' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
               }`}>
@@ -2157,7 +2117,7 @@ export default function HomePage() {
                   <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
                   <div>
                     <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                      H-7 (6 HARI SEBELUM EVENT): MINGGU, 6 DESEMBER 2026 · ABEEY COFFEE CIBUBUR
+                      H-7 (6 HARI SEBELUM EVENT): MINGGU, 6 DESEMBER 2026 // ABEEY COFFEE CIBUBUR
                     </span>
                     <span className="text-[11px] text-slate-400">
                       Pengambilan Race Pack (RPC Mandiri), Coaching Clinic &amp; Technical Meeting Resmi
