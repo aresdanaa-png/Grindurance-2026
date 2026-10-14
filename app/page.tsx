@@ -1786,17 +1786,34 @@ export default function HomePage() {
       {/* 4. EVENT TIMELINE & WAVE DISPATCH RUNDOWN (POIN 2) */}
       {/* ========================================================================= */}
       <section id="jadwal" className="pt-8 sm:pt-12 pb-20 sm:pb-24 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
-        {/* Seamless Smooth Top Transition from pesepeda2 background */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#0B0C0E] via-[#0B0C0E]/70 to-transparent pointer-events-none z-[1]" />
+        
+        {/* Cinematic Sculpted Orange Dune Background Image */}
+        <div 
+          className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 10%, black 28%, black 82%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 10%, black 28%, black 82%, transparent 100%)'
+          }}
+        >
+          <img
+            src="/timeline-dune-grain.jpg"
+            alt="Grindurance Sculpted Orange Dune Wave Background"
+            className="w-full h-full object-cover object-center opacity-80 filter contrast-125 saturate-125 brightness-95"
+          />
+          {/* Seamless overlays to ensure perfect blend with #0B0C0E */}
+          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#0B0C0E] via-[#0B0C0E]/70 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#0B0C0E] via-[#0B0C0E]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B0C0E]/60 via-transparent to-[#0B0C0E]/60" />
+        </div>
 
         {/* Luminous Orange Aurora Ambient Glows */}
-        <div className="absolute -top-16 right-1/4 w-[540px] h-[540px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.14)_0%,rgba(250,109,11,0.03)_50%,transparent_70%)] blur-3xl pointer-events-none" />
-        <div className="absolute top-1/3 -left-24 w-[620px] h-[620px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.09)_0%,rgba(217,83,7,0.02)_55%,transparent_75%)] blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 right-1/3 w-[560px] h-[560px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.11)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+        <div className="absolute -top-16 right-1/4 w-[540px] h-[540px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.18)_0%,rgba(250,109,11,0.04)_50%,transparent_70%)] blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -left-24 w-[620px] h-[620px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.12)_0%,rgba(217,83,7,0.03)_55%,transparent_75%)] blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/3 w-[560px] h-[560px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.15)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
         {/* Animated Cinematic Grain Layer (Athletic Orange Specks & Micro-texture) */}
         <div 
-          className="absolute -inset-[30%] w-[160%] h-[160%] pointer-events-none opacity-25 bg-orange-grain animate-film-grain mix-blend-screen" 
+          className="absolute -inset-[30%] w-[160%] h-[160%] pointer-events-none opacity-30 bg-orange-grain animate-film-grain mix-blend-screen" 
           aria-hidden="true" 
         />
 
@@ -1807,7 +1824,7 @@ export default function HomePage() {
         />
 
         {/* Vignette Overlay for High-Contrast Information Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C0E]/60 via-transparent to-[#0B0C0E]/80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C0E]/40 via-transparent to-[#0B0C0E]/70 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
           
