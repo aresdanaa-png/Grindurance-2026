@@ -28,9 +28,7 @@ import {
   Layers,
   Timer,
   Radio,
-  FileText,
-  Shirt,
-  Package
+  FileText
 } from 'lucide-react';
 
 interface StationItem {
@@ -1548,39 +1546,34 @@ export default function HomePage() {
               {/* ITEM 1: JERSEY */}
               <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
                 <div className="space-y-4">
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-b from-white/[0.04] to-black/60 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col items-center justify-center p-6 text-center">
-                    {/* Atmospheric Glow & Watermark */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FA6D0B]/5 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute -bottom-4 -right-4 font-display font-black text-8xl text-white/[0.02] select-none pointer-events-none">
-                      01
-                    </div>
-
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
                     {/* Top Badges */}
-                    <div className="absolute top-3 left-3">
-                      <span className="text-[10px] font-sans font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black shadow-[0_0_12px_rgba(250,109,11,0.4)]">
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-[10px] font-sans font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black">
                         POLLRIDE AERO FIT
                       </span>
-                    </div>
-                    <div className="absolute top-3 right-3">
-                      <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400">
-                        OFFICIAL REVEAL
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                        EDISI 2026
                       </span>
                     </div>
 
-                    {/* Icon & Coming Soon Content */}
-                    <div className="relative z-10 flex flex-col items-center">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md flex items-center justify-center text-slate-400 group-hover:text-[#FA6D0B] group-hover:border-[#FA6D0B]/40 group-hover:scale-105 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-3">
-                        <Shirt className="w-8 h-8 sm:w-10 sm:h-10 stroke-[1.5]" />
+                    {/* Pure Typographic Centerpiece */}
+                    <div className="flex flex-col items-center justify-center my-auto text-center space-y-1.5">
+                      <div className="font-display text-6xl sm:text-7xl font-black text-white/10 tracking-tighter group-hover:text-white/20 transition-colors leading-none">
+                        01
                       </div>
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                        <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-white">
-                          COMING SOON
-                        </span>
+                      <div className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+                        COMING SOON
                       </div>
-                      <span className="text-[10px] font-sans text-slate-400 mt-2 font-medium uppercase tracking-wider">
-                        Desain Jersey Dalam Tahap Finalisasi
-                      </span>
+                      <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#FA6D0B] font-bold">
+                        OFFICIAL DESIGN REVEAL
+                      </div>
+                    </div>
+
+                    {/* Bottom Telemetry Strip */}
+                    <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                      <span>APPAREL LAB</span>
+                      <span className="text-white font-bold">STAGE // PRODUKSI</span>
                     </div>
                   </div>
 
@@ -1622,39 +1615,34 @@ export default function HomePage() {
               {/* ITEM 2: MEDAL */}
               <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
                 <div className="space-y-4">
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-b from-white/[0.04] to-black/60 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col items-center justify-center p-6 text-center">
-                    {/* Atmospheric Glow & Watermark */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FA6D0B]/5 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute -bottom-4 -right-4 font-display font-black text-8xl text-white/[0.02] select-none pointer-events-none">
-                      02
-                    </div>
-
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
                     {/* Top Badges */}
-                    <div className="absolute top-3 left-3">
+                    <div className="flex items-center justify-between w-full">
                       <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
                         SEMUA KATEGORI
                       </span>
-                    </div>
-                    <div className="absolute top-3 right-3">
-                      <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400">
-                        OFFICIAL REVEAL
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                        EDISI 2026
                       </span>
                     </div>
 
-                    {/* Icon & Coming Soon Content */}
-                    <div className="relative z-10 flex flex-col items-center">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md flex items-center justify-center text-slate-400 group-hover:text-[#FA6D0B] group-hover:border-[#FA6D0B]/40 group-hover:scale-105 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-3">
-                        <Award className="w-8 h-8 sm:w-10 sm:h-10 stroke-[1.5]" />
+                    {/* Pure Typographic Centerpiece */}
+                    <div className="flex flex-col items-center justify-center my-auto text-center space-y-1.5">
+                      <div className="font-display text-6xl sm:text-7xl font-black text-white/10 tracking-tighter group-hover:text-white/20 transition-colors leading-none">
+                        02
                       </div>
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                        <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-white">
-                          COMING SOON
-                        </span>
+                      <div className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+                        COMING SOON
                       </div>
-                      <span className="text-[10px] font-sans text-slate-400 mt-2 font-medium uppercase tracking-wider">
-                        Mold 3D Medali Dalam Tahap Produksi
-                      </span>
+                      <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#FA6D0B] font-bold">
+                        MOLD 3D RELIEF
+                      </div>
+                    </div>
+
+                    {/* Bottom Telemetry Strip */}
+                    <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                      <span>ZINC ALLOY METAL</span>
+                      <span className="text-white font-bold">STAGE // CETAK</span>
                     </div>
                   </div>
 
@@ -1696,39 +1684,34 @@ export default function HomePage() {
               {/* ITEM 3: RACE PACK KIT */}
               <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
                 <div className="space-y-4">
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-gradient-to-b from-white/[0.04] to-black/60 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col items-center justify-center p-6 text-center">
-                    {/* Atmospheric Glow & Watermark */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#FA6D0B]/5 via-transparent to-transparent pointer-events-none" />
-                    <div className="absolute -bottom-4 -right-4 font-display font-black text-8xl text-white/[0.02] select-none pointer-events-none">
-                      03
-                    </div>
-
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
                     {/* Top Badges */}
-                    <div className="absolute top-3 left-3">
+                    <div className="flex items-center justify-between w-full">
                       <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
                         HARI-H READY
                       </span>
-                    </div>
-                    <div className="absolute top-3 right-3">
-                      <span className="text-[9px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400">
-                        OFFICIAL REVEAL
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                        EDISI 2026
                       </span>
                     </div>
 
-                    {/* Icon & Coming Soon Content */}
-                    <div className="relative z-10 flex flex-col items-center">
-                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-md flex items-center justify-center text-slate-400 group-hover:text-[#FA6D0B] group-hover:border-[#FA6D0B]/40 group-hover:scale-105 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-3">
-                        <Package className="w-8 h-8 sm:w-10 sm:h-10 stroke-[1.5]" />
+                    {/* Pure Typographic Centerpiece */}
+                    <div className="flex flex-col items-center justify-center my-auto text-center space-y-1.5">
+                      <div className="font-display text-6xl sm:text-7xl font-black text-white/10 tracking-tighter group-hover:text-white/20 transition-colors leading-none">
+                        03
                       </div>
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                        <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-white">
-                          COMING SOON
-                        </span>
+                      <div className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+                        COMING SOON
                       </div>
-                      <span className="text-[10px] font-sans text-slate-400 mt-2 font-medium uppercase tracking-wider">
-                        Kurasi Perlengkapan Dalam Tahap Finalisasi
-                      </span>
+                      <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#FA6D0B] font-bold">
+                        KURASI PERLENGKAPAN
+                      </div>
+                    </div>
+
+                    {/* Bottom Telemetry Strip */}
+                    <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                      <span>LOGISTIK ATLET</span>
+                      <span className="text-white font-bold">STAGE // FINALISASI</span>
                     </div>
                   </div>
 
