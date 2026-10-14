@@ -1349,23 +1349,13 @@ export default function HomePage() {
                 <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                   Sistem pendaftaran dua opsi: pilih paket <strong className="text-white">Medal Saja</strong> untuk esensi tantangan mandiri, atau upgrade ke paket <strong className="text-white">Medal &amp; Jersey</strong> resmi GX-ID buatan Pollride (+Rp 50.000). Seluruh paket mencakup perlengkapan hari-H.
                 </p>
+                {/* Micro-telemetry Status: Batas Produksi */}
+                <div className="mt-2.5 flex items-center md:justify-end gap-2 text-[10px] font-mono uppercase tracking-wider text-slate-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse shrink-0" />
+                  <span>JAMINAN HARI-H DITUTUP: <strong className="text-white font-bold">10 SEPTEMBER 2026</strong></span>
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Official Production Notice Banner (Sesuai Ketentuan Resmi GX-ID) */}
-          <div className="p-3.5 sm:p-4 rounded-xl border border-white/10 bg-black/55 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans">
-            <div className="flex items-center gap-2.5">
-              <span className="px-2.5 py-0.5 rounded bg-[#FA6D0B]/15 border border-[#FA6D0B]/40 text-[#FA6D0B] text-[10px] font-bold uppercase tracking-widest shrink-0">
-                BATAS PRODUKSI
-              </span>
-              <span className="text-slate-300">
-                Pemesanan paket untuk jaminan serah terima Hari-H ditutup <strong className="text-white font-bold">10 September 2026</strong>.
-              </span>
-            </div>
-            <span className="text-slate-400 text-[11px] shrink-0">
-              Pendaftaran setelah 10 September 2026, jersey &amp; medali dikirim via kurir pasca-event.
-            </span>
           </div>
 
           {/* DUAL PACKAGE COMPARISON (Exact 1:1 Match with User UI DNA) */}
@@ -1487,52 +1477,50 @@ export default function HomePage() {
 
           </div>
 
-          {/* RPC COLLECTION & HANDLING FEE NOTICE BANNER (Harmonized with UI DNA) */}
-          <div className="rounded-2xl border border-white/10 bg-[#0E0F13]/90 p-5 sm:p-6 backdrop-blur-md relative overflow-hidden">
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div className="space-y-2.5 max-w-2xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/15 bg-black/40">
-                  <span className="text-white text-[11px] font-sans font-bold uppercase tracking-wider">
-                    LOGISTIK RACE PACK (RPC)
-                  </span>
-                  <span className="text-[#FA6D0B] font-bold text-xs">//</span>
-                  <span className="text-slate-300 text-[11px] font-sans font-semibold uppercase tracking-wider">
-                    DUA OPSI PENGAMBILAN
-                  </span>
+          {/* LOGISTIK RACE PACK (RPC) — 2-COLUMN ATHLETIC TELEMETRY STRIP */}
+          <div className="rounded-2xl border border-white/10 bg-[#0E0F13]/90 backdrop-blur-md overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 p-6 sm:p-7 gap-6 md:gap-0">
+              
+              {/* Column 1: Ambil Mandiri saat RPC Day */}
+              <div className="flex flex-col justify-between md:pr-8 space-y-3">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] sm:text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      PENGAMBILAN MANDIRI // RPC DAY
+                    </span>
+                    <span className="text-[10px] font-mono font-black uppercase px-2 py-0.5 rounded bg-white/10 text-white border border-white/15">
+                      GRATIS / RP 0
+                    </span>
+                  </div>
+                  <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-none">
+                    MINGGU, 6 DESEMBER 2026
+                  </h4>
                 </div>
-                <h4 className="font-display text-lg sm:text-xl font-black uppercase text-white tracking-tight">
-                  PENGAMBILAN MANDIRI SAAT RPC DAY ATAU OPSI HANDLING FEE
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  RPC resmi (Nomor Plat Sepeda, Jersey Pollride, Goodie Bag, &amp; Suplemen) dapat diambil mandiri secara <strong className="text-white font-semibold">Gratis (Rp 0)</strong> saat gelaran <strong className="text-white font-semibold">RPC Day, Coaching Clinic &amp; Technical Meeting</strong> pada <strong className="text-[#FA6D0B] font-semibold">Minggu, 6 Desember 2026</strong> (6 hari sebelum event) di ABEEY Coffee Cibubur.
+                <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                  Diambil langsung di <strong className="text-white">ABEEY Coffee &amp; Eatery Cibubur</strong> (10:00–17:00 WIB). Sudah termasuk menghadiri sesi Coaching Clinic &amp; Technical Meeting resmi.
                 </p>
               </div>
 
-              <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 min-w-[280px]">
-                <div className="p-3.5 rounded-xl bg-black/50 border border-white/10 flex items-center justify-between gap-3">
-                  <div>
-                    <span className="text-[10px] font-sans font-bold text-slate-400 uppercase tracking-widest block">
-                      RPC DAY MANDIRI
+              {/* Column 2: Opsi Handling Fee */}
+              <div className="flex flex-col justify-between md:pl-8 space-y-3">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] sm:text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      OPSI HANDLING FEE // LOGISTIK KHUSUS
                     </span>
-                    <span className="text-xs font-sans font-medium text-slate-300">Minggu, 6 Des 2026</span>
-                  </div>
-                  <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-sans font-black tracking-wider">
-                    GRATIS / RP 0
-                  </span>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-[#FA6D0B]/10 border border-[#FA6D0B]/30 flex items-center justify-between gap-3">
-                  <div>
-                    <span className="text-[10px] font-sans font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                      OPSI HANDLING FEE
+                    <span className="text-[10px] font-mono font-black uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black">
+                      OPSI TAMBAHAN
                     </span>
-                    <span className="text-xs font-sans font-medium text-slate-300">Berhalangan saat RPC Day</span>
                   </div>
-                  <span className="px-2.5 py-1 rounded bg-[#FA6D0B] text-black text-xs font-sans font-black tracking-wider">
-                    +RP 20.000
-                  </span>
+                  <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-[#FA6D0B] tracking-tight leading-none">
+                    +RP 20.000 <span className="text-xs font-sans text-slate-400 font-bold uppercase tracking-wider">/ PAX</span>
+                  </h4>
                 </div>
+                <p className="text-xs text-slate-400 font-sans leading-relaxed">
+                  Bagi peserta yang <strong className="text-white">berhalangan hadir saat RPC Day</strong>. Disiapkan via handling khusus panitia / pengambilan saat Hari-H dengan konfirmasi terlebih dahulu.
+                </p>
               </div>
+
             </div>
           </div>
 
