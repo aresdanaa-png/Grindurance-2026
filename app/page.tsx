@@ -1524,119 +1524,181 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* EDITORIAL PRODUCT SHOWCASE (Lookbook Grid) */}
+          {/* EDITORIAL PRODUCT SHOWCASE (Lookbook Grid — Harmonized with UI DNA) */}
           <div className="space-y-6 pt-6">
             <div className="border-b border-white/10 pb-4 flex items-center justify-between">
-              <span className="text-xs font-sans font-bold uppercase tracking-widest text-slate-400">
-                RINCIAN ITEM RESMI · LOOKBOOK
+              <div className="flex items-center gap-2.5">
+                <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#FA6D0B]">
+                  RINCIAN ITEM RESMI
+                </span>
+                <span className="text-[#FA6D0B] font-bold text-xs">//</span>
+                <span className="text-xs font-sans font-bold uppercase tracking-widest text-white">
+                  LOOKBOOK
+                </span>
+              </div>
+              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10">
+                3 CORE ITEMS
               </span>
-              <span className="text-xs font-sans text-slate-500 uppercase">3 CORE ITEMS</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
               {/* ITEM 1: JERSEY */}
-              <div className="space-y-4 group">
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[#FA6D0B]/50 transition-colors">
-                  <Image
-                    src="/merchandise/jersey.webp"
-                    alt="Official Anniversary Jersey"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-sans font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black">
-                      POLLRIDE AERO FIT
-                    </span>
+              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+                <div className="space-y-4">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-colors">
+                    <Image
+                      src="/merchandise/jersey.webp"
+                      alt="Official Anniversary Jersey"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="text-[10px] font-sans font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black shadow-[0_0_12px_rgba(250,109,11,0.4)]">
+                        POLLRIDE AERO FIT
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-[11px] font-sans font-bold uppercase tracking-wider">
+                      <span className="text-slate-400">01</span>
+                      <span className="text-[#FA6D0B] font-bold text-xs">//</span>
+                      <span className="text-[#FA6D0B]">APPAREL RESMI</span>
+                    </div>
+                    <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
+                      OFFICIAL ANNIVERSARY JERSEY
+                    </h3>
+                    <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                      Material mesh bernapas berteknologi quick-dry dengan grafis kontur topografi Jonggol–Sukamakmur. Dirancang khusus untuk cuaca basah dan lembap.
+                    </p>
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <div className="text-[11px] font-sans font-bold text-slate-500 uppercase tracking-wider">01 · APPAREL RESMI</div>
-                  <h3 className="font-display text-xl font-black uppercase text-white tracking-tight">
-                    OFFICIAL ANNIVERSARY JERSEY
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Material mesh bernapas berteknologi quick-dry dengan grafis kontur topografi Jonggol–Sukamakmur. Dirancang khusus untuk cuaca basah dan lembap.
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-sans text-slate-400">
-                  <div>· Quick-Dry Mesh</div>
-                  <div>· 3 Saku Belakang</div>
-                  <div>· Zipper YKK Lock</div>
-                  <div>· Garis Reflektif</div>
+                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2.5 text-[11px] font-sans">
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Quick-Dry Mesh</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>3 Saku Belakang</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Zipper YKK Lock</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Garis Reflektif</span>
+                  </div>
                 </div>
               </div>
 
               {/* ITEM 2: MEDAL */}
-              <div className="space-y-4 group">
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[#FA6D0B]/50 transition-colors">
-                  <Image
-                    src="/merchandise/medal.webp"
-                    alt="Finisher Metal Medal"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
-                      SEMUA KATEGORI
-                    </span>
+              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+                <div className="space-y-4">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-colors">
+                    <Image
+                      src="/merchandise/medal.webp"
+                      alt="Finisher Metal Medal"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
+                        SEMUA KATEGORI
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-[11px] font-sans font-bold uppercase tracking-wider">
+                      <span className="text-slate-400">02</span>
+                      <span className="text-[#FA6D0B] font-bold text-xs">//</span>
+                      <span className="text-[#FA6D0B]">MEDALI SAH</span>
+                    </div>
+                    <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
+                      HEAVY FINISHER METAL MEDAL
+                    </h3>
+                    <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                      Medali berbobot tebal dari paduan zinc alloy antique bronze dengan ukiran timbul 3D topografi puncak pegunungan dan lanyard tenun edisi peringatan.
+                    </p>
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <div className="text-[11px] font-sans font-bold text-slate-500 uppercase tracking-wider">02 · MEDALI SAH</div>
-                  <h3 className="font-display text-xl font-black uppercase text-white tracking-tight">
-                    HEAVY FINISHER METAL MEDAL
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Medali berbobot tebal dari paduan zinc alloy antique bronze dengan ukiran timbul 3D topografi puncak pegunungan dan lanyard tenun edisi peringatan.
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-sans text-slate-400">
-                  <div>· Paduan Solid Zinc</div>
-                  <div>· Relief Timbul 3D</div>
-                  <div>· Lanyard Woven Tebal</div>
-                  <div>· Finisher Luring &amp; Virtual</div>
+                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2.5 text-[11px] font-sans">
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Paduan Solid Zinc</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Relief Timbul 3D</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Lanyard Woven Tebal</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Finisher Luring &amp; Virtual</span>
+                  </div>
                 </div>
               </div>
 
               {/* ITEM 3: RACE PACK KIT */}
-              <div className="space-y-4 group">
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[#FA6D0B]/50 transition-colors">
-                  <Image
-                    src="/merchandise/racepack.webp"
-                    alt="Race Pack Items & Inclusions"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
-                      HARI-H READY
-                    </span>
+              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+                <div className="space-y-4">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-colors">
+                    <Image
+                      src="/merchandise/racepack.webp"
+                      alt="Race Pack Items & Inclusions"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3">
+                      <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
+                        HARI-H READY
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-1.5 text-[11px] font-sans font-bold uppercase tracking-wider">
+                      <span className="text-slate-400">03</span>
+                      <span className="text-[#FA6D0B] font-bold text-xs">//</span>
+                      <span className="text-[#FA6D0B]">ESENSIAL ATLET</span>
+                    </div>
+                    <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
+                      PERLENGKAPAN &amp; LAYANAN HARI-H
+                    </h3>
+                    <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                      Plat nomor sepeda tahan air, nutrisi gel energi NDR, minuman elektrolit, asuransi kecelakaan resmi, serta voucher hidangan pemulihan di ABEEY.
+                    </p>
                   </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <div className="text-[11px] font-sans font-bold text-slate-500 uppercase tracking-wider">03 · ESENSIAL ATLET</div>
-                  <h3 className="font-display text-xl font-black uppercase text-white tracking-tight">
-                    PERLENGKAPAN &amp; LAYANAN HARI-H
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    Plat nomor sepeda tahan air, nutrisi gel energi NDR, minuman elektrolit, asuransi kecelakaan resmi, serta voucher hidangan pemulihan di ABEEY.
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-sans text-slate-400">
-                  <div>· Plat BIB Waterproof</div>
-                  <div>· NDR Energy Gel</div>
-                  <div>· Asuransi Resmi</div>
-                  <div>· Voucher ABEEY Lounge</div>
+                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2.5 text-[11px] font-sans">
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Plat BIB Waterproof</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>NDR Energy Gel</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Asuransi Resmi</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shrink-0" />
+                    <span>Voucher ABEEY Lounge</span>
+                  </div>
                 </div>
               </div>
 
@@ -1644,11 +1706,14 @@ export default function HomePage() {
           </div>
 
           {/* Minimalist Bottom CTA Strip */}
-          <div className="rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
             <div className="space-y-1 text-center sm:text-left">
-              <span className="text-[11px] font-sans font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                KUOTA TERBATAS · AMANKAN BIB ANDA
-              </span>
+              <div className="flex items-center justify-center sm:justify-start gap-2 text-[11px] font-sans font-bold uppercase tracking-widest text-[#FA6D0B]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
+                <span>KUOTA TERBATAS</span>
+                <span className="font-bold text-xs">//</span>
+                <span>AMANKAN BIB ANDA</span>
+              </div>
               <h4 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
                 PILIH KATEGORI &amp; DAPATKAN PAKET ANDA
               </h4>
