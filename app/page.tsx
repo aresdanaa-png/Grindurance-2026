@@ -1390,25 +1390,25 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Tier 1: Medal Only */}
-            <div className="p-8 rounded-2xl border border-white/10 bg-[#0E0F13] flex flex-col justify-between space-y-6 hover:border-white/25 transition-all">
+            <div className="p-7 sm:p-8 rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300">
               <div className="space-y-5">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full border border-white/20 text-slate-300 text-[10px] font-mono font-bold uppercase tracking-widest">
+                    <span className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-widest">
                       OPSI 01
                     </span>
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+                    <span className="text-white/20 font-black">·</span>
+                    <span className="text-xs font-sans font-bold text-white uppercase tracking-wider">
                       ESENSIAL
                     </span>
                   </div>
-                  <span className="text-xs font-mono text-slate-400 font-bold uppercase tracking-wider">
+                  <span className="text-[11px] font-sans text-slate-400 font-semibold uppercase tracking-wider">
                     TARIF DASAR KATEGORI
                   </span>
                 </div>
                 
                 <div>
-                  <h3 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                  <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
                     PAKET MEDAL ONLY
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
@@ -1416,90 +1416,96 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-white/10 space-y-3 text-xs text-slate-300 font-sans">
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                <div className="pt-4 border-t border-white/10 space-y-3 text-xs sm:text-[13px] text-slate-300 font-sans">
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)</span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Nomor Plat Sepeda Tahan Air #1000+ &amp; QR Check-in</span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Asuransi Kecelakaan Resmi 1 Hari Event</span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Nutrisi NDR Energy Gel + Isotonic Drink</span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Akses Finisher Lounge &amp; Voucher Pemulihan ABEEY Coffee</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-                <span className="text-slate-400 uppercase">Mulai dari Rp 200.000</span>
-                <span className="text-white font-bold uppercase">TERMASUK FASILITAS HARI-H</span>
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-sans">
+                <span className="text-slate-400 font-medium uppercase tracking-wider">Mulai dari Rp 200.000</span>
+                <span className="text-white font-bold uppercase tracking-wider">TERMASUK FASILITAS HARI-H</span>
               </div>
             </div>
 
             {/* Tier 2: Medal & Jersey */}
-            <div className="p-8 rounded-2xl border-2 border-[#FA6D0B]/60 bg-gradient-to-b from-[#141210] to-[#0E0F13] flex flex-col justify-between space-y-6 shadow-[0_0_40px_rgba(250,109,11,0.08)]">
+            <div className="relative p-7 sm:p-8 rounded-2xl border-2 border-[#FA6D0B] bg-gradient-to-b from-black/85 via-black/75 to-[#160e07]/90 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_50px_rgba(250,109,11,0.18)] transition-all duration-300">
               <div className="space-y-5">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-[#FA6D0B] text-black text-[10px] font-mono font-black uppercase tracking-widest">
+                    <span className="px-2.5 py-0.5 rounded bg-[#FA6D0B] text-black text-[10px] font-sans font-black uppercase tracking-widest">
                       OPSI 02
                     </span>
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                    <span className="text-xs font-mono font-black text-white uppercase tracking-wider">
+                    <span className="text-[#FA6D0B] font-black">·</span>
+                    <span className="text-xs font-sans font-black text-white uppercase tracking-wider">
                       REKOMENDASI LENGKAP
                     </span>
                   </div>
-                  <span className="text-xs font-mono text-[#FA6D0B] font-bold uppercase tracking-wider">
-                    HANYA +RP 50.000 / PAX
-                  </span>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#FA6D0B]/15 border border-[#FA6D0B]/40 text-[#FA6D0B]">
+                    <span className="text-[10px] uppercase font-bold tracking-wider">HANYA</span>
+                    <span className="text-xs font-display font-black tracking-wide">+RP 50.000</span>
+                  </div>
                 </div>
                 
                 <div>
-                  <h3 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                  <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
                     PAKET MEDAL &amp; JERSEY RESMI
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
                     Paket lengkap terfavorit. Mendapatkan seluruh fasilitas Paket Medal Only ditambah Official Anniversary Aero Jersey buatan Pollride.
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-white/10 space-y-3 text-xs text-slate-300 font-sans">
-                  <div className="flex items-center gap-2.5 font-bold text-white">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
-                    <span>Official Anniversary Aero Jersey by Pollride (Senilai Rp 350.000)</span>
+                <div className="pt-4 border-t border-white/10 space-y-3 text-xs sm:text-[13px] text-slate-300 font-sans">
+                  <div className="flex items-start gap-3 p-2.5 -mx-2.5 rounded-lg bg-[#FA6D0B]/10 border border-[#FA6D0B]/30 font-bold text-white">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
+                    <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                      <span>Official Anniversary Aero Jersey by Pollride</span>
+                      <span className="text-[10px] font-sans font-extrabold uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black self-start sm:self-auto">
+                        SENILAI RP 350.000
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)</span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Nomor Plat Sepeda Tahan Air #1000+ &amp; QR Check-in</span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Asuransi Kecelakaan Resmi 1 Hari Event</span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                  <div className="flex items-start gap-3">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0 mt-0.5" />
                     <span>Nutrisi NDR Energy Gel + Isotonic + Voucher ABEEY Coffee</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-                <span className="text-slate-400 uppercase">Subsidi Komunitas GX-ID</span>
-                <span className="text-[#FA6D0B] font-bold uppercase">BEST SELLER EDITION</span>
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-sans">
+                <span className="text-slate-400 font-medium uppercase tracking-wider">Subsidi Komunitas GX-ID</span>
+                <span className="text-[#FA6D0B] font-bold uppercase tracking-wider">BEST SELLER EDITION</span>
               </div>
             </div>
 
@@ -1508,10 +1514,10 @@ export default function HomePage() {
           {/* EDITORIAL PRODUCT SHOWCASE (Lookbook Grid) */}
           <div className="space-y-6 pt-6">
             <div className="border-b border-white/10 pb-4 flex items-center justify-between">
-              <span className="text-xs font-mono uppercase tracking-widest text-slate-400">
-                RINCIAN ITEM RESMI // LOOKBOOK
+              <span className="text-xs font-sans font-bold uppercase tracking-widest text-slate-400">
+                RINCIAN ITEM RESMI · LOOKBOOK
               </span>
-              <span className="text-xs font-mono text-slate-500 uppercase">3 CORE ITEMS</span>
+              <span className="text-xs font-sans text-slate-500 uppercase">3 CORE ITEMS</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -1527,15 +1533,15 @@ export default function HomePage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-mono font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black">
+                    <span className="text-[10px] font-sans font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black">
                       POLLRIDE AERO FIT
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="text-[11px] font-mono text-slate-500 uppercase">01 // APPAREL RESMI</div>
-                  <h3 className="font-nacelle text-xl font-bold uppercase text-white tracking-tight">
+                  <div className="text-[11px] font-sans font-bold text-slate-500 uppercase tracking-wider">01 · APPAREL RESMI</div>
+                  <h3 className="font-display text-xl font-black uppercase text-white tracking-tight">
                     OFFICIAL ANNIVERSARY JERSEY
                   </h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
@@ -1543,11 +1549,11 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-400">
-                  <div>• Quick-Dry Mesh</div>
-                  <div>• 3 Saku Belakang</div>
-                  <div>• Zipper YKK Lock</div>
-                  <div>• Garis Reflektif</div>
+                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-sans text-slate-400">
+                  <div>· Quick-Dry Mesh</div>
+                  <div>· 3 Saku Belakang</div>
+                  <div>· Zipper YKK Lock</div>
+                  <div>· Garis Reflektif</div>
                 </div>
               </div>
 
@@ -1562,15 +1568,15 @@ export default function HomePage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
+                    <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
                       SEMUA KATEGORI
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="text-[11px] font-mono text-slate-500 uppercase">02 // MEDALI SAH</div>
-                  <h3 className="font-nacelle text-xl font-bold uppercase text-white tracking-tight">
+                  <div className="text-[11px] font-sans font-bold text-slate-500 uppercase tracking-wider">02 · MEDALI SAH</div>
+                  <h3 className="font-display text-xl font-black uppercase text-white tracking-tight">
                     HEAVY FINISHER METAL MEDAL
                   </h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
@@ -1578,11 +1584,11 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-400">
-                  <div>• Paduan Solid Zinc</div>
-                  <div>• Relief Timbul 3D</div>
-                  <div>• Lanyard Woven Tebal</div>
-                  <div>• Finisher Luring &amp; Virtual</div>
+                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-sans text-slate-400">
+                  <div>· Paduan Solid Zinc</div>
+                  <div>· Relief Timbul 3D</div>
+                  <div>· Lanyard Woven Tebal</div>
+                  <div>· Finisher Luring &amp; Virtual</div>
                 </div>
               </div>
 
@@ -1597,15 +1603,15 @@ export default function HomePage() {
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
+                    <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
                       HARI-H READY
                     </span>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="text-[11px] font-mono text-slate-500 uppercase">03 // ESENSIAL ATLET</div>
-                  <h3 className="font-nacelle text-xl font-bold uppercase text-white tracking-tight">
+                  <div className="text-[11px] font-sans font-bold text-slate-500 uppercase tracking-wider">03 · ESENSIAL ATLET</div>
+                  <h3 className="font-display text-xl font-black uppercase text-white tracking-tight">
                     PERLENGKAPAN &amp; LAYANAN HARI-H
                   </h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
@@ -1613,11 +1619,11 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-400">
-                  <div>• Plat BIB Waterproof</div>
-                  <div>• NDR Energy Gel</div>
-                  <div>• Asuransi Resmi</div>
-                  <div>• Voucher ABEEY Lounge</div>
+                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-sans text-slate-400">
+                  <div>· Plat BIB Waterproof</div>
+                  <div>· NDR Energy Gel</div>
+                  <div>· Asuransi Resmi</div>
+                  <div>· Voucher ABEEY Lounge</div>
                 </div>
               </div>
 
@@ -1625,12 +1631,12 @@ export default function HomePage() {
           </div>
 
           {/* Minimalist Bottom CTA Strip */}
-          <div className="rounded-2xl border border-white/10 bg-[#0E0F13] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center sm:text-left">
-              <span className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                KUOTA TERBATAS // AMANKAN BIB ANDA
+              <span className="text-[11px] font-sans font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                KUOTA TERBATAS · AMANKAN BIB ANDA
               </span>
-              <h4 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+              <h4 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
                 PILIH KATEGORI &amp; DAPATKAN PAKET ANDA
               </h4>
               <p className="text-xs text-slate-400">
@@ -1639,7 +1645,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/daftar"
-              className="px-8 py-3.5 rounded-full text-xs font-nacelle font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap shrink-0"
+              className="px-8 py-3.5 rounded-full text-xs font-sans font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap shrink-0 shadow-[0_0_25px_rgba(250,109,11,0.35)]"
             >
               <span>PILIH PAKET &amp; DAFTAR</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
