@@ -26,6 +26,28 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+const avantGarde = localFont({
+  src: [
+    {
+      path: '../public/fonts/avgardn.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/avgardd.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/avgarddo.ttf',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-avantgarde',
+  display: 'swap',
+});
+
 const nacelle = localFont({
   src: [
     {
@@ -72,7 +94,7 @@ export default function RootLayout({
   return (
     <html lang="id" className="scroll-smooth">
       <body
-        className={`${plusJakartaSans.variable} ${oswald.variable} ${nacelle.variable} ${specialElite.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] antialiased selection:bg-[#FA6D0B] selection:text-black`}
+        className={`${avantGarde.variable} ${plusJakartaSans.variable} ${oswald.variable} ${nacelle.variable} ${specialElite.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] antialiased selection:bg-[#FA6D0B] selection:text-black`}
       >
         <Navbar />
         <main className="flex-1 flex flex-col">

@@ -30,11 +30,12 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "Plus Jakarta Sans", "system-ui", "sans-serif"],
+        sans: ["var(--font-avantgarde)", "var(--font-sans)", "Plus Jakarta Sans", "system-ui", "sans-serif"],
+        display: ["var(--font-avantgarde)", "var(--font-display)", "Oswald", "sans-serif"],
+        avantgarde: ["var(--font-avantgarde)", "sans-serif"],
         nacelle: ["var(--font-nacelle)", "sans-serif"],
-        display: ["var(--font-display)", "Oswald", "sans-serif"],
         typewriter: ["var(--font-typewriter)", "Courier New", "Courier", "monospace"],
-        mono: ["var(--font-sans)", "Plus Jakarta Sans", "sans-serif"], // Zero monospace: safely maps to sleek proportional sans
+        mono: ["var(--font-avantgarde)", "var(--font-sans)", "Plus Jakarta Sans", "sans-serif"], // Zero monospace: safely maps to sleek proportional avantgarde
       },
       boxShadow: {
         solar: "0 0 45px rgba(250, 109, 11, 0.45)",
