@@ -1365,8 +1365,8 @@ export default function HomePage() {
           {/* Section Header: Alternating Right-Aligned Layout (Kiri-Kanan Rhythm) with Custom Text Graphic */}
           <div className="flex flex-col md:flex-row-reverse md:items-end justify-between gap-6 border-b border-white/10 pb-8">
             <div className="flex flex-col items-start md:items-end space-y-3">
-              <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-mono pr-0 md:pr-7 lg:pr-9">
-                PARTICIPANT PACKAGES // 2026 EDITION
+              <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-sans pr-0 md:pr-7 lg:pr-9">
+                PARTICIPANT PACKAGES · 2026 EDITION
               </span>
               <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[560px] group">
                 {/* Ambient Radial Backlight Glow in exact brand orange */}
@@ -1390,8 +1390,11 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Tier 1: Medal Only */}
-            <div className="p-7 sm:p-8 rounded-2xl border border-white/10 bg-black/60 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300">
-              <div className="space-y-5">
+            <div className="relative overflow-hidden p-6 sm:p-7 rounded-xl border border-white/10 bg-black/60 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
+              {/* Top hairline accent bar */}
+              <div className="absolute top-0 inset-x-0 h-[2px] bg-white/15" />
+
+              <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
                     <span className="text-[11px] font-sans font-bold text-slate-400 uppercase tracking-widest">
@@ -1402,16 +1405,16 @@ export default function HomePage() {
                       ESENSIAL
                     </span>
                   </div>
-                  <span className="text-[11px] font-sans text-slate-400 font-semibold uppercase tracking-wider">
-                    TARIF DASAR KATEGORI
+                  <span className="text-[10px] font-sans text-slate-400 font-bold uppercase tracking-wider">
+                    STANDAR FINISHER
                   </span>
                 </div>
                 
                 <div>
-                  <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                  <h3 className="font-display italic text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-white tracking-tight leading-none">
                     PAKET MEDAL ONLY
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
                     Pilihan tepat bagi pesepeda yang fokus pada esensi jarak, tantangan mandiri, dan koleksi medali resmi finisher.
                   </p>
                 </div>
@@ -1440,18 +1443,38 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-sans">
-                <span className="text-slate-400 font-medium uppercase tracking-wider">Mulai dari Rp 200.000</span>
-                <span className="text-white font-bold uppercase tracking-wider">TERMASUK FASILITAS HARI-H</span>
+              <div className="pt-5 border-t border-white/10 flex items-end justify-between">
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-sans font-bold text-slate-400 uppercase tracking-widest block leading-none">
+                    TARIF DASAR
+                  </span>
+                  <div className="flex items-baseline gap-1.5 pt-1">
+                    <span className="text-[11px] font-sans font-bold text-slate-400 leading-none">MULAI</span>
+                    <span className="font-display italic font-black text-2xl sm:text-3xl text-white leading-none">
+                      RP 200.000
+                    </span>
+                  </div>
+                </div>
+                <div className="text-right pb-0.5">
+                  <span className="text-xs font-sans font-bold text-slate-300 uppercase tracking-wider block">
+                    TERMASUK FASILITAS HARI-H
+                  </span>
+                  <span className="text-[10px] font-sans text-slate-500 uppercase tracking-wider block mt-0.5">
+                    STANDAR FINISHER RESMI
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Tier 2: Medal & Jersey */}
-            <div className="relative p-7 sm:p-8 rounded-2xl border-2 border-[#FA6D0B] bg-gradient-to-b from-black/85 via-black/75 to-[#160e07]/90 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_50px_rgba(250,109,11,0.18)] transition-all duration-300">
-              <div className="space-y-5">
+            <div className="relative overflow-hidden p-6 sm:p-7 rounded-xl border-2 border-[#FA6D0B] bg-gradient-to-b from-black/85 via-black/75 to-[#160e07]/90 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_50px_rgba(250,109,11,0.22)] transition-all duration-300">
+              {/* Glowing Top Indicator Bar */}
+              <div className="absolute top-0 inset-x-0 h-[3px] bg-[#FA6D0B] shadow-[0_0_24px_#FA6D0B]" />
+
+              <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded bg-[#FA6D0B] text-black text-[10px] font-sans font-black uppercase tracking-widest">
+                    <span className="px-2.5 py-0.5 rounded bg-[#FA6D0B] text-black text-[10px] font-sans font-black uppercase tracking-widest shadow-[0_0_12px_rgba(250,109,11,0.5)]">
                       OPSI 02
                     </span>
                     <span className="text-[#FA6D0B] font-black">·</span>
@@ -1459,17 +1482,16 @@ export default function HomePage() {
                       REKOMENDASI LENGKAP
                     </span>
                   </div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#FA6D0B]/15 border border-[#FA6D0B]/40 text-[#FA6D0B]">
-                    <span className="text-[10px] uppercase font-bold tracking-wider">HANYA</span>
-                    <span className="text-xs font-display font-black tracking-wide">+RP 50.000</span>
-                  </div>
+                  <span className="text-[10px] font-sans font-bold text-[#FA6D0B] uppercase tracking-wider">
+                    HEMAT RP 300.000
+                  </span>
                 </div>
                 
                 <div>
-                  <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                  <h3 className="font-display italic text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-white tracking-tight leading-none">
                     PAKET MEDAL &amp; JERSEY RESMI
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-300 mt-1 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
                     Paket lengkap terfavorit. Mendapatkan seluruh fasilitas Paket Medal Only ditambah Official Anniversary Aero Jersey buatan Pollride.
                   </p>
                 </div>
@@ -1503,9 +1525,28 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-sans">
-                <span className="text-slate-400 font-medium uppercase tracking-wider">Subsidi Komunitas GX-ID</span>
-                <span className="text-[#FA6D0B] font-bold uppercase tracking-wider">BEST SELLER EDITION</span>
+              <div className="pt-5 border-t border-white/10 flex items-end justify-between">
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-sans font-bold text-[#FA6D0B] uppercase tracking-widest block leading-none">
+                    UPGRADE RESMI
+                  </span>
+                  <div className="flex items-baseline gap-1.5 pt-1">
+                    <span className="font-display italic font-black text-2xl sm:text-3xl text-[#FA6D0B] leading-none">
+                      +RP 50.000
+                    </span>
+                    <span className="text-xs font-sans font-bold text-slate-400 uppercase leading-none">
+                      / PAX
+                    </span>
+                  </div>
+                </div>
+                <div className="text-right pb-0.5">
+                  <span className="text-xs font-sans font-black text-[#FA6D0B] uppercase tracking-wider block">
+                    BEST SELLER EDITION
+                  </span>
+                  <span className="text-[10px] font-sans text-slate-400 uppercase tracking-wider block mt-0.5">
+                    SUBSIDI KOMUNITAS GX-ID
+                  </span>
+                </div>
               </div>
             </div>
 
