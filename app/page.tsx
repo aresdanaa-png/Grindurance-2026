@@ -1811,12 +1811,6 @@ export default function HomePage() {
         <div className="absolute top-1/2 -left-24 w-[620px] h-[620px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.12)_0%,rgba(217,83,7,0.03)_55%,transparent_75%)] blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 right-1/3 w-[560px] h-[560px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.15)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
-        {/* Animated Cinematic Grain Layer (Athletic Orange Specks & Micro-texture) */}
-        <div 
-          className="absolute -inset-[30%] w-[160%] h-[160%] pointer-events-none opacity-30 bg-orange-grain animate-film-grain mix-blend-screen" 
-          aria-hidden="true" 
-        />
-
         {/* Subtle Horizontal Telemetry Grid Lines */}
         <div 
           className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:100%_48px]"
