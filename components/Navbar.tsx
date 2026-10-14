@@ -24,8 +24,11 @@ export default function Navbar() {
   const [opsOpen, setOpsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 8);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -40,14 +43,18 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 font-nacelle ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-nacelle ${
         scrolled
-          ? 'backdrop-blur-xl bg-[#0D0E11]/90 shadow-[0_1px_0_rgba(255,255,255,0.06),0_8px_30px_rgba(0,0,0,0.5)]'
-          : 'bg-transparent border-none'
+          ? 'backdrop-blur-xl bg-[#0D0E11]/92 border-b border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85),0_2px_15px_rgba(250,109,11,0.08)]'
+          : 'bg-transparent border-b border-transparent shadow-none'
       }`}
     >
-      {/* Top accent line — only visible when scrolled */}
-      <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#FA6D0B]/40 to-transparent transition-opacity duration-500 ${scrolled ? 'opacity-100' : 'opacity-0'}`} />
+      {/* Bottom accent glow line when scrolled */}
+      <div
+        className={`absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#FA6D0B]/35 to-transparent transition-opacity duration-300 pointer-events-none ${
+          scrolled ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-[72px]">
@@ -179,7 +186,7 @@ export default function Navbar() {
             <Link
               href="/daftar"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl text-[14px] font-bold uppercase tracking-wider bg-[#F59E0B] text-black shadow-[0_0_30px_rgba(245,158,11,0.25)] hover:bg-[#D97706] transition-all duration-300 active:scale-[0.98]"
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-full text-[14px] font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_30px_rgba(250,109,11,0.35)] hover:bg-[#DE5A00] transition-all duration-300 active:scale-[0.98]"
             >
               Join Now
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />

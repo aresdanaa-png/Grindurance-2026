@@ -95,7 +95,7 @@ export default function PesertaPage() {
         
         {/* Header Section */}
         <div className="border-b border-white/10 pb-8">
-          <div className="text-xs font-bold text-[#F59E0B] uppercase tracking-widest mb-2 flex items-center gap-2">
+          <div className="text-xs font-bold text-[#FA6D0B] uppercase tracking-widest mb-2 flex items-center gap-2">
             <Compass className="w-3.5 h-3.5" />
             <span>OFFICIAL START LIST // RIDER ROSTER 2026</span>
           </div>
@@ -122,7 +122,7 @@ export default function PesertaPage() {
 
               <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
                 <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">120K Pair Mix</span>
-                <span className="font-display text-3xl font-bold text-[#F59E0B] mt-1 block">
+                <span className="font-display text-3xl font-bold text-[#FA6D0B] mt-1 block">
                   {stats.pair_teams} Tim
                 </span>
                 <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
@@ -164,7 +164,7 @@ export default function PesertaPage() {
                 placeholder="Cari No. BIB, Nama Rider, atau Chapter..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#15171C] border border-white/10 rounded pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#F59E0B] transition-colors"
+                className="w-full bg-[#15171C] border border-white/10 rounded pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#FA6D0B] transition-colors"
               />
               {searchQuery && (
                 <button
@@ -185,7 +185,7 @@ export default function PesertaPage() {
               </Link>
               <Link
                 href="/daftar"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded text-xs font-display font-bold uppercase tracking-wider bg-[#F59E0B] hover:bg-[#D97706] text-black shadow-sm transition-all"
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded text-xs font-display font-bold uppercase tracking-wider bg-[#FA6D0B] hover:bg-[#D97706] text-black shadow-sm transition-all"
               >
                 <span>Daftar Rider</span>
                 <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -201,7 +201,7 @@ export default function PesertaPage() {
                 onClick={() => setSelectedCategory(tab.id)}
                 className={`px-3.5 py-1.5 text-xs font-bold tracking-wider uppercase whitespace-nowrap transition-all rounded ${
                   selectedCategory === tab.id
-                    ? 'bg-[#F59E0B] text-black'
+                    ? 'bg-[#FA6D0B] text-black'
                     : 'bg-[#15171C] text-slate-400 hover:text-white hover:bg-[#1D2027] border border-white/10'
                 }`}
               >
@@ -215,7 +215,7 @@ export default function PesertaPage() {
         <div className="border border-white/10 bg-[#15171C] rounded-lg overflow-hidden shadow-xl">
           {loading ? (
             <div className="py-20 text-center">
-              <div className="w-8 h-8 border-2 border-white/10 border-t-[#F59E0B] rounded-full animate-spin mx-auto mb-4" />
+              <div className="w-8 h-8 border-2 border-white/10 border-t-[#FA6D0B] rounded-full animate-spin mx-auto mb-4" />
               <p className="text-xs text-slate-400">Memuat Roster Atlet GX-ID...</p>
             </div>
           ) : roster.length === 0 ? (
@@ -248,19 +248,19 @@ export default function PesertaPage() {
                     >
                       {/* BIB Number */}
                       <td className="py-3.5 px-4 font-bold tabular-nums">
-                        <span className="inline-block px-2.5 py-0.5 border border-[#F59E0B]/50 bg-black text-[#F59E0B] font-bold tracking-wider rounded">
+                        <span className="inline-block px-2.5 py-0.5 border border-[#FA6D0B]/50 bg-black text-[#FA6D0B] font-bold tracking-wider rounded">
                           #{rider.bib_number}
                         </span>
                       </td>
 
                       {/* Rider Name */}
                       <td className="py-3.5 px-4">
-                        <div className="font-bold text-white group-hover:text-[#F59E0B] transition-colors text-sm">
+                        <div className="font-bold text-white group-hover:text-[#FA6D0B] transition-colors text-sm">
                           {rider.full_name}
                         </div>
                         {rider.partner_name && (
-                          <div className="flex items-center gap-1 mt-0.5 text-xs text-[#F59E0B] font-semibold">
-                            <span className="border border-[#F59E0B]/40 px-1 py-0.2 text-[10px] uppercase rounded">
+                          <div className="flex items-center gap-1 mt-0.5 text-xs text-[#FA6D0B] font-semibold">
+                            <span className="border border-[#FA6D0B]/40 px-1 py-0.2 text-[10px] uppercase rounded">
                               Pair
                             </span>
                             <span>& {rider.partner_name}</span>
@@ -277,7 +277,7 @@ export default function PesertaPage() {
                           {rider.category_name}
                         </div>
                         <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mt-0.5 font-medium tabular-nums">
-                          <Clock className="w-3 h-3 text-[#F59E0B]" />
+                          <Clock className="w-3 h-3 text-[#FA6D0B]" />
                           <span>{rider.wave_start_time}</span>
                         </div>
                       </td>
@@ -290,7 +290,7 @@ export default function PesertaPage() {
                       {/* Package */}
                       <td className="py-3.5 px-4 text-xs">
                         {rider.package_type === 'MEDAL_JERSEY' ? (
-                          <span className="text-[#F59E0B] font-bold">Medal & Jersey</span>
+                          <span className="text-[#FA6D0B] font-bold">Medal & Jersey</span>
                         ) : (
                           <span className="text-slate-400 font-medium">Medal Saja</span>
                         )}
@@ -305,7 +305,7 @@ export default function PesertaPage() {
                               Prolog Lolos
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-1 border border-[#F59E0B]/40 bg-[#F59E0B]/10 text-[#F59E0B] text-[10px] uppercase tracking-wider font-bold rounded">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 text-[#FA6D0B] text-[10px] uppercase tracking-wider font-bold rounded">
                               <AlertTriangle className="w-3 h-3" />
                               Prolog Pending
                             </span>
@@ -321,7 +321,7 @@ export default function PesertaPage() {
                       <td className="py-3.5 px-4 text-right">
                         <button
                           onClick={() => setSelectedRiderForBib(rider)}
-                          className="inline-flex items-center gap-1 px-3 py-1 rounded border border-white/15 hover:border-[#F59E0B] hover:text-[#F59E0B] text-slate-300 text-[11px] font-bold transition-colors"
+                          className="inline-flex items-center gap-1 px-3 py-1 rounded border border-white/15 hover:border-[#FA6D0B] hover:text-[#FA6D0B] text-slate-300 text-[11px] font-bold transition-colors"
                         >
                           <Eye className="w-3 h-3" />
                           <span>Plat</span>
@@ -347,7 +347,7 @@ export default function PesertaPage() {
               </button>
 
               <div className="text-center space-y-1">
-                <span className="text-[10px] text-[#F59E0B] uppercase tracking-widest font-bold block">
+                <span className="text-[10px] text-[#FA6D0B] uppercase tracking-widest font-bold block">
                   DIGITAL BIKE PLATE VOUCHER
                 </span>
                 <h3 className="font-display text-2xl font-bold text-white uppercase italic">
@@ -382,7 +382,7 @@ export default function PesertaPage() {
                 </div>
                 <div className="flex justify-between">
                   <span>Paket:</span>
-                  <span className="text-[#F59E0B] font-bold">
+                  <span className="text-[#FA6D0B] font-bold">
                     {selectedRiderForBib.package_type === 'MEDAL_JERSEY' ? 'Medal & Jersey' : 'Medal Saja'}
                   </span>
                 </div>

@@ -10,11 +10,11 @@ export default function Footer() {
           {/* Brand Info (5 Cols) */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded bg-[#15171C] border border-white/15 flex items-center justify-center text-[#F59E0B]">
+              <div className="w-9 h-9 rounded bg-[#15171C] border border-white/15 flex items-center justify-center text-[#FA6D0B]">
                 <Compass className="w-5 h-5 stroke-[2]" />
               </div>
               <span className="font-display text-xl font-bold tracking-tight text-white uppercase italic">
-                GRAVEL GRINDURANCE <span className="text-[#F59E0B]">2026</span>
+                GRAVEL GRINDURANCE <span className="text-[#FA6D0B]">2026</span>
               </span>
             </div>
             
@@ -37,27 +37,27 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 uppercase tracking-wide font-medium">
               <li>
-                <Link href="/kategori" className="hover:text-[#F59E0B] transition-colors">
+                <Link href="/kategori" className="hover:text-[#FA6D0B] transition-colors">
                   5 Kategori & Rute
                 </Link>
               </li>
               <li>
-                <Link href="/peserta" className="hover:text-[#F59E0B] transition-colors text-white font-bold">
+                <Link href="/peserta" className="hover:text-[#FA6D0B] transition-colors text-white font-bold">
                   Rider Roster (Start List)
                 </Link>
               </li>
               <li>
-                <Link href="/peraturan" className="hover:text-[#F59E0B] transition-colors">
+                <Link href="/peraturan" className="hover:text-[#FA6D0B] transition-colors">
                   Regulasi & Athlete Guide
                 </Link>
               </li>
               <li>
-                <Link href="/cek-bib" className="hover:text-[#F59E0B] transition-colors">
+                <Link href="/cek-bib" className="hover:text-[#FA6D0B] transition-colors">
                   Cek Nomor BIB Digital
                 </Link>
               </li>
               <li>
-                <Link href="/daftar" className="hover:text-[#F59E0B] transition-colors text-[#F59E0B] font-bold">
+                <Link href="/daftar" className="hover:text-[#FA6D0B] transition-colors text-[#FA6D0B] font-bold">
                   Pendaftaran Peserta
                 </Link>
               </li>
@@ -73,7 +73,7 @@ export default function Footer() {
               <li>
                 <Link href="/scrutineering" className="hover:text-white transition-colors flex items-center justify-between">
                   <span>Meja Scrutineering (Prolog 30 km)</span>
-                  <span className="text-[10px] text-[#F59E0B] border border-white/10 px-1.5 py-0.5 rounded">03:00 WIB</span>
+                  <span className="text-[10px] text-[#FA6D0B] border border-white/10 px-1.5 py-0.5 rounded">03:00 WIB</span>
                 </Link>
               </li>
               <li>
@@ -91,7 +91,7 @@ export default function Footer() {
                   href="https://wa.me/628562720141"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-[#F59E0B] hover:underline text-xs font-bold"
+                  className="inline-flex items-center gap-1.5 text-[#FA6D0B] hover:underline text-xs font-bold"
                 >
                   <span>WhatsApp Panitia (+62 856-2720-141)</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -107,7 +107,7 @@ export default function Footer() {
           <div className="flex items-center gap-4 uppercase tracking-wider font-semibold">
             <span>Terrain: Makadam · Aspal Rusak · Tanah</span>
             <span>•</span>
-            <span className="text-[#F59E0B]">Rain Season Edition</span>
+            <span className="text-[#FA6D0B]">Rain Season Edition</span>
           </div>
         </div>
       </div>
