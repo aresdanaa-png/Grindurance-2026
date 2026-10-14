@@ -1052,7 +1052,7 @@ export default function HomePage() {
                 {/* 3. Narasi Deskripsi Jalur & Karakteristik Etape */}
                 <div className="space-y-1.5">
                   <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                    KARAKTERISTIK ETAPE
+                    KARAKTERISTIK ETAPE //
                   </span>
                   <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                     {currentCategory.desc}
@@ -1062,7 +1062,7 @@ export default function HomePage() {
                 {/* 4. Surface Breakdown (Komposisi Permukaan Jalur) */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-slate-400 uppercase tracking-wider font-semibold">KOMPOSISI MEDAN</span>
+                    <span className="text-[#FA6D0B] uppercase tracking-wider font-bold">KOMPOSISI MEDAN //</span>
                     <span className="text-slate-300">
                       <span className="text-[#FA6D0B] font-bold">{currentCategory.surfaceBreakdown.asphalt}</span> Aspal ·{' '}
                       <span className="text-white font-bold">{currentCategory.surfaceBreakdown.gravel}</span> Makadam ·{' '}
@@ -1084,11 +1084,7 @@ export default function HomePage() {
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 mb-3">
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] font-sans font-black uppercase tracking-widest text-[#FA6D0B]">
-                        BIAYA PENDAFTARAN RESMI
-                      </span>
-                      <span className="text-white/20 font-black">·</span>
-                      <span className="text-[10px] font-sans font-bold text-slate-400 uppercase tracking-wider">
-                        STANDAR GX-ID
+                        BIAYA PENDAFTARAN //
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5 text-[10px] font-sans font-bold text-slate-400 uppercase">
@@ -1234,8 +1230,8 @@ export default function HomePage() {
               {/* Checkpoint & Pitstop Grid (Full Width, Compact & Icon-free) */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-slate-400 uppercase tracking-wider font-semibold">
-                    CHECKPOINT &amp; PITSTOP ETAPE ({currentCategory.km})
+                  <span className="text-slate-300 uppercase tracking-wider font-bold">
+                    CHECKPOINT &amp; PITSTOP ETAPE // {currentCategory.km}
                   </span>
                   <span className="text-[10px] text-[#FA6D0B] font-bold uppercase tracking-wider">
                     {currentCategory.id === '150' || currentCategory.id === '200' ? 'WAJIB PITSTOP 30 MENIT' : 'SMART GEOFENCING'}
@@ -1276,7 +1272,7 @@ export default function HomePage() {
               {/* Safety & Protocol Box (Pure Typography, Icon-free) */}
               <div className="p-4 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 space-y-1.5 text-xs">
                 <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                  REGULASI TEKNIS &amp; PROTOKOL
+                  REGULASI TEKNIS &amp; PROTOKOL //
                 </span>
                 <div className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                   {currentCategory.isRace ? (
