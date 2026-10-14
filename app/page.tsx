@@ -1787,23 +1787,24 @@ export default function HomePage() {
       {/* ========================================================================= */}
       <section id="jadwal" className="pt-8 sm:pt-12 pb-20 sm:pb-24 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
         
-        {/* Cinematic Sculpted Orange Dune Background Image */}
+        {/* Action Cyclist on Orange Trail Background (Perjalanan Siklis di Jalur Oranye) */}
         <div 
           className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
           style={{
-            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 10%, black 28%, black 82%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 10%, black 28%, black 82%, transparent 100%)'
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 8%, black 22%, black 82%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 8%, black 22%, black 82%, transparent 100%)'
           }}
         >
           <img
-            src="/timeline-dune-grain.jpg"
-            alt="Grindurance Sculpted Orange Dune Wave Background"
-            className="w-full h-full object-cover object-center opacity-80 filter contrast-125 saturate-125 brightness-95"
+            src="/perjalanan-siklis-di-jalur-oranye.png"
+            alt="Perjalanan Siklis di Jalur Oranye - Grindurance Ultra Cycling"
+            className="w-full h-full object-cover object-[center_30%] sm:object-[center_22%] opacity-85 filter contrast-115 saturate-120 brightness-95"
           />
           {/* Seamless overlays to ensure perfect blend with #0B0C0E */}
-          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#0B0C0E] via-[#0B0C0E]/70 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#0B0C0E] via-[#0B0C0E]/80 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B0C0E]/60 via-transparent to-[#0B0C0E]/60" />
+          <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#0B0C0E] via-[#0B0C0E]/85 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0B0C0E] via-[#0B0C0E]/90 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B0C0E]/75 via-[#0B0C0E]/30 to-[#0B0C0E]/75" />
+          <div className="absolute inset-0 bg-[#0B0C0E]/20" />
         </div>
 
         {/* Luminous Orange Aurora Ambient Glows */}
