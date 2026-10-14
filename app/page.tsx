@@ -1316,7 +1316,8 @@ export default function HomePage() {
           {/* Seamless dark gradient overlays - smooth top fade-in from dark pause and bottom dissolve */}
           <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#090A0D] via-[#090A0D]/80 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#090A0D]/80 via-[#090A0D]/45 to-[#090A0D]/15" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#090A0D]/50 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E]/70 via-transparent to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0B0C0E] to-transparent" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12 relative z-10">
@@ -1785,9 +1786,28 @@ export default function HomePage() {
       {/* 4. EVENT TIMELINE & WAVE DISPATCH RUNDOWN (POIN 2) */}
       {/* ========================================================================= */}
       <section id="jadwal" className="pt-8 sm:pt-12 pb-20 sm:pb-24 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
-        {/* Subtle orange accent glow atmosphere */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.08)_0%,transparent_70%)] blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.06)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+        {/* Seamless Smooth Top Transition from pesepeda2 background */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#0B0C0E] via-[#0B0C0E]/70 to-transparent pointer-events-none z-[1]" />
+
+        {/* Luminous Orange Aurora Ambient Glows */}
+        <div className="absolute -top-16 right-1/4 w-[540px] h-[540px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.14)_0%,rgba(250,109,11,0.03)_50%,transparent_70%)] blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 -left-24 w-[620px] h-[620px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.09)_0%,rgba(217,83,7,0.02)_55%,transparent_75%)] blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/3 w-[560px] h-[560px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.11)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+
+        {/* Animated Cinematic Grain Layer (Athletic Orange Specks & Micro-texture) */}
+        <div 
+          className="absolute -inset-[30%] w-[160%] h-[160%] pointer-events-none opacity-25 bg-orange-grain animate-film-grain mix-blend-screen" 
+          aria-hidden="true" 
+        />
+
+        {/* Subtle Horizontal Telemetry Grid Lines */}
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(to_bottom,white_1px,transparent_1px)] bg-[size:100%_48px]"
+          aria-hidden="true" 
+        />
+
+        {/* Vignette Overlay for High-Contrast Information Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C0E]/60 via-transparent to-[#0B0C0E]/80 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
           
