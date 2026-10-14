@@ -19,7 +19,7 @@ function calculateAge(birthDateString?: string): number {
 export async function POST(req: Request) {
   try {
     const body: RegistrationPayload = await req.json();
-    const { category_id, package_type, rider_1, rider_2, waiver_agreed } = body;
+    const { category_id, package_type, rpc_method, rider_1, rider_2, waiver_agreed } = body;
 
     if (!waiver_agreed) {
       return NextResponse.json(
@@ -65,10 +65,12 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. Hitung Harga Bruto (Gross Amount)
-    const gross_amount = package_type === 'MEDAL_JERSEY'
+    // 2. Hitung Harga Bruto (Gross Amount) termasuk Opsi Handling Fee RPC Rp 20.000 jika dipilih
+    const rpc_handling_fee = rpc_method === 'HANDLING' ? 20000 : 0;
+    const base_amount = package_type === 'MEDAL_JERSEY'
       ? Number(category.price_medal_jersey)
       : Number(category.price_medal_only);
+    const gross_amount = base_amount + rpc_handling_fee;
 
     // 3. Hitung Insentif Meal Coupon Rp 50.000 sesuai aturan resmi GX-ID
     // Aturan: Wanita, Remaja <= 17 th, Pair Mix (Men & Women), atau Pair (Women & Women)
@@ -118,6 +120,8 @@ export async function POST(req: Request) {
           rider_2,
           category_id,
           package_type,
+          rpc_method: rpc_method ?? 'PICKUP',
+          rpc_handling_fee,
           registered_at: new Date().toISOString(),
         },
       })

@@ -18,6 +18,7 @@ export default function RegistrationPage() {
   // Pilihan Langkah 1
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [packageType, setPackageType] = useState<PackageType>('MEDAL_JERSEY');
+  const [rpcMethod, setRpcMethod] = useState<'PICKUP' | 'HANDLING'>('PICKUP');
 
   // Input Langkah 2 (Rider 1)
   const [rider1, setRider1] = useState({
@@ -134,8 +135,9 @@ export default function RegistrationPage() {
       : selectedCategory.price_medal_only
     : 0;
 
+  const rpcHandlingFee = rpcMethod === 'HANDLING' ? 20000 : 0;
   const mealCouponDiscount = isEligibleForMealCoupon() ? 50000 : 0;
-  const netPrice = Math.max(0, basePrice - mealCouponDiscount);
+  const netPrice = Math.max(0, basePrice + rpcHandlingFee - mealCouponDiscount);
 
   // Submit Registrasi (Langkah 2 ke Langkah 3)
   const handleProceedToReview = (e: React.FormEvent) => {
@@ -187,6 +189,7 @@ export default function RegistrationPage() {
       const payload = {
         category_id: selectedCategory?.id,
         package_type: packageType,
+        rpc_method: rpcMethod,
         rider_1: rider1,
         rider_2: selectedCategory?.is_pair ? rider2 : undefined,
         waiver_agreed: waiverAgreed,
@@ -431,6 +434,69 @@ export default function RegistrationPage() {
                 })}
               </div>
             )}
+          </div>
+
+          {/* 3. Metode Pengambilan Race Pack (RPC) */}
+          <div className="bg-brand-card p-4 sm:p-6 rounded-2xl border border-brand-border">
+            <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-brand-orange" />
+              3. Pilih Metode Pengambilan Race Pack (RPC)
+            </h3>
+            <p className="text-xs text-slate-400 mb-4 leading-relaxed">
+              Race pack berisi Nomor Plat Sepeda resmi, Jersey Pollride (jika paket jersey), Suplemen NDR, dan Asuransi Hari-H.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <button
+                type="button"
+                onClick={() => setRpcMethod('PICKUP')}
+                className={`p-4 rounded-xl border text-left transition-all relative ${
+                  rpcMethod === 'PICKUP'
+                    ? 'bg-brand-cardHover border-brand-gold ring-2 ring-brand-gold/20 shadow-glow'
+                    : 'bg-brand-dark/50 border-brand-border hover:border-slate-600'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-white flex items-center gap-2">
+                    Ambil Mandiri saat RPC Day
+                  </span>
+                  <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+                    Gratis / Rp 0
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Diambil saat <strong className="text-white">RPC Day, Coaching Clinic &amp; Technical Meeting</strong> pada <strong className="text-[#FA6D0B]">Minggu, 6 Des 2026</strong> di ABEEY Coffee Cibubur.
+                </p>
+                <div className="mt-3 text-[11px] font-semibold text-emerald-400">
+                  ✓ Tanpa biaya tambahan
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setRpcMethod('HANDLING')}
+                className={`p-4 rounded-xl border text-left transition-all ${
+                  rpcMethod === 'HANDLING'
+                    ? 'bg-brand-cardHover border-brand-orange ring-2 ring-brand-orange/30 shadow-glow'
+                    : 'bg-brand-dark/50 border-brand-border hover:border-slate-600'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-bold text-white flex items-center gap-2">
+                    Handling Fee Khusus
+                  </span>
+                  <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black">
+                    +Rp 20.000
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Bagi peserta yang <strong className="text-white">berhalangan hadir saat RPC Day</strong>. Disiapkan via handling khusus panitia / pengambilan saat Hari-H dengan verifikasi e-ticket.
+                </p>
+                <div className="mt-3 text-[11px] font-semibold text-[#FA6D0B]">
+                  + Rp 20.000 biaya layanan logistik
+                </div>
+              </button>
+            </div>
           </div>
 
           {/* Tombol Lanjut ke Langkah 2 */}
@@ -979,6 +1045,20 @@ export default function RegistrationPage() {
                 <span className="text-slate-400">Harga Tiket Dasar</span>
                 <span className="text-white">Rp {Number(basePrice).toLocaleString('id-ID')}</span>
               </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Metode Pengambilan RPC</span>
+                <span className="text-white font-medium">
+                  {rpcMethod === 'PICKUP' 
+                    ? 'Ambil Mandiri (RPC Day 6 Des 2026 - Rp 0)' 
+                    : 'Handling Fee Khusus (+Rp 20.000)'}
+                </span>
+              </div>
+              {rpcMethod === 'HANDLING' && (
+                <div className="flex justify-between text-[#FA6D0B] font-semibold">
+                  <span>Biaya Layanan Handling RPC</span>
+                  <span>+ Rp 20.000</span>
+                </div>
+              )}
               {mealCouponDiscount > 0 && (
                 <div className="flex justify-between text-emerald-400 font-semibold">
                   <span>Insentif Kupon Makan (GX-ID Voucher)</span>

@@ -1530,6 +1530,56 @@ export default function HomePage() {
 
           </div>
 
+          {/* RPC COLLECTION & HANDLING FEE NOTICE BANNER */}
+          <div className="rounded-xl border border-white/10 bg-gradient-to-r from-black/80 via-[#121318]/90 to-black/80 p-5 sm:p-6 backdrop-blur-md relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FA6D0B]" />
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pl-2 sm:pl-3">
+              <div className="space-y-2 max-w-2xl">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded bg-white/10 text-white text-[10px] font-sans font-bold uppercase tracking-widest">
+                    LOGISTIK RACE PACK (RPC)
+                  </span>
+                  <span className="text-[#FA6D0B] font-black">·</span>
+                  <span className="text-xs font-sans font-bold text-[#FA6D0B] uppercase tracking-wider">
+                    DUA OPSI PENGAMBILAN
+                  </span>
+                </div>
+                <h4 className="font-display italic text-lg sm:text-xl font-black uppercase text-white tracking-tight">
+                  PENGAMBILAN MANDIRI SAAT RPC DAY ATAU OPSI HANDLING FEE
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  RPC resmi (Nomor Plat Sepeda, Jersey Pollride, Goodie Bag, &amp; Suplemen) dapat diambil mandiri secara <strong className="text-white font-semibold">Gratis (Rp 0)</strong> saat gelaran <strong className="text-white font-semibold">RPC Day, Coaching Clinic &amp; Technical Meeting</strong> pada <strong className="text-[#FA6D0B] font-semibold">Minggu, 6 Desember 2026</strong> (6 hari sebelum event) di ABEEY Coffee Cibubur.
+                </p>
+              </div>
+
+              <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 min-w-[260px]">
+                <div className="p-3.5 rounded-lg bg-black/50 border border-white/10 flex items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[10px] font-sans font-bold text-slate-400 uppercase tracking-widest block">
+                      RPC DAY MANDIRI
+                    </span>
+                    <span className="text-xs font-sans font-medium text-slate-300">Minggu, 6 Des 2026</span>
+                  </div>
+                  <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-sans font-black tracking-wider">
+                    GRATIS / RP 0
+                  </span>
+                </div>
+
+                <div className="p-3.5 rounded-lg bg-[#FA6D0B]/10 border border-[#FA6D0B]/30 flex items-center justify-between gap-3">
+                  <div>
+                    <span className="text-[10px] font-sans font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      OPSI HANDLING FEE
+                    </span>
+                    <span className="text-xs font-sans font-medium text-slate-300">Berhalangan saat RPC Day</span>
+                  </div>
+                  <span className="px-2.5 py-1 rounded bg-[#FA6D0B] text-black text-xs font-sans font-black tracking-wider">
+                    +RP 20.000
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* EDITORIAL PRODUCT SHOWCASE (Lookbook Grid) */}
           <div className="space-y-6 pt-6">
             <div className="border-b border-white/10 pb-4 flex items-center justify-between">
@@ -1721,7 +1771,7 @@ export default function HomePage() {
               }`}
             >
               <Flag className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>RACE DAY (HARI-H) // MINGGU, 13 DES 2026</span>
+              <span>RACE DAY (HARI-H) · MINGGU, 13 DES 2026</span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                 activeScheduleTab === 'raceday' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
               }`}>
@@ -1738,11 +1788,11 @@ export default function HomePage() {
               }`}
             >
               <Calendar className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>PRA-EVENT (H-1) // SABTU, 12 DES 2026</span>
+              <span>RPC DAY &amp; PRA-EVENT · MINGGU, 6 DES 2026</span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
                 activeScheduleTab === 'praevent' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
               }`}>
-                RPC &amp; BRIEFING
+                RPC, CLINIC &amp; TM
               </span>
             </button>
 
@@ -2107,10 +2157,10 @@ export default function HomePage() {
                   <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
                   <div>
                     <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                      H-1: SABTU, DESEMBER 2026 // ABEEY COFFEE CIBUBUR
+                      H-7 (6 HARI SEBELUM EVENT): MINGGU, 6 DESEMBER 2026 · ABEEY COFFEE CIBUBUR
                     </span>
                     <span className="text-[11px] text-slate-400">
-                      Pengambilan Race Pack, Pengecekan Awal Sepeda &amp; Workshop Keselamatan Rute
+                      Pengambilan Race Pack (RPC Mandiri), Coaching Clinic &amp; Technical Meeting Resmi
                     </span>
                   </div>
                 </div>
@@ -2130,7 +2180,7 @@ export default function HomePage() {
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">OFFICIAL RPC DESK</span>
                   </div>
 
-                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                  <h3 className="font-display italic text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
                     RACE PACK COLLECTION (RPC) &amp; PRE-CHECK
                   </h3>
 
@@ -2138,9 +2188,15 @@ export default function HomePage() {
                     Pengambilan perlengkapan atlet: Jersey Pollride, nomor plat sepeda waterproof, goodie bag, suplemen gel NDR, serta kartu asuransi 1 hari. Pemeriksaan awal fungsi sepeda dapat dilakukan bersama tim mekanik rekanan.
                   </p>
 
-                  <div className="border-l-2 border-[#FA6D0B] pl-4 py-1 text-xs text-slate-400 space-y-0.5">
-                    <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Dokumen Wajib:</strong>
-                    <span>E-ticket QR Code pendaftaran &amp; Kartu Identitas Fisik (KTP/SIM/Paspor). Pengambilan diwakilkan wajib menyertakan surat kuasa resmi.</span>
+                  <div className="border-l-2 border-[#FA6D0B] pl-4 py-1 text-xs text-slate-400 space-y-1">
+                    <div>
+                      <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Opsi Pengambilan:</strong>
+                      <span>Mandiri saat RPC Day (Gratis / Rp 0). Bagi peserta berhalangan hadir, tersedia opsi <strong>Handling Fee RPC (+Rp 20.000)</strong> saat registrasi.</span>
+                    </div>
+                    <div>
+                      <strong className="text-white font-mono uppercase tracking-wider text-[11px] block mt-1">Dokumen Wajib:</strong>
+                      <span>E-ticket QR Code pendaftaran &amp; Kartu Identitas Fisik (KTP/SIM/Paspor). Pengambilan diwakilkan wajib menyertakan surat kuasa.</span>
+                    </div>
                   </div>
                 </div>
 
@@ -2153,7 +2209,7 @@ export default function HomePage() {
                     <span className="text-[10px] font-mono text-[#FA6D0B] uppercase font-bold tracking-wider">LIVE INSTAGRAM</span>
                   </div>
 
-                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                  <h3 className="font-display italic text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
                     COACHING CLINIC: GRAVEL NAVIGATION &amp; GEAR
                   </h3>
 
@@ -2178,7 +2234,7 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                  <h3 className="font-display italic text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
                     TECHNICAL MEETING &amp; SAFETY WORKSHOP
                   </h3>
 
@@ -2201,7 +2257,7 @@ export default function HomePage() {
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">COMMUNITY LOUNGE</span>
                   </div>
 
-                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                  <h3 className="font-display italic text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
                     COMMUNITY GATHERING &amp; BARISTA SOCIAL HOUR
                   </h3>
 

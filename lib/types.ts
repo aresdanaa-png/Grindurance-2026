@@ -111,6 +111,7 @@ export interface RiderFormData {
 export interface RegistrationPayload {
   category_id: string;
   package_type: PackageType;
+  rpc_method?: 'PICKUP' | 'HANDLING';
   rider_1: RiderFormData;
   rider_2?: RiderFormData; // Wajib jika category_id === '120_PAIR'
   waiver_agreed: boolean;
