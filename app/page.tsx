@@ -1797,9 +1797,16 @@ export default function HomePage() {
               <span className="text-sm sm:text-base font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
                 RUNDOWN RESMI // OPERASIONAL BALAPAN
               </span>
-              <h2 className="font-nacelle text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
-                EVENT TIMELINE &amp; WAVE DISPATCH
-              </h2>
+              <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] group">
+                {/* Subtle ambient backlight glow in brand orange */}
+                <div className="absolute -inset-3 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.28)_0%,transparent_70%)] blur-2xl opacity-80 pointer-events-none" />
+                <img
+                  src="/text event timeline.webp"
+                  alt="Event Timeline & Wave Dispatch"
+                  className="relative z-10 w-full h-auto object-contain filter drop-shadow-[0_14px_32px_rgba(0,0,0,0.95)] drop-shadow-[0_0_40px_rgba(250,109,11,0.35)] transition-transform duration-500 group-hover:scale-[1.01]"
+                />
+                <h2 className="sr-only">EVENT TIMELINE &amp; WAVE DISPATCH</h2>
+              </div>
               <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
                 Manajemen waktu presisi untuk menjamin keselamatan dan kelancaran 5 kategori balap. Mulai dari sesi Race Pack Collection (RPC), verifikasi Scrutineering fajar, pelepasan gelombang start teratur, hingga panggung podium perayaan di ABEEY Coffee &amp; Eatery.
               </p>
