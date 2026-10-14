@@ -93,29 +93,8 @@ export default function HomePage() {
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [activeScheduleTab, setActiveScheduleTab] = useState<'raceday' | 'praevent' | 'matrix'>('raceday');
 
-  // Early Bird deadline: 15 November 2025 23:59:59 WIB (UTC+7)
-  const EARLY_BIRD_DEADLINE = new Date('2025-11-15T16:59:59Z'); // UTC equivalent
-  const [earlyBirdCountdown, setEarlyBirdCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, active: false });
-
-  useEffect(() => {
-    const tick = () => {
-      const now = new Date();
-      const diff = EARLY_BIRD_DEADLINE.getTime() - now.getTime();
-      if (diff <= 0) {
-        setEarlyBirdCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0, active: false });
-        return;
-      }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      setEarlyBirdCountdown({ days, hours, minutes, seconds, active: true });
-    };
-    tick();
-    const timer = setInterval(tick, 1000);
-    return () => clearInterval(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Status Registrasi Resmi GX-ID
+  const REGISTRATION_PRODUCTION_DEADLINE = '10 September 2026';
 
 
   const handleCategorySelect = (id: string) => {
@@ -216,7 +195,7 @@ export default function HomePage() {
       tabLabel: '120 KM',
       km: '120 KM',
       watermark: '120K',
-      subtitle: 'RACE (PODIUM)',
+      subtitle: 'AMAZING RACE (PODIUM)',
       title: 'Race 120',
       titleNote: '(Single & Pair Mix)',
       elevation: '+1,450 m',
@@ -224,7 +203,7 @@ export default function HomePage() {
       cot: '11 Jam',
       wave: '06:00 WIB',
       quota: '100 Single / 30 Tim',
-      tag: 'OFFICIAL RACE // PODIUM TOP 3',
+      tag: 'OFFICIAL RACE · PODIUM TOP 3',
       format: 'Official Race (Top 3 Podium)',
       specialRules: 'Mendukung Tim PAIR Mix 2 Pax · Handicap Waktu · Live Tracking GPS',
       photo: 'https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?q=80&w=1200&auto=format&fit=crop',
@@ -312,7 +291,7 @@ export default function HomePage() {
       cot: '19 Jam',
       wave: '05:30 WIB',
       quota: '50 Peserta',
-      tag: 'ULTRA GRAVEL // NIGHT NAV',
+      tag: 'ULTRA GRAVEL · NIGHT NAV',
       format: 'Ultra Gravel Endurance',
       specialRules: 'Prolog 30 km · Night Navigation · Lampu Depan Ganda >500lm & Rompi Reflektif',
       photo: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop',
@@ -738,7 +717,7 @@ export default function HomePage() {
                         PODIUM TOP 3
                       </span>
                       <span className="text-[9px] font-mono font-bold tracking-wider text-[#FA6D0B] uppercase">
-                        PAIR MIX // DUAL
+                        PAIR MIX · DUAL
                       </span>
                     </div>
                   ) : (
@@ -792,7 +771,7 @@ export default function HomePage() {
                             : 'text-slate-400 group-hover:text-slate-200'
                       }`}
                     >
-                      {isRace ? 'OFFICIAL RACE // PODIUM' : c.subtitle}
+                      {isRace ? 'AMAZING RACE · PODIUM' : c.subtitle}
                     </div>
                     <div className={`text-[10px] truncate font-mono ${
                       isRace
@@ -801,7 +780,7 @@ export default function HomePage() {
                           : 'text-slate-300 group-hover:text-white'
                         : 'text-slate-300'
                     }`}>
-                      {c.cot !== 'Fleksibel' ? `COT ${c.cot} // ${c.wave}` : '19 CHAPTER NASIONAL'}
+                      {c.cot !== 'Fleksibel' ? `COT ${c.cot} · ${c.wave}` : '19 CHAPTER NASIONAL'}
                     </div>
                   </div>
                 </button>
@@ -1098,96 +1077,71 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* 5. TIERED PRICING — Matching Hero/Header Design Language */}
+                {/* 5. TIERED PRICING — Matching Official GX-ID Contribution Package */}
                 <div className="pt-3.5 border-t border-white/10">
 
-                  {/* Row 1: Section label + status/countdown */}
+                  {/* Row 1: Section label + Official Production Deadline Status */}
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 mb-3">
-                    <span className="text-[11px] font-mono font-black uppercase tracking-widest text-[#FA6D0B]">
-                      BIAYA PENDAFTARAN
-                    </span>
-                    {earlyBirdCountdown.active ? (
-                      <div className="flex items-center gap-2">
-                        <span className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest">EARLY BIRD TUTUP DALAM</span>
-                        <div className="flex items-center gap-1">
-                          {[
-                            { val: earlyBirdCountdown.days, label: 'H' },
-                            { val: earlyBirdCountdown.hours, label: 'J' },
-                            { val: earlyBirdCountdown.minutes, label: 'M' },
-                            { val: earlyBirdCountdown.seconds, label: 'D' },
-                          ].map(({ val, label }, i) => (
-                            <span key={i} className="flex items-center gap-0.5">
-                              <span className="font-mono font-black text-xs text-white bg-[#FA6D0B]/15 border border-[#FA6D0B]/30 rounded px-1.5 py-0.5 min-w-[24px] text-center tabular-nums leading-none">
-                                {String(val).padStart(2, '0')}
-                              </span>
-                              <span className="text-[8px] text-[#FA6D0B] font-mono font-bold">{label}</span>
-                              {i < 3 && <span className="text-white/20 text-[9px] mx-0.5">/</span>}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <span className="text-[9px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                        PERIODE REGULER DIBUKA
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-sans font-black uppercase tracking-widest text-[#FA6D0B]">
+                        BIAYA PENDAFTARAN RESMI
                       </span>
-                    )}
+                      <span className="text-white/20 font-black">·</span>
+                      <span className="text-[10px] font-sans font-bold text-slate-400 uppercase tracking-wider">
+                        STANDAR GX-ID
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[10px] font-sans font-bold text-slate-400 uppercase">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
+                      <span>BATAS AKHIR PRODUKSI: <strong className="text-white">10 SEPTEMBER 2026</strong></span>
+                    </div>
                   </div>
 
-                  {/* Row 2: Two tiers side by side + CTA */}
+                  {/* Row 2: Two packages side by side + CTA */}
                   <div className="flex flex-col sm:flex-row items-stretch gap-0">
 
-                    {/* EARLY BIRD TIER */}
-                    <div className={`flex-1 py-3 pr-5 border-r border-white/10 ${!earlyBirdCountdown.active ? 'opacity-50' : ''}`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${earlyBirdCountdown.active ? 'text-[#FA6D0B]' : 'text-slate-400'}`}>
-                          EARLY BIRD
+                    {/* TIER 1: PAKET MEDAL SAJA */}
+                    <div className="flex-1 py-3 pr-5 border-r border-white/10">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-sans font-black uppercase tracking-widest text-slate-300">
+                          PAKET MEDAL SAJA
                         </span>
-                        <span className="text-[9px] font-mono text-slate-500">s/d 15 Nov 2025</span>
-                        {earlyBirdCountdown.active ? (
-                          <span className="text-[9px] font-mono font-bold uppercase text-[#FA6D0B] tracking-wider ml-auto flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                            AKTIF
-                          </span>
-                        ) : (
-                          <span className="text-[9px] font-mono font-bold uppercase text-slate-500 tracking-wider ml-auto">
-                            SELESAI
-                          </span>
-                        )}
+                        <span className="text-[9px] font-sans font-bold uppercase text-slate-400">
+                          ESENSIAL
+                        </span>
                       </div>
 
                       {currentCategory.isRace ? (
                         <div className="space-y-2">
                           <div>
-                            <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mb-0.5">SINGLE RIDER</div>
-                            <div className="flex items-baseline gap-2 flex-wrap">
-                              <span className={`font-display font-black italic text-xl leading-none ${earlyBirdCountdown.active ? 'text-white' : 'text-slate-400'}`}>
-                                {currentCategory.earlyBird.medal}
+                            <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-0.5">SINGLE RIDER</div>
+                            <div className="flex items-baseline gap-2">
+                              <span className="font-display italic font-black text-2xl text-white leading-none">
+                                {currentCategory.regular.medal}
                               </span>
-                              <span className="text-[10px] font-mono text-slate-500">/ {currentCategory.earlyBird.jersey} +Jersey</span>
                             </div>
                           </div>
-                          {currentCategory.earlyBird.pairMedal && (
+                          {currentCategory.regular.pairMedal && (
                             <div className="pt-1.5 border-t border-white/[0.06]">
-                              <div className="text-[9px] font-mono text-[#FA6D0B] uppercase tracking-wider mb-0.5">PAIR MIX (2 PAX)</div>
-                              <div className="flex items-baseline gap-2 flex-wrap">
-                                <span className={`font-display font-black italic text-xl leading-none ${earlyBirdCountdown.active ? 'text-[#FA6D0B]' : 'text-slate-400'}`}>
-                                  {currentCategory.earlyBird.pairMedal}
+                              <div className="text-[9px] font-sans font-bold text-[#FA6D0B] uppercase tracking-wider mb-0.5">PAIR MIX (2 PAX)</div>
+                              <div className="flex items-baseline gap-2">
+                                <span className="font-display italic font-black text-2xl text-[#FA6D0B] leading-none">
+                                  {currentCategory.regular.pairMedal}
                                 </span>
-                                <span className="text-[10px] font-mono text-slate-500">/ {currentCategory.earlyBird.pairJersey} +Jersey</span>
+                                <span className="text-[10px] font-sans text-slate-400">/ Tim</span>
                               </div>
                             </div>
                           )}
                         </div>
                       ) : (
                         <div>
-                          <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mb-0.5">PAKET MEDAL</div>
-                          <div className="flex items-baseline gap-2 flex-wrap">
-                            <span className={`font-display font-black italic text-2xl leading-none ${earlyBirdCountdown.active ? 'text-white' : 'text-slate-400'}`}>
-                              {currentCategory.earlyBird.medal}
+                          <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-1">TARIF DASAR</div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="font-display italic font-black text-3xl text-white leading-none">
+                              {currentCategory.regular.medal}
                             </span>
                           </div>
-                          <div className="text-[10px] font-mono text-slate-500 mt-1">+Jersey: {currentCategory.earlyBird.jersey}</div>
+                          <div className="text-[10px] font-sans text-slate-400 mt-1.5">Termasuk seluruh fasilitas hari-H</div>
                         </div>
                       )}
                     </div>
@@ -1195,69 +1149,78 @@ export default function HomePage() {
                     {/* SEPARATOR */}
                     <div className="hidden sm:block w-[1px] bg-white/10 my-2 self-stretch" />
 
-                    {/* REGULAR TIER */}
-                    <div className={`flex-1 py-3 sm:pl-4 sm:pr-5 border-t sm:border-t-0 border-white/10 sm:border-r border-white/10 ${earlyBirdCountdown.active ? 'opacity-60 hover:opacity-90 transition-opacity' : ''}`}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className={`text-[10px] font-mono font-black uppercase tracking-widest ${!earlyBirdCountdown.active ? 'text-[#FA6D0B]' : 'text-white'}`}>
-                          REGULAR
+                    {/* TIER 2: PAKET MEDAL & JERSEY RESMI */}
+                    <div className="flex-1 py-3 sm:pl-5 sm:pr-5 border-t sm:border-t-0 border-white/10 sm:border-r border-white/10 bg-[#FA6D0B]/[0.03]">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] font-sans font-black uppercase tracking-widest text-[#FA6D0B]">
+                          MEDAL + JERSEY RESMI
                         </span>
-                        <span className="text-[9px] font-mono text-slate-400">16 Nov – H-Event</span>
-                        {!earlyBirdCountdown.active && (
-                          <span className="text-[9px] font-mono font-bold uppercase text-[#FA6D0B] tracking-wider ml-auto flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                            AKTIF
-                          </span>
-                        )}
+                        <span className="text-[9px] font-sans font-black uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black">
+                          +RP 50.000
+                        </span>
                       </div>
 
                       {currentCategory.isRace ? (
                         <div className="space-y-2">
                           <div>
-                            <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mb-0.5">SINGLE RIDER</div>
-                            <div className="flex items-baseline gap-2 flex-wrap">
-                              <span className="font-display font-black text-white italic text-xl leading-none">{currentCategory.regular.medal}</span>
-                              <span className="text-[10px] font-mono text-slate-400">/ {currentCategory.regular.jersey} +Jersey</span>
+                            <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-0.5">SINGLE RIDER</div>
+                            <div className="flex items-baseline gap-2">
+                              <span className="font-display italic font-black text-2xl text-white leading-none">
+                                {currentCategory.regular.jersey}
+                              </span>
                             </div>
                           </div>
-                          {currentCategory.regular.pairMedal && (
+                          {currentCategory.regular.pairJersey && (
                             <div className="pt-1.5 border-t border-white/[0.06]">
-                              <div className="text-[9px] font-mono text-[#FA6D0B] uppercase tracking-wider mb-0.5">PAIR MIX (2 PAX)</div>
-                              <div className="flex items-baseline gap-2 flex-wrap">
-                                <span className="font-display font-black text-[#FA6D0B] italic text-xl leading-none">{currentCategory.regular.pairMedal}</span>
-                                <span className="text-[10px] font-mono text-slate-400">/ {currentCategory.regular.pairJersey} +Jersey</span>
+                              <div className="text-[9px] font-sans font-bold text-[#FA6D0B] uppercase tracking-wider mb-0.5">PAIR MIX (2 PAX)</div>
+                              <div className="flex items-baseline gap-2">
+                                <span className="font-display italic font-black text-2xl text-[#FA6D0B] leading-none">
+                                  {currentCategory.regular.pairJersey}
+                                </span>
+                                <span className="text-[10px] font-sans text-slate-400">/ Tim (2 Jersey)</span>
                               </div>
                             </div>
                           )}
                         </div>
                       ) : (
                         <div>
-                          <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mb-0.5">PAKET MEDAL</div>
-                          <div className="flex items-baseline gap-2 flex-wrap">
-                            <span className="font-display font-black text-white italic text-2xl leading-none">{currentCategory.regular.medal}</span>
+                          <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-1">PAKET LENGKAP</div>
+                          <div className="flex items-baseline gap-2">
+                            <span className="font-display italic font-black text-3xl text-white leading-none">
+                              {currentCategory.regular.jersey}
+                            </span>
                           </div>
-                          <div className="text-[10px] font-mono text-slate-400 mt-1">+Jersey: {currentCategory.regular.jersey}</div>
+                          <div className="text-[10px] font-sans text-[#FA6D0B] font-bold mt-1.5">Termasuk Aero Jersey Pollride (Nilai Rp 350.000)</div>
                         </div>
                       )}
                     </div>
 
                     {/* CTA + VOUCHER */}
-                    <div className="flex flex-col justify-between gap-3 sm:pl-5 pt-3 sm:pt-0 border-t sm:border-t-0 border-white/10 sm:w-[175px] shrink-0">
+                    <div className="flex flex-col justify-between gap-3 sm:pl-5 pt-3 sm:pt-0 border-t sm:border-t-0 border-white/10 sm:w-[190px] shrink-0">
                       <div>
-                        <div className="text-[9px] font-mono font-black uppercase tracking-widest text-[#FA6D0B] mb-1">VOUCHER SUBSIDI</div>
-                        <p className="text-[10px] font-mono text-slate-300 leading-relaxed">
-                          Hemat <strong className="text-white font-bold">Rp 50.000</strong> untuk Wanita · ≤17 Th · Pair Mix.<br />
-                          <span className="text-slate-400 text-[9px]">Gunakan kupon saat checkout.</span>
+                        <div className="text-[10px] font-sans font-black uppercase tracking-widest text-[#FA6D0B] mb-1">MEAL COUPON RP 50.000</div>
+                        <p className="text-[10px] font-sans text-slate-300 leading-relaxed">
+                          Otomatis untuk <strong className="text-white font-bold">Wanita · Usia ≤17 Th · Tim Pair Mix</strong> (1 kupon/tim).<br />
+                          <span className="text-slate-400 text-[9px]">*Tidak berlaku untuk Pair Men&amp;Men.</span>
                         </p>
                       </div>
                       <Link
                         href={`/daftar?category=${currentCategory.id}`}
-                        className="group w-full px-4 py-3 rounded-full text-[11px] font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all duration-300 hover:shadow-[0_0_24px_rgba(250,109,11,0.5)] flex items-center justify-center gap-1.5 transform hover:-translate-y-0.5 active:scale-95 whitespace-nowrap text-center"
+                        className="group w-full px-4 py-3 rounded-full text-[11px] font-sans font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all duration-300 hover:shadow-[0_0_24px_rgba(250,109,11,0.5)] flex items-center justify-center gap-1.5 transform hover:-translate-y-0.5 active:scale-95 whitespace-nowrap text-center"
                       >
                         DAFTAR SEKARANG
                         <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 shrink-0" />
                       </Link>
                     </div>
 
+                  </div>
+
+                  {/* Foreigner & Expatriate Rate Banner */}
+                  <div className="mt-3 pt-2.5 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2 text-[10px] font-sans text-slate-400">
+                    <span>
+                      <strong className="text-white font-semibold">Peserta Asing (WNA / Expat):</strong> Single US$50 (Rp 890.000) · Pair US$80 (Rp 1.424.000) sudah termasuk opsi jersey resmi.
+                    </span>
+                    <span className="text-slate-500 uppercase tracking-wider">KONTRIBUSI GLOBAL</span>
                   </div>
                 </div>
 
@@ -1386,6 +1349,21 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Official Production Notice Banner (Sesuai Ketentuan Resmi GX-ID) */}
+          <div className="p-3.5 sm:p-4 rounded-xl border border-white/10 bg-black/55 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans">
+            <div className="flex items-center gap-2.5">
+              <span className="px-2.5 py-0.5 rounded bg-[#FA6D0B]/15 border border-[#FA6D0B]/40 text-[#FA6D0B] text-[10px] font-bold uppercase tracking-widest shrink-0">
+                BATAS PRODUKSI
+              </span>
+              <span className="text-slate-300">
+                Pemesanan paket untuk jaminan serah terima Hari-H ditutup <strong className="text-white font-bold">10 September 2026</strong>.
+              </span>
+            </div>
+            <span className="text-slate-400 text-[11px] shrink-0">
+              Pendaftaran setelah 10 September 2026, jersey &amp; medali dikirim via kurir pasca-event.
+            </span>
+          </div>
+
           {/* DUAL PACKAGE COMPARISON (Clean Side-by-Side Split) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
@@ -1451,7 +1429,7 @@ export default function HomePage() {
                   <div className="flex items-baseline gap-1.5 pt-1">
                     <span className="text-[11px] font-sans font-bold text-slate-400 leading-none">MULAI</span>
                     <span className="font-display italic font-black text-2xl sm:text-3xl text-white leading-none">
-                      RP 200.000
+                      RP 250.000
                     </span>
                   </div>
                 </div>
@@ -1460,7 +1438,7 @@ export default function HomePage() {
                     TERMASUK FASILITAS HARI-H
                   </span>
                   <span className="text-[10px] font-sans text-slate-500 uppercase tracking-wider block mt-0.5">
-                    STANDAR FINISHER RESMI
+                    OFFLINE 60–200 KM · VIRTUAL RP 200.000
                   </span>
                 </div>
               </div>
