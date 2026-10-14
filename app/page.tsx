@@ -1298,7 +1298,7 @@ export default function HomePage() {
 
       {/* ========================================================================= */}
       {/* 2.5 PAKET PESERTA & MERCHANDISE (RAD RACE INSPIRED - EDITORIAL & ELEGAN) */}
-      <section id="racepack" className="pt-12 sm:pt-16 pb-20 text-white relative">
+      <section id="racepack" className="pt-12 sm:pt-16 pb-8 sm:pb-10 text-white relative">
         
         {/* Dynamic Action Tandem Cyclists Background (pesepeda2.webp) - 3RD BOTTOM IMAGE */}
         <div 
@@ -1319,7 +1319,7 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#090A0D]/50 via-transparent to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12 relative z-10">
           
           {/* Section Header: Alternating Right-Aligned Layout (Kiri-Kanan Rhythm) with Custom Text Graphic */}
           <div className="flex flex-col md:flex-row-reverse md:items-end justify-between gap-6 border-b border-white/10 pb-8">
@@ -1784,7 +1784,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 4. EVENT TIMELINE & WAVE DISPATCH RUNDOWN (POIN 2) */}
       {/* ========================================================================= */}
-      <section id="jadwal" className="py-24 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
+      <section id="jadwal" className="pt-8 sm:pt-12 pb-20 sm:pb-24 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
         {/* Subtle orange accent glow atmosphere */}
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.08)_0%,transparent_70%)] blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.06)_0%,transparent_70%)] blur-3xl pointer-events-none" />
