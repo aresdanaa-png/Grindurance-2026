@@ -1362,7 +1362,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Tier 1: Medal Only */}
-            <div className="p-7 sm:p-8 rounded-2xl border border-white/10 bg-[#0E0F13]/90 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.5)]">
+            <div className="p-7 sm:p-8 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
@@ -1419,7 +1419,7 @@ export default function HomePage() {
             </div>
 
             {/* Tier 2: Medal & Jersey */}
-            <div className="p-7 sm:p-8 rounded-2xl border-2 border-[#FA6D0B] bg-[#0E0F13]/90 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_45px_rgba(250,109,11,0.18)] transition-all duration-300">
+            <div className="p-7 sm:p-8 rounded-2xl border-2 border-[#FA6D0B] bg-black/45 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_45px_rgba(250,109,11,0.18)] transition-all duration-300">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
@@ -1478,7 +1478,7 @@ export default function HomePage() {
           </div>
 
           {/* LOGISTIK RACE PACK (RPC) — 2-COLUMN ATHLETIC TELEMETRY STRIP */}
-          <div className="rounded-2xl border border-white/10 bg-[#0E0F13]/90 backdrop-blur-md overflow-hidden">
+          <div className="rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
             <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 p-6 sm:p-7 gap-6 md:gap-0">
               
               {/* Column 1: Ambil Mandiri saat RPC Day */}
