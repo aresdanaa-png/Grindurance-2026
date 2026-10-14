@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   ArrowUpRight, 
   Users, 
@@ -25,7 +26,9 @@ import {
   AlertTriangle,
   Flag,
   Layers,
-  Timer
+  Timer,
+  Radio,
+  FileText
 } from 'lucide-react';
 
 interface StationItem {
@@ -88,6 +91,7 @@ interface CategoryData {
 export default function HomePage() {
   const [selectedId, setSelectedId] = useState<string>('120_PAIR');
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [activeScheduleTab, setActiveScheduleTab] = useState<'raceday' | 'praevent' | 'matrix'>('raceday');
 
   // Early Bird deadline: 15 November 2025 23:59:59 WIB (UTC+7)
   const EARLY_BIRD_DEADLINE = new Date('2025-11-15T16:59:59Z'); // UTC equivalent
@@ -530,21 +534,35 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 2. HYBRID COCKPIT TELEMETRY & ATHLETIC MONOLITHS (NIKE TRAIL X GARMIN HUD) */}
       {/* ========================================================================= */}
-      <section id="kategori" className="relative pt-8 pb-24">
+      <section id="kategori" className="relative pt-8 pb-0">
         
-        {/* Dynamic Fluid Wave Background Overlapping Upwards into Hero with Feathered Blend */}
+        {/* Cinematic Action Cyclist Motion Background (pesepeda.webp) - MIDDLE IMAGE: Solo Aero Cyclist */}
         <div 
-          className="absolute -top-64 bottom-0 inset-x-0 z-0 pointer-events-none overflow-hidden"
+          className="absolute -top-72 -bottom-96 inset-x-0 z-0 pointer-events-none overflow-hidden"
           style={{
-            maskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 85%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 25%, black 85%, transparent 100%)'
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, black 22%, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, black 22%, black 85%, transparent 100%)'
           }}
         >
           <img
-            src="/bg-orange.webp"
-            alt="Grindurance Fluid Flow Background"
-            className="w-full h-full object-cover object-top opacity-95 filter contrast-125 saturate-135 brightness-110"
+            src="/pesepeda.webp"
+            alt="Grindurance Gravel Cyclist Solo In Motion"
+            className="w-full h-full object-cover object-[center_35%] lg:object-[70%_25%] opacity-90 filter contrast-120 saturate-125 brightness-100"
           />
+          {/* Seamless gradient overlays for extreme typographic legibility without cutting off the bottom */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E11] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0D0E11]/90 via-[#0D0E11]/55 to-[#0D0E11]/25" />
+        </div>
+
+        {/* Seamless Horizontal Motion Blur Transition Seam between Hero and Categories */}
+        <div 
+          className="absolute -top-36 inset-x-0 h-48 z-[2] pointer-events-none opacity-70 overflow-hidden"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 50%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50%, transparent 100%)'
+          }}
+        >
+          <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.25)_0%,transparent_70%)] blur-2xl" />
         </div>
 
         {/* Section Header */}
@@ -636,7 +654,7 @@ export default function HomePage() {
                     isRace
                       ? isActive
                         ? 'bg-gradient-to-b from-[#FA6D0B]/20 via-[#FA6D0B]/10 to-transparent text-white shadow-[inset_0_0_24px_rgba(250,109,11,0.2)] border-x border-[#FA6D0B]/40 z-20'
-                        : 'bg-gradient-to-b from-amber-500/[0.06] via-white/[0.02] to-transparent hover:from-amber-500/[0.14] hover:via-white/[0.03] hover:to-transparent text-slate-300 border-x border-amber-500/20'
+                        : 'bg-gradient-to-b from-[#FA6D0B]/[0.06] via-white/[0.02] to-transparent hover:from-[#FA6D0B]/[0.12] hover:via-white/[0.03] hover:to-transparent text-slate-300 border-x border-[#FA6D0B]/20'
                       : isActive
                         ? 'bg-gradient-to-b from-[#FA6D0B]/25 via-[#FA6D0B]/10 to-transparent text-white'
                         : 'bg-transparent hover:bg-white/[0.04] text-slate-400 hover:text-white'
@@ -668,8 +686,8 @@ export default function HomePage() {
                     className={`absolute top-0 inset-x-0 transition-all duration-300 ${
                       isRace
                         ? isActive
-                          ? 'bg-gradient-to-r from-amber-400 via-[#FA6D0B] to-amber-500 shadow-[0_0_24px_#FA6D0B] h-[3px]'
-                          : 'bg-gradient-to-r from-amber-500/40 via-[#FA6D0B]/30 to-amber-500/40 group-hover:from-amber-400 group-hover:to-[#FA6D0B] h-[2px]'
+                          ? 'bg-[#FA6D0B] shadow-[0_0_24px_#FA6D0B] h-[3px]'
+                          : 'bg-[#FA6D0B]/40 group-hover:bg-[#FA6D0B] h-[2px]'
                         : isActive
                           ? 'bg-[#FA6D0B] shadow-[0_0_18px_#FA6D0B] h-1'
                           : 'bg-transparent group-hover:bg-white/20 h-1'
@@ -717,8 +735,8 @@ export default function HomePage() {
                       className={`text-[11px] sm:text-xs font-mono font-bold tracking-tight shrink-0 transition-all duration-300 ${
                         isRace
                           ? isActive
-                            ? 'text-amber-300 drop-shadow-[0_0_14px_rgba(245,158,11,0.9)] font-black'
-                            : 'text-amber-400/80 group-hover:text-amber-300'
+                            ? 'text-white drop-shadow-[0_0_14px_rgba(250,109,11,0.9)] font-black'
+                            : 'text-[#FA6D0B] group-hover:text-white'
                           : isActive
                             ? 'text-[#FA6D0B] drop-shadow-[0_0_14px_rgba(250,109,11,0.9)] font-black'
                             : 'text-slate-400 group-hover:text-slate-200'
@@ -746,8 +764,8 @@ export default function HomePage() {
                     <div className={`text-[10px] truncate font-mono ${
                       isRace
                         ? isActive 
-                          ? 'text-amber-100/90 font-medium' 
-                          : 'text-slate-300 group-hover:text-amber-100'
+                          ? 'text-white/90 font-medium' 
+                          : 'text-slate-300 group-hover:text-white'
                         : 'text-slate-300'
                     }`}>
                       {c.cot !== 'Fleksibel' ? `COT ${c.cot} // ${c.wave}` : '19 CHAPTER NASIONAL'}
@@ -789,7 +807,7 @@ export default function HomePage() {
                     <h4 className="font-display text-lg sm:text-xl lg:text-2xl font-black uppercase text-white italic tracking-wider leading-none">
                       {currentCategory.id === 'VIRTUAL' ? 'VIRTUAL RIDE ROUTE' : `${currentCategory.km} ROUTE`}
                     </h4>
-                    <span className="text-[9px] sm:text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-white/[0.06] text-[#FA6D0B] border border-white/10 uppercase tracking-widest">
+                    <span className="text-[9px] sm:text-[10px] font-mono font-bold px-3 py-1 rounded-full bg-white/[0.06] text-[#FA6D0B] border border-white/10 uppercase tracking-widest">
                       GPS // ELEVATION
                     </span>
                   </div>
@@ -1035,15 +1053,15 @@ export default function HomePage() {
                     <span className="text-slate-400 uppercase tracking-wider font-semibold">KOMPOSISI MEDAN //</span>
                     <span className="text-slate-300">
                       <span className="text-[#FA6D0B] font-bold">{currentCategory.surfaceBreakdown.asphalt}</span> Aspal ·{' '}
-                      <span className="text-amber-400 font-bold">{currentCategory.surfaceBreakdown.gravel}</span> Makadam ·{' '}
-                      <span className="text-orange-400 font-bold">{currentCategory.surfaceBreakdown.unpaved}</span> Tanah/Batu
+                      <span className="text-white font-bold">{currentCategory.surfaceBreakdown.gravel}</span> Makadam ·{' '}
+                      <span className="text-slate-400 font-bold">{currentCategory.surfaceBreakdown.unpaved}</span> Tanah/Batu
                     </span>
                   </div>
                   {/* Progress multi-segment bar */}
                   <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden flex">
                     <div style={{ width: currentCategory.surfaceBreakdown.asphalt }} className="h-full bg-slate-400" title="Aspal" />
                     <div style={{ width: currentCategory.surfaceBreakdown.gravel }} className="h-full bg-[#FA6D0B]" title="Makadam" />
-                    <div style={{ width: currentCategory.surfaceBreakdown.unpaved }} className="h-full bg-amber-500" title="Tanah/Batu" />
+                    <div style={{ width: currentCategory.surfaceBreakdown.unpaved }} className="h-full bg-white/30" title="Tanah/Batu" />
                   </div>
                 </div>
 
@@ -1279,8 +1297,1105 @@ export default function HomePage() {
 
 
       {/* ========================================================================= */}
-      {/* 3. COMMUNITY, VENUE & LIFESTYLE (HUMAN WARMTH AT ABEEY COFFEE) */}
+      {/* 2.5 PAKET PESERTA & MERCHANDISE (RAD RACE INSPIRED - EDITORIAL & ELEGAN) */}
+      <section id="racepack" className="pt-12 sm:pt-16 pb-20 text-white relative">
+        
+        {/* Dynamic Action Tandem Cyclists Background (pesepeda2.webp) - 3RD BOTTOM IMAGE */}
+        <div 
+          className="absolute top-64 sm:top-72 bottom-0 inset-x-0 z-0 pointer-events-none overflow-hidden"
+          style={{
+            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 14%, black 35%, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 14%, black 35%, black 85%, transparent 100%)'
+          }}
+        >
+          <img
+            src="/pesepeda2.webp"
+            alt="Grindurance Gravel Cyclists Tandem In Motion"
+            className="w-full h-full object-cover object-[center_20%] lg:object-[75%_15%] opacity-90 filter contrast-120 saturate-125 brightness-100"
+          />
+          {/* Seamless dark gradient overlays - smooth top fade-in from dark pause and bottom dissolve */}
+          <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#090A0D] via-[#090A0D]/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#090A0D]/90 via-[#090A0D]/55 to-[#090A0D]/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#090A0D] via-transparent to-transparent" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
+          
+          {/* Section Header: Alternating Right-Aligned Layout (Kiri-Kanan Rhythm) with Custom Text Graphic */}
+          <div className="flex flex-col md:flex-row-reverse md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+            <div className="flex flex-col items-start md:items-end space-y-3">
+              <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-mono pr-0 md:pr-7 lg:pr-9">
+                PARTICIPANT PACKAGES // 2026 EDITION
+              </span>
+              <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[560px] group">
+                {/* Ambient Radial Backlight Glow in exact brand orange */}
+                <div className="absolute -inset-3 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.28)_0%,transparent_70%)] blur-2xl opacity-80 pointer-events-none" />
+                <img
+                  src="/text race pack.webp"
+                  alt="Race Pack & Merchandise"
+                  className="relative z-10 w-full h-auto object-contain filter drop-shadow-[0_14px_32px_rgba(0,0,0,0.95)] drop-shadow-[0_0_40px_rgba(250,109,11,0.35)] transition-transform duration-500 group-hover:scale-[1.01]"
+                />
+              </div>
+            </div>
+
+            <div className="border-l-2 md:border-l-0 md:border-r-2 border-[#FA6D0B] pl-4 md:pl-0 md:pr-4 py-0.5 max-w-md md:text-right space-y-3">
+              <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
+                Sistem pendaftaran dua opsi: pilih paket <strong className="text-white">Medal Saja</strong> untuk esensi tantangan mandiri, atau upgrade ke paket <strong className="text-white">Medal &amp; Jersey</strong> resmi GX-ID buatan Pollride (+Rp 50.000). Seluruh paket mencakup perlengkapan hari-H.
+              </p>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/[0.03] text-xs font-mono uppercase text-slate-300">
+                <span className="text-white font-bold">2 OPSI PAKET</span>
+                <span className="text-[#FA6D0B] select-none">//</span>
+                <span>TARIF TRANSPARAN</span>
+              </div>
+            </div>
+          </div>
+
+          {/* DUAL PACKAGE COMPARISON (Clean Side-by-Side Split) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            {/* Tier 1: Medal Only */}
+            <div className="p-8 rounded-2xl border border-white/10 bg-[#0E0F13] flex flex-col justify-between space-y-6 hover:border-white/25 transition-all">
+              <div className="space-y-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-full border border-white/20 text-slate-300 text-[10px] font-mono font-bold uppercase tracking-widest">
+                      OPSI 01
+                    </span>
+                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+                      ESENSIAL
+                    </span>
+                  </div>
+                  <span className="text-xs font-mono text-slate-400 font-bold uppercase tracking-wider">
+                    TARIF DASAR KATEGORI
+                  </span>
+                </div>
+                
+                <div>
+                  <h3 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                    PAKET MEDAL ONLY
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
+                    Pilihan tepat bagi pesepeda yang fokus pada esensi jarak, tantangan mandiri, dan koleksi medali resmi finisher.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/10 space-y-3 text-xs text-slate-300 font-sans">
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Nomor Plat Sepeda Tahan Air #1000+ &amp; QR Check-in</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Asuransi Kecelakaan Resmi 1 Hari Event</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Nutrisi NDR Energy Gel + Isotonic Drink</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Akses Finisher Lounge &amp; Voucher Pemulihan ABEEY Coffee</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                <span className="text-slate-400 uppercase">Mulai dari Rp 200.000</span>
+                <span className="text-white font-bold uppercase">TERMASUK FASILITAS HARI-H</span>
+              </div>
+            </div>
+
+            {/* Tier 2: Medal & Jersey */}
+            <div className="p-8 rounded-2xl border-2 border-[#FA6D0B]/60 bg-gradient-to-b from-[#141210] to-[#0E0F13] flex flex-col justify-between space-y-6 shadow-[0_0_40px_rgba(250,109,11,0.08)]">
+              <div className="space-y-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-full bg-[#FA6D0B] text-black text-[10px] font-mono font-black uppercase tracking-widest">
+                      OPSI 02
+                    </span>
+                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                    <span className="text-xs font-mono font-black text-white uppercase tracking-wider">
+                      REKOMENDASI LENGKAP
+                    </span>
+                  </div>
+                  <span className="text-xs font-mono text-[#FA6D0B] font-bold uppercase tracking-wider">
+                    HANYA +RP 50.000 / PAX
+                  </span>
+                </div>
+                
+                <div>
+                  <h3 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                    PAKET MEDAL &amp; JERSEY RESMI
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1 leading-relaxed">
+                    Paket lengkap terfavorit. Mendapatkan seluruh fasilitas Paket Medal Only ditambah Official Anniversary Aero Jersey buatan Pollride.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/10 space-y-3 text-xs text-slate-300 font-sans">
+                  <div className="flex items-center gap-2.5 font-bold text-white">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Official Anniversary Aero Jersey by Pollride (Senilai Rp 350.000)</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Nomor Plat Sepeda Tahan Air #1000+ &amp; QR Check-in</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Asuransi Kecelakaan Resmi 1 Hari Event</span>
+                  </div>
+                  <div className="flex items-center gap-2.5">
+                    <Check className="w-4 h-4 text-[#FA6D0B] shrink-0" />
+                    <span>Nutrisi NDR Energy Gel + Isotonic + Voucher ABEEY Coffee</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono">
+                <span className="text-slate-400 uppercase">Subsidi Komunitas GX-ID</span>
+                <span className="text-[#FA6D0B] font-bold uppercase">BEST SELLER EDITION</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* EDITORIAL PRODUCT SHOWCASE (Lookbook Grid) */}
+          <div className="space-y-6 pt-6">
+            <div className="border-b border-white/10 pb-4 flex items-center justify-between">
+              <span className="text-xs font-mono uppercase tracking-widest text-slate-400">
+                RINCIAN ITEM RESMI // LOOKBOOK
+              </span>
+              <span className="text-xs font-mono text-slate-500 uppercase">3 CORE ITEMS</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+              {/* ITEM 1: JERSEY */}
+              <div className="space-y-4 group">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[#FA6D0B]/50 transition-colors">
+                  <Image
+                    src="/merchandise/jersey.webp"
+                    alt="Official Anniversary Jersey"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] font-mono font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black">
+                      POLLRIDE AERO FIT
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="text-[11px] font-mono text-slate-500 uppercase">01 // APPAREL RESMI</div>
+                  <h3 className="font-nacelle text-xl font-bold uppercase text-white tracking-tight">
+                    OFFICIAL ANNIVERSARY JERSEY
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Material mesh bernapas berteknologi quick-dry dengan grafis kontur topografi Jonggol–Sukamakmur. Dirancang khusus untuk cuaca basah dan lembap.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-400">
+                  <div>• Quick-Dry Mesh</div>
+                  <div>• 3 Saku Belakang</div>
+                  <div>• Zipper YKK Lock</div>
+                  <div>• Garis Reflektif</div>
+                </div>
+              </div>
+
+              {/* ITEM 2: MEDAL */}
+              <div className="space-y-4 group">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[#FA6D0B]/50 transition-colors">
+                  <Image
+                    src="/merchandise/medal.webp"
+                    alt="Finisher Metal Medal"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
+                      SEMUA KATEGORI
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="text-[11px] font-mono text-slate-500 uppercase">02 // MEDALI SAH</div>
+                  <h3 className="font-nacelle text-xl font-bold uppercase text-white tracking-tight">
+                    HEAVY FINISHER METAL MEDAL
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Medali berbobot tebal dari paduan zinc alloy antique bronze dengan ukiran timbul 3D topografi puncak pegunungan dan lanyard tenun edisi peringatan.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-400">
+                  <div>• Paduan Solid Zinc</div>
+                  <div>• Relief Timbul 3D</div>
+                  <div>• Lanyard Woven Tebal</div>
+                  <div>• Finisher Luring &amp; Virtual</div>
+                </div>
+              </div>
+
+              {/* ITEM 3: RACE PACK KIT */}
+              <div className="space-y-4 group">
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/60 border border-white/10 group-hover:border-[#FA6D0B]/50 transition-colors">
+                  <Image
+                    src="/merchandise/racepack.webp"
+                    alt="Race Pack Items & Inclusions"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
+                      HARI-H READY
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="text-[11px] font-mono text-slate-500 uppercase">03 // ESENSIAL ATLET</div>
+                  <h3 className="font-nacelle text-xl font-bold uppercase text-white tracking-tight">
+                    PERLENGKAPAN &amp; LAYANAN HARI-H
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Plat nomor sepeda tahan air, nutrisi gel energi NDR, minuman elektrolit, asuransi kecelakaan resmi, serta voucher hidangan pemulihan di ABEEY.
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono text-slate-400">
+                  <div>• Plat BIB Waterproof</div>
+                  <div>• NDR Energy Gel</div>
+                  <div>• Asuransi Resmi</div>
+                  <div>• Voucher ABEEY Lounge</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Minimalist Bottom CTA Strip */}
+          <div className="rounded-2xl border border-white/10 bg-[#0E0F13] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="space-y-1 text-center sm:text-left">
+              <span className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                KUOTA TERBATAS // AMANKAN BIB ANDA
+              </span>
+              <h4 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                PILIH KATEGORI &amp; DAPATKAN PAKET ANDA
+              </h4>
+              <p className="text-xs text-slate-400">
+                Pendaftaran ditutup saat kuota per kategori terpenuhi atau batas akhir pendaftaran tercapai.
+              </p>
+            </div>
+            <Link
+              href="/daftar"
+              className="px-8 py-3.5 rounded-full text-xs font-nacelle font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap shrink-0"
+            >
+              <span>PILIH PAKET &amp; DAFTAR</span>
+              <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+            </Link>
+          </div>
+
+        </div>
+      </section>
+
       {/* ========================================================================= */}
+      {/* 4. EVENT TIMELINE & WAVE DISPATCH RUNDOWN (POIN 2) */}
+      {/* ========================================================================= */}
+      <section id="jadwal" className="py-24 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
+        {/* Subtle orange accent glow atmosphere */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.08)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.06)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+          
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+            <div className="space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 text-[#FA6D0B] text-[10px] font-mono font-bold uppercase tracking-widest">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>RUNDOWN RESMI // OPERASIONAL BALAPAN</span>
+              </div>
+              <h2 className="font-nacelle text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
+                EVENT TIMELINE &amp; WAVE DISPATCH
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
+                Manajemen waktu presisi untuk menjamin keselamatan dan kelancaran 5 kategori balap. Mulai dari sesi Race Pack Collection (RPC), verifikasi Scrutineering fajar, pelepasan gelombang start teratur, hingga panggung podium perayaan di ABEEY Coffee &amp; Eatery.
+              </p>
+            </div>
+
+            {/* Quick Action / Reference */}
+            <div className="flex items-center gap-3 shrink-0">
+              <Link
+                href="/peraturan"
+                className="px-5 py-2.5 rounded-full border border-white/15 hover:border-[#FA6D0B]/50 text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white bg-white/[0.03] hover:bg-white/[0.06] transition-all flex items-center gap-2"
+              >
+                <span>ATHLETE GUIDE PDF</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#FA6D0B]" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Interactive Tab Switcher: Using Brand Pill Shape rounded-full */}
+          <div className="flex flex-wrap items-center gap-3 border-b border-white/10 pb-6">
+            <button
+              onClick={() => setActiveScheduleTab('raceday')}
+              className={`px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 ${
+                activeScheduleTab === 'raceday'
+                  ? 'bg-[#FA6D0B] text-black'
+                  : 'bg-white/[0.03] text-slate-400 hover:text-white border border-white/10 hover:border-white/20'
+              }`}
+            >
+              <Flag className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>RACE DAY (HARI-H) // MINGGU</span>
+              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
+                activeScheduleTab === 'raceday' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
+              }`}>
+                03:00–21:00 WIB
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveScheduleTab('praevent')}
+              className={`px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 ${
+                activeScheduleTab === 'praevent'
+                  ? 'bg-[#FA6D0B] text-black'
+                  : 'bg-white/[0.03] text-slate-400 hover:text-white border border-white/10 hover:border-white/20'
+              }`}
+            >
+              <Calendar className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>PRA-EVENT (H-1) // SABTU</span>
+              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
+                activeScheduleTab === 'praevent' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
+              }`}>
+                RPC &amp; BRIEFING
+              </span>
+            </button>
+
+            <button
+              onClick={() => setActiveScheduleTab('matrix')}
+              className={`px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2.5 ${
+                activeScheduleTab === 'matrix'
+                  ? 'bg-[#FA6D0B] text-black'
+                  : 'bg-white/[0.03] text-slate-400 hover:text-white border border-white/10 hover:border-white/20'
+              }`}
+            >
+              <Layers className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>MATRIKS GELOMBANG (5 KATEGORI)</span>
+              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
+                activeScheduleTab === 'matrix' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-400'
+              }`}>
+                WAVE &amp; COT
+              </span>
+            </button>
+          </div>
+
+          {/* TAB 1: RACE DAY ITINERARY */}
+          {activeScheduleTab === 'raceday' && (
+            <div className="space-y-6">
+              
+              {/* Context Summary Bar */}
+              <div className="rounded-2xl border border-white/10 bg-black/50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
+                  <div>
+                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+                      VENUE UTAMA: ABEEY COFFEE &amp; EATERY, HARJAMUKTI
+                    </span>
+                    <span className="text-[11px] text-slate-400">
+                      Titik Kumpul Start &amp; Finish Terintegrasi Stasiun LRT Harjamukti Cibubur
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-xs font-mono text-slate-400 shrink-0">
+                  <span>FLAG OFF: <strong className="text-[#FA6D0B]">05:30 WIB</strong></span>
+                  <span className="text-[#FA6D0B]">//</span>
+                  <span>FINAL COT: <strong className="text-white">21:00 WIB</strong></span>
+                </div>
+              </div>
+
+              {/* Vertical Timeline Container */}
+              <div className="relative border-l border-white/15 ml-4 sm:ml-6 pl-6 sm:pl-8 space-y-8">
+
+                {/* ITEM 1: PROLOG 30 KM */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-black group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-[#FA6D0B]/40 transition-colors">
+                    
+                    {/* Header: Pure Typography with Slashes (Zero generic template boxes) */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          03:00 — 05:00 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#FA6D0B]">
+                          WAJIB KHUSUS 150 &amp; 200 KM
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase">RUTE MANDIRI SUBUH</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                      MANDIRI PROLOG 30 KM // REKAMAN GPS MANDIRI
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Peserta kategori 150 km dan 200 km wajib menuntaskan minimal 30 km mandiri dari titik asal masing-masing menuju venue atau di rute sekitar Cibubur sebelum pukul 05:00 WIB. File aktivitas rekam jejak GPS (Garmin, Wahoo, atau Strava GPX/FIT) diverifikasi panitia di Meja Scrutineering fajar.
+                    </p>
+
+                    <div className="border-l-2 border-[#FA6D0B] pl-4 py-1 text-xs text-slate-300 space-y-0.5">
+                      <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Mitigasi Keselamatan Mutlak:</strong>
+                      <span className="text-slate-400">Peserta yang gagal melampirkan log prolog 30 km atau tiba lewat pukul 05:15 WIB tidak diizinkan masuk starting grid demi mencegah kelelahan berlebih dan risiko medis.</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ITEM 2: VENUE OPEN & SCRUTINEERING */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/40 bg-black group-hover:border-white group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-white/25 transition-colors">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          04:30 — 05:15 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-300">
+                          SEMUA PESERTA LURING
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase">ABEEY COFFEE LOUNGE</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                      VENUE OPEN &amp; MEJA SCRUTINEERING AKHIR
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Pintu registrasi ulang dan inspeksi teknis dibuka. Peserta melakukan scan QR e-ticket nomor BIB, verifikasi kelayakan sepeda (rem, ban, drivetrain), serta inspeksi perlengkapan keselamatan wajib.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-[11px] font-mono text-slate-300">
+                      <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#FA6D0B] shrink-0" />
+                        <span>2 Lampu Depan (400+ lm) &amp; Lampu Belakang</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#FA6D0B] shrink-0" />
+                        <span>Rompi Reflektif EN ISO 20471 &amp; Helm CE</span>
+                      </div>
+                      <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#FA6D0B] shrink-0" />
+                        <span>Plat Nomor Sepeda &amp; Botol Hidrasi Penuh</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ITEM 3: WAVE 1 DISPATCH */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-[#FA6D0B] group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border-2 border-[#FA6D0B]/50 bg-[#0E0F13] space-y-4">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          05:30 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
+                          WAVE 1 DISPATCH
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-[#FA6D0B] font-bold uppercase">FAJAR PERDANA</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                      FLAG OFF WAVE 1: ULTRA 200 KM &amp; CROSS 150 KM
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Pelepasan fajar awal untuk memaksimalkan jam cahaya matahari (*daylight hours*) sebelum transisi navigasi malam hari. Mengarungi jalur aspal awal Cibubur–Cileungsi yang steril menuju perbukitan pedalaman Jonggol, Sukamakmur, dan Cariu.
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
+                      <span>COT 200 KM: <strong className="text-white">19 JAM (00:30 WIB H+1)</strong></span>
+                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span>COT 150 KM: <strong className="text-white">15 JAM (20:30 WIB)</strong></span>
+                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span>MODE: <strong className="text-[#FA6D0B]">EKSPEDISI MANDIRI PENUH</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ITEM 4: WAVE 2 DISPATCH */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-[#FA6D0B] group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-[#FA6D0B]/40 bg-[#0E0F13] space-y-4">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          06:00 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
+                          WAVE 2 DISPATCH
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-[#FA6D0B] font-bold uppercase">KOMPETITIF RESMI</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                      FLAG OFF WAVE 2: 120 KM AMAZING RACE (SINGLE &amp; PAIR MIX)
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Pelepasan kategori balap berintensitas tinggi perebutan Top 3 Podium &amp; Jersey Juara Pollride. Jalur steril dari rombongan rekreasi agar dinamika peloton cepat dan formasi aerodinamis dapat terbentuk secara aman.
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
+                      <span>COT 120 KM: <strong className="text-white">11 JAM (17:00 WIB)</strong></span>
+                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span>LIVE TRACKING: <strong className="text-white">WAJIB AKTIF TERUS</strong></span>
+                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span>PITSTOP: <strong className="text-white">WAJIB 30 MENIT (CP#4)</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ITEM 5: WAVE 3 DISPATCH */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/60 bg-white group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-white/20 transition-colors">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          07:00 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/20 text-white font-bold">
+                          WAVE 3 DISPATCH
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase">CAHAYA MATAHARI PENUH</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                      FLAG OFF WAVE 3: FUN GRAVEL 80 KM &amp; KOMUNITAS 60 KM
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Pelepasan di bawah sinar matahari pagi penuh dengan atmosfer festival dan kebersamaan komunitas. Sangat ramah untuk sepeda lipat (*folding bike*), sepeda hybrid, dan pemula gravel tanpa tekanan persaingan podium.
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
+                      <span>COT 80 KM: <strong className="text-white">9 JAM (16:00 WIB)</strong></span>
+                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span>COT 60 KM: <strong className="text-white">7 JAM (14:00 WIB)</strong></span>
+                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span>ATMOSFER: <strong className="text-white">FESTIVAL &amp; PARADE KOMUNITAS</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ITEM 6: PITSTOP 30-MIN REST */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-black group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-[#FA6D0B]/40 transition-colors">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          10:00 — 16:00 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-[#FA6D0B] text-[#FA6D0B] font-bold">
+                          PENALTI 300%
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase">CP#4 / CP#6 JONGGOL</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                      MANDATORY 30-MIN NEUTRALIZED PITSTOP // SMART GEOFENCING
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Seluruh peserta 120, 150, dan 200 km wajib mengambil jeda istirahat minimal 30 menit tanpa bergerak yang terverifikasi sensor smart geofencing dan scan barcode check-in/check-out.
+                    </p>
+
+                    <div className="border-l-2 border-[#FA6D0B] pl-4 py-1 text-xs text-slate-300 space-y-0.5">
+                      <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Regulasi Waktu Netral:</strong>
+                      <span className="text-slate-400">Waktu istirahat 30 menit tidak dihitung dalam race time bersih. Peserta yang keluar pos di bawah 30 menit otomatis diganjar penalti waktu 300% (penambahan 90 menit ke catatan waktu).</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* ITEM 7: FINISHER ARRIVAL & RECOVERY */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/40 bg-black group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-white/20 transition-colors">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          11:00 — 21:00 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/20 text-white font-bold">
+                          SEMUA FINISHER SAH
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase">FINISHER GATE ABEEY</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                      FINISHER ARRIVAL, MEDAL CLAIM &amp; ATHLETE RECOVERY LOUNGE
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Penyambutan finisher di ABEEY Coffee &amp; Eatery. Pengalungan Heavy Metal Finisher Medal, verifikasi log GPS akhir, penukaran voucher hidangan hangat, hidrasi isotonik NDR, dan sajian fermented kombucha artisan (Candala, Palapa, Mantra).
+                    </p>
+                  </div>
+                </div>
+
+                {/* ITEM 8: PODIUM CEREMONY */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-[#FA6D0B] group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-[#FA6D0B]/40 bg-[#0E0F13] space-y-4">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          17:00 — 18:00 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
+                          STAGE CEREMONY
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-[#FA6D0B] font-bold uppercase">PANGGUNG UTAMA</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                      PODIUM CEREMONY 120 KM &amp; COMMUNITY AWARDS
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                      Penganugerahan piala dan hadiah sponsor bagi Top 3 120 KM Kategori Pria, Wanita, dan Pair Mix. Penyerahan sertifikat Best Spirit Community untuk chapter teraktif, serta pengundian hadiah doorprize utama.
+                    </p>
+                  </div>
+                </div>
+
+                {/* ITEM 9: OFFICIAL COT CLOSING */}
+                <div className="relative group">
+                  <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/60 bg-white group-hover:scale-125 transition-transform" />
+                  <div className="p-6 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+                      <div className="flex flex-wrap items-baseline gap-3">
+                        <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
+                          21:00 WIB
+                        </span>
+                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/30 text-white font-bold">
+                          BATAS AKHIR MUTLAK
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase">VENUE CLOSED</span>
+                    </div>
+
+                    <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                      OFFICIAL CUT-OFF TIME (COT) &amp; PENUTUPAN VENUE
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                      Batas akhir penyelesaian seluruh rute event. Tim sweeper dan paramedis ambulans RS Hermina Cibubur menyelesaikan sapuan jalur terakhir. Operasional panggung resmi selesai.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          )}
+
+          {/* TAB 2: PRA-EVENT (H-1) */}
+          {activeScheduleTab === 'praevent' && (
+            <div className="space-y-6">
+              
+              <div className="rounded-2xl border border-white/10 bg-black/50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
+                  <div>
+                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+                      H-1: SABTU, DESEMBER 2026 // ABEEY COFFEE CIBUBUR
+                    </span>
+                    <span className="text-[11px] text-slate-400">
+                      Pengambilan Race Pack, Pengecekan Awal Sepeda &amp; Workshop Keselamatan Rute
+                    </span>
+                  </div>
+                </div>
+                <div className="text-xs font-mono text-[#FA6D0B] shrink-0 font-bold uppercase">
+                  WAJIB E-TICKET &amp; IDENTITAS RESMI (KTP/SIM)
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {/* Pra-Event Card 1 */}
+                <div className="p-8 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-[#FA6D0B]/40 transition-colors">
+                  <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+                    <span className="font-mono text-sm font-black text-white">
+                      10:00 — 17:00 WIB
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">OFFICIAL RPC DESK</span>
+                  </div>
+
+                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                    RACE PACK COLLECTION (RPC) &amp; PRE-CHECK
+                  </h3>
+
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Pengambilan perlengkapan atlet: Jersey Pollride, nomor plat sepeda waterproof, goodie bag, suplemen gel NDR, serta kartu asuransi 1 hari. Pemeriksaan awal fungsi sepeda dapat dilakukan bersama tim mekanik rekanan.
+                  </p>
+
+                  <div className="border-l-2 border-[#FA6D0B] pl-4 py-1 text-xs text-slate-400 space-y-0.5">
+                    <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Dokumen Wajib:</strong>
+                    <span>E-ticket QR Code pendaftaran &amp; Kartu Identitas Fisik (KTP/SIM/Paspor). Pengambilan diwakilkan wajib menyertakan surat kuasa resmi.</span>
+                  </div>
+                </div>
+
+                {/* Pra-Event Card 2 */}
+                <div className="p-8 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-white/20 transition-colors">
+                  <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+                    <span className="font-mono text-sm font-black text-white">
+                      11:00 — 12:30 WIB
+                    </span>
+                    <span className="text-[10px] font-mono text-[#FA6D0B] uppercase font-bold tracking-wider">LIVE INSTAGRAM</span>
+                  </div>
+
+                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                    COACHING CLINIC: GRAVEL NAVIGATION &amp; GEAR
+                  </h3>
+
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Sesi edukasi praktis bersama pelatih ketahanan GX-ID. Membedah strategi tekanan angin ban (tire pressure) untuk makadam Jonggol, sinkronisasi rute GPX di head unit Garmin/Wahoo, dan manajemen cairan saat hujan tropis.
+                  </p>
+
+                  <div className="border-l-2 border-white/20 pl-4 py-1 text-xs text-slate-400 space-y-0.5">
+                    <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Format Sesi:</strong>
+                    <span>Tersedia tatap muka di area outdoor ABEEY Coffee serta siaran langsung di Instagram <strong>@gxid.official</strong>.</span>
+                  </div>
+                </div>
+
+                {/* Pra-Event Card 3 */}
+                <div className="p-8 rounded-2xl border-2 border-[#FA6D0B]/50 bg-[#0E0F13] space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+                    <span className="font-mono text-sm font-black text-white">
+                      14:00 — 15:30 WIB
+                    </span>
+                    <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
+                      BRIEFING WAJIB
+                    </span>
+                  </div>
+
+                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                    TECHNICAL MEETING &amp; SAFETY WORKSHOP
+                  </h3>
+
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Pengarahan teknis rute final: pengumuman titik kritis tanjakan Sukamakmur &amp; Cariu, koordinat penempatan ambulans SPGDT RS Hermina Cibubur, tata kelola smart geofencing pitstop 30 menit, dan sistem darurat evakuasi.
+                  </p>
+
+                  <div className="border-l-2 border-[#FA6D0B] pl-4 py-1 text-xs text-slate-300 space-y-0.5">
+                    <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Wajib Hadir / Menyimak:</strong>
+                    <span className="text-slate-400">Seluruh kapten squad, peserta solo, dan pair mix sangat disarankan hadir atau menyimak rekaman sesi ini sebelum flag off esok paginya.</span>
+                  </div>
+                </div>
+
+                {/* Pra-Event Card 4 */}
+                <div className="p-8 rounded-2xl border border-white/10 bg-[#0E0F13] space-y-4 hover:border-white/20 transition-colors">
+                  <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+                    <span className="font-mono text-sm font-black text-white">
+                      15:30 — 17:30 WIB
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">COMMUNITY LOUNGE</span>
+                  </div>
+
+                  <h3 className="font-nacelle text-xl sm:text-2xl font-bold uppercase text-white tracking-tight">
+                    COMMUNITY GATHERING &amp; BARISTA SOCIAL HOUR
+                  </h3>
+
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Temu kangen antar-pesepeda dari 19 chapter GX-ID se-Indonesia. Saling bertukar cerita petualangan ekspedisi mandiri sambil mencicipi racikan kopi dan kombucha khas ABEEY Eatery sebelum kembali istirahat persiapan dini hari.
+                  </p>
+
+                  <div className="border-l-2 border-white/20 pl-4 py-1 text-xs text-slate-400 space-y-0.5">
+                    <strong className="text-white font-mono uppercase tracking-wider text-[11px] block">Akses Lokasi:</strong>
+                    <span>Terhubung langsung ke akomodasi sekitar Cibubur Junction dan Stasiun LRT Harjamukti.</span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          )}
+
+          {/* TAB 3: WAVE DISPATCH MATRIX (TABLE) */}
+          {activeScheduleTab === 'matrix' && (
+            <div className="space-y-6">
+              
+              <div className="rounded-2xl border border-white/10 bg-black/50 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+                    MATRIKS PERBANDINGAN OPERASIONAL 5 KATEGORI
+                  </span>
+                  <span className="text-[11px] text-slate-400">
+                    Rincian gelombang flag off, syarat prolog, batas waktu Cut-Off Time (COT), dan regulasi lampu wajib.
+                  </span>
+                </div>
+                <span className="text-xs font-mono text-[#FA6D0B] font-bold uppercase">INTERVAL PELEPASAN: 15–30 MENIT</span>
+              </div>
+
+              {/* Responsive Table Container */}
+              <div className="overflow-x-auto rounded-2xl border border-white/10 bg-[#0E0F12]">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="border-b border-white/10 bg-white/[0.03] font-mono text-[11px] uppercase text-slate-400 tracking-wider">
+                      <th className="py-4 px-4 sm:px-6">Kategori &amp; Jarak</th>
+                      <th className="py-4 px-4">Gelombang &amp; Start</th>
+                      <th className="py-4 px-4">Prolog Subuh</th>
+                      <th className="py-4 px-4">Cut-Off Time (COT)</th>
+                      <th className="py-4 px-4">Pitstop Wajib</th>
+                      <th className="py-4 px-4">Standar Lampu</th>
+                      <th className="py-4 px-4">Sifat Kategori</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.06] font-mono">
+                    
+                    {/* Row 200 KM */}
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 px-4 sm:px-6">
+                        <strong className="text-white text-sm font-nacelle uppercase tracking-tight block">200 KM ULTRA</strong>
+                        <span className="text-[11px] text-[#FA6D0B]">Ultra Gravel Grind</span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30 font-bold block w-fit">
+                          WAVE 1 (05:30 WIB)
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-[#FA6D0B] font-bold">
+                        Wajib 30 KM (03:00–05:00)
+                      </td>
+                      <td className="py-4 px-4 text-white font-bold">
+                        19 Jam (00:30 WIB H+1)
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        Wajib 30 Min (CP#4)
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        2 Depan (400+ lm) + Rompi EN ISO
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full border border-white/20 text-slate-300 text-[10px]">
+                          Ekspedisi Mandiri Ultra
+                        </span>
+                      </td>
+                    </tr>
+
+                    {/* Row 150 KM */}
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 px-4 sm:px-6">
+                        <strong className="text-white text-sm font-nacelle uppercase tracking-tight block">150 KM CROSS</strong>
+                        <span className="text-[11px] text-[#FA6D0B]">Cross Endurance</span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30 font-bold block w-fit">
+                          WAVE 1 (05:30 WIB)
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-[#FA6D0B] font-bold">
+                        Wajib 30 KM (03:00–05:00)
+                      </td>
+                      <td className="py-4 px-4 text-white font-bold">
+                        15 Jam (20:30 WIB)
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        Wajib 30 Min (CP#4)
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        2 Depan (400+ lm) + Rompi EN ISO
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full border border-white/20 text-slate-300 text-[10px]">
+                          Cross Gran Fondo
+                        </span>
+                      </td>
+                    </tr>
+
+                    {/* Row 120 KM */}
+                    <tr className="hover:bg-white/[0.02] transition-colors bg-[#FA6D0B]/[0.03]">
+                      <td className="py-4 px-4 sm:px-6">
+                        <strong className="text-white text-sm font-nacelle uppercase tracking-tight block">120 KM AMAZING RACE</strong>
+                        <span className="text-[11px] text-[#FA6D0B]">Single &amp; Pair Mix</span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full bg-[#FA6D0B] text-black font-black block w-fit">
+                          WAVE 2 (06:00 WIB)
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-slate-500">
+                        Tidak Ada
+                      </td>
+                      <td className="py-4 px-4 text-white font-bold">
+                        11 Jam (17:00 WIB)
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        Wajib 30 Min (CP#4)
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        Min 1 Depan + Belakang Aktif
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full bg-[#FA6D0B]/20 text-[#FA6D0B] border border-[#FA6D0B]/40 text-[10px] font-bold">
+                          KOMPETITIF (PODIUM TOP 3)
+                        </span>
+                      </td>
+                    </tr>
+
+                    {/* Row 80 KM */}
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 px-4 sm:px-6">
+                        <strong className="text-white text-sm font-nacelle uppercase tracking-tight block">80 KM FUN GRAVEL</strong>
+                        <span className="text-[11px] text-slate-400">Jonggol Explorer</span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full border border-white/20 text-white font-bold block w-fit">
+                          WAVE 3 (07:00 WIB)
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-slate-500">
+                        Tidak Ada
+                      </td>
+                      <td className="py-4 px-4 text-white font-bold">
+                        9 Jam (16:00 WIB)
+                      </td>
+                      <td className="py-4 px-4 text-slate-400">
+                        Fleksibel (Water Station)
+                      </td>
+                      <td className="py-4 px-4 text-slate-400">
+                        Rekomendasi Senja/Siang
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full border border-white/10 text-slate-300 text-[10px]">
+                          Rekreasi Gravel
+                        </span>
+                      </td>
+                    </tr>
+
+                    {/* Row 60 KM */}
+                    <tr className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 px-4 sm:px-6">
+                        <strong className="text-white text-sm font-nacelle uppercase tracking-tight block">60 KM KOMUNITAS</strong>
+                        <span className="text-[11px] text-slate-400">Ramah Seli &amp; Pemula</span>
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full border border-white/20 text-white font-bold block w-fit">
+                          WAVE 3 (07:00 WIB)
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-slate-500">
+                        Tidak Ada
+                      </td>
+                      <td className="py-4 px-4 text-white font-bold">
+                        7 Jam (14:00 WIB)
+                      </td>
+                      <td className="py-4 px-4 text-slate-400">
+                        Fleksibel (Water Station)
+                      </td>
+                      <td className="py-4 px-4 text-slate-400">
+                        Standar Reflektor/Lampu
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full border border-white/10 text-slate-300 text-[10px]">
+                          Parade Festival
+                        </span>
+                      </td>
+                    </tr>
+
+                    {/* Row Virtual Ride */}
+                    <tr className="hover:bg-white/[0.02] transition-colors bg-white/[0.01]">
+                      <td className="py-4 px-4 sm:px-6">
+                        <strong className="text-white text-sm font-nacelle uppercase tracking-tight block">VIRTUAL RIDE</strong>
+                        <span className="text-[11px] text-white">19 Chapter Nasional</span>
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        Mandiri H-Event
+                      </td>
+                      <td className="py-4 px-4 text-slate-500">
+                        Rute Lokal Domisili
+                      </td>
+                      <td className="py-4 px-4 text-slate-300">
+                        Sesuai Jarak Pilihan
+                      </td>
+                      <td className="py-4 px-4 text-slate-400">
+                        Mandiri
+                      </td>
+                      <td className="py-4 px-4 text-slate-400">
+                        Standar Jalan Raya Lokal
+                      </td>
+                      <td className="py-4 px-4">
+                        <span className="px-3 py-1 rounded-full border border-[#FA6D0B]/40 text-[#FA6D0B] text-[10px] font-bold">
+                          Validasi Strava Webhook
+                        </span>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Bottom Rule Highlight */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                <div className="p-4 rounded-xl border border-white/10 bg-black/40 space-y-1">
+                  <span className="text-[#FA6D0B] font-bold block uppercase">// DISIPLIN JADWAL FLAG OFF</span>
+                  <p className="text-slate-400 text-[11px] leading-relaxed">
+                    Peserta yang terlambat pada wave kategorinya akan dilepas di gelombang berikutnya. Namun, catatan waktu resmi (official race time) tetap dihitung sejak gelombang aslinya dilepas (*chasing time penalty*).
+                  </p>
+                </div>
+                <div className="p-4 rounded-xl border border-white/10 bg-black/40 space-y-1">
+                  <span className="text-[#FA6D0B] font-bold block uppercase">// LIVE TRACKING AKTIF (120, 150, 200 KM)</span>
+                  <p className="text-slate-400 text-[11px] leading-relaxed">
+                    Kategori kompetitif dan ultra wajib menyerahkan tautan pelacakan langsung (Garmin LiveTrack, Strava Beacon, atau WhatsApp Live Location) pada saat Scrutineering fajar untuk pengawasan panitia dan paramedis.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          )}
+
+        </div>
+
+      </section>
       <section className="py-20 border-t border-b border-white/10 bg-[#111216]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
