@@ -14,6 +14,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import BibCard from '@/components/BibCard';
+import { useLanguage } from '@/lib/context/LanguageContext';
 
 interface RosterItem {
   id: string;
@@ -46,24 +47,25 @@ interface RosterStats {
   prolog_required_total: number;
 }
 
-const CATEGORY_TABS = [
-  { id: 'ALL', label: 'SEMUA KATEGORI' },
-  { id: '200', label: '200 ULTRA' },
-  { id: '150', label: '150 GRAND FONDO' },
-  { id: '120_SINGLE', label: '120 (RACE) SINGLE' },
-  { id: '120_PAIR', label: '120 (RACE) PAIR MIX' },
-  { id: '100', label: '100 FONDO' },
-  { id: '60', label: '60 FUN RIDE' },
-  { id: 'VIRTUAL', label: 'VIRTUAL RIDE' },
-];
-
 export default function PesertaPage() {
+  const { t } = useLanguage();
   const [roster, setRoster] = useState<RosterItem[]>([]);
   const [stats, setStats] = useState<RosterStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRiderForBib, setSelectedRiderForBib] = useState<RosterItem | null>(null);
+
+  const categoryTabs = [
+    { id: 'ALL', label: t('SEMUA KATEGORI', 'ALL CATEGORIES') },
+    { id: '200', label: '200 ULTRA' },
+    { id: '150', label: '150 GRAND FONDO' },
+    { id: '120_SINGLE', label: '120 (RACE) SINGLE' },
+    { id: '120_PAIR', label: '120 (RACE) PAIR MIX' },
+    { id: '100', label: '100 FONDO' },
+    { id: '60', label: '60 FUN RIDE' },
+    { id: 'VIRTUAL', label: 'VIRTUAL RIDE' },
+  ];
 
   useEffect(() => {
     fetchRoster();
@@ -100,48 +102,58 @@ export default function PesertaPage() {
             <span>OFFICIAL START LIST // RIDER ROSTER 2026</span>
           </div>
           <h1 className="font-display text-4xl sm:text-6xl font-black uppercase tracking-tight text-white italic">
-            ROSTER ATLET & WAVE ALLOCATION
+            {t('ROSTER ATLET & WAVE ALLOCATION', 'ATHLETE ROSTER & WAVE ALLOCATION')}
           </h1>
           <p className="mt-3 text-sm sm:text-base text-slate-400 max-w-3xl leading-relaxed">
-            Daftar peserta terkonfirmasi, alokasi gelombang start (Wave 1 / 2 / 3), status verifikasi 
-            prolog 30 km (03:00–05:00 WIB), serta representasi 19 Chapter Regional GX-ID se-Indonesia.
+            {t(
+              'Daftar peserta terkonfirmasi, alokasi gelombang start (Wave 1 / 2 / 3), status verifikasi prolog 30 km (03:00–05:00 WIB), serta representasi 19 Chapter Regional GX-ID se-Indonesia.',
+              'Confirmed participant start list, wave dispatch allocation (Wave 1 / 2 / 3), 30 km dawn prologue verification (03:00–05:00 WIB), and 19 GX-ID National Regional Chapter representation.'
+            )}
           </p>
 
           {/* Stats Bar */}
           {stats && (
             <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 border-t border-l border-white/10">
               <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
-                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Total Atlet Masuk</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">
+                  {t('Total Atlet Masuk', 'Total Registered Riders')}
+                </span>
                 <span className="font-display text-3xl font-bold text-white mt-1 block">
                   {stats.total}
                 </span>
                 <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
-                  {stats.male} Pria • {stats.female} Wanita
+                  {stats.male} {t('Pria', 'Men')} • {stats.female} {t('Wanita', 'Women')}
                 </span>
               </div>
 
               <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
-                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">120K Pair Mix</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">
+                  120K Pair Mix
+                </span>
                 <span className="font-display text-3xl font-bold text-[#FA6D0B] mt-1 block">
-                  {stats.pair_teams} Tim
+                  {stats.pair_teams} {t('Tim', 'Teams')}
                 </span>
                 <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
-                  Format Tandem 2 Pax
+                  {t('Format Tandem 2 Pax', '2-Rider Tandem Format')}
                 </span>
               </div>
 
               <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
-                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Prolog 30K Lolos</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">
+                  {t('Prolog 30K Lolos', '30K Prologue Passed')}
+                </span>
                 <span className="font-display text-3xl font-bold text-white mt-1 block">
                   {stats.prolog_passed} <span className="text-xs text-slate-400">/ {stats.prolog_required_total}</span>
                 </span>
                 <span className="text-[11px] text-slate-400 mt-0.5 block font-medium">
-                  Kategori 150K & 200K
+                  {t('Kategori 150K & 200K', '150K & 200K Categories')}
                 </span>
               </div>
 
               <div className="border-r border-b border-white/10 p-4 bg-[#15171C]">
-                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">Basecamp Start</span>
+                <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">
+                  {t('Basecamp Start', 'Start Basecamp')}
+                </span>
                 <span className="font-display text-xl font-bold text-white mt-2 block">
                   ABEEY COFFEE
                 </span>
@@ -161,7 +173,7 @@ export default function PesertaPage() {
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
-                placeholder="Cari No. BIB, Nama Rider, atau Chapter..."
+                placeholder={t('Cari No. BIB, Nama Rider, atau Chapter...', 'Search BIB No, Rider Name, or Chapter...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-[#15171C] border border-white/10 rounded pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#FA6D0B] transition-colors"
@@ -187,7 +199,7 @@ export default function PesertaPage() {
                 href="/daftar"
                 className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded text-xs font-display font-bold uppercase tracking-wider bg-[#FA6D0B] hover:bg-[#D97706] text-black shadow-sm transition-all"
               >
-                <span>Daftar Rider</span>
+                <span>{t('Daftar Rider', 'Register Rider')}</span>
                 <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
               </Link>
             </div>
@@ -195,7 +207,7 @@ export default function PesertaPage() {
 
           {/* Category Tabs */}
           <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none border-b border-white/10">
-            {CATEGORY_TABS.map((tab) => (
+            {categoryTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setSelectedCategory(tab.id)}
@@ -216,14 +228,14 @@ export default function PesertaPage() {
           {loading ? (
             <div className="py-20 text-center">
               <div className="w-8 h-8 border-2 border-white/10 border-t-[#FA6D0B] rounded-full animate-spin mx-auto mb-4" />
-              <p className="text-xs text-slate-400">Memuat Roster Atlet GX-ID...</p>
+              <p className="text-xs text-slate-400">{t('Memuat Roster Atlet GX-ID...', 'Loading GX-ID Rider Roster...')}</p>
             </div>
           ) : roster.length === 0 ? (
             <div className="py-20 text-center space-y-2">
               <Users className="w-10 h-10 text-slate-600 mx-auto" />
-              <p className="text-sm font-semibold text-white">Tidak ada atlet ditemukan</p>
+              <p className="text-sm font-semibold text-white">{t('Tidak ada atlet ditemukan', 'No riders found')}</p>
               <p className="text-xs text-slate-400">
-                Sesuaikan kata kunci pencarian atau pilih kategori lain.
+                {t('Sesuaikan kata kunci pencarian atau pilih kategori lain.', 'Adjust search keyword or select another category.')}
               </p>
             </div>
           ) : (
@@ -232,12 +244,12 @@ export default function PesertaPage() {
                 <thead>
                   <tr className="border-b border-white/10 bg-[#0D0E11] text-[11px] tracking-wider text-slate-400 uppercase font-bold">
                     <th className="py-3.5 px-4">BIB #</th>
-                    <th className="py-3.5 px-4">Nama Rider / Skuad</th>
-                    <th className="py-3.5 px-4">Kategori & Wave</th>
-                    <th className="py-3.5 px-4">Chapter Regional</th>
-                    <th className="py-3.5 px-4">Paket</th>
-                    <th className="py-3.5 px-4">Status Scrutineering</th>
-                    <th className="py-3.5 px-4 text-right">Plat BIB</th>
+                    <th className="py-3.5 px-4">{t('Nama Rider / Skuad', 'Rider / Squad Name')}</th>
+                    <th className="py-3.5 px-4">{t('Kategori & Wave', 'Category & Wave')}</th>
+                    <th className="py-3.5 px-4">{t('Chapter Regional', 'Regional Chapter')}</th>
+                    <th className="py-3.5 px-4">{t('Paket', 'Package')}</th>
+                    <th className="py-3.5 px-4">{t('Status Scrutineering', 'Scrutineering Status')}</th>
+                    <th className="py-3.5 px-4 text-right">{t('Plat BIB', 'BIB Plate')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/10">
@@ -263,11 +275,11 @@ export default function PesertaPage() {
                             <span className="border border-[#FA6D0B]/40 px-1 py-0.2 text-[10px] uppercase rounded">
                               Pair
                             </span>
-                            <span>& {rider.partner_name}</span>
+                            <span>&amp; {rider.partner_name}</span>
                           </div>
                         )}
                         <span className="text-[11px] text-slate-400 block mt-0.5 font-medium">
-                          {rider.gender === 'female' ? 'Wanita' : 'Pria'} • Ukuran: {rider.jersey_size}
+                          {rider.gender === 'female' ? t('Wanita', 'Female') : t('Pria', 'Male')} • {t('Ukuran:', 'Size:')} {rider.jersey_size}
                         </span>
                       </td>
 
@@ -290,9 +302,9 @@ export default function PesertaPage() {
                       {/* Package */}
                       <td className="py-3.5 px-4 text-xs">
                         {rider.package_type === 'MEDAL_JERSEY' ? (
-                          <span className="text-[#FA6D0B] font-bold">Medal & Jersey</span>
+                          <span className="text-[#FA6D0B] font-bold">Medal &amp; Jersey</span>
                         ) : (
-                          <span className="text-slate-400 font-medium">Medal Saja</span>
+                          <span className="text-slate-400 font-medium">{t('Medal Saja', 'Medal Only')}</span>
                         )}
                       </td>
 
@@ -302,12 +314,12 @@ export default function PesertaPage() {
                           rider.prologue_status === 'PASSED' ? (
                             <span className="inline-flex items-center gap-1 px-2.5 py-1 border border-white/20 bg-white/5 text-white text-[10px] uppercase tracking-wider font-bold rounded">
                               <CheckCircle2 className="w-3 h-3 text-white" />
-                              Prolog Lolos
+                              {t('Prolog Lolos', 'Prologue Passed')}
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 px-2.5 py-1 border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 text-[#FA6D0B] text-[10px] uppercase tracking-wider font-bold rounded">
                               <AlertTriangle className="w-3 h-3" />
-                              Prolog Pending
+                              {t('Prolog Pending', 'Prologue Pending')}
                             </span>
                           )
                         ) : (
@@ -324,7 +336,7 @@ export default function PesertaPage() {
                           className="inline-flex items-center gap-1 px-3 py-1 rounded border border-white/15 hover:border-[#FA6D0B] hover:text-[#FA6D0B] text-slate-300 text-[11px] font-bold transition-colors"
                         >
                           <Eye className="w-3 h-3" />
-                          <span>Plat</span>
+                          <span>{t('Plat', 'Plate')}</span>
                         </button>
                       </td>
                     </tr>
@@ -381,9 +393,9 @@ export default function PesertaPage() {
                   <span className="text-white font-medium">ABEEY Coffee (LRT Harjamukti)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Paket:</span>
+                  <span>{t('Paket:', 'Package:')}</span>
                   <span className="text-[#FA6D0B] font-bold">
-                    {selectedRiderForBib.package_type === 'MEDAL_JERSEY' ? 'Medal & Jersey' : 'Medal Saja'}
+                    {selectedRiderForBib.package_type === 'MEDAL_JERSEY' ? 'Medal & Jersey' : t('Medal Saja', 'Medal Only')}
                   </span>
                 </div>
               </div>
@@ -392,7 +404,7 @@ export default function PesertaPage() {
                 onClick={() => setSelectedRiderForBib(null)}
                 className="w-full py-2.5 rounded border border-white/10 bg-black hover:bg-zinc-900 text-white text-xs uppercase tracking-wider font-bold transition-colors"
               >
-                Tutup Jendela
+                {t('Tutup Jendela', 'Close Window')}
               </button>
             </div>
           </div>

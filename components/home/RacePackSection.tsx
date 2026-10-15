@@ -9,7 +9,7 @@ export default function RacePackSection() {
   return (
     <>
       {/* 2.5 PAKET PESERTA & MERCHANDISE (RAD RACE INSPIRED - EDITORIAL & ELEGAN) */}
-      <section id="racepack" className="pt-12 sm:pt-16 pb-8 sm:pb-10 text-white relative">
+      <section id="racepack" className="pt-6 sm:pt-8 pb-5 sm:pb-6 text-white relative">
         
         {/* Dynamic Action Tandem Cyclists Background (pesepeda2.webp) - 3RD BOTTOM IMAGE */}
         <div 
@@ -20,9 +20,9 @@ export default function RacePackSection() {
           }}
         >
           <img
-            src="/pesepeda2.webp"
-            alt="Grindurance Gravel Cyclists Tandem In Motion"
-            className="w-full h-full object-cover object-[center_10%] lg:object-[75%_8%] opacity-90 filter contrast-120 saturate-125 brightness-100"
+            src="/backgrounds/bg-racepack.webp"
+            alt="Grindurance Equipped Gravel Cyclist"
+            className="w-full h-full object-cover object-[center_10%] lg:object-[75%_8%] opacity-90 filter contrast-[1.18] saturate-[1.2] brightness-[0.95] blur-[0.4px]"
           />
           {/* Seamless dark gradient overlays - smooth top fade-in from dark pause and bottom dissolve */}
           <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#090A0D] via-[#090A0D]/80 to-transparent" />
@@ -31,10 +31,10 @@ export default function RacePackSection() {
           <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0B0C0E] to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-7 relative z-10">
           
           {/* Section Header: Alternating Right-Aligned Layout (Kiri-Kanan Rhythm) with Custom Text Graphic */}
-          <div className="flex flex-col md:flex-row-reverse md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="flex flex-col md:flex-row-reverse md:items-end justify-between gap-4 border-b border-white/10 pb-4 sm:pb-5">
             <div className="flex flex-col items-start md:items-end space-y-3">
               <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
                 PARTICIPANT PACKAGES // 2026 EDITION
@@ -113,19 +113,19 @@ export default function RacePackSection() {
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>Nomor Plat Sepeda Tahan Air #1000+ &amp; QR Check-in</span>
+                    <span>{t('Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in', 'Waterproof Bike Number Plate #1000+ & QR Check-in')}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>Asuransi Kecelakaan Resmi 1 Hari Event</span>
+                    <span>{t('Asuransi Kecelakaan Resmi 1 Hari Event', 'Official 1-Day Event Accident Insurance')}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>Nutrisi NDR Energy Gel + Isotonic Drink</span>
+                    <span>{t('Nutrisi NDR Energy Gel + Isotonic Drink', 'NDR Energy Gel Nutrition + Isotonic Drink')}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>Akses Finisher Lounge &amp; Voucher Pemulihan ABEEY Coffee</span>
+                    <span>{t('Akses Finisher Lounge & Voucher Pemulihan ABEEY Coffee', 'Finisher Lounge Access & ABEEY Coffee Recovery Voucher')}</span>
                   </div>
                 </div>
               </div>
@@ -177,15 +177,15 @@ export default function RacePackSection() {
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>Nomor Plat Sepeda Tahan Air #1000+ &amp; QR Check-in</span>
+                    <span>{t('Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in', 'Waterproof Bike Number Plate #1000+ & QR Check-in')}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>Asuransi Kecelakaan Resmi 1 Hari Event</span>
+                    <span>{t('Asuransi Kecelakaan Resmi 1 Hari Event', 'Official 1-Day Event Accident Insurance')}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>Nutrisi NDR Energy Gel + Isotonic + Voucher ABEEY Coffee</span>
+                    <span>{t('Nutrisi NDR Energy Gel + Isotonic + Voucher ABEEY Coffee', 'NDR Energy Gel Nutrition + Isotonic + ABEEY Coffee Voucher')}</span>
                   </div>
                 </div>
               </div>
@@ -246,7 +246,7 @@ export default function RacePackSection() {
           </div>
 
           {/* EDITORIAL PRODUCT SHOWCASE (Lookbook Grid — Harmonized with UI DNA) */}
-          <div className="space-y-6 pt-6">
+          <div className="space-y-4 pt-4">
             <div className="border-b border-white/10 pb-4 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
                 <span className="text-xs font-sans font-bold uppercase tracking-widest text-[#FA6D0B]">
@@ -484,7 +484,7 @@ export default function RacePackSection() {
           </div>
 
           {/* Minimalist Bottom CTA Strip */}
-          <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+          <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
             <div className="space-y-1 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start gap-2 text-[11px] font-sans font-bold uppercase tracking-widest text-[#FA6D0B]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />

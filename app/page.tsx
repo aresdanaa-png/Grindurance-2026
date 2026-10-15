@@ -2,8 +2,8 @@ import HeroSection from '@/components/home/HeroSection';
 import CategoryCockpit from '@/components/home/CategoryCockpit';
 import RacePackSection from '@/components/home/RacePackSection';
 import TimelineSection from '@/components/home/TimelineSection';
-import BasecampSection from '@/components/home/BasecampSection';
-import SafetySection from '@/components/home/SafetySection';
+import CommunitySocialSection from '@/components/home/CommunitySocialSection';
+import SponsorsSection from '@/components/home/SponsorsSection';
 import CtaSection from '@/components/home/CtaSection';
 
 export default function HomePage() {
@@ -13,8 +13,8 @@ export default function HomePage() {
       <CategoryCockpit />
       <RacePackSection />
       <TimelineSection />
-      <BasecampSection />
-      <SafetySection />
+      <CommunitySocialSection />
+      <SponsorsSection />
       <CtaSection />
     </div>
   );

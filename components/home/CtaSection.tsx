@@ -8,11 +8,11 @@ export default function CtaSection() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-24 sm:py-28 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-gradient-to-b from-[#0D0E11] to-black text-center space-y-6 relative overflow-hidden">
+    <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-gradient-to-b from-[#0D0E11] to-black text-center space-y-4 relative overflow-hidden">
       {/* Ambient Center Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.18)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 max-w-4xl mx-auto space-y-6">
+      <div className="relative z-10 max-w-4xl mx-auto space-y-4">
         <span className="text-xs font-mono font-black text-[#FA6D0B] uppercase tracking-widest block">
           {t('KUOTA TERBATAS // AMBIL NOMOR BIB ANDA SEKARANG', 'LIMITED SLOTS // SECURE YOUR BIB NUMBER NOW')}
         </span>

@@ -18,15 +18,14 @@ export default function HeroSection() {
         <div 
           className="absolute inset-0 z-0 pointer-events-none"
           style={{
-            maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)'
+            maskImage: 'linear-gradient(to bottom, black 0%, black 65%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 65%, transparent 100%)'
           }}
         >
           <img
-            src="/hero.webp"
+            src="/backgrounds/bg-hero.webp"
             alt="Gravel Grindurance Cyclist Action"
-            className="w-full h-full object-cover object-center scale-[1.15] filter brightness-[0.78] contrast-[1.1] saturate-[1.2]"
-            style={{ transformOrigin: 'center center' }}
+            className="w-full h-full object-cover object-[center_top] translate-y-3 sm:translate-y-5 filter brightness-[0.76] contrast-[1.08] saturate-[1.18] blur-[0.4px]"
           />
           {/* Soft dark gradient for contrast */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D0E11]/40 via-transparent to-transparent" />
@@ -34,7 +33,7 @@ export default function HeroSection() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-3 sm:pb-4 w-full flex flex-col items-center sm:items-start space-y-4 sm:space-y-5">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-2 sm:pb-3 w-full flex flex-col items-center sm:items-start space-y-3 sm:space-y-4">
           
           {/* 1. Event Graphic Title with Radial Fire Backlight & Kinetic Glow */}
           <div className="relative w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] group">
@@ -87,7 +86,7 @@ export default function HeroSection() {
           </div>
 
           {/* 4. Running Text Ticker — Directly Under Buttons */}
-          <div className="w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] mt-3.5 sm:mt-4 rounded-2xl bg-black/70 backdrop-blur-xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.7)] overflow-hidden py-3 px-2 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
+          <div className="w-full max-w-2xl sm:max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-[1150px] mt-2 sm:mt-2.5 rounded-2xl bg-black/70 backdrop-blur-xl border border-white/[0.08] shadow-[0_12px_40px_rgba(0,0,0,0.7)] overflow-hidden py-2 sm:py-2.5 px-2 [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)]">
             <div className="animate-marquee flex items-center whitespace-nowrap text-xs sm:text-[13px] font-semibold tracking-widest uppercase text-slate-300">
               {/* Set 1 */}
               <div className="flex items-center">
@@ -154,7 +153,7 @@ export default function HeroSection() {
       {/* ========================================================================= */}
       <div className="relative z-20 w-full border-y border-white/10 bg-black/60 backdrop-blur-md shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 py-4 sm:py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 py-2.5 sm:py-3">
             
             {/* Segment 1: Waktu & Tanggal Gelaran Resmi */}
             <div className="py-2.5 md:py-0 md:pr-10 lg:pr-14 flex flex-col justify-center">

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import QRCode from 'qrcode';
 import { toPng } from 'html-to-image';
 import { Download, Compass, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '@/lib/context/LanguageContext';
 
 interface BibCardProps {
   bibNumber: number | string;
@@ -33,6 +34,7 @@ export default function BibCard({
   const [qrCodeUrl, setQrCodeUrl] = useState<string>('');
   const [downloading, setDownloading] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
 
   useEffect(() => {
     async function generateQR() {
@@ -144,11 +146,11 @@ export default function BibCard({
             </div>
             <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[10px] font-semibold text-slate-500">
               <span className="bg-slate-100 border border-slate-300 px-1.5 py-0.5 rounded">
-                GOL: {bloodType}
+                {t('GOL', 'BLOOD')}: {bloodType}
               </span>
-              {medicalNotes && medicalNotes !== 'Tidak Ada' && (
+              {medicalNotes && medicalNotes !== 'Tidak Ada' && medicalNotes !== 'None' && (
                 <span className="bg-red-50 text-red-700 border border-red-300 px-1.5 py-0.5 rounded font-bold truncate max-w-[120px]" title={medicalNotes}>
-                  ALERT: {medicalNotes}
+                  {t('MEDIS', 'ALERT')}: {medicalNotes}
                 </span>
               )}
               {riderRole !== 'SINGLE' && (
@@ -194,7 +196,7 @@ export default function BibCard({
         className="w-full py-3.5 rounded-xl font-bold text-sm bg-gradient-to-r from-brand-gold to-brand-orange text-brand-dark hover:brightness-110 shadow-glow transition-all flex items-center justify-center gap-2"
       >
         <Download className="w-4 h-4" />
-        <span>{downloading ? 'Menyiapkan Gambar HD...' : 'Unduh Kartu BIB (Gambar PNG)'}</span>
+        <span>{downloading ? t('Menyiapkan Gambar HD...', 'Preparing HD Image...') : t('Unduh Kartu BIB (Gambar PNG)', 'Download BIB Card (PNG Image)')}</span>
       </button>
     </div>
   );

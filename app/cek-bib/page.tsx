@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Compass, AlertCircle, RefreshCw, CheckCircle2, QrCode } from 'lucide-react';
+import { Search, Compass, AlertCircle, RefreshCw, QrCode } from 'lucide-react';
 import BibCard from '@/components/BibCard';
+import { useLanguage } from '@/lib/context/LanguageContext';
 
 export default function CekBibPage() {
+  const { t } = useLanguage();
   const [query, setQuery] = useState('');
   const [searching, setSearching] = useState(false);
   const [results, setResults] = useState<any[]>([]);
@@ -27,11 +29,11 @@ export default function CekBibPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || 'Gagal mencari data.');
+        throw new Error(data.error || t('Gagal mencari data.', 'Search request failed.'));
       }
       setResults(data.results || []);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Terjadi kesalahan saat mencari.');
+      setErrorMsg(err.message || t('Terjadi kesalahan saat mencari.', 'An error occurred during search.'));
       setResults([]);
     } finally {
       setSearching(false);
@@ -39,18 +41,21 @@ export default function CekBibPage() {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10">
+    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10 font-sans">
       {/* Header */}
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-sky/10 border border-brand-sky/30 text-brand-sky text-xs font-bold uppercase tracking-wider">
           <QrCode className="w-3.5 h-3.5" />
-          Self-Service e-Ticket & BIB
+          Self-Service e-Ticket &amp; BIB
         </div>
         <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-          Cek e-Ticket & <span className="gradient-gold-text">Nomor BIB</span>
+          {t('Cek e-Ticket & ', 'Check e-Ticket & ')}<span className="gradient-gold-text">{t('Nomor BIB', 'BIB Number')}</span>
         </h1>
         <p className="text-sm text-slate-400 max-w-md mx-auto">
-          Temukan kartu nomor dada resmi Anda dan unduh berkas gambar HD untuk ditunjukkan saat pengambilan race pack di venue.
+          {t(
+            'Temukan kartu nomor dada resmi Anda dan unduh berkas gambar HD untuk ditunjukkan saat pengambilan race pack di venue.',
+            'Look up your official rider BIB number plate and download HD images to present during Race Pack Collection at the venue.'
+          )}
         </p>
       </div>
 
@@ -61,7 +66,7 @@ export default function CekBibPage() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Ketik Nomor BIB (#6001), Kode Registrasi, atau Nama..."
+            placeholder={t('Ketik Nomor BIB (#6001), Kode Registrasi, atau Nama...', 'Enter BIB Number (#6001), Registration Code, or Name...')}
             className="w-full pl-5 pr-32 py-4 rounded-2xl bg-brand-card border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none shadow-2xl"
           />
           <button
@@ -70,11 +75,11 @@ export default function CekBibPage() {
             className="absolute right-2 px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-brand-gold to-brand-orange text-brand-dark hover:brightness-110 shadow-glow flex items-center gap-2 transition-all disabled:opacity-50"
           >
             {searching ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-            <span>Cari</span>
+            <span>{t('Cari', 'Search')}</span>
           </button>
         </div>
         <span className="text-[11px] text-slate-500 block text-center mt-2">
-          Tips: Masukkan nomor BIB (misal: 6001, 8001, 1201) atau nama lengkap pendaftar.
+          {t('Tips: Masukkan nomor BIB (misal: 6001, 8001, 1201) atau nama lengkap pendaftar.', 'Tip: Enter BIB number (e.g. 6001, 8001, 1201) or full registered name.')}
         </span>
       </form>
 
@@ -91,16 +96,19 @@ export default function CekBibPage() {
           {results.length === 0 ? (
             <div className="text-center py-12 bg-brand-card/50 rounded-2xl border border-brand-border/60 max-w-xl mx-auto space-y-3">
               <Compass className="w-10 h-10 text-slate-600 mx-auto animate-pulse" />
-              <h4 className="text-base font-bold text-white">Data Peserta Tidak Ditemukan</h4>
+              <h4 className="text-base font-bold text-white">{t('Data Peserta Tidak Ditemukan', 'Participant Record Not Found')}</h4>
               <p className="text-xs text-slate-400 max-w-xs mx-auto">
-                Pastikan nomor BIB, kode registrasi, atau nama yang Anda masukkan sudah sesuai saat mendaftar.
+                {t(
+                  'Pastikan nomor BIB, kode registrasi, atau nama yang Anda masukkan sudah sesuai saat mendaftar.',
+                  'Please double check the BIB number, registration code, or full name as submitted during registration.'
+                )}
               </p>
             </div>
           ) : (
             <div className="space-y-12">
               <div className="text-center">
                 <span className="text-xs text-brand-gold font-bold uppercase tracking-wider">
-                  Ditemukan {results.length} Data Peserta
+                  {t(`Ditemukan ${results.length} Data Peserta`, `Found ${results.length} Rider Record(s)`)}
                 </span>
               </div>
 
@@ -121,14 +129,17 @@ export default function CekBibPage() {
                   ) : (
                     <div className="max-w-md mx-auto bg-brand-card p-6 rounded-2xl border border-brand-orange/40 text-center space-y-3">
                       <div className="inline-block px-2.5 py-1 rounded bg-brand-orange/20 text-brand-orange font-bold text-xs uppercase">
-                        Menunggu Pembayaran
+                        {t('Menunggu Pembayaran', 'Awaiting Payment')}
                       </div>
                       <h4 className="text-lg font-bold text-white">{p.full_name}</h4>
                       <p className="text-xs text-slate-400">
-                        Kode: <span className="font-sans font-bold tracking-wider text-slate-300">{p.registration_code}</span> | Kategori: {p.category?.name}
+                        {t('Kode:', 'Code:')} <span className="font-sans font-bold tracking-wider text-slate-300">{p.registration_code}</span> | {t('Kategori:', 'Category:')} {p.category?.name}
                       </p>
                       <p className="text-xs text-slate-400">
-                        Tagihan sebesar <span className="text-white font-bold">Rp {Number(p.order?.net_amount || 0).toLocaleString('id-ID')}</span> belum terverifikasi lunas sehingga nomor BIB belum diterbitkan.
+                        {t(
+                          `Tagihan sebesar Rp ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} belum terverifikasi lunas sehingga nomor BIB belum diterbitkan.`,
+                          `Invoice of IDR ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} is not yet confirmed, so BIB number has not been generated.`
+                        )}
                       </p>
                     </div>
                   )}

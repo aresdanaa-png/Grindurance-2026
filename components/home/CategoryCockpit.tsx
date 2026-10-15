@@ -38,7 +38,7 @@ export default function CategoryCockpit() {
     <>
       {/* 2. HYBRID COCKPIT TELEMETRY & ATHLETIC MONOLITHS (NIKE TRAIL X GARMIN HUD) */}
       {/* ========================================================================= */}
-      <section id="kategori" className="relative pt-8 pb-0">
+      <section id="kategori" className="relative pt-4 sm:pt-6 pb-0">
         
         {/* Cinematic Action Cyclist Motion Background (pesepeda.webp) - MIDDLE IMAGE: Solo Aero Cyclist */}
         <div 
@@ -49,9 +49,9 @@ export default function CategoryCockpit() {
           }}
         >
           <img
-            src="/pesepeda.webp"
-            alt="Grindurance Gravel Cyclist Solo In Motion"
-            className="w-full h-full object-cover object-[center_20%] lg:object-[70%_12%] opacity-90 filter contrast-120 saturate-125 brightness-100"
+            src="/backgrounds/bg-categories.webp"
+            alt="Grindurance High Speed Gravel Cyclist"
+            className="w-full h-full object-cover object-[center_20%] lg:object-[72%_15%] opacity-90 filter contrast-[1.18] saturate-[1.2] brightness-[0.95] blur-[0.4px]"
           />
           {/* Seamless gradient overlays for extreme typographic legibility without cutting off the bottom */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E11] via-transparent to-transparent" />
@@ -70,8 +70,8 @@ export default function CategoryCockpit() {
         </div>
 
         {/* Section Header */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 sm:mb-5">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-3 sm:pb-4">
             <div className="space-y-3">
               <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
                 60 — 200 KM EXPEDITION
@@ -160,7 +160,7 @@ export default function CategoryCockpit() {
                 <button
                   key={c.id}
                   onClick={() => handleCategorySelect(c.id)}
-                  className={`group relative text-left py-4 sm:py-5 px-4 sm:px-5 lg:px-6 transition-all duration-300 flex flex-col justify-between overflow-hidden focus:outline-none min-w-[175px] sm:min-w-[195px] lg:min-w-0 flex-shrink-0 lg:flex-shrink ${
+                  className={`group relative text-left py-2.5 sm:py-3.5 px-3.5 sm:px-4 lg:px-5 transition-all duration-300 flex flex-col justify-between overflow-hidden focus:outline-none min-w-[175px] sm:min-w-[195px] lg:min-w-0 flex-shrink-0 lg:flex-shrink ${
                     isRace
                       ? isActive
                         ? 'bg-gradient-to-b from-[#FA6D0B]/20 via-[#FA6D0B]/10 to-transparent text-white shadow-[inset_0_0_24px_rgba(250,109,11,0.2)] border-x border-[#FA6D0B]/40 z-20'
@@ -221,7 +221,7 @@ export default function CategoryCockpit() {
                   ) : (
                     <div className="relative z-10 flex items-center justify-between gap-1 mb-1.5">
                       <span className="text-[9px] font-mono text-slate-500 font-semibold uppercase">
-                        KUOTA: {c.quota.split(' ')[0]}
+                        {t('KUOTA:', 'QUOTA:')} {c.quota.split(' ')[0]}
                       </span>
                     </div>
                   )}
@@ -274,11 +274,11 @@ export default function CategoryCockpit() {
                     <div className={`text-[10px] truncate font-mono ${
                       isRace
                         ? isActive 
-                          ? 'text-white/90 font-medium' 
-                          : 'text-slate-300 group-hover:text-white'
+                        ? 'text-white/90 font-medium' 
+                        : 'text-slate-300 group-hover:text-white'
                         : 'text-slate-300'
                     }`}>
-                      {c.cot !== 'Fleksibel' ? `COT ${c.cot} · ${c.wave}` : t('19 CHAPTER NASIONAL', '19 NATIONAL CHAPTERS')}
+                      {c.cot !== 'Fleksibel' ? `COT ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'Hours')) : c.cot} · ${c.wave}` : t('19 CHAPTER NASIONAL', '19 NATIONAL CHAPTERS')}
                     </div>
                   </div>
                 </button>
@@ -288,14 +288,14 @@ export default function CategoryCockpit() {
         </div>
 
         {/* THE CENTERPIECE: OPEN ATHLETIC SHOWCASE */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-5">
           
           {/* Smooth Cross-Fade Transition Container */}
           <div className={`transition-all duration-300 transform ${
             isTransitioning ? 'opacity-25 scale-[0.99] translate-y-1 blur-[1px]' : 'opacity-100 scale-100 translate-y-0 blur-0'
           }`}>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch pt-1 pb-2">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch pt-1 pb-1">
             
               {/* KOLOM KIRI (5 COLS): ROUTE MAP — Tab toggle antara SVG schematic & Leaflet GPX live map */}
               <div className="lg:col-span-5 select-none">
@@ -335,7 +335,7 @@ export default function CategoryCockpit() {
                 {/* 1. Header Etape */}
                 <div>
                   <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black uppercase text-white italic tracking-tight leading-none drop-shadow-sm flex items-baseline gap-x-2.5 whitespace-nowrap">
-                    <span>{currentCategory.title}</span>
+                    <span>{language === 'ENG' && currentCategory.titleEng ? currentCategory.titleEng : currentCategory.title}</span>
                     {currentCategory.titleNote && (
                       <span className="text-xs sm:text-sm lg:text-base font-mono font-bold text-slate-400 not-italic uppercase tracking-wider inline-block">
                         {currentCategory.titleNote}
@@ -422,7 +422,7 @@ export default function CategoryCockpit() {
                           </span>
                           {currentCategory.cot.split(' ')[1] && (
                             <span className="text-xs sm:text-sm font-mono font-bold text-slate-400 uppercase not-italic">
-                              {currentCategory.cot.split(' ')[1]}
+                              {language === 'ENG' ? (currentCategory.cot.split(' ')[1] === 'Jam' ? 'HOURS' : currentCategory.cot.split(' ')[1]) : currentCategory.cot.split(' ')[1]}
                             </span>
                           )}
                         </>
@@ -506,7 +506,7 @@ export default function CategoryCockpit() {
                                 <span className="font-display italic font-black text-2xl text-[#FA6D0B] leading-none">
                                   {currentCategory.regular.pairMedal}
                                 </span>
-                                <span className="text-[10px] font-sans text-slate-400">/ Tim</span>
+                                <span className="text-[10px] font-sans text-slate-400">{t('/ Tim', '/ Team')}</span>
                               </div>
                             </div>
                           )}
@@ -555,7 +555,7 @@ export default function CategoryCockpit() {
                                 <span className="font-display italic font-black text-2xl text-[#FA6D0B] leading-none">
                                   {currentCategory.regular.pairJersey}
                                 </span>
-                                <span className="text-[10px] font-sans text-slate-400">/ Tim (2 Jersey)</span>
+                                <span className="text-[10px] font-sans text-slate-400">{t('/ Tim (2 Jersey)', '/ Team (2 Jerseys)')}</span>
                               </div>
                             </div>
                           )}
@@ -578,8 +578,8 @@ export default function CategoryCockpit() {
                       <div>
                         <div className="text-[10px] font-sans font-black uppercase tracking-widest text-[#FA6D0B] mb-1">{t('MEAL COUPON RP 50.000', 'IDR 50,000 MEAL COUPON')}</div>
                         <p className="text-[10px] font-sans text-slate-300 leading-relaxed">
-                          Otomatis untuk <strong className="text-white font-bold">Wanita · Usia ≤17 Th · Tim Pair Mix</strong> (1 kupon/tim).<br />
-                          <span className="text-slate-400 text-[9px]">*Tidak berlaku untuk Pair Men&amp;Men.</span>
+                          {t('Otomatis untuk ', 'Automatic for ')}<strong className="text-white font-bold">{t('Wanita · Usia ≤17 Th · Tim Pair Mix', 'Women · Age ≤17 Yrs · Pair Mix Teams')}</strong> {t('(1 kupon/tim).', '(1 coupon/team).')}<br />
+                          <span className="text-slate-400 text-[9px]">{t('*Tidak berlaku untuk Pair Men&Men.', '*Not valid for Pair Men&Men.')}</span>
                         </p>
                       </div>
                       <Link
@@ -613,10 +613,10 @@ export default function CategoryCockpit() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-300 uppercase tracking-wider font-bold">
-                    CHECKPOINT &amp; PITSTOP ETAPE // {currentCategory.km}
+                    {t('CHECKPOINT & PITSTOP ETAPE //', 'STAGE CHECKPOINTS & PITSTOPS //')} {currentCategory.km}
                   </span>
                   <span className="text-[10px] text-[#FA6D0B] font-bold uppercase tracking-wider">
-                    {currentCategory.id === '150' || currentCategory.id === '200' ? 'WAJIB PITSTOP 30 MENIT' : 'SMART GEOFENCING'}
+                    {currentCategory.id === '150' || currentCategory.id === '200' ? t('WAJIB PITSTOP 30 MENIT', 'MANDATORY 30-MIN PITSTOP') : 'SMART GEOFENCING'}
                   </span>
                 </div>
                 
@@ -643,8 +643,12 @@ export default function CategoryCockpit() {
                             {st.type}
                           </span>
                         </div>
-                        <span className="text-xs font-bold text-white uppercase leading-snug block line-clamp-2">{st.name}</span>
-                        <span className="text-[10px] text-slate-400 block truncate mt-1">{st.desc}</span>
+                        <span className="text-xs font-bold text-white uppercase leading-snug block line-clamp-2">
+                          {language === 'ENG' && st.nameEng ? st.nameEng : st.name}
+                        </span>
+                        <span className="text-[10px] text-slate-400 block truncate mt-1">
+                          {language === 'ENG' && st.descEng ? st.descEng : st.desc}
+                        </span>
                       </div>
                     );
                   })}
@@ -654,17 +658,17 @@ export default function CategoryCockpit() {
               {/* Safety & Protocol Box (Pure Typography, Icon-free) */}
               <div className="p-4 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 space-y-1.5 text-xs">
                 <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                  REGULASI TEKNIS &amp; PROTOKOL //
+                  {t('REGULASI TEKNIS & PROTOKOL //', 'TECHNICAL REGULATIONS & PROTOCOLS //')}
                 </span>
                 <div className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                   {currentCategory.isRace ? (
-                    <span>Wajib mengaktifkan Live Tracking via <strong>RaceRoute.id / Traccar</strong>. Perebutan Podium Resmi Top 3 (Putra, Putri &amp; Tim Tandem Pair Mix). Format balap kompetitif tercepat.</span>
+                    <span>{t('Wajib mengaktifkan Live Tracking via ', 'Mandatory Live Tracking via ')}<strong>RaceRoute.id / Traccar</strong>{t('. Perebutan Podium Resmi Top 3 (Putra, Putri & Tim Tandem Pair Mix). Format balap kompetitif tercepat.', '. Top 3 Official Podium contest (Men, Women & Pair Mix Tandem Teams). Fastest competitive race format.')}</span>
                   ) : (currentCategory.id === '150' || currentCategory.id === '200') ? (
-                    <span>Wajib menyelesaikan <strong>Prolog 30 km mandiri (03:00–05:00 WIB)</strong> sebelum registrasi start. Wajib istirahat <strong>Pitstop 30 Menit di CP#4</strong> (penalti 300% jika melanggar). Wajib wet lube &amp; ban 35–40mm.</span>
+                    <span>{t('Wajib menyelesaikan ', 'Mandatory ')}<strong>{t('Prolog 30 km mandiri (03:00–05:00 WIB)', '30 km self-start prologue (03:00–05:00 WIB)')}</strong>{t(' sebelum registrasi start. Wajib istirahat ', ' before morning staging. Mandatory ')}<strong>{t('Pitstop 30 Menit di CP#4', '30-Minute Pitstop at CP#4')}</strong>{t(' (penalti 300% jika melanggar). Wajib wet lube & ban 35–40mm.', ' (300% penalty for violations). Wet lube & 35–40mm tires required.')}</span>
                   ) : currentCategory.id === 'VIRTUAL' ? (
-                    <span>Khusus domisili luar Jabodetabek. Wajib rekaman outdoor satelit murni via <strong>Strava / Komoot</strong>. Sinkronisasi otomatis Strava Webhook, medali resmi dikirim via DHS Logistik.</span>
+                    <span>{t('Khusus domisili luar Jabodetabek. Wajib rekaman outdoor satelit murni via ', 'Exclusive for riders domiciled outside Greater Jakarta (Jabodetabek). Genuine outdoor GPS recording required via ')}<strong>Strava / Komoot</strong>{t('. Sinkronisasi otomatis Strava Webhook, medali resmi dikirim via DHS Logistik.', '. Automated Strava Webhook sync, official medal dispatched via DHS Logistics.')}</span>
                   ) : (
-                    <span>Kategori rekreasional mandiri (*un-supported joy of riding*). Ramah bagi pengguna sepeda lipat (Seli 20"), sepeda hybrid, dan pemula. Wajib helm &amp; lampu sepeda.</span>
+                    <span>{t('Kategori rekreasional mandiri (un-supported joy of riding). Ramah bagi pengguna sepeda lipat (Seli 20"), sepeda hybrid, dan pemula. Wajib helm & lampu sepeda.', 'Self-supported recreational category (un-supported joy of riding). Friendly for folding bikes (20" wheels), hybrid bikes, and beginner riders. Helmet & bike lights required.')}</span>
                   )}
                 </div>
               </div>

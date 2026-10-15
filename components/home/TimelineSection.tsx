@@ -13,7 +13,7 @@ export default function TimelineSection() {
     <>
       {/* 4. EVENT TIMELINE & WAVE DISPATCH RUNDOWN (POIN 2) */}
       {/* ========================================================================= */}
-      <section id="jadwal" className="pt-8 sm:pt-12 pb-20 sm:pb-24 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
+      <section id="jadwal" className="pt-6 sm:pt-8 pb-8 sm:pb-10 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
         
         {/* Action Cyclist on Orange Trail Background (Perjalanan Siklis di Jalur Oranye) */}
         <div 
@@ -24,9 +24,9 @@ export default function TimelineSection() {
           }}
         >
           <img
-            src="/perjalanan-siklis-di-jalur-oranye.webp"
+            src="/backgrounds/bg-timeline.webp"
             alt="Perjalanan Siklis di Jalur Oranye - Grindurance Ultra Cycling"
-            className="w-full h-full object-cover object-[center_30%] sm:object-[center_22%] opacity-85 filter contrast-115 saturate-120 brightness-95"
+            className="w-full h-full object-cover object-[center_30%] sm:object-[center_22%] opacity-85 filter contrast-[1.15] saturate-[1.2] brightness-[0.95] blur-[0.4px]"
           />
           {/* Seamless overlays to ensure perfect blend with #0B0C0E */}
           <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#0B0C0E] via-[#0B0C0E]/85 to-transparent" />
@@ -49,10 +49,10 @@ export default function TimelineSection() {
         {/* Vignette Overlay for High-Contrast Information Legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C0E]/40 via-transparent to-[#0B0C0E]/70 pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-7 relative z-10">
           
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4 sm:pb-5">
             <div className="space-y-3">
               <span className="text-sm sm:text-base font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
                 {t('RUNDOWN RESMI // OPERASIONAL BALAPAN', 'OFFICIAL RUNDOWN // RACE OPERATIONS')}
@@ -88,7 +88,7 @@ export default function TimelineSection() {
           </div>
 
           {/* Interactive Tab Switcher: Using Brand Pill Shape rounded-full (1 Baris Saja - DNA UI) */}
-          <div className="flex items-center gap-2 sm:gap-2.5 border-b border-white/10 pb-5 overflow-x-auto no-scrollbar flex-nowrap w-full">
+          <div className="flex items-center gap-2 sm:gap-2.5 border-b border-white/10 pb-3 sm:pb-3.5 overflow-x-auto no-scrollbar flex-nowrap w-full">
             <button
               onClick={() => setActiveScheduleTab('raceday')}
               className={`px-3.5 sm:px-4 lg:px-5 py-2.5 rounded-full text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
@@ -864,7 +864,7 @@ export default function TimelineSection() {
                     <tr className="hover:bg-white/[0.02] transition-colors">
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
                         <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">60 FUN RIDE</strong>
-                        <span className="text-[10px] lg:text-[11px] text-slate-400">Fun Ride Ramah Seli</span>
+                        <span className="text-[10px] lg:text-[11px] text-slate-400">{t('Fun Ride Ramah Seli', 'Folding-Bike Friendly')}</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-white font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
@@ -894,7 +894,7 @@ export default function TimelineSection() {
                     <tr className="hover:bg-white/[0.02] transition-colors bg-white/[0.01]">
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
                         <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">VIRTUAL RIDE</strong>
-                        <span className="text-[10px] lg:text-[11px] text-white">19 Chapter Nasional</span>
+                        <span className="text-[10px] lg:text-[11px] text-white">{t('19 Chapter Nasional', '19 National Chapters')}</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-300 whitespace-nowrap">
                         {t('Mandiri H-Event', 'Self-Ride Race Week')}

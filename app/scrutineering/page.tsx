@@ -18,6 +18,7 @@ import {
   RefreshCw,
   QrCode
 } from 'lucide-react';
+import { useLanguage } from '@/lib/context/LanguageContext';
 
 interface ScrutineerCandidate {
   bib: number;
@@ -101,6 +102,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
 ];
 
 export default function ScrutineeringPage() {
+  const { language, t } = useLanguage();
   const [candidates, setCandidates] = useState<ScrutineerCandidate[]>(SAMPLE_CANDIDATES);
   const [searchBib, setSearchBib] = useState('');
   const [selectedRider, setSelectedRider] = useState<ScrutineerCandidate>(SAMPLE_CANDIDATES[1]); // default to Donny (pending)
@@ -162,28 +164,28 @@ export default function ScrutineeringPage() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-sans font-bold uppercase mb-2">
               <ShieldCheck className="w-4 h-4" />
-              Race Operations — Scrutineering Desk
+              {t('Race Operations — Scrutineering Desk', 'Race Operations — Scrutineering Desk')}
             </div>
             <h1 className="font-display italic text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
-              Meja Inspeksi <span className="text-brand-gold">& Prolog 30 KM</span>
+              {t('Meja Inspeksi', 'Inspection Desk')} <span className="text-brand-gold">{t('& Prolog 30 KM', '& 30 KM Prologue')}</span>
             </h1>
             <p className="text-xs sm:text-sm text-slate-400 mt-1 font-sans">
-              Venue: ABEEY Coffee Lounge • LRT Harjamukti Cibubur | Waktu: 03:00–05:00 WIB
+              {t('Venue: ABEEY Coffee Lounge • LRT Harjamukti Cibubur | Waktu: 03:00–05:00 WIB', 'Venue: ABEEY Coffee Lounge • LRT Harjamukti Cibubur | Time: 03:00–05:00 WIB')}
             </p>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="bg-zinc-900 border border-brand-border/60 px-4 py-2 rounded-xl text-right">
-              <span className="text-[10px] font-sans font-semibold text-slate-400 block uppercase">Status Wave Clearance</span>
+              <span className="text-[10px] font-sans font-semibold text-slate-400 block uppercase">{t('Status Wave Clearance', 'Wave Clearance Status')}</span>
               <span className="text-xl font-black font-display italic text-emerald-400">
-                {clearedCount} Lolos <span className="text-xs font-sans text-slate-500">/ {candidates.length}</span>
+                {clearedCount} {t('Lolos', 'Cleared')} <span className="text-xs font-sans text-slate-500">/ {candidates.length}</span>
               </span>
             </div>
             <Link
               href="/peserta"
               className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold font-sans text-slate-200 border border-zinc-700 transition-colors uppercase tracking-wider"
             >
-              Start List Roster
+              {t('Start List Roster', 'Start List Roster')}
             </Link>
           </div>
         </div>
@@ -196,10 +198,10 @@ export default function ScrutineeringPage() {
             <div className="bg-brand-card/90 border border-brand-border/60 rounded-2xl p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-300">
-                  Antrean Atlet Scrutineering
+                  {t('Antrean Atlet Scrutineering', 'Scrutineering Athlete Queue')}
                 </h3>
                 <span className="text-[11px] font-sans font-bold text-brand-gold">
-                  {waitingCount} Menunggu
+                  {waitingCount} {t('Menunggu', 'Waiting')}
                 </span>
               </div>
 
@@ -208,7 +210,7 @@ export default function ScrutineeringPage() {
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
-                  placeholder="Cari No. BIB / Nama..."
+                  placeholder={t('Cari No. BIB / Nama...', 'Search BIB No. / Rider Name...')}
                   value={searchBib}
                   onChange={(e) => setSearchBib(e.target.value)}
                   className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 font-sans focus:outline-none focus:border-brand-gold"
@@ -251,17 +253,17 @@ export default function ScrutineeringPage() {
                         {c.clearance_status === 'CLEARED' ? (
                           <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/30">
                             <CheckCircle2 className="w-3 h-3" />
-                            LOLOS
+                            {t('LOLOS', 'CLEARED')}
                           </span>
                         ) : c.clearance_status === 'DNS' ? (
                           <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-md border border-rose-500/30">
                             <XCircle className="w-3 h-3" />
-                            REJECTED
+                            {t('DITOLAK', 'REJECTED')}
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/30">
                             <Clock className="w-3 h-3" />
-                            CEK FISIK
+                            {t('CEK FISIK', 'INSPECTION')}
                           </span>
                         )}
                       </div>
@@ -299,7 +301,7 @@ export default function ScrutineeringPage() {
                     ) : (
                       <span className="px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs font-sans font-bold inline-flex items-center gap-1.5 uppercase tracking-wider">
                         <AlertTriangle className="w-4 h-4" />
-                        INSPEKSI DIPERLUKAN
+                        {t('INSPEKSI DIPERLUKAN', 'INSPECTION REQUIRED')}
                       </span>
                     )}
                   </div>
@@ -315,25 +317,27 @@ export default function ScrutineeringPage() {
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4 text-brand-gold" />
                       <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-200">
-                        1. Verifikasi Prolog 30 KM (Mandiri 03:00–05:00 WIB)
+                        {t('1. Verifikasi Prolog 30 KM (Mandiri 03:00–05:00 WIB)', '1. 30 KM Prologue Verification (Self-Start 03:00–05:00 WIB)')}
                       </h4>
                     </div>
                     <span className="text-[11px] font-sans font-bold text-slate-400">
-                      {selectedRider.prologue_required ? 'WAJIB (150K & 200K)' : 'TIDAK WAJIB'}
+                      {selectedRider.prologue_required ? t('WAJIB (150K & 200K)', 'MANDATORY (150K & 200K)') : t('TIDAK WAJIB', 'NOT REQUIRED')}
                     </span>
                   </div>
 
                   {selectedRider.prologue_required ? (
                     <div className="space-y-3">
                       <p className="text-xs text-slate-400 leading-relaxed font-sans">
-                        Cek rekaman GPS Strava / Garmin / Wahoo peserta sebelum jam 05:00 WIB di ABEEY Coffee. 
-                        Jarak minimal wajib adalah <strong>30.0 km</strong>.
+                        {t(
+                          'Cek rekaman GPS Strava / Garmin / Wahoo peserta sebelum jam 05:00 WIB di ABEEY Coffee. Jarak minimal wajib adalah 30.0 km.',
+                          'Verify rider Strava / Garmin / Wahoo GPS activity logs before 05:00 WIB at ABEEY Coffee. Mandatory minimum distance is 30.0 km.'
+                        )}
                       </p>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
                         <div>
                           <label className="text-[11px] font-sans font-bold text-slate-400 block mb-1">
-                            Jarak Tempuh GPS Tercatat (KM):
+                            {t('Jarak Tempuh GPS Tercatat (KM):', 'Recorded GPS Distance (KM):')}
                           </label>
                           <input
                             type="number"
@@ -348,12 +352,12 @@ export default function ScrutineeringPage() {
                           {parseFloat(prologKmInput) >= 30.0 ? (
                             <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-sans font-semibold flex items-center gap-2">
                               <CheckCircle2 className="w-4 h-4 shrink-0" />
-                              <span>Memenuhi syarat (≥ 30 km). Prolog Valid!</span>
+                              <span>{t('Memenuhi syarat (≥ 30 km). Prolog Valid!', 'Requirement satisfied (≥ 30 km). Prologue Valid!')}</span>
                             </div>
                           ) : (
                             <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-sans font-semibold flex items-center gap-2">
                               <XCircle className="w-4 h-4 shrink-0" />
-                              <span>Kurang dari 30.0 km! Tidak memenuhi syarat prolog.</span>
+                              <span>{t('Kurang dari 30.0 km! Tidak memenuhi syarat prolog.', 'Less than 30.0 km! Prologue requirement not met.')}</span>
                             </div>
                           )}
                         </div>
@@ -361,7 +365,7 @@ export default function ScrutineeringPage() {
                     </div>
                   ) : (
                     <p className="text-xs text-slate-500 italic font-sans">
-                      Kategori ini tidak memiliki syarat prolog 30 km. Langsung lanjutkan ke inspeksi perlengkapan.
+                      {t('Kategori ini tidak memiliki syarat prolog 30 km. Langsung lanjutkan ke inspeksi perlengkapan.', 'This category does not require the 30 km prologue. Proceed directly to gear inspection.')}
                     </p>
                   )}
                 </div>
@@ -371,7 +375,7 @@ export default function ScrutineeringPage() {
                   <div className="flex items-center gap-2">
                     <Lightbulb className="w-4 h-4 text-brand-orange" />
                     <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-200">
-                      2. Standar Keselamatan & Perlengkapan Wajib (Scrutineering)
+                      {t('2. Standar Keselamatan & Perlengkapan Wajib (Scrutineering)', '2. Mandatory Safety & Gear Standards (Scrutineering)')}
                     </h4>
                   </div>
 
@@ -383,7 +387,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkHelmet(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Helm Standar CE/CPSC (Kencang & utuh)</span>
+                      <span className="text-slate-200">{t('Helm Standar CE/CPSC (Kencang & utuh)', 'CE/CPSC Certified Helmet (Intact & secure)')}</span>
                     </label>
 
                     <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
@@ -393,7 +397,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkFrontLight(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Lampu Depan Ganda (Utama &gt;500lm + Backup)</span>
+                      <span className="text-slate-200">{t('Lampu Depan Ganda (Utama >500lm + Backup)', 'Dual Front Lights (Primary >500lm + Backup)')}</span>
                     </label>
 
                     <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
@@ -403,7 +407,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkRearLight(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Lampu Belakang Ganda (Merah Steady)</span>
+                      <span className="text-slate-200">{t('Lampu Belakang Ganda (Merah Steady)', 'Dual Rear Lights (Steady Red)')}</span>
                     </label>
 
                     <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
@@ -413,7 +417,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkReflective(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Rompi Reflektif / Sash (EN ISO 20471)</span>
+                      <span className="text-slate-200">{t('Rompi Reflektif / Sash (EN ISO 20471)', 'Reflective Vest / Sash (EN ISO 20471)')}</span>
                     </label>
 
                     <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
@@ -423,7 +427,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkTools(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Tubeless Plug Kit / Ban Dalam & Pompa</span>
+                      <span className="text-slate-200">{t('Tubeless Plug Kit / Ban Dalam & Pompa', 'Tubeless Plug Kit / Inner Tube & Pump')}</span>
                     </label>
 
                     <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
@@ -433,7 +437,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkEmergencyContact(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Kontak Darurat SPGDT RS Hermina Tersimpan</span>
+                      <span className="text-slate-200">{t('Kontak Darurat SPGDT RS Hermina Tersimpan', 'SPGDT RS Hermina Emergency Contact Saved')}</span>
                     </label>
 
                     <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer sm:col-span-2">
@@ -443,7 +447,7 @@ export default function ScrutineeringPage() {
                         onChange={(e) => setChkTyreWidth(e.target.checked)}
                         className="rounded border-zinc-700 text-brand-gold focus:ring-0"
                       />
-                      <span className="text-slate-200">Rekomendasi Ban (≥ 38c, optimal 45c untuk makadam Sodong)</span>
+                      <span className="text-slate-200">{t('Rekomendasi Ban (≥ 38c, optimal 45c untuk makadam Sodong)', 'Tire Recommendation (≥ 38c, optimal 45c for Sodong macadam)')}</span>
                     </label>
                   </div>
                 </div>
@@ -452,11 +456,11 @@ export default function ScrutineeringPage() {
                 <div className="space-y-4 pt-2 border-t border-brand-border/60">
                   <div>
                     <label className="text-[11px] font-sans font-bold text-slate-400 block mb-1">
-                      Catatan Tambahan Marshall (Opsional):
+                      {t('Catatan Tambahan Marshall (Opsional):', 'Marshal Inspection Notes (Optional):')}
                     </label>
                     <input
                       type="text"
-                      placeholder="Contoh: Lampu cadangan baterai baru, stiker scrutineering #04 ditempel di fork kiri..."
+                      placeholder={t('Contoh: Lampu cadangan baterai baru, stiker scrutineering #04 ditempel di fork kiri...', 'e.g., Fresh battery in backup light, scrutineering sticker #04 placed on fork...')}
                       value={marshallNote}
                       onChange={(e) => setMarshallNote(e.target.value)}
                       className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 font-sans focus:outline-none focus:border-brand-gold"
@@ -469,15 +473,15 @@ export default function ScrutineeringPage() {
                       className="flex-1 py-3 px-4 rounded-xl font-bold font-sans text-xs uppercase tracking-wider bg-brand-gold hover:brightness-110 text-brand-dark shadow-glow transition-all flex items-center justify-center gap-2"
                     >
                       <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
-                      Setujui & Terbitkan Izin Start (Wave Clearance)
+                      {t('Setujui & Terbitkan Izin Start (Wave Clearance)', 'Approve & Issue Wave Clearance')}
                     </button>
                     <button
                       onClick={() => {
-                        alert(`BIB #${selectedRider.bib} ditandai butuh perbaikan perlengkapan sebelum 05:00 WIB.`);
+                        alert(t(`BIB #${selectedRider.bib} ditandai butuh perbaikan perlengkapan sebelum 05:00 WIB.`, `BIB #${selectedRider.bib} marked pending gear correction before 05:00 WIB.`));
                       }}
                       className="py-3 px-4 rounded-xl font-sans text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-slate-300 border border-zinc-700 transition-colors uppercase tracking-wider"
                     >
-                      Tahan (Pending Gear)
+                      {t('Tahan (Pending Gear)', 'Hold (Pending Gear)')}
                     </button>
                   </div>
                 </div>
@@ -485,7 +489,7 @@ export default function ScrutineeringPage() {
               </div>
             ) : (
               <div className="bg-brand-card border border-brand-border/60 rounded-2xl p-12 text-center text-slate-400">
-                Pilih atlet dari daftar antrean sebelah kiri untuk memulai pemeriksaan.
+                {t('Pilih atlet dari daftar antrean sebelah kiri untuk memulai pemeriksaan.', 'Select a rider from the queue on the left to start inspection.')}
               </div>
             )}
           </div>
