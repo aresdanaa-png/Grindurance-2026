@@ -153,7 +153,7 @@ export default function TimelineSection() {
                 <div className="flex items-center gap-3 text-xs font-mono text-slate-400 shrink-0">
                   <span>FLAG OFF: <strong className="text-[#FA6D0B]">05:30 WIB</strong></span>
                   <span className="text-[#FA6D0B]">//</span>
-                  <span>FINAL COT: <strong className="text-white">21:00 WIB</strong></span>
+                  <span>FINAL COT: <strong className="text-white">00:30 WIB (H+1)</strong></span>
                 </div>
               </div>
 
@@ -328,7 +328,7 @@ export default function TimelineSection() {
                     </div>
 
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
-                      FLAG OFF WAVE 3: FUN GRAVEL 80 KM &amp; KOMUNITAS 60 KM
+                      FLAG OFF WAVE 3: 100 FONDO &amp; 60 FUN RIDE
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -336,7 +336,7 @@ export default function TimelineSection() {
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
-                      <span>COT 80 KM: <strong className="text-white">9 JAM (16:00 WIB)</strong></span>
+                      <span>COT 100 KM: <strong className="text-white">9.5 JAM (16:30 WIB)</strong></span>
                       <span className="text-[#FA6D0B] select-none">//</span>
                       <span>COT 60 KM: <strong className="text-white">7 JAM (14:00 WIB)</strong></span>
                       <span className="text-[#FA6D0B] select-none">//</span>
@@ -368,7 +368,7 @@ export default function TimelineSection() {
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                      Seluruh peserta 120, 150, dan 200 km wajib mengambil jeda istirahat minimal 30 menit tanpa bergerak yang terverifikasi sensor smart geofencing dan scan barcode check-in/check-out.
+                      Seluruh peserta wajib mengambil jeda istirahat minimal 30 menit tanpa bergerak yang terverifikasi sensor smart geofencing dan scan barcode: di CP#4 untuk kategori 120, 150, dan 200 km, serta di CP#6 untuk kategori 60 Fun Ride dan 100 Fondo.
                     </p>
 
                     <div className="border-l-2 border-[#FA6D0B] pl-4 py-1 text-xs text-slate-300 space-y-0.5">
@@ -442,22 +442,22 @@ export default function TimelineSection() {
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
-                          21:00 WIB
+                          21:00 — 00:30 WIB (H+1)
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
                         <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/30 text-white font-bold">
                           BATAS AKHIR MUTLAK
                         </span>
                       </div>
-                      <span className="text-[11px] font-mono text-slate-400 uppercase">VENUE CLOSED</span>
+                      <span className="text-[11px] font-mono text-slate-400 uppercase">FINAL FINISH GATE</span>
                     </div>
 
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
-                      OFFICIAL CUT-OFF TIME (COT) &amp; PENUTUPAN VENUE
+                      OFFICIAL COT // 21:00 WIB (STAGE) &amp; 00:30 WIB (ULTRA 200 KM)
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                      Batas akhir penyelesaian seluruh rute event. Tim sweeper dan paramedis ambulans RS Hermina Cibubur menyelesaikan sapuan jalur terakhir. Operasional panggung resmi selesai.
+                      Pukul 21:00 WIB merupakan batas akhir kategori 60–150 KM serta penutupan panggung perayaan utama. Pos finis dan tim ambulans malam RS Hermina Cibubur tetap bersiaga mengawal peserta Ultra 200 KM hingga batas Cut-Off Time resmi pukul 00:30 WIB dini hari (19 jam perlombaan).
                     </p>
                   </div>
                 </div>
@@ -662,8 +662,8 @@ export default function TimelineSection() {
                     {/* Row 150 KM */}
                     <tr className="hover:bg-white/[0.02] transition-colors">
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">150 KM CROSS</strong>
-                        <span className="text-[10px] lg:text-[11px] text-[#FA6D0B]">Cross Endurance</span>
+                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">150 GRAND FONDO</strong>
+                        <span className="text-[10px] lg:text-[11px] text-[#FA6D0B]">Grand Fondo Endurance</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30 font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
@@ -684,7 +684,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
                         <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-slate-300 text-[10px] inline-block whitespace-nowrap">
-                          Cross Gran Fondo
+                          Grand Fondo
                         </span>
                       </td>
                     </tr>
@@ -692,7 +692,7 @@ export default function TimelineSection() {
                     {/* Row 120 KM */}
                     <tr className="hover:bg-white/[0.02] transition-colors bg-[#FA6D0B]/[0.03]">
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">120 KM AMAZING RACE</strong>
+                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">120 (RACE)</strong>
                         <span className="text-[10px] lg:text-[11px] text-[#FA6D0B]">Single &amp; Pair Mix</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
@@ -719,11 +719,11 @@ export default function TimelineSection() {
                       </td>
                     </tr>
 
-                    {/* Row 80 KM */}
+                    {/* Row 100 KM */}
                     <tr className="hover:bg-white/[0.02] transition-colors">
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">80 KM FUN GRAVEL</strong>
-                        <span className="text-[10px] lg:text-[11px] text-slate-400">Jonggol Explorer</span>
+                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">100 FONDO</strong>
+                        <span className="text-[10px] lg:text-[11px] text-slate-400">Fondo Exploration</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-white font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
@@ -734,17 +734,17 @@ export default function TimelineSection() {
                         Tidak Ada
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-white font-bold whitespace-nowrap">
-                        9 Jam (16:00 WIB)
+                        9.5 Jam (16:30 WIB)
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-400 whitespace-nowrap">
-                        Fleksibel (Water Station)
+                        Wajib 30 Min (CP#6)
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-400 whitespace-nowrap">
                         Rekomendasi Senja/Siang
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
                         <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/10 text-slate-300 text-[10px] inline-block whitespace-nowrap">
-                          Rekreasi Gravel
+                          Fondo / Rekreasi
                         </span>
                       </td>
                     </tr>
@@ -752,8 +752,8 @@ export default function TimelineSection() {
                     {/* Row 60 KM */}
                     <tr className="hover:bg-white/[0.02] transition-colors">
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">60 KM KOMUNITAS</strong>
-                        <span className="text-[10px] lg:text-[11px] text-slate-400">Ramah Seli &amp; Pemula</span>
+                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">60 FUN RIDE</strong>
+                        <span className="text-[10px] lg:text-[11px] text-slate-400">Fun Ride Ramah Seli</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-white font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
@@ -767,7 +767,7 @@ export default function TimelineSection() {
                         7 Jam (14:00 WIB)
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-400 whitespace-nowrap">
-                        Fleksibel (Water Station)
+                        Wajib 30 Min (CP#6)
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-400 whitespace-nowrap">
                         Standar Reflektor/Lampu

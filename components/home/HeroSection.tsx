@@ -103,7 +103,7 @@ export default function HeroSection() {
                 <span>FORMAT: SELF-SUPPORTED · RAIN SEASON EXPEDITION</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>KATEGORI: 60 KM · 80 KM · 120 KM RACE · 150 KM CROSS · 200 KM ULTRA</span>
+                <span>KATEGORI: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>
@@ -130,7 +130,7 @@ export default function HeroSection() {
                 <span>FORMAT: SELF-SUPPORTED · RAIN SEASON EXPEDITION</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>KATEGORI: 60 KM · 80 KM · 120 KM RACE · 150 KM CROSS · 200 KM ULTRA</span>
+                <span>KATEGORI: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>

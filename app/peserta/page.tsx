@@ -48,12 +48,12 @@ interface RosterStats {
 
 const CATEGORY_TABS = [
   { id: 'ALL', label: 'SEMUA KATEGORI' },
-  { id: '200', label: '200 KM ULTRA' },
-  { id: '150', label: '150 KM CROSS' },
-  { id: '120_SINGLE', label: '120 KM SINGLE' },
-  { id: '120_PAIR', label: '120 KM PAIR MIX' },
-  { id: '80', label: '80 KM URBAN' },
-  { id: '60', label: '60 KM URBAN' },
+  { id: '200', label: '200 ULTRA' },
+  { id: '150', label: '150 GRAND FONDO' },
+  { id: '120_SINGLE', label: '120 (RACE) SINGLE' },
+  { id: '120_PAIR', label: '120 (RACE) PAIR MIX' },
+  { id: '100', label: '100 FONDO' },
+  { id: '60', label: '60 FUN RIDE' },
   { id: 'VIRTUAL', label: 'VIRTUAL RIDE' },
 ];
 

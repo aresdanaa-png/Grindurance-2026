@@ -90,7 +90,7 @@ export default function CheckpointPage() {
               >
                 <span className="text-[10px] font-sans font-semibold text-slate-400 block tracking-wider">KM 45.0 • SODONG SPRINGS</span>
                 <span className="text-sm font-bold text-white block mt-0.5">CP#6 Sodong / Cileungsi</span>
-                <span className="text-[11px] font-sans font-bold text-brand-gold mt-1 block">Kategori 60, 80 km</span>
+                <span className="text-[11px] font-sans font-bold text-brand-gold mt-1 block">Kategori 60, 100 km</span>
               </button>
             </div>
 

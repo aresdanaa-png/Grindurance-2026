@@ -18,7 +18,7 @@ export default function CategoryCockpit() {
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
   // Status Registrasi Resmi GX-ID
-  const REGISTRATION_PRODUCTION_DEADLINE = '10 September 2026';
+  const REGISTRATION_PRODUCTION_DEADLINE = '10 November 2026';
 
   const handleCategorySelect = (id: string) => {
     if (id === selectedId) return;
@@ -463,7 +463,7 @@ export default function CategoryCockpit() {
                     </div>
                     <div className="flex items-center gap-1.5 text-[10px] font-sans font-bold text-slate-400 uppercase">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                      <span>BATAS AKHIR PRODUKSI: <strong className="text-white">10 SEPTEMBER 2026</strong></span>
+                      <span>BATAS AKHIR PRODUKSI: <strong className="text-white">10 NOVEMBER 2026</strong></span>
                     </div>
                   </div>
 

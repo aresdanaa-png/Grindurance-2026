@@ -60,7 +60,7 @@ export default function RacePackSection() {
                 {/* Micro-telemetry Status: Batas Produksi */}
                 <div className="mt-2.5 flex items-center md:justify-end gap-2 text-[10px] font-mono uppercase tracking-wider text-slate-400">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse shrink-0" />
-                  <span>JAMINAN HARI-H DITUTUP: <strong className="text-white font-bold">10 SEPTEMBER 2026</strong></span>
+                  <span>JAMINAN HARI-H DITUTUP: <strong className="text-white font-bold">10 NOVEMBER 2026</strong></span>
                 </div>
               </div>
             </div>

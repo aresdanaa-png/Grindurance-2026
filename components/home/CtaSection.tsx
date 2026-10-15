@@ -15,7 +15,7 @@ export default function CtaSection() {
           BERANI TAKLUKKAN MEDAN JONGGOL?
         </h2>
         <p className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed">
-          Pilih paket Medal Saja atau Medal &amp; Jersey resmi GX-ID Anniversary Edition. Tantangan ketahanan musim hujan mandiri edisi ke-8. Pendaftaran ditutup saat kuota terpenuhi.
+          Pilih paket Medal Saja atau Medal &amp; Jersey resmi GX-ID Anniversary Edition. Tantangan ketahanan musim hujan mandiri edisi perayaan 8 tahun komunitas GX-ID. Pendaftaran ditutup saat kuota terpenuhi.
         </p>
 
         <div className="pt-4 flex justify-center">

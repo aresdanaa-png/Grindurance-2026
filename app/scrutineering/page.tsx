@@ -37,7 +37,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
   {
     bib: 2001,
     name: 'Bagus Setyawan',
-    category: 'Ultra Gravel 200',
+    category: '200 Ultra',
     distance_km: 200,
     wave: 'Wave 1 (05:30 WIB)',
     chapter: 'GX-ID Chapter Bandung Barat',
@@ -50,7 +50,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
   {
     bib: 2002,
     name: 'Donny Prasetya',
-    category: 'Ultra Gravel 200',
+    category: '200 Ultra',
     distance_km: 200,
     wave: 'Wave 1 (05:30 WIB)',
     chapter: 'GX-ID Chapter Jakarta Selatan',
@@ -63,7 +63,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
   {
     bib: 1501,
     name: 'Rian Hidayat',
-    category: 'Cross Gravel 150',
+    category: '150 Grand Fondo',
     distance_km: 150,
     wave: 'Wave 1 (05:30 WIB)',
     chapter: 'GX-ID Chapter Bekasi Pesisir',
@@ -76,7 +76,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
   {
     bib: 1502,
     name: 'Faisal Ramadhan',
-    category: 'Cross Gravel 150',
+    category: '150 Grand Fondo',
     distance_km: 150,
     wave: 'Wave 1 (05:30 WIB)',
     chapter: 'GX-ID Chapter Solo Raya',
@@ -89,7 +89,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
   {
     bib: 1201,
     name: 'Hendrik Wijaya',
-    category: 'Amazing Race 120 (Single)',
+    category: '120 (Race) Single',
     distance_km: 120,
     wave: 'Wave 2 (06:00 WIB)',
     chapter: 'GX-ID Chapter Tangerang Raya',

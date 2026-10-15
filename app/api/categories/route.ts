@@ -18,7 +18,8 @@ export async function GET() {
 
     const cotHoursMap: Record<string, number> = {
       '60': 7.0,
-      '80': 9.0,
+      '80': 9.5,
+      '100': 9.5,
       '120_SINGLE': 11.0,
       '120_PAIR': 11.0,
       '150': 15.0,
