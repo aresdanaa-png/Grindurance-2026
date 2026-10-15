@@ -1,0 +1,41 @@
+'use client';
+
+import { useEffect } from 'react';
+
+export default function GlobalError({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
+  useEffect(() => {
+    console.error('Global application error:', error);
+  }, [error]);
+
+  return (
+    <html lang="id">
+      <body className="bg-[#0D0E11] text-white font-sans antialiased m-0 p-0">
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
+          <div className="max-w-md w-full text-center space-y-6 p-8 rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md">
+            <span className="font-mono text-xs uppercase tracking-wider text-[#FA6D0B] block">
+              // CRITICAL TELEMETRY ERROR
+            </span>
+            <h1 className="font-sans text-3xl font-black uppercase tracking-tight text-white">
+              KESALAHAN SISTEM UTAMA
+            </h1>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              Terjadi kegagalan kritis pada tata letak aplikasi. Silakan klik tombol di bawah untuk menyegarkan sistem.
+            </p>
+            <button
+              onClick={() => reset()}
+              className="px-6 py-3 bg-[#FA6D0B] text-black font-black uppercase text-xs tracking-wider rounded-xl hover:bg-[#ff7b1c] transition-all"
+            >
+              RESET APLIKASI
+            </button>
+          </div>
+        </div>
+      </body>
+    </html>
+  );
+}
