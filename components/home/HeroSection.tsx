@@ -91,55 +91,55 @@ export default function HeroSection() {
             <div className="animate-marquee flex items-center whitespace-nowrap text-xs sm:text-[13px] font-semibold tracking-widest uppercase text-slate-300">
               {/* Set 1 */}
               <div className="flex items-center">
-                <span>MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)</span>
+                <span>{t('MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)', 'SUNDAY, 13 DECEMBER 2026 (WEEK 2)')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>START &amp; FINISH: ABEEY COFFEE &amp; LRT HARJAMUKTI CIBUBUR</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP</span>
+                <span>{t('RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP', 'ROUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>FORMAT: SELF-SUPPORTED · RAIN SEASON EXPEDITION</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>KATEGORI: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA</span>
+                <span>{t('KATEGORI: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA', 'CATEGORIES: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>
+                <span>{t('VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION', 'NATIONWIDE VIRTUAL RIDE: STRAVA GPS AUTO-VALIDATION')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN &amp; TIM PAIR MIX</span>
+                <span className="text-[#FA6D0B] font-bold">{t('INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN & TIM PAIR MIX', 'IDR 50,000 MEAL INCENTIVE: FEMALE, AGE ≤ 17 & PAIR MIX TEAMS')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID</span>
+                <span>{t('80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID', '80,000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
               </div>
 
               {/* Set 2 */}
               <div className="flex items-center" aria-hidden="true">
-                <span>MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)</span>
+                <span>{t('MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)', 'SUNDAY, 13 DECEMBER 2026 (WEEK 2)')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>START &amp; FINISH: ABEEY COFFEE &amp; LRT HARJAMUKTI CIBUBUR</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP</span>
+                <span>{t('RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP', 'ROUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
                 <span>FORMAT: SELF-SUPPORTED · RAIN SEASON EXPEDITION</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>KATEGORI: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA</span>
+                <span>{t('KATEGORI: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA', 'CATEGORIES: 60 FUN RIDE · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION</span>
+                <span>{t('VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION', 'NATIONWIDE VIRTUAL RIDE: STRAVA GPS AUTO-VALIDATION')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span className="text-[#FA6D0B] font-bold">INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN &amp; TIM PAIR MIX</span>
+                <span className="text-[#FA6D0B] font-bold">{t('INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN & TIM PAIR MIX', 'IDR 50,000 MEAL INCENTIVE: FEMALE, AGE ≤ 17 & PAIR MIX TEAMS')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
 
-                <span>80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID</span>
+                <span>{t('80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID', '80,000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
               </div>
             </div>

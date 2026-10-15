@@ -26,8 +26,11 @@ export interface CategoryData {
   wave: string;
   quota: string;
   tag: string;
+  tagEng?: string;
   format: string;
+  formatEng?: string;
   specialRules: string;
+  specialRulesEng?: string;
   photo: string;
   priceMedal: string;
   priceJersey: string;
@@ -36,6 +39,7 @@ export interface CategoryData {
   earlyBird: PriceTier;
   regular: PriceTier;
   desc: string;
+  descEng?: string;
   routeHighlights: string;
   terrain: string;
   gearTip: string;
@@ -82,6 +86,7 @@ export const CATEGORIES: CategoryData[] = [
     quota: '150 Peserta',
     tag: 'REKREASI & PEMULA',
     format: 'Fun Ride / Non-Kompetitif',
+    formatEng: 'Fun Ride / Non-Competitive',
     specialRules: 'Ramah Sepeda Lipat (Seli), Hybrid & Pemula · Pitstop Wajib 30 Min (CP#6)',
     photo: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?q=80&w=1200&auto=format&fit=crop',
     priceMedal: 'Rp 225.000',
@@ -89,6 +94,7 @@ export const CATEGORIES: CategoryData[] = [
     earlyBird: { medal: 'Rp 225.000', jersey: 'Rp 275.000' },
     regular: { medal: 'Rp 250.000', jersey: 'Rp 300.000' },
     desc: 'Lintasan tanah pedesaan Jonggol & aspal halus Cibubur. Sangat ideal bagi pesepeda yang baru pertama kali mencicipi gravel serta pengguna sepeda lipat.',
+    descEng: 'Jonggol countryside dirt paths & smooth Cibubur asphalt. Ideal for beginners tasting gravel for the first time and folding bike riders.',
     routeHighlights: 'Cibubur Basecamp → Pasir Angin → CP#6 Jonggol → ABEEY Coffee Finish',
     terrain: 'Aspal Pinggiran Kota & Makadam Halus Pasir Angin',
     gearTip: 'Ramah Sepeda Lipat (Seli 20"), Hybrid, & Gravel Pemula',
@@ -117,6 +123,7 @@ export const CATEGORIES: CategoryData[] = [
     quota: '150 Peserta',
     tag: 'EKSPLORASI FONDO',
     format: 'Fondo / Non-Kompetitif',
+    formatEng: 'Fondo / Non-Competitive',
     specialRules: 'Rolling Terrain · Ban Rekomendasi 38c+ · Pitstop Wajib 30 Min (CP#6)',
     photo: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?q=80&w=1200&auto=format&fit=crop',
     priceMedal: 'Rp 275.000',
@@ -124,6 +131,7 @@ export const CATEGORIES: CategoryData[] = [
     earlyBird: { medal: 'Rp 275.000', jersey: 'Rp 325.000' },
     regular: { medal: 'Rp 300.000', jersey: 'Rp 350.000' },
     desc: 'Lintasan 100 km menembus persawahan Cileungsi dan makadam khas Pemandian Sodong. Etape peningkatan jarak ideal dengan rolling hills berirama dinamis.',
+    descEng: '100 km course cutting through Cileungsi paddy fields and Sodong Springs macadam. Ideal progression distance with dynamic rolling hills.',
     routeHighlights: 'Cileungsi → Sodong Makadam → Klapanunggal Ridge → ABEEY Coffee Finish',
     terrain: 'Rolling Hills, Persawahan Cileungsi & Makadam Pemandian Sodong (+850 m)',
     gearTip: 'Rekomendasi Ban 38c+ · Joy of Riding & Scenic Gravel',
@@ -154,6 +162,7 @@ export const CATEGORIES: CategoryData[] = [
     quota: '100 Single / 30 Tim',
     tag: 'OFFICIAL RACE · PODIUM TOP 3',
     format: 'Official Race (Top 3 Podium)',
+    formatEng: 'Official Race (Top 3 Podium)',
     specialRules: 'Mendukung Tim PAIR Mix 2 Pax · Handicap Waktu · Live Tracking GPS',
     photo: 'https://images.unsplash.com/photo-1534787238916-9ba6764efd4f?q=80&w=1200&auto=format&fit=crop',
     priceMedal: 'Rp 350.000',
@@ -163,6 +172,7 @@ export const CATEGORIES: CategoryData[] = [
     earlyBird: { medal: 'Rp 350.000', jersey: 'Rp 400.000', pairMedal: 'Rp 600.000', pairJersey: 'Rp 650.000' },
     regular: { medal: 'Rp 400.000', jersey: 'Rp 450.000', pairMedal: 'Rp 700.000', pairJersey: 'Rp 750.000' },
     desc: 'Satu-satunya kategori balap kompetitif resmi dengan perebutan podium Top 3. Menaklukkan tanjakan koridor Jonggol–Sukamakmur dengan opsi tandem 2 pesepeda (Pair Mix).',
+    descEng: 'The only official competitive race category battling for Top 3 podium. Conquering Jonggol–Sukamakmur ridge with optional 2-rider tandem (Pair Mix).',
     routeHighlights: 'Cibubur → Jonggol Ridge → Tanjakan Sukamakmur → Sentul Descent → ABEEY Coffee Finish',
     terrain: 'Koridor Jonggol Ridge & Tanjakan Sukamakmur (+1.450 m)',
     gearTip: 'Live Tracking RaceRoute.id Wajib · Perebutan Podium Top 3 · Opsi Tandem PAIR MIX',
@@ -193,6 +203,7 @@ export const CATEGORIES: CategoryData[] = [
     quota: '75 Peserta',
     tag: 'WAJIB PROLOG 30 KM',
     format: 'Grand Fondo Endurance',
+    formatEng: 'Grand Fondo Endurance',
     specialRules: 'Wajib Prolog 30 km (03:00–05:00 WIB) · Pitstop Wajib 30 Menit',
     photo: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1200&auto=format&fit=crop',
     priceMedal: 'Rp 350.000',
@@ -200,6 +211,7 @@ export const CATEGORIES: CategoryData[] = [
     earlyBird: { medal: 'Rp 350.000', jersey: 'Rp 400.000' },
     regular: { medal: 'Rp 400.000', jersey: 'Rp 450.000' },
     desc: 'Tantangan klasik veteran endurance menembus tanjakan ganda Sukamakmur dan turunan teknis berbatu di tengah guyuran musim hujan khas Jawa Barat.',
+    descEng: 'Classic veteran endurance challenge braving dual Sukamakmur climbs and technical rocky descents amidst West Java monsoon rain.',
     routeHighlights: 'Prolog 30 km Subuh → Sukamakmur → Jonggol Loop → Puncak Dua → ABEEY Coffee Finish',
     terrain: 'Tanjakan Ganda Sukamakmur, Jalur Batu Puncak Dua & Sentul Loop',
     gearTip: 'Wajib Prolog 30 km (03:00–05:00 WIB) · Ban Min 38–40mm & Wet Lube',
@@ -230,6 +242,7 @@ export const CATEGORIES: CategoryData[] = [
     quota: '50 Peserta',
     tag: 'ULTRA GRAVEL · NIGHT NAV',
     format: 'Ultra Endurance',
+    formatEng: 'Ultra Endurance',
     specialRules: 'Prolog 30 km · Night Navigation · Lampu Depan Ganda >500lm & Rompi Reflektif',
     photo: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?q=80&w=1200&auto=format&fit=crop',
     priceMedal: 'Rp 350.000',
@@ -237,6 +250,7 @@ export const CATEGORIES: CategoryData[] = [
     earlyBird: { medal: 'Rp 350.000', jersey: 'Rp 400.000' },
     regular: { medal: 'Rp 400.000', jersey: 'Rp 450.000' },
     desc: 'Kategori puncak ketahanan fisik, mental, dan navigasi malam mandiri. Loop penuh Jonggol–Sukamakmur–Babakan Madang–Sentul dengan total elevasi tembus +3.180 meter.',
+    descEng: 'The pinnacle of physical, mental, and self-supported night navigation endurance. Full 4-region loop exceeding +3,180m total elevation.',
     routeHighlights: 'Prolog 30 km → Jonggol → Sukamakmur Monster Pass → Sentul Loop → Malam ABEEY Coffee',
     terrain: 'Loop Penuh 4 Wilayah · Monster Pass Sukamakmur · Sentul Extreme',
     gearTip: 'Wajib Prolog 30 km · Night Nav: Lampu Depan >500lm & Rompi Reflektif',
@@ -269,6 +283,7 @@ export const CATEGORIES: CategoryData[] = [
     quota: '1.000 Peserta',
     tag: 'VALIDASI STRAVA / KOMOOT',
     format: 'Virtual Ride Mandiri',
+    formatEng: 'Self-Supported Virtual Ride',
     specialRules: 'Khusus Luar Jabodetabek · Outdoor Only · Medali Dikirim DHS Logistik',
     photo: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?q=80&w=1200&auto=format&fit=crop',
     priceMedal: 'Rp 175.000',
@@ -276,6 +291,7 @@ export const CATEGORIES: CategoryData[] = [
     earlyBird: { medal: 'Rp 175.000', jersey: 'Rp 225.000' },
     regular: { medal: 'Rp 200.000', jersey: 'Rp 250.000' },
     desc: 'Bagi 80.000+ anggota GX-ID di 19 Chapter se-Indonesia. Selesaikan jarak tantangan di kota domisili Anda, validasi via Strava Webhook, dan medali resmi dikirim ke rumah.',
+    descEng: 'For 80,000+ GX-ID members across 19 Regional Chapters. Complete your ride in your hometown, validate via Strava Webhook, and official medals are shipped to your doorstep.',
     routeHighlights: '19 Chapter: Bandung, Surabaya, Medan, Bali, Jogja, Makassar, Semarang, Solo & Nasional',
     terrain: 'Rute Domisili Lokal di 19 Regional Chapter GX-ID se-Indonesia',
     gearTip: 'Outdoor GPS Validasi Otomatis via Strava Webhook · Medali via DHS Logistik',
