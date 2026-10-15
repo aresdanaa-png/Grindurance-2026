@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Compass, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -10,10 +10,7 @@ export default function Footer() {
           {/* Brand Info (5 Cols) */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded bg-[#15171C] border border-white/15 flex items-center justify-center text-[#FA6D0B]">
-                <Compass className="w-5 h-5 stroke-[2]" />
-              </div>
-              <span className="font-display text-xl font-bold tracking-tight text-white uppercase italic">
+              <span className="font-display text-2xl font-black tracking-tight text-white uppercase italic">
                 GRAVEL GRINDURANCE <span className="text-[#FA6D0B]">2026</span>
               </span>
             </div>

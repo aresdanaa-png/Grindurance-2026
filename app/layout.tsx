@@ -1,82 +1,54 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Oswald, Plus_Jakarta_Sans, Special_Elite } from 'next/font/google';
 import localFont from 'next/font/local';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { LanguageProvider } from '@/lib/context/LanguageContext';
 
-const specialElite = Special_Elite({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-typewriter',
-  display: 'swap',
-});
-
-const oswald = Oswald({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-display',
-  display: 'swap',
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const avantGarde = localFont({
+const neueHaas = localFont({
   src: [
     {
-      path: '../public/fonts/avgardn.ttf',
+      path: '../public/fonts/NeueHaasDisplay-Roman.ttf',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../public/fonts/avgardd.ttf',
+      path: '../public/fonts/NeueHaasDisplay-RomanItalic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../public/fonts/NeueHaasDisplay-Medium.ttf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/NeueHaasDisplay-MediumItalic.ttf',
+      weight: '500',
+      style: 'italic',
+    },
+    {
+      path: '../public/fonts/NeueHaasDisplay-Bold.ttf',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '../public/fonts/avgarddo.ttf',
+      path: '../public/fonts/NeueHaasDisplay-BoldItalic.ttf',
       weight: '700',
       style: 'italic',
     },
-  ],
-  variable: '--font-avantgarde',
-  display: 'swap',
-});
-
-const nacelle = localFont({
-  src: [
     {
-      path: '../public/fonts/Nacelle-Light.otf',
-      weight: '300',
+      path: '../public/fonts/NeueHaasDisplay-Black.ttf',
+      weight: '900',
       style: 'normal',
     },
     {
-      path: '../public/fonts/Nacelle-Regular.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Nacelle-SemiBold.otf',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Nacelle-Bold.otf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Nacelle-Heavy.otf',
-      weight: '800',
-      style: 'normal',
+      path: '../public/fonts/NeueHaasDisplay-BlackItalic.ttf',
+      weight: '900',
+      style: 'italic',
     },
   ],
-  variable: '--font-nacelle',
+  variable: '--font-neue-haas',
   display: 'swap',
 });
 
@@ -94,13 +66,15 @@ export default function RootLayout({
   return (
     <html lang="id" className="scroll-smooth">
       <body
-        className={`${avantGarde.variable} ${plusJakartaSans.variable} ${oswald.variable} ${nacelle.variable} ${specialElite.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] antialiased selection:bg-[#FA6D0B] selection:text-black`}
+        className={`${neueHaas.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] subpixel-antialiased selection:bg-[#FA6D0B] selection:text-black`}
       >
-        <Navbar />
-        <main className="flex-1 flex flex-col">
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          <main className="flex-1 flex flex-col">
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );
