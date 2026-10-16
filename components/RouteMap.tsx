@@ -300,7 +300,7 @@ export default function RouteMap({
       <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-black/70 border-b border-white/10 backdrop-blur-md flex-shrink-0">
         <div className="flex items-center gap-2 min-w-0">
           <span className="text-[11px] font-mono font-bold text-white uppercase tracking-widest truncate">
-            {t('ETAPE //', 'STAGE //')} {gpxTotalKm}
+            {t('ETAPE ·', 'STAGE ·')} {gpxTotalKm}
             {prologKm > 0 && (
               <span className="text-[#FA6D0B] ml-2 font-black">+{prologKm}KM {t('PROLOG', 'PROLOGUE')}</span>
             )}
@@ -414,9 +414,8 @@ export default function RouteMap({
         {status === 'success' && (
           <div className="absolute bottom-3 left-3 z-[400] pointer-events-auto bg-black/85 backdrop-blur-md border border-white/15 rounded-lg px-3 py-2 shadow-lg select-none">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
               <span className="text-[10px] font-mono font-bold text-white uppercase tracking-wider">
-                GPX LIVE // {categoryKm}
+                GPX LIVE · {categoryKm}
               </span>
             </div>
             <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mt-0.5 flex items-center gap-2">
@@ -446,7 +445,7 @@ export default function RouteMap({
       {prologKm > 0 && (
         <div className="px-3.5 py-2 bg-[#FA6D0B]/10 border-t border-[#FA6D0B]/25 flex-shrink-0">
           <p className="text-[9px] sm:text-[10px] font-mono text-[#FA6D0B] leading-relaxed uppercase tracking-wide">
-            <strong>{t('// PERINGATAN PROLOG:', '// PROLOGUE NOTICE:')}</strong>{' '}
+            <strong>{t('PERINGATAN PROLOG:', 'PROLOGUE NOTICE:')}</strong>{' '}
             {t(
               `Rute resmi ${gpxTotalKm} dari Start ABEEY. Peserta wajib menambah prolog mandiri ${prologKm} km dari kediaman (03:00–05:00 WIB).`,
               `Official route ${gpxTotalKm} starting from ABEEY. Riders must add independent prologue ${prologKm} km from residence (03:00–05:00 WIB).`

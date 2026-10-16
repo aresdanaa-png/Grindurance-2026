@@ -335,6 +335,77 @@ html {
   transform: translateY(0);
 }
 
+/* 8. Slide-Up Fade with Stagger Support */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-up-fade {
+  animation: slideUpFade 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 9. Slow Breathing Aurora Glow */
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 4.5s ease-in-out infinite;
+}
+
+/* 10. Live Telemetry Beacon Dot */
+@keyframes beaconDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(250, 109, 11, 0.85);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(250, 109, 11, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(250, 109, 11, 0);
+  }
+}
+
+.animate-beacon-dot {
+  animation: beaconDot 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+/* 11. Subtle Laser Line Scan */
+@keyframes laserSweep {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.6;
+  }
+  70% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(1000%);
+    opacity: 0;
+  }
+}
+
+.animate-laser-sweep {
+  animation: laserSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-draw-ridge,
   .animate-fade-in-area,

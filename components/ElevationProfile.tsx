@@ -151,7 +151,7 @@ export default function ElevationProfile({
       <div className="w-full rounded-xl bg-black/45 backdrop-blur-md border border-white/10 p-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
         <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
           <span className="text-[10px] font-mono font-bold tracking-widest text-[#FA6D0B] uppercase">
-            {t('PROFIL ELEVASI // MANDIRI', 'ELEVATION PROFILE // SELF-PLANNED')}
+            {t('PROFIL ELEVASI · MANDIRI', 'ELEVATION PROFILE · SELF-PLANNED')}
           </span>
           <span className="text-[10px] font-mono text-slate-400 uppercase">
             19 CHAPTER NASIONAL
@@ -173,19 +173,18 @@ export default function ElevationProfile({
   }
 
   return (
-    <div className="w-full rounded-xl bg-black/45 backdrop-blur-md border border-white/10 p-3.5 sm:p-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between select-none">
+    <div className="w-full rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-4 sm:p-5 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between select-none">
       
       {/* Header Info Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5 mb-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5 mb-3">
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
           <h4 className="font-display italic text-sm sm:text-base font-black uppercase text-white tracking-wide">
-            {t('PROFIL ELEVASI', 'ELEVATION PROFILE')} // {category.km}
+            {t('PROFIL ELEVASI RESMI', 'OFFICIAL ELEVATION PROFILE')} · {category.km}
           </h4>
         </div>
 
         {/* Telemetry Stats Pill */}
-        <div className="flex items-center gap-2 text-[9px] sm:text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+        <div className="flex items-center gap-2 text-[10px] sm:text-[11px] font-mono text-slate-400 uppercase tracking-wider">
           <span className="text-white font-bold">{category.elevation} {t('GAIN', 'GAIN')}</span>
           <span className="text-white/20">·</span>
           <span>MAX <strong className="text-[#FA6D0B]">{maxEle}M</strong></span>
