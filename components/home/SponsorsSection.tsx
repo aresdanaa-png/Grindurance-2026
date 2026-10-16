@@ -121,15 +121,23 @@ export default function SponsorsSection() {
         {/* ========================================================================= */}
         {/* ROW 2: SUPPORTING PARTNERS (Clean Transparent Logos, Balanced Scale) */}
         {/* ========================================================================= */}
-        <div className="space-y-5 sm:space-y-6 pt-1">
+        <div className="space-y-4 sm:space-y-5 pt-1">
           <div className="flex items-center justify-center gap-4 text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.25em] text-slate-500">
             <span className="h-px w-10 sm:w-16 bg-white/10" />
             <span>SUPPORTING PARTNERS</span>
             <span className="h-px w-10 sm:w-16 bg-white/10" />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 lg:gap-6 max-w-6xl mx-auto px-4">
-            {SUPPORTING_PARTNERS.map((item) => (
+          {/* Row 1: first 6 */}
+          <div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-5 max-w-6xl mx-auto px-4">
+            {SUPPORTING_PARTNERS.slice(0, 6).map((item) => (
+              <SupportingSponsorLogo key={item.id} item={item} />
+            ))}
+          </div>
+
+          {/* Row 2: last 5 */}
+          <div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-5 max-w-6xl mx-auto px-4">
+            {SUPPORTING_PARTNERS.slice(6).map((item) => (
               <SupportingSponsorLogo key={item.id} item={item} />
             ))}
           </div>
