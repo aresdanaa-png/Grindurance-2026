@@ -3,26 +3,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 const navLinks = [
   { href: '/', labelId: 'Beranda', labelEng: 'Overview' },
-  { href: '/kategori', labelId: 'Rute & Kategori', labelEng: 'Courses & Route' },
-  { href: '/peserta', labelId: 'Daftar Peserta', labelEng: 'Start List' },
+  { href: '/#kategori', labelId: 'Rute & Kategori', labelEng: 'Courses & Route' },
+  { href: '/#jadwal', labelId: 'Jadwal', labelEng: 'Timeline' },
   { href: '/peraturan', labelId: 'Regulasi', labelEng: 'Rules' },
-  { href: '/cek-bib', labelId: 'Cek BIB', labelEng: 'Check BIB' },
-];
-
-const opsLinks = [
-  { href: '/scrutineering', labelId: 'Scrutineering', labelEng: 'Scrutineering' },
-  { href: '/checkpoint', labelId: 'Pitstop 300%', labelEng: 'Pitstop 300%' },
+  { href: '/peserta', labelId: 'Daftar Peserta', labelEng: 'Start List' },
 ];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [opsOpen, setOpsOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
@@ -75,7 +69,7 @@ export default function Navbar() {
           </Link>
 
           {/* ── Center: Desktop Navigation ── */}
-          <nav className="hidden md:flex items-center gap-5 lg:gap-7 xl:gap-10">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7 xl:gap-9">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -86,32 +80,6 @@ export default function Navbar() {
                 <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-0 group-hover:w-4 h-[2px] bg-[#FA6D0B] rounded-full transition-all duration-300" />
               </Link>
             ))}
-
-            {/* Ops Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setOpsOpen(!opsOpen)}
-                onBlur={() => setTimeout(() => setOpsOpen(false), 150)}
-                className="flex items-center gap-1.5 px-2.5 lg:px-3 py-2 text-[12px] lg:text-[13px] font-medium text-white hover:text-[#FA6D0B] tracking-wide transition-colors duration-200 rounded-lg hover:bg-white/[0.04]"
-              >
-                {t('Operasional', 'Ops')}
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${opsOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {opsOpen && (
-                <div className="absolute top-full right-0 mt-2 w-48 py-2 bg-[#15171C] border border-white/10 rounded-xl shadow-2xl shadow-black/40 backdrop-blur-xl transition-all duration-200 z-50">
-                  {opsLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setOpsOpen(false)}
-                      className="block px-4 py-2.5 text-[13px] text-white hover:text-[#FA6D0B] hover:bg-white/[0.05] transition-colors"
-                    >
-                      {t(link.labelId, link.labelEng)}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
           </nav>
 
           {/* ── Right: Language Switcher (ID | ENG) & CTA Button ── */}
@@ -221,25 +189,6 @@ export default function Navbar() {
               {t(link.labelId, link.labelEng)}
             </Link>
           ))}
-
-          {/* Ops Section */}
-          <div className="pt-2 mt-2 border-t border-white/[0.06]">
-            <span className="block px-4 py-2 text-[10px] text-slate-600 uppercase tracking-[0.2em] font-semibold">
-              {t('Operasional', 'Operations')}
-            </span>
-            <div className="flex gap-2 px-2">
-              {opsLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex-1 text-center py-2.5 border border-white/[0.08] rounded-xl text-[13px] text-slate-400 hover:text-white hover:border-white/20 transition-all duration-200"
-                >
-                  {t(link.labelId, link.labelEng)}
-                </Link>
-              ))}
-            </div>
-          </div>
 
           {/* CTA */}
           <div className="pt-4 px-2">
