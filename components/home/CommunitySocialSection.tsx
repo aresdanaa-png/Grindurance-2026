@@ -14,8 +14,7 @@ export default function CommunitySocialSection() {
       handle: '@gxid.official',
       description: t('Siaran Live & Galeri', 'Live Streams & Gallery'),
       bannerImage: '/perjalanan-siklis-di-jalur-oranye.webp',
-      profilePhoto: '/logo-gx-id.webp',
-      ringClass: 'bg-gradient-to-tr from-[#FA6D0B] via-[#E1306C] to-[#FFDC80]',
+      platformType: 'instagram',
       ctaText: t('Buka Instagram', 'Open Instagram'),
       href: 'https://instagram.com/gxid.official',
       isExternal: true,
@@ -26,8 +25,7 @@ export default function CommunitySocialSection() {
       handle: 'GX-ID Group',
       description: t('41.000+ Komunitas', '41,000+ Cyclists'),
       bannerImage: '/pesepeda2.webp',
-      profilePhoto: '/logo-gx-id.webp',
-      ringClass: 'bg-gradient-to-tr from-[#1877F2] via-slate-400 to-[#FA6D0B]',
+      platformType: 'facebook',
       ctaText: t('Buka Facebook', 'Open Facebook'),
       href: 'https://www.facebook.com/groups/260107147993705/',
       isExternal: true,
@@ -38,8 +36,7 @@ export default function CommunitySocialSection() {
       handle: 'GX-ID Market',
       description: t('Jual Beli Gear & Part', 'Gear & Parts Trading'),
       bannerImage: '/pesepeda.webp',
-      profilePhoto: '/logo-gx-id.webp',
-      ringClass: 'bg-gradient-to-tr from-[#00A400] via-[#FA6D0B] to-amber-300',
+      platformType: 'marketplace',
       ctaText: t('Buka Marketplace', 'Open Marketplace'),
       href: 'https://www.facebook.com/groups/260107147993705/',
       isExternal: true,
@@ -50,8 +47,7 @@ export default function CommunitySocialSection() {
       handle: 'Gravel Grindurance',
       description: t('5 Kategori Rute Balap', '5 Race Route Categories'),
       bannerImage: '/backgrounds/bg-categories.webp',
-      profilePhoto: '/logo-gx-id.webp',
-      ringClass: 'bg-gradient-to-tr from-[#FA6D0B] via-white to-[#FA6D0B]',
+      platformType: 'registration',
       ctaText: t('Daftar Sekarang', 'Register Now'),
       href: '/daftar',
       isInternal: true,
@@ -62,8 +58,7 @@ export default function CommunitySocialSection() {
       handle: 'Linktree GX-ID',
       description: t('Dokumentasi & Arsip', 'Archive & Track Record'),
       bannerImage: '/hero.webp',
-      profilePhoto: '/logo-gx-id.webp',
-      ringClass: 'bg-gradient-to-tr from-amber-400 via-[#FA6D0B] to-purple-500',
+      platformType: 'portfolio',
       ctaText: t('Buka Portofolio', 'Open Portfolio'),
       href: 'https://linktr.ee/gxid.official',
       isExternal: true,
@@ -74,8 +69,7 @@ export default function CommunitySocialSection() {
       handle: '19 Chapter Resmi',
       description: t('Jaringan Seluruh Indonesia', 'Nationwide Network'),
       bannerImage: '/backgrounds/bg-timeline.webp',
-      profilePhoto: '/logo-gx-id.webp',
-      ringClass: 'bg-gradient-to-tr from-[#FA6D0B] via-white to-amber-400',
+      platformType: 'chapter',
       ctaText: t('Lihat Chapter', 'View Chapters'),
       href: '#chapters',
       isInternal: false,
@@ -88,6 +82,79 @@ export default function CommunitySocialSection() {
     'Lampung', 'Pekanbaru', 'Balikpapan', 'Samarinda', 'Banjarmasin',
     'Makassar', 'Manado', 'Lombok', 'Virtual Nationwide'
   ];
+
+  const renderProfileAvatar = (type: string) => {
+    switch (type) {
+      case 'instagram':
+        return (
+          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-lg flex items-center justify-center">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center p-3">
+              <svg viewBox="0 0 24 24" className="w-full h-full fill-white" strokeWidth="0">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+              </svg>
+            </div>
+          </div>
+        );
+      case 'facebook':
+        return (
+          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#1877F2] to-blue-400 shadow-lg flex items-center justify-center">
+            <div className="w-full h-full rounded-full bg-[#1877F2] flex items-center justify-center p-2.5">
+              <svg viewBox="0 0 24 24" className="w-full h-full fill-white">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </div>
+          </div>
+        );
+      case 'marketplace':
+        return (
+          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#0084FF] via-[#00A400] to-[#FA6D0B] shadow-lg flex items-center justify-center">
+            <div className="w-full h-full rounded-full bg-[#0E1013] border border-white/10 flex items-center justify-center p-3">
+              <svg viewBox="0 0 24 24" className="w-full h-full" fill="none">
+                <path d="M3 9l1.5-6h15L21 9v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" fill="#0084FF" />
+                <path d="M2 9h20M7 9v11M17 9v11" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" />
+                <path d="M3 9c0 1.657 1.343 3 3 3s3-1.343 3-3M9 9c0 1.657 1.343 3 3 3s3-1.343 3-3M15 9c0 1.657 1.343 3 3 3s3-1.343 3-3" stroke="#ffffff" strokeWidth="1.4" />
+              </svg>
+            </div>
+          </div>
+        );
+      case 'registration':
+        return (
+          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#FA6D0B] via-white to-[#FA6D0B] shadow-lg flex items-center justify-center">
+            <div className="w-full h-full rounded-full bg-[#0B0C0E] border border-white/10 flex items-center justify-center p-2 overflow-hidden">
+              <img
+                src="/nama_event.webp"
+                alt="Gravel Grindurance 2026"
+                className="w-full h-full object-contain filter brightness-110 drop-shadow"
+              />
+            </div>
+          </div>
+        );
+      case 'portfolio':
+        return (
+          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#39E09B] via-emerald-400 to-[#FA6D0B] shadow-lg flex items-center justify-center">
+            <div className="w-full h-full rounded-full bg-[#39E09B] flex items-center justify-center p-3">
+              <svg viewBox="0 0 24 24" className="w-full h-full fill-black">
+                <path d="M10.8 13.2V8.4l-3 3-1.7-1.7 4.9-4.9h2v4.9l3-3 1.7 1.7-3 3v4.8h4.8l-3-3 1.7-1.7 4.9 4.9v2l-4.9 4.9-1.7-1.7 3-3h-4.8v4.8l3-3 1.7 1.7-4.9 4.9h-2l-4.9-4.9 1.7-1.7 3 3V18H6.5l3 3-1.7 1.7L2.9 17.8v-2l4.9-4.9 1.7 1.7-3 3h4.3z" />
+              </svg>
+            </div>
+          </div>
+        );
+      case 'chapter':
+        return (
+          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#FA6D0B] via-amber-400 to-white shadow-lg flex items-center justify-center">
+            <div className="w-full h-full rounded-full bg-[#0D0E11] border border-white/10 flex items-center justify-center p-2.5 overflow-hidden">
+              <img
+                src="/logo-gx-id.webp"
+                alt="19 Chapter Regional GX-ID"
+                className="w-full h-full object-contain filter brightness-110 drop-shadow"
+              />
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <section id="komunitas" className="pt-8 sm:pt-10 pb-8 sm:pb-10 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
@@ -146,7 +213,7 @@ export default function CommunitySocialSection() {
           </a>
         </div>
 
-        {/* 6 Official Profile Channel Cards (Foto Profil GX-ID Terpajang & Link Langsung) */}
+        {/* 6 Official Profile Channel Cards (Profil Asli Tiap Platform & Link Langsung) */}
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4">
           {communityChannels.map((item, idx) => {
             const cardInner = (
@@ -167,16 +234,10 @@ export default function CommunitySocialSection() {
                   </div>
                 </div>
 
-                {/* Profile Photo (Foto Profil GX ID yg Terpajang) */}
+                {/* Profile Photo (Gambar Profil Asli Tiap Platform) */}
                 <div className="relative -mt-8 sm:-mt-10 mb-1 flex justify-center">
-                  <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full p-[2px] shadow-2xl transition-transform duration-300 group-hover:scale-105 ${item.ringClass}`}>
-                    <div className="w-full h-full rounded-full bg-[#0D0E11] p-2.5 flex items-center justify-center overflow-hidden border border-white/10 shadow-inner">
-                      <img
-                        src={item.profilePhoto}
-                        alt={`Foto Profil ${item.title}`}
-                        className="w-full h-full object-contain filter brightness-110 drop-shadow group-hover:scale-110 transition-transform duration-300"
-                      />
-                    </div>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-2xl transition-transform duration-300 group-hover:scale-110">
+                    {renderProfileAvatar(item.platformType)}
                   </div>
                 </div>
 
