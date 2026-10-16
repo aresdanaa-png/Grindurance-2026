@@ -2,30 +2,46 @@
 
 import { useLanguage } from '@/lib/context/LanguageContext';
 import {
-  PRESENTING_TOP_TIER,
-  PRESENTING_BOTTOM_TIER,
+  PRESENTED_BY_SPONSORS,
   SUPPORTING_PARTNERS,
   SponsorItem,
 } from '@/lib/data/sponsors';
 
-function SponsorLogo({ item, isLarge = false }: { item: SponsorItem; isLarge?: boolean }) {
+function MainSponsorLogo({ item }: { item: SponsorItem }) {
   return (
     <div
-      className={`group flex items-center justify-center transition-all duration-300 hover:scale-105 ${
-        isLarge ? 'opacity-95 hover:opacity-100' : 'opacity-80 hover:opacity-100'
-      }`}
+      className="h-12 sm:h-14 lg:h-16 w-32 sm:w-36 lg:w-44 flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 opacity-95 hover:opacity-100 group"
       title={item.name}
     >
       {item.logo ? (
         <img
           src={item.logo}
           alt={item.name}
-          className={`${item.heightClass} ${item.maxWidthClass || 'w-auto max-w-[130px] sm:max-w-[160px] lg:max-w-[190px]'} w-auto object-contain filter ${
-            isLarge ? 'drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]' : 'drop-shadow-md'
-          }`}
+          className="max-h-full max-w-full w-auto h-auto object-contain filter drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
         />
       ) : (
         <span className="font-display text-xs sm:text-sm lg:text-base font-black italic tracking-widest text-white/90 group-hover:text-white">
+          {item.customText}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function SupportingSponsorLogo({ item }: { item: SponsorItem }) {
+  return (
+    <div
+      className="h-8 sm:h-9 lg:h-10 w-24 sm:w-28 lg:w-32 flex items-center justify-center p-1.5 transition-all duration-300 hover:scale-105 opacity-80 hover:opacity-100 group"
+      title={item.name}
+    >
+      {item.logo ? (
+        <img
+          src={item.logo}
+          alt={item.name}
+          className="max-h-full max-w-full w-auto h-auto object-contain filter drop-shadow-md"
+        />
+      ) : (
+        <span className="font-display text-xs sm:text-sm font-black italic tracking-widest text-white/90 group-hover:text-white">
           {item.customText}
         </span>
       )}
@@ -76,7 +92,7 @@ export default function SponsorsSection() {
         </div>
 
         {/* ========================================================================= */}
-        {/* PRESENTED BY (Top Row: Abeey, JNT, BYD | Bottom Row: Hermina Depok, DHS) */}
+        {/* 5 LOGO UTAMA (PRESENTED BY): Abeey, J&T, BYD, RS Hermina Depok, DHS */}
         {/* ========================================================================= */}
         <div className="space-y-5 sm:space-y-6">
           <div className="flex items-center justify-center gap-4 text-xs font-mono font-bold uppercase tracking-[0.25em] text-slate-400">
@@ -85,20 +101,10 @@ export default function SponsorsSection() {
             <span className="h-px w-12 sm:w-20 bg-white/15" />
           </div>
 
-          <div className="space-y-4 sm:space-y-5">
-            {/* Top Row: Abeey, J&T, BYD */}
-            <div className="flex flex-wrap items-center justify-center gap-x-12 sm:gap-x-16 lg:gap-x-24 gap-y-4 max-w-6xl mx-auto px-4">
-              {PRESENTING_TOP_TIER.map((item) => (
-                <SponsorLogo key={item.id} item={item} isLarge />
-              ))}
-            </div>
-
-            {/* Bottom Row: RS Hermina Depok & DHS */}
-            <div className="flex flex-wrap items-center justify-center gap-x-16 sm:gap-x-24 lg:gap-x-32 gap-y-4 max-w-5xl mx-auto px-4">
-              {PRESENTING_BOTTOM_TIER.map((item) => (
-                <SponsorLogo key={item.id} item={item} isLarge />
-              ))}
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto px-4">
+            {PRESENTED_BY_SPONSORS.map((item) => (
+              <MainSponsorLogo key={item.id} item={item} />
+            ))}
           </div>
         </div>
 
@@ -112,9 +118,9 @@ export default function SponsorsSection() {
             <span className="h-px w-10 sm:w-16 bg-white/10" />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:gap-x-12 sm:gap-y-5 lg:gap-x-14 max-w-6xl mx-auto px-4">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 lg:gap-6 max-w-6xl mx-auto px-4">
             {SUPPORTING_PARTNERS.map((item) => (
-              <SponsorLogo key={item.id} item={item} />
+              <SupportingSponsorLogo key={item.id} item={item} />
             ))}
           </div>
         </div>
