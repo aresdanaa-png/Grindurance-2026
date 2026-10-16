@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { CATEGORIES, GPX_FILE_MAP, GPX_DISPLAY_INFO } from '@/lib/data/categories';
 import { useLanguage } from '@/lib/context/LanguageContext';
+import ElevationProfile from '@/components/ElevationProfile';
 
 const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
 
@@ -289,10 +290,11 @@ export default function CategoryCockpit() {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch pt-1 pb-1">
             
-              {/* KOLOM KIRI (5 COLS): ROUTE MAP — Tab toggle antara SVG schematic & Leaflet GPX live map */}
-              <div className="lg:col-span-5 select-none">
+              {/* KOLOM KIRI (5 COLS): ROUTE MAP & ELEVATION PROFILE */}
+              <div className="lg:col-span-5 select-none flex flex-col gap-4">
                 
-                <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col">
+                {/* KOTAK MAP GPX LIVE */}
+                <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[5/4] rounded-xl overflow-hidden bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col">
                   
                   {/* HEADER: Title + Telemetry */}
                   <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-4 sm:px-5 py-3 shrink-0 bg-black/40">
@@ -318,6 +320,12 @@ export default function CategoryCockpit() {
                   </div>
 
                 </div>
+
+                {/* KOTAK DIAGRAM ELEVASI (ELEVATION PROFILE) */}
+                <ElevationProfile
+                  category={currentCategory}
+                  accentColor="#FA6D0B"
+                />
 
               </div>
 
