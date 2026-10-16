@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 export default function RacePackSection() {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   return (
     <>
       {/* 2.5 PAKET PESERTA & MERCHANDISE (RAD RACE INSPIRED - EDITORIAL & ELEGAN) */}

@@ -4,12 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import { 
-  CATEGORIES, 
-  CategoryData, 
-  GPX_FILE_MAP, 
-  GPX_DISPLAY_INFO 
-} from '@/lib/data/categories';
+import { CATEGORIES, GPX_FILE_MAP, GPX_DISPLAY_INFO } from '@/lib/data/categories';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
@@ -18,9 +13,6 @@ export default function CategoryCockpit() {
   const { language, t } = useLanguage();
   const [selectedId, setSelectedId] = useState<string>('120_PAIR');
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
-
-  // Status Registrasi Resmi GX-ID
-  const REGISTRATION_PRODUCTION_DEADLINE = '10 November 2026';
 
   const handleCategorySelect = (id: string) => {
     if (id === selectedId) return;

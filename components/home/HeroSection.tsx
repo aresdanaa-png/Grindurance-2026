@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 export default function HeroSection() {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
 
   return (
     <>
