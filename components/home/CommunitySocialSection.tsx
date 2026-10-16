@@ -1,11 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 export default function CommunitySocialSection() {
   const { t } = useLanguage();
+  const [showChapters, setShowChapters] = useState(false);
 
   const stories = [
     {
@@ -43,6 +45,38 @@ export default function CommunitySocialSection() {
     'Surabaya-Sidoarjo', 'Malang', 'Bali & Nusa', 'Medan', 'Palembang',
     'Lampung', 'Pekanbaru', 'Balikpapan', 'Samarinda', 'Banjarmasin',
     'Makassar', 'Manado', 'Lombok', 'Virtual Nationwide'
+  ];
+
+  const ecosystemLinks = [
+    {
+      label: 'IG : gxid.official',
+      href: 'https://instagram.com/gxid.official',
+      type: 'external',
+    },
+    {
+      label: 'FB GX-ID',
+      href: 'https://www.facebook.com/groups/260107147993705/',
+      type: 'external',
+    },
+    {
+      label: 'FB Marketplace GX-ID',
+      href: 'https://www.facebook.com/groups/260107147993705/',
+      type: 'external',
+    },
+    {
+      label: t('Pendaftaran Event', 'Event Registration'),
+      href: '/daftar',
+      type: 'internal',
+    },
+    {
+      label: t('Portofolio', 'Portfolio'),
+      href: 'https://linktr.ee/gxid.official',
+      type: 'external',
+    },
+    {
+      label: t('Region/Chapter GX-ID', 'Region/Chapter GX-ID'),
+      type: 'toggle',
+    },
   ];
 
   return (
@@ -143,32 +177,102 @@ export default function CommunitySocialSection() {
           ))}
         </div>
 
-        {/* 19 Chapters Strip & Action Bar */}
+        {/* Official Channels & Ecosystem Strip */}
         <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-5 sm:p-6 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.4)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3.5">
-            {/* No icon — pure mono text */}
+            {/* Pure mono industrial label — no icon */}
             <span className="text-xs font-mono font-bold uppercase text-white tracking-wider">
-              {t('19 CHAPTER REGIONAL RESMI GX-ID', '19 OFFICIAL GX-ID REGIONAL CHAPTERS')}
+              {t('KANAL & EKOSISTEM RESMI GX-ID', 'OFFICIAL GX-ID CHANNELS & ECOSYSTEM')}
             </span>
             <span className="text-[11px] font-mono text-slate-400">
               {t('TERBUKA UNTUK SELURUH MERK & JENIS SEPEDA', 'OPEN FOR ALL BIKE BRANDS & TYPES')}
             </span>
           </div>
 
-          {/* Chapter Tags */}
-          <div className="flex flex-wrap gap-2">
-            {chapters.map((ch, idx) => (
-              <span
-                key={idx}
-                className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B]/50 hover:bg-[#FA6D0B]/10 text-slate-300 hover:text-white text-[11px] font-mono transition-all duration-200 cursor-default"
-              >
-                #{ch}
-              </span>
-            ))}
+          {/* 6 Official Community Channels Row */}
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+            {ecosystemLinks.map((link) => {
+              if (link.type === 'toggle') {
+                return (
+                  <button
+                    key={link.label}
+                    type="button"
+                    onClick={() => setShowChapters((prev) => !prev)}
+                    className={`px-4 py-2.5 rounded-full border text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2 cursor-pointer active:scale-95 ${
+                      showChapters
+                        ? 'bg-[#FA6D0B] text-black border-[#FA6D0B] shadow-[0_0_20px_rgba(250,109,11,0.4)]'
+                        : 'bg-white/[0.04] hover:bg-[#FA6D0B]/15 border-white/10 hover:border-[#FA6D0B] text-slate-200 hover:text-white hover:shadow-[0_0_20px_rgba(250,109,11,0.25)]'
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    <span className="text-[11px] font-mono font-bold">
+                      {showChapters ? '[-]' : '[+]'}
+                    </span>
+                  </button>
+                );
+              }
+
+              if (link.type === 'internal') {
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href!}
+                    className="group px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-[#FA6D0B]/15 border border-white/10 hover:border-[#FA6D0B] text-slate-200 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2 hover:shadow-[0_0_20px_rgba(250,109,11,0.25)] active:scale-95"
+                  >
+                    <span>{link.label}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#FA6D0B] opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  </Link>
+                );
+              }
+
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-[#FA6D0B]/15 border border-white/10 hover:border-[#FA6D0B] text-slate-200 hover:text-white text-xs font-mono font-bold uppercase tracking-wider transition-all duration-200 flex items-center gap-2 hover:shadow-[0_0_20px_rgba(250,109,11,0.25)] active:scale-95"
+                >
+                  <span>{link.label}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#FA6D0B] opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </a>
+              );
+            })}
           </div>
 
+          {/* Expandable 19 Chapters Drawer */}
+          {showChapters && (
+            <div className="pt-4 border-t border-white/10 space-y-3 animate-in fade-in duration-300">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <span className="text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
+                  {t('19 CHAPTER REGIONAL RESMI GX-ID NUSANTARA:', '19 OFFICIAL GX-ID REGIONAL CHAPTERS:')}
+                </span>
+                <a
+                  href="https://wa.me/6281290001000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-[11px] font-mono text-white hover:text-[#FA6D0B] font-bold uppercase tracking-wider transition-colors"
+                >
+                  <span>{t('GABUNG VIA WHATSAPP ADMIN', 'JOIN VIA WHATSAPP ADMIN')}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {chapters.map((ch, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B]/50 hover:bg-[#FA6D0B]/10 text-slate-300 hover:text-white text-[11px] font-mono transition-all duration-200 cursor-default"
+                  >
+                    #{ch}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Action Bar */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs font-mono">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs font-mono border-t border-white/5">
             <div className="text-slate-400">
               {t('Ingin bergabung dengan grup ride mingguan chapter terdekat?', 'Want to join weekly community training rides with your local chapter?')}
             </div>
