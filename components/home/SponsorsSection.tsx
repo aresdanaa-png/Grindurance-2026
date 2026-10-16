@@ -2,7 +2,8 @@
 
 import { useLanguage } from '@/lib/context/LanguageContext';
 import {
-  PRESENTED_BY_SPONSORS,
+  PRESENTING_TOP_TIER,
+  PRESENTING_BOTTOM_TIER,
   SUPPORTING_PARTNERS,
   SponsorItem,
 } from '@/lib/data/sponsors';
@@ -10,7 +11,7 @@ import {
 function MainSponsorLogo({ item }: { item: SponsorItem }) {
   return (
     <div
-      className="h-12 sm:h-14 lg:h-16 w-32 sm:w-36 lg:w-44 flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 opacity-95 hover:opacity-100 group"
+      className="h-16 sm:h-20 lg:h-24 w-36 sm:w-44 lg:w-52 flex items-center justify-center p-2 transition-all duration-300 hover:scale-105 opacity-95 hover:opacity-100 group"
       title={item.name}
     >
       {item.logo ? (
@@ -20,7 +21,7 @@ function MainSponsorLogo({ item }: { item: SponsorItem }) {
           className="max-h-full max-w-full w-auto h-auto object-contain filter drop-shadow-[0_4px_24px_rgba(0,0,0,0.7)]"
         />
       ) : (
-        <span className="font-display text-xs sm:text-sm lg:text-base font-black italic tracking-widest text-white/90 group-hover:text-white">
+        <span className="font-display text-sm sm:text-base lg:text-lg font-black italic tracking-widest text-white/90 group-hover:text-white">
           {item.customText}
         </span>
       )}
@@ -93,16 +94,25 @@ export default function SponsorsSection() {
 
         {/* ========================================================================= */}
         {/* 5 LOGO UTAMA (PRESENTED BY): Abeey, J&T, BYD, RS Hermina Depok, DHS */}
+        {/* Row 1: Abeey | J&T | BYD   |   Row 2: Hermina Depok | DHS           */}
         {/* ========================================================================= */}
-        <div className="space-y-5 sm:space-y-6">
+        <div className="space-y-4 sm:space-y-5">
           <div className="flex items-center justify-center gap-4 text-xs font-mono font-bold uppercase tracking-[0.25em] text-slate-400">
             <span className="h-px w-12 sm:w-20 bg-white/15" />
             <span>PRESENTED BY</span>
             <span className="h-px w-12 sm:w-20 bg-white/15" />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-8 max-w-5xl mx-auto px-4">
-            {PRESENTED_BY_SPONSORS.map((item) => (
+          {/* Row 1: Abeey, J&T, BYD */}
+          <div className="flex items-center justify-center gap-3 sm:gap-5 lg:gap-7 max-w-4xl mx-auto px-4">
+            {PRESENTING_TOP_TIER.map((item) => (
+              <MainSponsorLogo key={item.id} item={item} />
+            ))}
+          </div>
+
+          {/* Row 2: Hermina Depok, DHS */}
+          <div className="flex items-center justify-center gap-3 sm:gap-5 lg:gap-7 max-w-4xl mx-auto px-4">
+            {PRESENTING_BOTTOM_TIER.map((item) => (
               <MainSponsorLogo key={item.id} item={item} />
             ))}
           </div>
