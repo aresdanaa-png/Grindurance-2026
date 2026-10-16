@@ -138,7 +138,7 @@ const CATEGORY_VISUALS: Record<string, {
   prologueNote?: string;
 }> = {
   '60': {
-    image: '/backgrounds/bg-categories.webp',
+    image: '/categories/cat_60_funride.jpg',
     headline: '60 FUN RIDE',
     subtitle: 'REKREASI & PEMULA · SUKAMAKMUR',
     elevation: '+450 M GAIN',
@@ -147,7 +147,7 @@ const CATEGORY_VISUALS: Record<string, {
     callToAction: 'MULAI PETUALANGAN',
   },
   '100': {
-    image: '/hero.webp',
+    image: '/categories/cat_100_fondo.jpg',
     headline: '100 FONDO',
     subtitle: 'EKSPLORASI PERSAWAHAN & MAKADAM SODONG',
     elevation: '+850 M GAIN',
@@ -156,7 +156,7 @@ const CATEGORY_VISUALS: Record<string, {
     callToAction: 'JELAJAHI JALUR',
   },
   '120_PAIR': {
-    image: '/pesepeda2.webp',
+    image: '/categories/cat_120_race.jpg',
     headline: '120 (RACE)',
     subtitle: 'OFFICIAL RACE · SINGLE & PAIR MIX',
     elevation: '+1,450 M GAIN',
@@ -165,7 +165,7 @@ const CATEGORY_VISUALS: Record<string, {
     callToAction: 'REBUT PODIUM DUAL',
   },
   '150': {
-    image: '/pesepeda.webp',
+    image: '/categories/cat_150_grandfondo.jpg',
     headline: '150 GRAND FONDO',
     subtitle: 'RUTE 120 KM + WAJIB PROLOG 30 KM SUBUH',
     elevation: '+1,450 M GAIN',
@@ -175,7 +175,7 @@ const CATEGORY_VISUALS: Record<string, {
     prologueNote: 'Rute 120 km dan 150 km memiliki trek sama, bedanya kategori 150 wajib menyelesaikan Prolog 30 km mandiri (03:00–05:00 WIB).',
   },
   '200': {
-    image: '/perjalanan-siklis-di-jalur-oranye.webp',
+    image: '/categories/cat_200_ultra.jpg',
     headline: '200 ULTRA',
     subtitle: 'RUTE 170 KM + WAJIB PROLOG 30 KM',
     elevation: '+3,180 M GAIN',
@@ -185,7 +185,7 @@ const CATEGORY_VISUALS: Record<string, {
     prologueNote: 'Rute resmi disiapkan 170 km, peserta wajib menyelesaikan Prolog 30 km mandiri (Total jarak 200 km).',
   },
   'VIRTUAL': {
-    image: '/backgrounds/bg-community.webp',
+    image: '/categories/cat_virtual_ride.jpg',
     headline: 'VIRTUAL RIDE',
     subtitle: '19 REGIONAL CHAPTERS · SE-INDONESIA',
     elevation: 'RUTE DOMISILI',
