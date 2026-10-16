@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { Search, Compass, AlertCircle, RefreshCw, QrCode } from 'lucide-react';
 import BibCard from '@/components/BibCard';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
@@ -29,7 +28,7 @@ export default function CekBibPage() {
       });
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || t('Gagal mencari data.', 'Search request failed.'));
+        throw new Error(data.error || t('Gagal mencari data peserta.', 'Search request failed.'));
       }
       setResults(data.results || []);
     } catch (err: any) {
@@ -41,17 +40,16 @@ export default function CekBibPage() {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10 font-sans">
+    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10 font-sans selection:bg-[#FA6D0B] selection:text-black">
       {/* Header */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-sky/10 border border-brand-sky/30 text-brand-sky text-xs font-bold uppercase tracking-wider">
-          <QrCode className="w-3.5 h-3.5" />
-          Self-Service e-Ticket &amp; BIB
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-          {t('Cek e-Ticket & ', 'Check e-Ticket & ')}<span className="gradient-gold-text">{t('Nomor BIB', 'BIB Number')}</span>
+      <div className="border-b border-white/10 pb-8 text-center space-y-3">
+        <span className="font-mono font-bold text-xs sm:text-sm text-[#FA6D0B] uppercase tracking-widest block">
+          GX-ID OFFICIAL SELF-SERVICE // 2026 EDITION
+        </span>
+        <h1 className="font-display italic text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">
+          {t('CEK E-TICKET & NOMOR BIB', 'CHECK E-TICKET & BIB NUMBER')}
         </h1>
-        <p className="text-sm text-slate-400 max-w-md mx-auto">
+        <p className="text-sm sm:text-base text-slate-300 max-w-md mx-auto leading-relaxed">
           {t(
             'Temukan kartu nomor dada resmi Anda dan unduh berkas gambar HD untuk ditunjukkan saat pengambilan race pack di venue.',
             'Look up your official rider BIB number plate and download HD images to present during Race Pack Collection at the venue.'
@@ -60,33 +58,31 @@ export default function CekBibPage() {
       </div>
 
       {/* Form Pencarian */}
-      <form onSubmit={handleSearch} className="max-w-xl mx-auto">
+      <form onSubmit={handleSearch} className="max-w-xl mx-auto space-y-2">
         <div className="relative flex items-center">
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={t('Ketik Nomor BIB (#6001), Kode Registrasi, atau Nama...', 'Enter BIB Number (#6001), Registration Code, or Name...')}
-            className="w-full pl-5 pr-32 py-4 rounded-2xl bg-brand-card border border-brand-border text-white text-sm focus:border-brand-gold focus:outline-none shadow-2xl"
+            placeholder={t('Nomor BIB (misal 1001), Kode Registrasi, atau Nama...', 'BIB number (e.g. 1001), Registration Code, or Name...')}
+            className="w-full pl-5 pr-32 py-4 rounded-xl bg-black/60 border border-white/20 text-white font-mono text-sm sm:text-base focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-500 shadow-2xl transition-all"
           />
           <button
             type="submit"
             disabled={searching || !query.trim()}
-            className="absolute right-2 px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-brand-gold to-brand-orange text-brand-dark hover:brightness-110 shadow-glow flex items-center gap-2 transition-all disabled:opacity-50"
+            className="absolute right-2 px-5 py-2.5 rounded-lg font-mono font-black text-xs uppercase tracking-wider bg-[#FA6D0B] text-black hover:bg-[#DE5A00] transition-all disabled:opacity-40 cursor-pointer shadow-[0_0_15px_rgba(250,109,11,0.3)]"
           >
-            {searching ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
-            <span>{t('Cari', 'Search')}</span>
+            {searching ? t('MENCARI...', 'SEARCHING...') : t('CARI // BIB', 'SEARCH // BIB')}
           </button>
         </div>
-        <span className="text-[11px] text-slate-500 block text-center mt-2">
-          {t('Tips: Masukkan nomor BIB (misal: 6001, 8001, 1201) atau nama lengkap pendaftar.', 'Tip: Enter BIB number (e.g. 6001, 8001, 1201) or full registered name.')}
+        <span className="text-[11px] font-mono text-slate-400 block text-center">
+          {t('Format pencarian: Nomor BIB (1001, 2001), kode registrasi, atau nama lengkap pendaftar.', 'Search tip: BIB number (1001, 2001), registration code, or full registered athlete name.')}
         </span>
       </form>
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-3 max-w-xl mx-auto">
-          <AlertCircle className="w-5 h-5 shrink-0" />
-          <span>{errorMsg}</span>
+        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs sm:text-sm font-mono max-w-xl mx-auto text-center font-bold">
+          // {errorMsg}
         </div>
       )}
 
@@ -94,21 +90,25 @@ export default function CekBibPage() {
       {searched && (
         <div className="space-y-8 pt-4">
           {results.length === 0 ? (
-            <div className="text-center py-12 bg-brand-card/50 rounded-2xl border border-brand-border/60 max-w-xl mx-auto space-y-3">
-              <Compass className="w-10 h-10 text-slate-600 mx-auto animate-pulse" />
-              <h4 className="text-base font-bold text-white">{t('Data Peserta Tidak Ditemukan', 'Participant Record Not Found')}</h4>
-              <p className="text-xs text-slate-400 max-w-xs mx-auto">
+            <div className="text-center py-12 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md max-w-xl mx-auto space-y-3 p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
+                STATUS // NOT FOUND
+              </span>
+              <h4 className="font-display italic text-2xl font-black text-white uppercase tracking-tight">
+                {t('DATA PESERTA TIDAK DITEMUKAN', 'ATHLETE RECORD NOT FOUND')}
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-300 max-w-sm mx-auto font-sans leading-relaxed">
                 {t(
-                  'Pastikan nomor BIB, kode registrasi, atau nama yang Anda masukkan sudah sesuai saat mendaftar.',
-                  'Please double check the BIB number, registration code, or full name as submitted during registration.'
+                  'Pastikan nomor BIB, kode registrasi, atau nama yang Anda masukkan sudah persis sesuai saat pendaftaran.',
+                  'Please double-check the BIB number, registration code, or full name as submitted during registration.'
                 )}
               </p>
             </div>
           ) : (
             <div className="space-y-12">
               <div className="text-center">
-                <span className="text-xs text-brand-gold font-bold uppercase tracking-wider">
-                  {t(`Ditemukan ${results.length} Data Peserta`, `Found ${results.length} Rider Record(s)`)}
+                <span className="text-xs sm:text-sm font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block">
+                  {t(`// DITEMUKAN ${results.length} DATA PESERTA RESMI`, `// FOUND ${results.length} OFFICIAL RIDER RECORD(S)`)}
                 </span>
               </div>
 
@@ -127,15 +127,15 @@ export default function CekBibPage() {
                       registrationCode={p.registration_code}
                     />
                   ) : (
-                    <div className="max-w-md mx-auto bg-brand-card p-6 rounded-2xl border border-brand-orange/40 text-center space-y-3">
-                      <div className="inline-block px-2.5 py-1 rounded bg-brand-orange/20 text-brand-orange font-bold text-xs uppercase">
-                        {t('Menunggu Pembayaran', 'Awaiting Payment')}
-                      </div>
-                      <h4 className="text-lg font-bold text-white">{p.full_name}</h4>
-                      <p className="text-xs text-slate-400">
-                        {t('Kode:', 'Code:')} <span className="font-sans font-bold tracking-wider text-slate-300">{p.registration_code}</span> | {t('Kategori:', 'Category:')} {p.category?.name}
+                    <div className="max-w-md mx-auto rounded-2xl border border-[#FA6D0B]/40 bg-black/60 p-6 sm:p-7 text-center space-y-3 shadow-[0_15px_50px_rgba(0,0,0,0.5)] font-mono">
+                      <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
+                        // {t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
+                      </span>
+                      <h4 className="font-display italic text-2xl font-black text-white uppercase tracking-tight">{p.full_name}</h4>
+                      <p className="text-xs text-slate-300">
+                        {t('Kode:', 'Code:')} <span className="font-bold text-white">{p.registration_code}</span> | {t('Kategori:', 'Category:')} <span className="text-white font-bold">{p.category?.name}</span>
                       </p>
-                      <p className="text-xs text-slate-400">
+                      <p className="text-xs text-slate-300 leading-relaxed font-sans pt-1">
                         {t(
                           `Tagihan sebesar Rp ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} belum terverifikasi lunas sehingga nomor BIB belum diterbitkan.`,
                           `Invoice of IDR ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} is not yet confirmed, so BIB number has not been generated.`

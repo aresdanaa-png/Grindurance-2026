@@ -2,22 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { 
-  ShieldCheck, 
-  Search, 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
-  Clock, 
-  Bike, 
-  Lightbulb, 
-  Activity, 
-  PhoneCall, 
-  Sparkles,
-  ChevronRight,
-  RefreshCw,
-  QrCode
-} from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 interface ScrutineerCandidate {
@@ -82,7 +66,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
     wave: 'Wave 1 (05:30 WIB)',
     chapter: 'GX-ID Chapter Solo Raya',
     prologue_required: true,
-    prologue_km: 18.5, // Kurang dari 30km!
+    prologue_km: 18.5,
     prologue_status: 'PENDING',
     gear_cleared: false,
     clearance_status: 'WAITING',
@@ -102,7 +86,7 @@ const SAMPLE_CANDIDATES: ScrutineerCandidate[] = [
 ];
 
 export default function ScrutineeringPage() {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   const [candidates, setCandidates] = useState<ScrutineerCandidate[]>(SAMPLE_CANDIDATES);
   const [searchBib, setSearchBib] = useState('');
   const [selectedRider, setSelectedRider] = useState<ScrutineerCandidate>(SAMPLE_CANDIDATES[1]); // default to Donny (pending)
@@ -156,36 +140,35 @@ export default function ScrutineeringPage() {
   const waitingCount = candidates.filter((c) => c.clearance_status === 'WAITING').length;
 
   return (
-    <div className="min-h-screen bg-brand-dark text-slate-100 py-10 px-4 sm:px-6 lg:px-8 font-sans">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] py-14 px-4 sm:px-6 lg:px-8 font-sans selection:bg-[#FA6D0B] selection:text-black">
+      <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Ops Header */}
-        <div className="border-b border-brand-border/60 pb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="border-b border-white/10 pb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-sans font-bold uppercase mb-2">
-              <ShieldCheck className="w-4 h-4" />
-              {t('Race Operations — Scrutineering Desk', 'Race Operations — Scrutineering Desk')}
-            </div>
-            <h1 className="font-display italic text-2xl sm:text-4xl font-black uppercase tracking-tight text-white">
-              {t('Meja Inspeksi', 'Inspection Desk')} <span className="text-brand-gold">{t('& Prolog 30 KM', '& 30 KM Prologue')}</span>
+            <span className="font-mono text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-widest block mb-2">
+              RACE OPERATIONS // SCRUTINEERING DESK
+            </span>
+            <h1 className="font-display italic text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
+              {t('MEJA INSPEKSI & PROLOG 30 KM', 'INSPECTION DESK & 30 KM PROLOGUE')}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1 font-sans">
-              {t('Venue: ABEEY Coffee Lounge • LRT Harjamukti Cibubur | Waktu: 03:00–05:00 WIB', 'Venue: ABEEY Coffee Lounge • LRT Harjamukti Cibubur | Time: 03:00–05:00 WIB')}
+            <p className="text-xs sm:text-sm text-slate-300 mt-2 font-mono">
+              {t('Venue: ABEEY Coffee Lounge · LRT Harjamukti Cibubur | Waktu: 03:00–05:00 WIB', 'Venue: ABEEY Coffee Lounge · LRT Harjamukti Cibubur | Time: 03:00–05:00 WIB')}
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="bg-zinc-900 border border-brand-border/60 px-4 py-2 rounded-xl text-right">
-              <span className="text-[10px] font-sans font-semibold text-slate-400 block uppercase">{t('Status Wave Clearance', 'Wave Clearance Status')}</span>
-              <span className="text-xl font-black font-display italic text-emerald-400">
-                {clearedCount} {t('Lolos', 'Cleared')} <span className="text-xs font-sans text-slate-500">/ {candidates.length}</span>
+          <div className="flex items-center gap-3 font-mono">
+            <div className="bg-black/60 border border-white/15 px-5 py-3 rounded-xl text-right">
+              <span className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">{t('STATUS CLEARANCE', 'CLEARANCE STATUS')}</span>
+              <span className="text-xl sm:text-2xl font-black text-white italic">
+                {clearedCount} {t('LOLOS', 'CLEARED')} <span className="text-xs text-slate-400 not-italic">/ {candidates.length}</span>
               </span>
             </div>
             <Link
               href="/peserta"
-              className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-bold font-sans text-slate-200 border border-zinc-700 transition-colors uppercase tracking-wider"
+              className="px-5 py-3 rounded-xl bg-black/60 hover:bg-black text-xs font-bold text-slate-200 hover:text-white border border-white/20 transition-all uppercase tracking-wider"
             >
-              {t('Start List Roster', 'Start List Roster')}
+              {t('ROSTER ATLET //', 'ATHLETE ROSTER //')}
             </Link>
           </div>
         </div>
@@ -193,27 +176,26 @@ export default function ScrutineeringPage() {
         {/* 2-Column Ops Workspace */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Candidate List & Search (4 Cols) */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="bg-brand-card/90 border border-brand-border/60 rounded-2xl p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-300">
-                  {t('Antrean Atlet Scrutineering', 'Scrutineering Athlete Queue')}
-                </h3>
-                <span className="text-[11px] font-sans font-bold text-brand-gold">
-                  {waitingCount} {t('Menunggu', 'Waiting')}
+          {/* Left Column: Candidate List & Search (5 Cols) */}
+          <div className="lg:col-span-5 space-y-4 font-mono">
+            <div className="bg-black/40 border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  {t('ANTEAN ATLET SCRUTINEERING', 'SCRUTINEERING QUEUE')}
+                </span>
+                <span className="text-xs font-bold text-[#FA6D0B]">
+                  {waitingCount} {t('MENUNGGU', 'WAITING')}
                 </span>
               </div>
 
               {/* Quick Search */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <div>
                 <input
                   type="text"
                   placeholder={t('Cari No. BIB / Nama...', 'Search BIB No. / Rider Name...')}
                   value={searchBib}
                   onChange={(e) => setSearchBib(e.target.value)}
-                  className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 font-sans focus:outline-none focus:border-brand-gold"
+                  className="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 font-mono focus:outline-none focus:border-[#FA6D0B]"
                 />
               </div>
 
@@ -227,43 +209,41 @@ export default function ScrutineeringPage() {
                   .map((c) => (
                     <button
                       key={c.bib}
+                      type="button"
                       onClick={() => handleSelectRider(c)}
-                      className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between ${
+                      className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
                         selectedRider?.bib === c.bib
-                          ? 'bg-zinc-800/90 border-brand-gold shadow-md'
-                          : 'bg-zinc-900/60 border-brand-border/40 hover:bg-zinc-800/50 hover:border-zinc-700'
+                          ? 'bg-black/80 border-[#FA6D0B] shadow-[0_0_20px_rgba(250,109,11,0.25)]'
+                          : 'bg-black/30 border-white/10 hover:bg-black/50 hover:border-white/25'
                       }`}
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <span className="font-display italic text-sm font-black text-brand-gold bg-black px-1.5 py-0.5 rounded border border-brand-gold/30">
+                          <span className="font-mono text-sm font-black text-[#FA6D0B]">
                             #{c.bib}
                           </span>
                           <span className="font-bold text-sm text-white font-sans">{c.name}</span>
                         </div>
-                        <div className="text-[11px] text-slate-400 font-sans font-medium">
-                          {c.category} • {c.wave}
+                        <div className="text-[11px] text-slate-400 font-sans">
+                          {c.category} · {c.wave}
                         </div>
-                        <div className="text-[10px] text-slate-500 font-sans">
+                        <div className="text-[10px] text-slate-500 font-mono">
                           {c.chapter}
                         </div>
                       </div>
 
-                      <div className="text-right">
+                      <div className="text-right text-xs font-bold">
                         {c.clearance_status === 'CLEARED' ? (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/30">
-                            <CheckCircle2 className="w-3 h-3" />
-                            {t('LOLOS', 'CLEARED')}
+                          <span className="text-white">
+                            [LOLOS]
                           </span>
                         ) : c.clearance_status === 'DNS' ? (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-rose-400 bg-rose-500/10 px-2 py-0.5 rounded-md border border-rose-500/30">
-                            <XCircle className="w-3 h-3" />
-                            {t('DITOLAK', 'REJECTED')}
+                          <span className="text-red-400">
+                            [DITOLAK]
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-sans font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/30">
-                            <Clock className="w-3 h-3" />
-                            {t('CEK FISIK', 'INSPECTION')}
+                          <span className="text-[#FA6D0B]">
+                            [CEK FISIK]
                           </span>
                         )}
                       </div>
@@ -276,219 +256,208 @@ export default function ScrutineeringPage() {
           {/* Right Column: Detailed Marshall Inspection Workbench (7 Cols) */}
           <div className="lg:col-span-7 space-y-6">
             {selectedRider ? (
-              <div className="bg-brand-card border border-brand-border/80 rounded-2xl p-6 space-y-6 shadow-xl">
+              <div className="bg-black/40 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-6 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] font-mono">
                 
                 {/* Rider Header Card */}
-                <div className="flex items-start justify-between border-b border-brand-border/60 pb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 gap-3">
                   <div>
                     <div className="flex items-center gap-3">
-                      <span className="text-3xl font-black font-display italic text-brand-gold">
+                      <span className="text-2xl sm:text-3xl font-black font-display italic text-[#FA6D0B]">
                         BIB #{selectedRider.bib}
                       </span>
-                      <h2 className="text-xl font-bold text-white font-sans">{selectedRider.name}</h2>
+                      <h2 className="text-lg sm:text-xl font-bold text-white font-sans">{selectedRider.name}</h2>
                     </div>
-                    <p className="text-xs font-sans text-slate-400 mt-1 font-medium">
-                      {selectedRider.category} • {selectedRider.wave} • {selectedRider.chapter}
+                    <p className="text-xs text-slate-400 mt-1 font-sans">
+                      {selectedRider.category} · {selectedRider.wave} · {selectedRider.chapter}
                     </p>
                   </div>
 
                   <div>
                     {selectedRider.clearance_status === 'CLEARED' ? (
-                      <span className="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 text-xs font-sans font-bold inline-flex items-center gap-1.5 uppercase tracking-wider">
-                        <CheckCircle2 className="w-4 h-4" />
-                        CLEARED FOR START
+                      <span className="text-white text-xs font-bold uppercase tracking-wider block">
+                        [CLEARED FOR START]
                       </span>
                     ) : (
-                      <span className="px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-400 text-xs font-sans font-bold inline-flex items-center gap-1.5 uppercase tracking-wider">
-                        <AlertTriangle className="w-4 h-4" />
-                        {t('INSPEKSI DIPERLUKAN', 'INSPECTION REQUIRED')}
+                      <span className="text-[#FA6D0B] text-xs font-bold uppercase tracking-wider block">
+                        [INSPEKSI DIPERLUKAN]
                       </span>
                     )}
                   </div>
                 </div>
 
                 {/* Section 1: Prologue 30 km Verification */}
-                <div className={`p-4 rounded-xl border ${
-                  selectedRider.prologue_required 
-                    ? 'bg-zinc-900/90 border-brand-gold/40' 
-                    : 'bg-zinc-900/40 border-zinc-800'
-                } space-y-3`}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-brand-gold" />
-                      <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-200">
-                        {t('1. Verifikasi Prolog 30 KM (Mandiri 03:00–05:00 WIB)', '1. 30 KM Prologue Verification (Self-Start 03:00–05:00 WIB)')}
-                      </h4>
-                    </div>
-                    <span className="text-[11px] font-sans font-bold text-slate-400">
+                <div className="p-4 sm:p-5 rounded-xl border border-white/10 bg-black/60 space-y-3">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#FA6D0B]">
+                      1. {t('VERIFIKASI PROLOG 30 KM (03:00–05:00 WIB)', '1. 30 KM PROLOGUE VERIFICATION (03:00–05:00 WIB)')}
+                    </span>
+                    <span className="text-[11px] text-slate-400">
                       {selectedRider.prologue_required ? t('WAJIB (150K & 200K)', 'MANDATORY (150K & 200K)') : t('TIDAK WAJIB', 'NOT REQUIRED')}
                     </span>
                   </div>
 
                   {selectedRider.prologue_required ? (
                     <div className="space-y-3">
-                      <p className="text-xs text-slate-400 leading-relaxed font-sans">
+                      <p className="text-xs text-slate-300 leading-relaxed font-sans">
                         {t(
-                          'Cek rekaman GPS Strava / Garmin / Wahoo peserta sebelum jam 05:00 WIB di ABEEY Coffee. Jarak minimal wajib adalah 30.0 km.',
+                          'Cek rekaman GPS Strava / Garmin / Wahoo peserta sebelum jam 05:00 WIB di venue ABEEY Coffee. Jarak minimal wajib adalah persis 30.0 km.',
                           'Verify rider Strava / Garmin / Wahoo GPS activity logs before 05:00 WIB at ABEEY Coffee. Mandatory minimum distance is 30.0 km.'
                         )}
                       </p>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center">
                         <div>
-                          <label className="text-[11px] font-sans font-bold text-slate-400 block mb-1">
-                            {t('Jarak Tempuh GPS Tercatat (KM):', 'Recorded GPS Distance (KM):')}
+                          <label className="text-[11px] font-bold text-slate-400 block mb-1">
+                            {t('JARAK TEMPUH GPS TERCATAT (KM):', 'RECORDED GPS DISTANCE (KM):')}
                           </label>
                           <input
                             type="number"
                             step="0.1"
                             value={prologKmInput}
                             onChange={(e) => setPrologKmInput(e.target.value)}
-                            className="w-full bg-black border border-zinc-700 rounded-lg px-3 py-2 text-base font-display italic font-bold text-white focus:outline-none focus:border-brand-gold"
+                            className="w-full bg-black/80 border border-white/20 rounded-xl px-4 py-2.5 text-base font-display italic font-bold text-white focus:outline-none focus:border-[#FA6D0B]"
                           />
                         </div>
 
-                        <div className="pt-4 sm:pt-0">
+                        <div className="pt-2 sm:pt-4">
                           {parseFloat(prologKmInput) >= 30.0 ? (
-                            <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-sans font-semibold flex items-center gap-2">
-                              <CheckCircle2 className="w-4 h-4 shrink-0" />
-                              <span>{t('Memenuhi syarat (≥ 30 km). Prolog Valid!', 'Requirement satisfied (≥ 30 km). Prologue Valid!')}</span>
+                            <div className="p-3 rounded-xl border border-white/20 bg-white/5 text-white text-xs font-bold uppercase">
+                              // {t('SYARAT TERPENUHI (≥ 30 KM) · PROLOG VALID', 'REQUIREMENT MET (≥ 30 KM) · PROLOGUE VALID')}
                             </div>
                           ) : (
-                            <div className="p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-sans font-semibold flex items-center gap-2">
-                              <XCircle className="w-4 h-4 shrink-0" />
-                              <span>{t('Kurang dari 30.0 km! Tidak memenuhi syarat prolog.', 'Less than 30.0 km! Prologue requirement not met.')}</span>
+                            <div className="p-3 rounded-xl border border-red-500/40 bg-red-500/10 text-red-400 text-xs font-bold uppercase">
+                              // {t('KURANG DARI 30.0 KM! DENY START', 'LESS THAN 30.0 KM! DENY START')}
                             </div>
                           )}
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <p className="text-xs text-slate-500 italic font-sans">
-                      {t('Kategori ini tidak memiliki syarat prolog 30 km. Langsung lanjutkan ke inspeksi perlengkapan.', 'This category does not require the 30 km prologue. Proceed directly to gear inspection.')}
+                    <p className="text-xs text-slate-400 italic font-sans">
+                      {t('Kategori ini tidak memiliki syarat prolog 30 km. Langsung lanjutkan ke inspeksi kelayakan sepeda.', 'This category does not require the 30 km prologue. Proceed directly to bike inspection.')}
                     </p>
                   )}
                 </div>
 
                 {/* Section 2: Technical Equipment Checklist */}
                 <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Lightbulb className="w-4 h-4 text-brand-orange" />
-                    <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-slate-200">
-                      {t('2. Standar Keselamatan & Perlengkapan Wajib (Scrutineering)', '2. Mandatory Safety & Gear Standards (Scrutineering)')}
-                    </h4>
+                  <div className="border-b border-white/10 pb-2">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#FA6D0B]">
+                      2. {t('STANDAR KESELAMATAN & PERLENGKAPAN WAJIB', '2. MANDATORY SAFETY & GEAR STANDARDS')}
+                    </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-sans">
-                    <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={chkHelmet}
                         onChange={(e) => setChkHelmet(e.target.checked)}
-                        className="rounded border-zinc-700 text-brand-gold focus:ring-0"
+                        className="rounded border-white/20 text-[#FA6D0B] accent-[#FA6D0B] focus:ring-0"
                       />
-                      <span className="text-slate-200">{t('Helm Standar CE/CPSC (Kencang & utuh)', 'CE/CPSC Certified Helmet (Intact & secure)')}</span>
+                      <span className="text-slate-200">{t('Helm Bersertifikasi CE/CPSC', 'CE/CPSC Certified Helmet')}</span>
                     </label>
 
-                    <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={chkFrontLight}
                         onChange={(e) => setChkFrontLight(e.target.checked)}
-                        className="rounded border-zinc-700 text-brand-gold focus:ring-0"
+                        className="rounded border-white/20 text-[#FA6D0B] accent-[#FA6D0B] focus:ring-0"
                       />
-                      <span className="text-slate-200">{t('Lampu Depan Ganda (Utama >500lm + Backup)', 'Dual Front Lights (Primary >500lm + Backup)')}</span>
+                      <span className="text-slate-200">{t('Lampu Depan Ganda (Min 400lm + Backup)', 'Dual Front Lights (Min 400lm + Backup)')}</span>
                     </label>
 
-                    <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={chkRearLight}
                         onChange={(e) => setChkRearLight(e.target.checked)}
-                        className="rounded border-zinc-700 text-brand-gold focus:ring-0"
+                        className="rounded border-white/20 text-[#FA6D0B] accent-[#FA6D0B] focus:ring-0"
                       />
-                      <span className="text-slate-200">{t('Lampu Belakang Ganda (Merah Steady)', 'Dual Rear Lights (Steady Red)')}</span>
+                      <span className="text-slate-200">{t('Lampu Belakang Merah Steady', 'Dual Rear Lights (Steady Red)')}</span>
                     </label>
 
-                    <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={chkReflective}
                         onChange={(e) => setChkReflective(e.target.checked)}
-                        className="rounded border-zinc-700 text-brand-gold focus:ring-0"
+                        className="rounded border-white/20 text-[#FA6D0B] accent-[#FA6D0B] focus:ring-0"
                       />
-                      <span className="text-slate-200">{t('Rompi Reflektif / Sash (EN ISO 20471)', 'Reflective Vest / Sash (EN ISO 20471)')}</span>
+                      <span className="text-slate-200">{t('Rompi Reflektif / Sash', 'Reflective Vest / Sash')}</span>
                     </label>
 
-                    <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={chkTools}
                         onChange={(e) => setChkTools(e.target.checked)}
-                        className="rounded border-zinc-700 text-brand-gold focus:ring-0"
+                        className="rounded border-white/20 text-[#FA6D0B] accent-[#FA6D0B] focus:ring-0"
                       />
-                      <span className="text-slate-200">{t('Tubeless Plug Kit / Ban Dalam & Pompa', 'Tubeless Plug Kit / Inner Tube & Pump')}</span>
+                      <span className="text-slate-200">{t('Tubeless Plug Kit / Ban Dalam & Wet Lube', 'Tubeless Plug Kit / Inner Tube & Wet Lube')}</span>
                     </label>
 
-                    <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={chkEmergencyContact}
                         onChange={(e) => setChkEmergencyContact(e.target.checked)}
-                        className="rounded border-zinc-700 text-brand-gold focus:ring-0"
+                        className="rounded border-white/20 text-[#FA6D0B] accent-[#FA6D0B] focus:ring-0"
                       />
-                      <span className="text-slate-200">{t('Kontak Darurat SPGDT RS Hermina Tersimpan', 'SPGDT RS Hermina Emergency Contact Saved')}</span>
+                      <span className="text-slate-200">{t('Kontak Darurat SPGDT Hermina Tersimpan', 'SPGDT Hermina Emergency Contact Saved')}</span>
                     </label>
 
-                    <label className="flex items-center gap-2.5 p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700 cursor-pointer sm:col-span-2">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer sm:col-span-2">
                       <input
                         type="checkbox"
                         checked={chkTyreWidth}
                         onChange={(e) => setChkTyreWidth(e.target.checked)}
-                        className="rounded border-zinc-700 text-brand-gold focus:ring-0"
+                        className="rounded border-white/20 text-[#FA6D0B] accent-[#FA6D0B] focus:ring-0"
                       />
-                      <span className="text-slate-200">{t('Rekomendasi Ban (≥ 38c, optimal 45c untuk makadam Sodong)', 'Tire Recommendation (≥ 38c, optimal 45c for Sodong macadam)')}</span>
+                      <span className="text-slate-200">{t('Lebar Ban Layak (≥ 35c, disarankan 38–45c)', 'Tire Width Standard (≥ 35c, recommended 38–45c)')}</span>
                     </label>
                   </div>
                 </div>
 
                 {/* Section 3: Notes & Action Button */}
-                <div className="space-y-4 pt-2 border-t border-brand-border/60">
+                <div className="space-y-4 pt-2 border-t border-white/10">
                   <div>
-                    <label className="text-[11px] font-sans font-bold text-slate-400 block mb-1">
-                      {t('Catatan Tambahan Marshall (Opsional):', 'Marshal Inspection Notes (Optional):')}
+                    <label className="text-[11px] font-bold text-slate-400 block mb-1">
+                      {t('CATATAN TAMBAHAN MARSHAL (OPSIONAL):', 'MARSHAL INSPECTION NOTES (OPTIONAL):')}
                     </label>
                     <input
                       type="text"
-                      placeholder={t('Contoh: Lampu cadangan baterai baru, stiker scrutineering #04 ditempel di fork kiri...', 'e.g., Fresh battery in backup light, scrutineering sticker #04 placed on fork...')}
+                      placeholder={t('Catatan teknis perlengkapan...', 'Technical gear notes...')}
                       value={marshallNote}
                       onChange={(e) => setMarshallNote(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-600 font-sans focus:outline-none focus:border-brand-gold"
+                      className="w-full bg-black/60 border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-600 font-mono focus:outline-none focus:border-[#FA6D0B]"
                     />
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3 pt-1">
                     <button
+                      type="button"
                       onClick={handleApproveClearance}
-                      className="flex-1 py-3 px-4 rounded-xl font-bold font-sans text-xs uppercase tracking-wider bg-brand-gold hover:brightness-110 text-brand-dark shadow-glow transition-all flex items-center justify-center gap-2"
+                      className="flex-1 py-4 px-6 rounded-full font-black text-xs font-sans uppercase tracking-wider bg-[#FA6D0B] hover:bg-[#DE5A00] text-black shadow-[0_0_25px_rgba(250,109,11,0.4)] transition-all cursor-pointer hover:-translate-y-0.5 active:scale-95"
                     >
-                      <CheckCircle2 className="w-4 h-4 stroke-[2.5]" />
-                      {t('Setujui & Terbitkan Izin Start (Wave Clearance)', 'Approve & Issue Wave Clearance')}
+                      {t('SETUJUI & TERBITKAN IZIN START (WAVE CLEARANCE)', 'APPROVE & ISSUE WAVE CLEARANCE')}
                     </button>
                     <button
+                      type="button"
                       onClick={() => {
                         alert(t(`BIB #${selectedRider.bib} ditandai butuh perbaikan perlengkapan sebelum 05:00 WIB.`, `BIB #${selectedRider.bib} marked pending gear correction before 05:00 WIB.`));
                       }}
-                      className="py-3 px-4 rounded-xl font-sans text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-slate-300 border border-zinc-700 transition-colors uppercase tracking-wider"
+                      className="py-4 px-6 rounded-full text-xs font-bold font-mono bg-black/60 hover:bg-black text-slate-300 border border-white/20 transition-all uppercase tracking-wider cursor-pointer"
                     >
-                      {t('Tahan (Pending Gear)', 'Hold (Pending Gear)')}
+                      {t('TAHAN (PENDING GEAR)', 'HOLD (PENDING GEAR)')}
                     </button>
                   </div>
                 </div>
 
               </div>
             ) : (
-              <div className="bg-brand-card border border-brand-border/60 rounded-2xl p-12 text-center text-slate-400">
+              <div className="bg-black/40 border border-white/10 rounded-2xl p-12 text-center text-slate-400 font-mono">
                 {t('Pilih atlet dari daftar antrean sebelah kiri untuk memulai pemeriksaan.', 'Select a rider from the queue on the left to start inspection.')}
               </div>
             )}
