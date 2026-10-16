@@ -810,9 +810,6 @@ export default function RegistrationPage() {
                         {selectedCategory.name}
                       </h1>
                     </div>
-                    <span className="text-[11px] font-mono font-bold text-white uppercase tracking-wider self-start sm:self-auto px-3 py-1 rounded-full bg-white/10 border border-white/20">
-                      STRAVA WEBHOOK · ACTIVE
-                    </span>
                   </div>
 
                   {/* 4-Metric Telemetry Bar */}
@@ -979,13 +976,8 @@ export default function RegistrationPage() {
                       </h1>
                     </div>
 
-                    <div className="flex items-center gap-2 self-start sm:self-auto font-mono text-xs">
-                      <span className="px-3 py-1 rounded-full bg-white/[0.06] border border-white/10 text-slate-300">
-                        {t('KUOTA:', 'QUOTA:')} <strong className="text-white">{selectedCategory.quota - selectedCategory.current_enrolled} {t('SLOT', 'SLOTS')}</strong>
-                      </span>
-                      <span className="px-3 py-1 rounded-full bg-[#FA6D0B]/10 border border-[#FA6D0B]/30 text-[#FA6D0B] font-bold">
-                        {t('PENDAFTARAN RESMI DIBUKA', 'OFFICIAL REGISTRATION OPEN')}
-                      </span>
+                    <div className="font-mono text-xs sm:text-sm text-slate-300 self-start sm:self-auto">
+                      {t('KUOTA:', 'QUOTA:')} <strong className="text-white font-bold">{selectedCategory.quota - selectedCategory.current_enrolled} {t('SLOT', 'SLOTS')}</strong>
                     </div>
                   </div>
 
@@ -1356,18 +1348,12 @@ export default function RegistrationPage() {
             {/* Selected Category Cockpit Strip */}
             <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="space-y-3">
-                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm">
-                  <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
-                    {t('KATEGORI TERPILIH', 'SELECTED CATEGORY')}
-                  </span>
-                  <span className="text-[#FA6D0B] font-bold text-sm select-none">//</span>
-                  <span className="text-xs sm:text-sm font-semibold text-slate-200 uppercase tracking-wider">
-                    {selectedCategory.is_pair 
-                      ? t('PAIR MIX · 2 PESERTA (KAPTEN & PARTNER)', 'PAIR MIX · 2 RIDERS (CAPTAIN & PARTNER)') 
-                      : (selectedCategory.id === '120_SINGLE' 
-                          ? t('INDIVIDU · 1 PESERTA (SENDIRI)', 'SOLO · 1 RIDER (INDIVIDUAL)') 
-                          : t('SOLO INDIVIDUAL RIDER', 'SOLO INDIVIDUAL RIDER'))}
-                  </span>
+                <div className="font-mono text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
+                  {selectedCategory.is_pair 
+                    ? t('KATEGORI TERPILIH · PAIR MIX (2 PESERTA)', 'SELECTED CATEGORY · PAIR MIX (2 RIDERS)') 
+                    : (selectedCategory.id === '120_SINGLE' 
+                        ? t('KATEGORI TERPILIH · INDIVIDU (1 PESERTA)', 'SELECTED CATEGORY · SOLO (1 RIDER)') 
+                        : t('KATEGORI TERPILIH · PESERTA TUNGGAL', 'SELECTED CATEGORY · SOLO RIDER'))}
                 </div>
                 
                 <h2 className="font-display italic text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white tracking-tight leading-none drop-shadow-sm">
@@ -1477,11 +1463,6 @@ export default function RegistrationPage() {
                       {t('PILIH PAKET FINISHER RESMI', 'SELECT OFFICIAL FINISHER PACKAGE')}
                     </h3>
                   </div>
-                  <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm self-start sm:self-auto">
-                    <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">{selectedCategory.is_pair ? t('2 RIDER / TIM', '2 RIDERS / TEAM') : t('INDIVIDUAL', 'INDIVIDUAL')}</span>
-                    <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
-                    <span className="text-xs sm:text-sm font-semibold text-slate-200 uppercase tracking-wider">{t('TARIF TRANSPARAN', 'TRANSPARENT RATES')}</span>
-                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
@@ -1495,22 +1476,12 @@ export default function RegistrationPage() {
                     }`}
                   >
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2.5">
-                          <span className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider ${
-                            packageType === 'MEDAL_ONLY'
-                              ? 'bg-[#FA6D0B] text-black font-black'
-                              : 'border border-white/20 text-white'
-                          }`}>
-                            {t('OPSI 01', 'OPTION 01')}
-                          </span>
-                          <span className="text-[#FA6D0B] font-bold text-xs tracking-wider select-none">//</span>
-                          <span className="text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider">
-                            {selectedCategory.is_pair ? t('ESENSIAL (2 RIDER)', 'ESSENTIAL (2 RIDERS)') : t('ESENSIAL', 'ESSENTIAL')}
-                          </span>
-                        </div>
-                        <span className="text-xs sm:text-sm font-mono text-slate-300 font-semibold uppercase tracking-wider">
-                          {t('TARIF DASAR KATEGORI', 'BASE RATE')}
+                      <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+                        <span className="text-xs sm:text-sm font-mono font-bold text-slate-300 uppercase tracking-wider">
+                          {selectedCategory.is_pair ? t('PAKET 2 RIDER · ESENSIAL', '2 RIDERS PACKAGE · ESSENTIAL') : t('PAKET 1 RIDER · ESENSIAL', '1 RIDER PACKAGE · ESSENTIAL')}
+                        </span>
+                        <span className="text-xs sm:text-sm font-mono text-slate-400 uppercase tracking-wider">
+                          {t('TARIF DASAR', 'BASE RATE')}
                         </span>
                       </div>
 
@@ -1570,18 +1541,12 @@ export default function RegistrationPage() {
                     }`}
                   >
                     <div className="space-y-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2.5">
-                          <span className="px-3.5 py-1.5 rounded-full bg-[#FA6D0B] text-black text-xs font-mono font-black uppercase tracking-wider">
-                            {t('OPSI 02', 'OPTION 02')}
-                          </span>
-                          <span className="text-[#FA6D0B] font-bold text-xs tracking-wider select-none">//</span>
-                          <span className="text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider">
-                            {t('REKOMENDASI LENGKAP', 'RECOMMENDED COMPLETE')}
-                          </span>
-                        </div>
+                      <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+                        <span className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
+                          {selectedCategory.is_pair ? t('PAKET 2 RIDER · LENGKAP', '2 RIDERS PACKAGE · COMPLETE') : t('PAKET 1 RIDER · LENGKAP', '1 RIDER PACKAGE · COMPLETE')}
+                        </span>
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
-                          {selectedCategory.is_pair ? t('HANYA +RP 50.000 (TOTAL TIM)', 'ONLY +IDR 50K (TOTAL TEAM)') : t('HANYA +RP 50.000 / PAX', 'ONLY +IDR 50K / PAX')}
+                          {selectedCategory.is_pair ? t('+RP 50.000 (TOTAL TIM)', '+IDR 50K (TOTAL TEAM)') : t('+RP 50.000 / PAX', '+IDR 50K / PAX')}
                         </span>
                       </div>
 
@@ -1642,12 +1607,9 @@ export default function RegistrationPage() {
                   {/* Column 1: Logistik & Pengambilan Race Pack */}
                   <div className="flex flex-col justify-between lg:pr-8 space-y-5">
                     <div className="space-y-2.5">
-                      <div className="flex items-center justify-between">
+                      <div>
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
                           {selectedCategory.id === 'VIRTUAL' ? t('METODE PENGIRIMAN // VIRTUAL RIDE', 'SHIPPING METHOD // VIRTUAL RIDE') : t('PENGAMBILAN RACE PACK (RPC) // LOGISTIK', 'RACE PACK COLLECTION (RPC) // LOGISTICS')}
-                        </span>
-                        <span className="text-xs font-mono font-black uppercase px-3 py-1 rounded bg-white/10 text-white border border-white/20">
-                          {selectedCategory.id === 'VIRTUAL' ? t('TERMASUK / RP 0', 'INCLUDED / IDR 0') : t('PILIHAN LOGISTIK', 'LOGISTICS OPTIONS')}
                         </span>
                       </div>
                       <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-none">
@@ -1677,8 +1639,8 @@ export default function RegistrationPage() {
                               <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
                                 {t('RPC DAY RESMI', 'OFFICIAL RPC DAY')}
                               </span>
-                              <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-white/10 text-white border border-white/15">
-                                {t('GRATIS / RP 0', 'FREE / IDR 0')}
+                              <span className="text-xs font-mono font-bold text-slate-300 uppercase">
+                                {t('GRATIS (RP 0)', 'FREE (IDR 0)')}
                               </span>
                             </div>
                             <div className="text-sm sm:text-base font-black text-white uppercase font-sans">
@@ -1705,7 +1667,7 @@ export default function RegistrationPage() {
                               <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
                                 {t('EKSPEDISI LOGISTIK', 'LOGISTICS EXPEDITION')}
                               </span>
-                              <span className="text-xs font-mono font-black px-2 py-0.5 rounded bg-[#FA6D0B] text-black">
+                              <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase">
                                 +Rp 20.000
                               </span>
                             </div>
@@ -1724,12 +1686,9 @@ export default function RegistrationPage() {
                   {/* Column 2: Kode Promo / Voucher Komunitas */}
                   <div className="flex flex-col justify-between lg:pl-8 space-y-5 pt-6 lg:pt-0">
                     <div className="space-y-2.5">
-                      <div className="flex items-center justify-between">
+                      <div>
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
                           {t('KODE PROMO // VOUCHER KOMUNITAS', 'PROMO CODE // COMMUNITY VOUCHER')}
-                        </span>
-                        <span className="text-xs font-mono font-black uppercase px-3 py-1 rounded bg-[#FA6D0B]/10 text-[#FA6D0B] border border-[#FA6D0B]/30">
-                          {t('POTONGAN BIAYA', 'FEE DISCOUNT')}
                         </span>
                       </div>
                       <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-none">
@@ -1856,18 +1815,13 @@ export default function RegistrationPage() {
               {/* ========================================================================= */}
               {(!selectedCategory.is_pair || pairActiveTab === 'rider1') ? (
                 <div className="rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
-                    <div>
-                      <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                        {t('IDENTITAS ATLET //', 'ATHLETE IDENTITY //')} {selectedCategory.is_pair ? t('RIDER 1 (KAPTEN TIM)', 'RIDER 1 (TEAM CAPTAIN)') : t('PESERTA RESMI', 'OFFICIAL RIDER')}
-                      </span>
-                      <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
-                        {t('Lengkapi data identitas resmi sesuai KTP atau Paspor untuk verifikasi asuransi dan nomor start.', 'Complete official identity data as in ID or Passport for insurance and start number verification.')}
-                      </p>
-                    </div>
-                    <span className="text-xs font-mono text-slate-200 uppercase font-bold self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20">
-                      {t('DATA WAJIB KTP / PASPOR', 'OFFICIAL ID DATA')}
+                  <div className="border-b border-white/10 pb-4">
+                    <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      {t('IDENTITAS ATLET //', 'ATHLETE IDENTITY //')} {selectedCategory.is_pair ? t('RIDER 1 (KAPTEN TIM)', 'RIDER 1 (TEAM CAPTAIN)') : t('PESERTA RESMI', 'OFFICIAL RIDER')}
                     </span>
+                    <p className="text-xs sm:text-sm text-slate-300 font-sans mt-1">
+                      {t('Lengkapi data identitas resmi sesuai KTP atau Paspor untuk verifikasi asuransi dan nomor start.', 'Complete official identity data as in ID or Passport for insurance and start number verification.')}
+                    </p>
                   </div>
 
                   {/* Bagian 1: Identitas Resmi */}
@@ -2132,18 +2086,13 @@ export default function RegistrationPage() {
                 /* 3.6 IDENTITAS ATLET (RIDER 2 · PARTNER TIM TANDEM) */
                 /* ========================================================================= */
                 <div className="rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
-                    <div>
-                      <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                        {t('IDENTITAS ATLET // RIDER 2 (PARTNER TIM TANDEM)', 'ATHLETE IDENTITY // RIDER 2 (TANDEM TEAM PARTNER)')}
-                      </span>
-                      <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
-                        {t('Lengkapi data resmi partner tim tandem sesuai KTP atau Paspor untuk polis asuransi dan nomor bib kedua.', 'Complete official partner data as in ID or Passport for insurance and second race bib.')}
-                      </p>
-                    </div>
-                    <span className="text-xs font-mono text-slate-200 uppercase font-bold self-start sm:self-auto px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20">
-                      {t('DATA RESMI PARTNER', 'OFFICIAL PARTNER ID DATA')}
+                  <div className="border-b border-white/10 pb-4">
+                    <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      {t('IDENTITAS ATLET // RIDER 2 (PARTNER TIM TANDEM)', 'ATHLETE IDENTITY // RIDER 2 (TANDEM TEAM PARTNER)')}
                     </span>
+                    <p className="text-xs sm:text-sm text-slate-300 font-sans mt-1">
+                      {t('Lengkapi data resmi partner tim tandem sesuai KTP atau Paspor untuk polis asuransi dan nomor bib kedua.', 'Complete official partner data as in ID or Passport for insurance and second race bib.')}
+                    </p>
                   </div>
 
                   {/* Bagian 1: Identitas Resmi Partner */}
@@ -2409,12 +2358,9 @@ export default function RegistrationPage() {
               {/* 3.7 SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (SAFETY WAIVER) */}
               {/* ========================================================================= */}
               <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3.5">
+                <div className="border-b border-white/10 pb-3.5">
                   <span className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider block">
-                    {t('SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (WAIVER) //', 'SAFETY STATEMENT & LIABILITY WAIVER //')}
-                  </span>
-                  <span className="text-xs font-mono text-[#FA6D0B] font-bold uppercase self-start sm:self-auto px-3 py-1 rounded-full bg-[#FA6D0B]/10 border border-[#FA6D0B]/30">
-                    OFFICIAL PROTOCOL
+                    {t('SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (WAIVER)', 'SAFETY STATEMENT & LIABILITY WAIVER')}
                   </span>
                 </div>
 
@@ -2531,13 +2477,10 @@ export default function RegistrationPage() {
           <div className="w-full max-w-7xl mx-auto space-y-8 animate-slide-up-fade">
             {/* Header Konfirmasi */}
             <div className="p-7 sm:p-9 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md text-center space-y-4 relative overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
-              <div className="inline-block">
-                <span className={`px-4 py-2 text-xs sm:text-sm font-mono font-black uppercase tracking-widest rounded-full border ${
-                  createdOrder.payment_status === 'PAID'
-                    ? 'bg-white/10 text-white border-white/20'
-                    : 'bg-[#FA6D0B] text-black border-[#FA6D0B]'
-                }`}>
-                  {t('STATUS:', 'STATUS:')} {createdOrder.payment_status === 'PAID' ? t('LUNAS // TERDAFTAR RESMI', 'PAID // OFFICIALLY REGISTERED') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
+              <div className="font-mono text-xs sm:text-sm font-bold uppercase tracking-widest">
+                <span className="text-slate-400">{t('STATUS ·', 'STATUS ·')} </span>
+                <span className={createdOrder.payment_status === 'PAID' ? 'text-white font-black' : 'text-[#FA6D0B] font-black'}>
+                  {createdOrder.payment_status === 'PAID' ? t('LUNAS · TERDAFTAR RESMI', 'PAID · OFFICIALLY REGISTERED') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
                 </span>
               </div>
 
