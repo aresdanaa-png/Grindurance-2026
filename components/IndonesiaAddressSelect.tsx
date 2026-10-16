@@ -217,7 +217,7 @@ export default function IndonesiaAddressSelect({
         <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-wider">
           {t('ALAMAT DOMISILI · PENGIRIMAN RACEPACK', 'DOMICILE ADDRESS · RACE PACK SHIPPING')} {required && <span className="text-[#FA6D0B]">*</span>}
         </label>
-        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">{t('[DATABASE RESMI WILAYAH RI]', '[OFFICIAL RI REGIONAL DATABASE]')}</span>
+        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">{t('DATABASE RESMI WILAYAH RI', 'OFFICIAL RI REGIONAL DATABASE')}</span>
       </div>
 
       {/* Grid 4 Kolom Dropdown Berjenjang (Provinsi, Kab/Kota, Kecamatan, Desa/Kelurahan) */}
@@ -236,7 +236,7 @@ export default function IndonesiaAddressSelect({
               disabled={loadingProvinces}
               className="w-full px-3 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-50 pr-8"
             >
-              <option value="">{loadingProvinces ? t('MEMUAT...', 'LOADING...') : t('-- PILIH PROVINSI --', '-- SELECT PROVINCE --')}</option>
+              <option value="">{loadingProvinces ? t('MEMUAT...', 'LOADING...') : t('PILIH PROVINSI', 'SELECT PROVINCE')}</option>
               {provinces.map((prov) => (
                 <option key={prov.id} value={prov.id} className="bg-[#15171C] text-white">
                   {prov.name}
@@ -262,10 +262,10 @@ export default function IndonesiaAddressSelect({
             >
               <option value="">
                 {!value.province_id
-                  ? t('-- PILIH PROVINSI --', '-- SELECT PROVINCE --')
+                  ? t('PILIH PROVINSI DAHULU', 'SELECT PROVINCE FIRST')
                   : loadingRegencies
                   ? t('MEMUAT...', 'LOADING...')
-                  : t('-- PILIH KAB/KOTA --', '-- SELECT CITY/REGENCY --')}
+                  : t('PILIH KABUPATEN / KOTA', 'SELECT CITY / REGENCY')}
               </option>
               {regencies.map((reg) => (
                 <option key={reg.id} value={reg.id} className="bg-[#15171C] text-white">
@@ -292,10 +292,10 @@ export default function IndonesiaAddressSelect({
             >
               <option value="">
                 {!value.regency_id
-                  ? t('-- PILIH KAB/KOTA --', '-- SELECT CITY/REGENCY --')
+                  ? t('PILIH KAB/KOTA DAHULU', 'SELECT CITY FIRST')
                   : loadingDistricts
                   ? t('MEMUAT...', 'LOADING...')
-                  : t('-- PILIH KECAMATAN --', '-- SELECT DISTRICT --')}
+                  : t('PILIH KECAMATAN', 'SELECT DISTRICT')}
               </option>
               {districts.map((dist) => (
                 <option key={dist.id} value={dist.id} className="bg-[#15171C] text-white">
@@ -322,10 +322,10 @@ export default function IndonesiaAddressSelect({
             >
               <option value="">
                 {!value.district_id
-                  ? t('-- PILIH KECAMATAN --', '-- SELECT DISTRICT --')
+                  ? t('PILIH KECAMATAN DAHULU', 'SELECT DISTRICT FIRST')
                   : loadingVillages
                   ? t('MEMUAT...', 'LOADING...')
-                  : t('-- PILIH DESA/KEL --', '-- SELECT SUB-DISTRICT --')}
+                  : t('PILIH DESA / KELURAHAN', 'SELECT VILLAGE')}
               </option>
               {villages.map((vill) => (
                 <option key={vill.id} value={vill.id} className="bg-[#15171C] text-white">

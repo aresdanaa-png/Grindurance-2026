@@ -1190,7 +1190,7 @@ export default function RegistrationPage() {
         {/* STEP 3: FORMULIR PENDAFTARAN ATLET & WAIVER */}
         {/* ========================================================================= */}
         {currentStep === 'form' && (
-          <div className="space-y-10 animate-slide-up-fade max-w-4xl mx-auto">
+          <div className="space-y-8 animate-slide-up-fade max-w-4xl mx-auto">
             
             {/* Top Navigation Bar */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
@@ -1205,24 +1205,37 @@ export default function RegistrationPage() {
                 {t('← KEMBALI · DETAIL KATEGORI', '← BACK · CATEGORY DETAILS')}
               </button>
 
-              <div className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
+              <div className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">
                 {t('TAHAP 03 / 03 · FORMULIR REGISTRASI ATLET', 'STAGE 03 / 03 · ATHLETE REGISTRATION FORM')}
               </div>
             </div>
 
-            {/* Selected Category Sticky Banner */}
-            <div className="p-6 rounded-2xl border border-white/10 bg-[#121418] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <span className="text-xs font-mono text-[#FA6D0B] uppercase tracking-widest font-bold block">
-                  {t('KATEGORI PILIHAN · ACTIVE SELECTION', 'ACTIVE SELECTION · CATEGORY')}
-                </span>
-                <h2 className="font-display italic text-2xl font-black uppercase text-white mt-0.5">
+            {/* Selected Category Cockpit Strip */}
+            <div className="rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row md:items-center justify-between gap-5">
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">
+                    {t('KATEGORI TERPILIH · OFFICIAL STAGE', 'SELECTED CATEGORY · OFFICIAL STAGE')}
+                  </span>
+                  {selectedCategory.is_pair && (
+                    <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30 font-bold uppercase">
+                      PAIR MIX · 2 PAX
+                    </span>
+                  )}
+                </div>
+                
+                <h2 className="font-display italic text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
                   {selectedCategory.name}
                 </h2>
-                <div className="text-xs font-mono text-slate-400 mt-1">
-                  {t('Jarak:', 'Distance:')} <span className="text-white font-bold">{selectedCategory.id === 'VIRTUAL' ? t('Bebas (Rute Domisili)', 'Flexible (Local Course)') : `${selectedCategory.distance_km} KM`}</span> · 
-                  {t('Format:', 'Format:')} <span className="text-white font-bold">{selectedCategory.is_pair ? t('Tandem Tim (2 Riders)', 'Pair Tandem (2 Riders)') : selectedCategory.id === 'VIRTUAL' ? t('Virtual Ride (19 Chapters)', 'Virtual Ride (19 Chapters)') : t('Solo Rider', 'Solo Rider')}</span> · 
-                  {t('COT:', 'COT:')} <span className="text-white font-bold">{selectedCategory.cot_hours ? `${selectedCategory.cot_hours} ${t('Jam', 'Hours')}` : t('Fleksibel', 'Flexible')}</span>
+
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-slate-400">
+                  <span>{t('Jarak:', 'Distance:')} <strong className="text-white">{selectedCategory.id === 'VIRTUAL' ? t('Bebas (Rute Domisili)', 'Flexible (Local Course)') : `${selectedCategory.distance_km} KM`}</strong></span>
+                  <span>·</span>
+                  <span>{t('Format:', 'Format:')} <strong className="text-white">{selectedCategory.is_pair ? t('Tandem Tim (2 Riders)', 'Pair Tandem (2 Riders)') : selectedCategory.id === 'VIRTUAL' ? t('Virtual Ride (19 Chapters)', 'Virtual Ride (19 Chapters)') : t('Solo Rider', 'Solo Rider')}</strong></span>
+                  <span>·</span>
+                  <span>{t('COT:', 'COT:')} <strong className="text-white">{selectedCategory.cot_hours ? `${selectedCategory.cot_hours} ${t('Jam', 'Hours')}` : t('Fleksibel', 'Flexible')}</strong></span>
+                  <span>·</span>
+                  <span>{t('Flag-off:', 'Flag-off:')} <strong className="text-[#FA6D0B]">{selectedCategory.wave_start_time || '05:30'} WIB</strong></span>
                 </div>
               </div>
 
@@ -1232,136 +1245,159 @@ export default function RegistrationPage() {
                   setCurrentStep('select');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="text-xs font-mono font-bold text-[#FA6D0B] hover:text-white uppercase tracking-wider underline cursor-pointer self-start sm:self-center"
+                className="px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-[#FA6D0B] transition-all cursor-pointer self-start md:self-center shrink-0"
               >
-                {t('[GANTI KATEGORI]', '[CHANGE CATEGORY]')}
+                {t('GANTI KATEGORI', 'CHANGE CATEGORY')}
               </button>
             </div>
 
             {/* Error Message Box */}
             {errorMessage && (
-              <div className="p-4 rounded-2xl border border-red-500/40 bg-red-500/10 text-red-300 font-mono text-xs flex items-center justify-between gap-3">
-                <div>
-                  <span className="font-bold text-red-400">{t('[PERINGATAN]', '[ALERT]')}</span> {errorMessage}
+              <div className="p-4 sm:p-5 rounded-2xl border border-red-500/40 bg-red-500/10 text-red-300 font-mono text-xs flex items-center justify-between gap-3 animate-shake">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-red-400 uppercase tracking-wider">{t('PERINGATAN DATA ·', 'DATA ALERT ·')}</span>
+                  <span>{errorMessage}</span>
                 </div>
                 <button
                   onClick={() => setErrorMessage('')}
-                  className="text-red-400 hover:text-white uppercase font-bold text-[10px] shrink-0 cursor-pointer"
+                  className="text-red-400 hover:text-white uppercase font-bold text-[10px] px-2.5 py-1 rounded border border-red-500/30 shrink-0 cursor-pointer"
                 >
-                  {t('[TUTUP]', '[CLOSE]')}
+                  {t('TUTUP', 'CLOSE')}
                 </button>
               </div>
             )}
 
             {/* Formulir Pendaftaran */}
-            <form onSubmit={handleFinalSubmit} className="space-y-10">
+            <form onSubmit={handleFinalSubmit} className="space-y-8">
 
               {/* 3.1 Pilihan Paket & RPC Method */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                 
                 {/* Paket Jersey vs Medal */}
-                <div className="space-y-3">
-                  <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">
-                    {t('PILIHAN PAKET ATLET', 'ATHLETE PACKAGE SELECTION')} <span className="text-[#FA6D0B]">*</span>
-                  </label>
+                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+                    <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest block">
+                      {t('PILIHAN PAKET ATLET', 'ATHLETE PACKAGE SELECTION')} <span className="text-[#FA6D0B]">*</span>
+                    </label>
+                    <span className="text-[10px] font-mono text-[#FA6D0B] uppercase font-bold">GX-ID TIER</span>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {/* Opsi 1: Medal + Finisher Jersey */}
                     <button
                       type="button"
                       onClick={() => setPackageType('MEDAL_JERSEY')}
-                      className={`p-5 rounded-2xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer ${
+                      className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
                         packageType === 'MEDAL_JERSEY'
                           ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                          : 'border-white/10 bg-[#121418] hover:border-white/25 hover:bg-[#15181F]'
+                          : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
                       }`}
                     >
                       <span className="text-[9px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block mb-1">
-                        {t('[REKOMENDASI KOMUNITAS]', '[COMMUNITY CHOICE]')}
+                        {t('KOMUNITAS GX-ID · BEST VALUE', 'COMMUNITY CHOICE · BEST VALUE')}
                       </span>
-                      <div className="text-sm font-black text-white uppercase">{t('MEDALI + FINISHER JERSEY', 'MEDAL + FINISHER JERSEY')}</div>
-                      <div className="font-mono text-sm text-[#FA6D0B] font-bold mt-1">
+                      <div className="text-sm font-black text-white uppercase font-sans">
+                        {t('MEDALI + FINISHER JERSEY', 'MEDAL + FINISHER JERSEY')}
+                      </div>
+                      <div className="font-display italic text-xl font-black text-[#FA6D0B] mt-1.5">
                         {formatRupiah(selectedCategory.price_medal_jersey)}
                       </div>
                       <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                        {t('Termasuk jersey finisher eksklusif 8 tahun GX-ID.', 'Includes exclusive 8th-anniversary GX-ID finisher jersey.')}
+                        {t('Termasuk aero jersey finisher eksklusif Pollride (nilai Rp 350.000).', 'Includes official Pollride aero finisher jersey (IDR 350K value).')}
                       </p>
                     </button>
 
+                    {/* Opsi 2: Medal Saja */}
                     <button
                       type="button"
                       onClick={() => setPackageType('MEDAL_ONLY')}
-                      className={`p-5 rounded-2xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer ${
+                      className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
                         packageType === 'MEDAL_ONLY'
                           ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                          : 'border-white/10 bg-[#121418] hover:border-white/25 hover:bg-[#15181F]'
+                          : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
                       }`}
                     >
-                      <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider block mb-1">
-                        {t('[PAKET BASE]', '[BASE PACKAGE]')}
+                      <span className="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider block mb-1">
+                        {t('PAKET ESENSIAL', 'ESSENTIAL PACKAGE')}
                       </span>
-                      <div className="text-sm font-black text-white uppercase">{t('MEDALI SAJA', 'MEDAL ONLY')}</div>
-                      <div className="font-mono text-sm text-white font-bold mt-1">
+                      <div className="text-sm font-black text-white uppercase font-sans">
+                        {t('MEDALI SAJA', 'MEDAL ONLY')}
+                      </div>
+                      <div className="font-display italic text-xl font-black text-white mt-1.5">
                         {formatRupiah(selectedCategory.price_medal_only)}
                       </div>
                       <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                        {t('Hanya medali finisher (tanpa jersey finisher).', 'Finisher medal only (without jersey).')}
+                        {t('Hanya medali cor logam resmi hari-H (tanpa jersey finisher).', 'Official die-cast medal only (without finisher jersey).')}
                       </p>
                     </button>
                   </div>
                 </div>
 
                 {/* Pengambilan Race Pack */}
-                <div className="space-y-3">
-                  <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">
-                    {selectedCategory.id === 'VIRTUAL' ? t('METODE PENGIRIMAN MEDALI & RACE PACK', 'MEDAL & RACE PACK SHIPPING METHOD') : t('PENGAMBILAN RACE PACK (RPC)', 'RACE PACK COLLECTION (RPC)')} <span className="text-[#FA6D0B]">*</span>
-                  </label>
+                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
+                    <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest block">
+                      {selectedCategory.id === 'VIRTUAL' ? t('METODE PENGIRIMAN LOGISTIK', 'LOGISTICS SHIPPING METHOD') : t('PENGAMBILAN RACE PACK (RPC)', 'RACE PACK COLLECTION (RPC)')} <span className="text-[#FA6D0B]">*</span>
+                    </label>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase">LOGISTICS</span>
+                  </div>
+
                   {selectedCategory.id === 'VIRTUAL' ? (
-                    <div className="p-5 rounded-2xl border border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]">
-                      <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
-                        {t('[TERMASUK DALAM PAKET VIRTUAL]', '[INCLUDED IN VIRTUAL PACKAGE]')}
+                    <div className="p-4 sm:p-5 rounded-xl border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]/40 space-y-2">
+                      <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block">
+                        {t('TERMASUK DALAM PAKET VIRTUAL · GRATIS', 'INCLUDED IN VIRTUAL PACKAGE · FREE')}
                       </span>
-                      <div className="text-sm font-black text-white uppercase">{t('PENGIRIMAN DHS LOGISTIK KE ALAMAT RUMAH', 'DHS LOGISTICS HOME DELIVERY')}</div>
-                      <p className="text-[10px] text-slate-300 mt-2 font-sans leading-relaxed">
+                      <div className="text-sm font-black text-white uppercase font-sans">
+                        {t('PENGIRIMAN DHS LOGISTIK KE ALAMAT RUMAH', 'DHS LOGISTICS HOME DELIVERY')}
+                      </div>
+                      <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
                         {t(
-                          'Medali finisher resmi dan jersey akan dikirim via kurir DHS Logistik langsung ke alamat domisili Anda setelah validasi GPS Strava selesai. Bebas biaya handling on-site.',
-                          'Official finisher medal and jersey delivered directly via DHS Logistics after Strava GPS validation. Free of on-site handling charges.'
+                          'Medali cor logam resmi dan jersey akan dikirim via kurir DHS Logistik langsung ke alamat domisili Anda setelah validasi data Strava selesai. Bebas biaya handling.',
+                          'Official medal and jersey delivered directly via DHS Logistics after Strava validation is complete. Free of handling charges.'
                         )}
                       </p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {/* Opsi 1: Ambil di Cibubur (Gratis) */}
                       <button
                         type="button"
                         onClick={() => setRpcMethod('PICKUP')}
-                        className={`p-5 rounded-2xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer ${
+                        className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
                           rpcMethod === 'PICKUP'
                             ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                            : 'border-white/10 bg-[#121418] hover:border-white/25 hover:bg-[#15181F]'
+                            : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
                         }`}
                       >
                         <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
-                          {t('[GRATIS · FREE]', '[FREE · NO CHARGE]')}
+                          {t('GRATIS · BEBAS BIAYA', 'FREE · NO EXTRA CHARGE')}
                         </span>
-                        <div className="text-sm font-black text-white uppercase">{t('AMBIL DI CIBUBUR', 'PICK UP AT CIBUBUR')}</div>
+                        <div className="text-sm font-black text-white uppercase font-sans">
+                          {t('AMBIL DI CIBUBUR', 'PICK UP AT CIBUBUR')}
+                        </div>
                         <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                          {t('Lokasi: ABEEY Coffee & Eatery, LRT Harjamukti, Cibubur (11–12 Des 2026).', 'Location: ABEEY Coffee & Eatery, LRT Harjamukti, Cibubur (Dec 11–12, 2026).')}
+                          {t('Lokasi: ABEEY Coffee, LRT Harjamukti, Cibubur (11–12 Des 2026).', 'Location: ABEEY Coffee, LRT Harjamukti, Cibubur (Dec 11–12, 2026).')}
                         </p>
                       </button>
 
+                      {/* Opsi 2: Handling & Kirim (+Rp 20.000) */}
                       <button
                         type="button"
                         onClick={() => setRpcMethod('HANDLING')}
-                        className={`p-5 rounded-2xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer ${
+                        className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
                           rpcMethod === 'HANDLING'
                             ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                            : 'border-white/10 bg-[#121418] hover:border-white/25 hover:bg-[#15181F]'
+                            : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
                         }`}
                       >
                         <span className="text-[9px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block mb-1">
-                          {t('[+RP 20.000 · JASA KIRIM]', '[+RP 20,000 · SHIPPING]')}
+                          {t('+RP 20.000 · LAYANAN KIRIM', '+RP 20,000 · SHIPPING')}
                         </span>
-                        <div className="text-sm font-black text-white uppercase">{t('HANDLING & KIRIM', 'HANDLING & SHIPPING')}</div>
+                        <div className="text-sm font-black text-white uppercase font-sans">
+                          {t('HANDLING & KIRIM RUMAH', 'HANDLING & HOME DELIVERY')}
+                        </div>
                         <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                          {t('Paket race pack dikirim langsung ke alamat rumah Anda.', 'Race pack shipped directly to your residential address.')}
+                          {t('Paket race pack dikirim aman langsung ke alamat rumah Anda sebelum hari-H.', 'Race pack safely shipped directly to your home address prior to race day.')}
                         </p>
                       </button>
                     </div>
@@ -1372,52 +1408,67 @@ export default function RegistrationPage() {
 
               {/* Banner Insentif Kupon Makan Jika Memenuhi Syarat */}
               {isEligibleForMealCoupon() && (
-                <div className="p-4 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-mono text-xs flex items-center justify-between">
-                  <div>
-                    <span className="font-bold text-emerald-400">{t('[INSENTIF GX-ID AKTIF]', '[GX-ID INCENTIVE ACTIVE]')}</span> {t('Diskon Kupon Makan Rp 50.000 otomatis dipotong dari invoice Anda.', 'Rp 50,000 Meal Coupon discount automatically deducted from your invoice.')}
+                <div className="p-4 sm:p-5 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-mono text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-[0_0_25px_rgba(16,185,129,0.15)]">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-emerald-400 uppercase tracking-wider">
+                        {t('INSENTIF KHUSUS GX-ID AKTIF ·', 'GX-ID SPECIAL INCENTIVE ACTIVE ·')}
+                      </span>
+                      <span className="text-white font-bold">{t('POTONGAN KUPON MAKAN', 'MEAL COUPON DISCOUNT')}</span>
+                    </div>
+                    <p className="text-slate-300 font-sans text-xs">
+                      {t('Kategori berhak mendapatkan insentif kupon makan (Wanita / Usia ≤17 Th / Tim Pair Mix). Terpotong otomatis pada total.', 'Eligible for meal coupon incentive (Women / Age ≤17 / Pair Mix). Automatically deducted from invoice.')}
+                    </p>
                   </div>
-                  <span className="text-emerald-400 font-bold shrink-0 text-xs uppercase tracking-wider">[-RP 50.000]</span>
+                  <span className="text-emerald-400 font-mono font-black text-sm px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 shrink-0 self-start sm:self-auto">
+                    -RP 50.000
+                  </span>
                 </div>
               )}
 
               {/* Tab Switcher Jika Kategori Pair */}
               {selectedCategory.is_pair && (
-                <div className="flex border-b border-white/10">
+                <div className="grid grid-cols-2 gap-3 p-1.5 rounded-2xl bg-black/60 border border-white/10">
                   <button
                     type="button"
                     onClick={() => setPairActiveTab('rider1')}
-                    className={`flex-1 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
+                    className={`py-3 px-4 rounded-xl text-xs font-mono font-black uppercase tracking-wider transition-all cursor-pointer ${
                       pairActiveTab === 'rider1'
-                        ? 'border-[#FA6D0B] text-[#FA6D0B] bg-white/[0.02]'
-                        : 'border-transparent text-slate-500 hover:text-white'
+                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                        : 'text-slate-400 hover:text-white bg-transparent'
                     }`}
                   >
-                    {t('[01] RIDER 1 · KAPTEN TIM', '[01] RIDER 1 · TEAM CAPTAIN')}
+                    {t('01 · RIDER 1 (KAPTEN TIM)', '01 · RIDER 1 (TEAM CAPTAIN)')}
                   </button>
                   <button
                     type="button"
                     onClick={() => setPairActiveTab('rider2')}
-                    className={`flex-1 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
+                    className={`py-3 px-4 rounded-xl text-xs font-mono font-black uppercase tracking-wider transition-all cursor-pointer ${
                       pairActiveTab === 'rider2'
-                        ? 'border-[#FA6D0B] text-[#FA6D0B] bg-white/[0.02]'
-                        : 'border-transparent text-slate-500 hover:text-white'
+                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                        : 'text-slate-400 hover:text-white bg-transparent'
                     }`}
                   >
-                    {t('[02] RIDER 2 · PARTNER TIM', '[02] RIDER 2 · TEAM PARTNER')}
+                    {t('02 · RIDER 2 (PARTNER TIM)', '02 · RIDER 2 (TEAM PARTNER)')}
                   </button>
                 </div>
               )}
 
               {/* 3.2 Form Fields: Rider 1 */}
               {(!selectedCategory.is_pair || pairActiveTab === 'rider1') ? (
-                <div className="space-y-6">
-                  <div className="text-xs font-mono text-slate-400 uppercase tracking-widest pb-1 border-b border-white/10">
-                    {t('IDENTITAS ATLET RIDER 1', 'RIDER 1 ATHLETE IDENTITY')} {selectedCategory.is_pair && t('(KAPTEN TIM)', '(TEAM CAPTAIN)')}
+                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-7 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-6">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      {t('IDENTITAS ATLET RIDER 1', 'RIDER 1 ATHLETE IDENTITY')} {selectedCategory.is_pair && t('· KAPTEN TIM', '· TEAM CAPTAIN')}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase">
+                      {t('DATA WAJIB SESUAI KTP/PASPOR', 'REQUIRED AS IN ID/PASSPORT')}
+                    </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NAMA LENGKAP (SESUAI KTP/PASPOR)', 'FULL NAME (AS IN ID/PASSPORT)')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1431,7 +1482,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NOMOR NIK / PASPOR (16 DIGIT KTP)', 'ID / PASSPORT NUMBER (16 DIGIT ID)')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1448,7 +1499,7 @@ export default function RegistrationPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('JENIS KELAMIN', 'GENDER')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <div className="grid grid-cols-2 gap-2">
@@ -1457,8 +1508,8 @@ export default function RegistrationPage() {
                           onClick={() => setRider1({ ...rider1, gender: 'male' })}
                           className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider1.gender === 'male'
-                              ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                              : 'border-white/15 bg-black/60 text-slate-400'
+                              ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
+                              : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
                           }`}
                         >
                           {t('LAKI-LAKI', 'MALE')}
@@ -1468,8 +1519,8 @@ export default function RegistrationPage() {
                           onClick={() => setRider1({ ...rider1, gender: 'female' })}
                           className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider1.gender === 'female'
-                              ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                              : 'border-white/15 bg-black/60 text-slate-400'
+                              ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
+                              : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
                           }`}
                         >
                           {t('PEREMPUAN', 'FEMALE')}
@@ -1478,7 +1529,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('TANGGAL LAHIR', 'DATE OF BIRTH')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1491,7 +1542,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('GOLONGAN DARAH', 'BLOOD TYPE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <select
@@ -1510,7 +1561,7 @@ export default function RegistrationPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('EMAIL AKTIF', 'ACTIVE EMAIL')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1524,7 +1575,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NOMOR WHATSAPP AKTIF', 'ACTIVE WHATSAPP NUMBER')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1540,7 +1591,7 @@ export default function RegistrationPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NAMA KONTAK DARURAT', 'EMERGENCY CONTACT NAME')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1554,7 +1605,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NOMOR HP KONTAK DARURAT', 'EMERGENCY CONTACT PHONE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1569,11 +1620,14 @@ export default function RegistrationPage() {
                   </div>
 
                   {packageType === 'MEDAL_JERSEY' && (
-                    <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                        {t('UKURAN JERSEY FINISHER RIDER 1', 'RIDER 1 FINISHER JERSEY SIZE')} <span className="text-[#FA6D0B]">*</span>
-                      </label>
-                      <div className="grid grid-cols-6 gap-2">
+                    <div className="space-y-2 pt-2 border-t border-white/10">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                          {t('UKURAN JERSEY FINISHER RIDER 1', 'RIDER 1 FINISHER JERSEY SIZE')} <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase">POLLRIDE AERO FIT</span>
+                      </div>
+                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                         {JERSEY_SIZES.map((sz) => (
                           <button
                             type="button"
@@ -1581,8 +1635,8 @@ export default function RegistrationPage() {
                             onClick={() => setRider1({ ...rider1, jersey_size: sz })}
                             className={`py-3 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
                               rider1.jersey_size === sz
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black'
-                                : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
+                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.5)]'
+                                : 'border-white/15 bg-black/60 text-slate-400 hover:border-white/30 hover:text-white'
                             }`}
                           >
                             {sz}
@@ -1592,33 +1646,40 @@ export default function RegistrationPage() {
                     </div>
                   )}
 
-                  <IndonesiaAddressSelect
-                    prefixId="r1"
-                    value={{
-                      address_detail: rider1.address_detail,
-                      province_id: rider1.province_id,
-                      province_name: rider1.province_name,
-                      regency_id: rider1.regency_id,
-                      regency_name: rider1.regency_name,
-                      district_id: rider1.district_id,
-                      district_name: rider1.district_name,
-                      village_id: rider1.village_id,
-                      village_name: rider1.village_name,
-                      postal_code: rider1.postal_code,
-                    }}
-                    onChange={(addr) => setRider1({ ...rider1, ...addr })}
-                  />
+                  <div className="pt-2 border-t border-white/10">
+                    <IndonesiaAddressSelect
+                      prefixId="r1"
+                      value={{
+                        address_detail: rider1.address_detail,
+                        province_id: rider1.province_id,
+                        province_name: rider1.province_name,
+                        regency_id: rider1.regency_id,
+                        regency_name: rider1.regency_name,
+                        district_id: rider1.district_id,
+                        district_name: rider1.district_name,
+                        village_id: rider1.village_id,
+                        village_name: rider1.village_name,
+                        postal_code: rider1.postal_code,
+                      }}
+                      onChange={(addr) => setRider1({ ...rider1, ...addr })}
+                    />
+                  </div>
                 </div>
               ) : (
-                /* 3.3 Form Fields: Rider 2 */
-                <div className="space-y-6">
-                  <div className="text-xs font-mono text-slate-400 uppercase tracking-widest pb-1 border-b border-white/10">
-                    {t('IDENTITAS ATLET RIDER 2 (PARTNER TIM)', 'RIDER 2 ATHLETE IDENTITY (TEAM PARTNER)')}
+                /* 3.3 Form Fields: Rider 2 (Partner Tim) */
+                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-7 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-6">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      {t('IDENTITAS ATLET RIDER 2 · PARTNER TIM', 'RIDER 2 ATHLETE IDENTITY · TEAM PARTNER')}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase">
+                      {t('DATA PARTNER RESMI', 'OFFICIAL PARTNER DATA')}
+                    </span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NAMA LENGKAP PARTNER', 'PARTNER FULL NAME')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1632,7 +1693,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NIK PARTNER (16 DIGIT KTP)', 'PARTNER ID NUMBER (16 DIGIT ID)')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1649,7 +1710,7 @@ export default function RegistrationPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('JENIS KELAMIN PARTNER', 'PARTNER GENDER')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <div className="grid grid-cols-2 gap-2">
@@ -1658,8 +1719,8 @@ export default function RegistrationPage() {
                           onClick={() => setRider2({ ...rider2, gender: 'male' })}
                           className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider2.gender === 'male'
-                              ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                              : 'border-white/15 bg-black/60 text-slate-400'
+                              ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
+                              : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
                           }`}
                         >
                           {t('LAKI-LAKI', 'MALE')}
@@ -1669,8 +1730,8 @@ export default function RegistrationPage() {
                           onClick={() => setRider2({ ...rider2, gender: 'female' })}
                           className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider2.gender === 'female'
-                              ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                              : 'border-white/15 bg-black/60 text-slate-400'
+                              ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
+                              : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
                           }`}
                         >
                           {t('PEREMPUAN', 'FEMALE')}
@@ -1679,7 +1740,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('TANGGAL LAHIR', 'DATE OF BIRTH')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1692,7 +1753,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('GOLONGAN DARAH', 'BLOOD TYPE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <select
@@ -1711,7 +1772,7 @@ export default function RegistrationPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('EMAIL PARTNER', 'PARTNER EMAIL')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1725,7 +1786,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('WHATSAPP PARTNER', 'PARTNER WHATSAPP')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1741,7 +1802,7 @@ export default function RegistrationPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('KONTAK DARURAT (NAMA)', 'EMERGENCY CONTACT NAME')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1755,7 +1816,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
                         {t('NOMOR HP KONTAK DARURAT', 'EMERGENCY CONTACT PHONE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1770,11 +1831,14 @@ export default function RegistrationPage() {
                   </div>
 
                   {packageType === 'MEDAL_JERSEY' && (
-                    <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                        {t('UKURAN JERSEY FINISHER PARTNER', 'PARTNER FINISHER JERSEY SIZE')} <span className="text-[#FA6D0B]">*</span>
-                      </label>
-                      <div className="grid grid-cols-6 gap-2">
+                    <div className="space-y-2 pt-2 border-t border-white/10">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest">
+                          {t('UKURAN JERSEY FINISHER PARTNER', 'PARTNER FINISHER JERSEY SIZE')} <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase">POLLRIDE AERO FIT</span>
+                      </div>
+                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                         {JERSEY_SIZES.map((sz) => (
                           <button
                             type="button"
@@ -1782,8 +1846,8 @@ export default function RegistrationPage() {
                             onClick={() => setRider2({ ...rider2, jersey_size: sz })}
                             className={`py-3 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
                               rider2.jersey_size === sz
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black'
-                                : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
+                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.5)]'
+                                : 'border-white/15 bg-black/60 text-slate-400 hover:border-white/30 hover:text-white'
                             }`}
                           >
                             {sz}
@@ -1793,58 +1857,65 @@ export default function RegistrationPage() {
                     </div>
                   )}
 
-                  <IndonesiaAddressSelect
-                    prefixId="r2"
-                    value={{
-                      address_detail: rider2.address_detail,
-                      province_id: rider2.province_id,
-                      province_name: rider2.province_name,
-                      regency_id: rider2.regency_id,
-                      regency_name: rider2.regency_name,
-                      district_id: rider2.district_id,
-                      district_name: rider2.district_name,
-                      village_id: rider2.village_id,
-                      village_name: rider2.village_name,
-                      postal_code: rider2.postal_code,
-                    }}
-                    onChange={(addr) => setRider2({ ...rider2, ...addr })}
-                  />
+                  <div className="pt-2 border-t border-white/10">
+                    <IndonesiaAddressSelect
+                      prefixId="r2"
+                      value={{
+                        address_detail: rider2.address_detail,
+                        province_id: rider2.province_id,
+                        province_name: rider2.province_name,
+                        regency_id: rider2.regency_id,
+                        regency_name: rider2.regency_name,
+                        district_id: rider2.district_id,
+                        district_name: rider2.district_name,
+                        village_id: rider2.village_id,
+                        village_name: rider2.village_name,
+                        postal_code: rider2.postal_code,
+                      }}
+                      onChange={(addr) => setRider2({ ...rider2, ...addr })}
+                    />
+                  </div>
                 </div>
               )}
 
               {/* 3.4 Safety Waiver & Agreement */}
-              <div className="space-y-4 pt-6 border-t border-white/10">
-                <div className="text-xs font-mono font-bold text-white uppercase tracking-wider">
-                  {t('SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (WAIVER):', 'SAFETY STATEMENT & LIABILITY WAIVER:')}
+              <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+                    {t('SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (WAIVER) ·', 'SAFETY STATEMENT & LIABILITY WAIVER ·')}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#FA6D0B] font-bold uppercase">
+                    OFFICIAL PROTOCOL
+                  </span>
                 </div>
 
-                <div className="p-5 rounded-2xl border border-white/10 bg-[#121418] text-xs font-mono text-slate-300 leading-relaxed space-y-2">
+                <div className="p-4 sm:p-5 rounded-xl border border-white/10 bg-black/60 text-xs font-mono text-slate-300 leading-relaxed space-y-2.5">
                   <p>
                     {t(
-                      '1. Saya menyadari bahwa Gravel Grindurance 2026 adalah ekspedisi bersepeda mandiri (*unsupported*) di jalan raya umum yang tidak steril.',
-                      '1. I understand that Gravel Grindurance 2026 is an unsupported cycling expedition on unsterilized public roads.'
+                      '1. Saya menyadari bahwa Gravel Grindurance 2026 adalah ekspedisi bersepeda mandiri (unsupported) di jalan raya umum dan pedesaan yang tidak steril dari lalu lintas.',
+                      '1. I understand that Gravel Grindurance 2026 is an unsupported cycling expedition on public and rural roads that are not closed to general traffic.'
                     )}
                   </p>
                   <p>
                     {t(
-                      '2. Saya wajib memakai helm keselamatan, lampu depan min 400 lumen, lampu belakang merah, serta mematuhi aturan lalu lintas dan arahan marshal.',
-                      '2. I must wear a certified helmet, front light (min 400 lumens), steady red taillight, and obey traffic laws and marshal instructions.'
+                      '2. Saya wajib memakai helm keselamatan bersepeda bersertifikasi, lampu depan min 400 lumen menyala, lampu belakang merah, serta wajib mematuhi seluruh rambu jalan dan arahan marshal etape.',
+                      '2. I must wear a certified cycling helmet, operating front light (min 400 lumens), red rear light, and obey all traffic regulations and race marshal instructions.'
                     )}
                   </p>
                   <p>
                     {t(
-                      '3. Saya bertanggung jawab penuh atas kondisi fisik, sepeda, dan keselamatan pribadi selama kegiatan berlangsung.',
-                      '3. I take full responsibility for my physical condition, bicycle condition, and personal safety throughout the event.'
+                      '3. Saya bertanggung jawab penuh atas kebugaran fisik, kelayakan teknis sepeda gravel, serta keselamatan pribadi selama rangkaian ekspedisi berlangsung hingga garis finis.',
+                      '3. I take full personal responsibility for my physical fitness, bicycle mechanical readiness, and personal safety throughout the expedition until the finish line.'
                     )}
                   </p>
                 </div>
 
-                <label className="p-4 rounded-xl border border-white/15 bg-[#15171C] flex items-start gap-3 cursor-pointer hover:border-[#FA6D0B] transition-colors select-none">
+                <label className="p-4 sm:p-5 rounded-xl border border-white/15 hover:border-[#FA6D0B] bg-black/60 transition-all flex items-start gap-3.5 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={waiverAgreed}
                     onChange={(e) => setWaiverAgreed(e.target.checked)}
-                    className="mt-1 w-4 h-4 rounded border-white/20 text-[#FA6D0B] focus:ring-[#FA6D0B] bg-black/60 accent-[#FA6D0B]"
+                    className="mt-1 w-4 h-4 rounded border-white/20 text-[#FA6D0B] focus:ring-[#FA6D0B] bg-black/80 accent-[#FA6D0B] shrink-0"
                   />
                   <span className="text-xs text-white font-mono leading-relaxed">
                     {t(
@@ -1856,22 +1927,37 @@ export default function RegistrationPage() {
               </div>
 
               {/* 3.5 Submit Action Bar */}
-              <div className="p-6 rounded-3xl border border-white/15 bg-gradient-to-r from-[#15171C] via-[#1A1D24] to-[#15171C] flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="p-5 sm:p-7 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-center justify-between gap-5">
                 <div>
-                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">{t('NOMINAL AKHIR PEMBAYARAN:', 'FINAL PAYMENT AMOUNT:')}</span>
-                  <span className="text-2xl sm:text-3xl font-mono font-black text-[#FA6D0B] block">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">{t('TOTAL BIAYA REGISTRASI:', 'TOTAL REGISTRATION FEE:')}</span>
+                  <div className="font-display italic text-3xl sm:text-4xl font-black text-[#FA6D0B] leading-none mt-1">
                     {formatRupiah(netPrice)}
-                  </span>
+                  </div>
+                  <div className="text-[11px] font-mono text-slate-400 mt-1.5 flex flex-wrap items-center gap-x-2">
+                    <span>{packageType === 'MEDAL_JERSEY' ? t('Paket Medal + Jersey', 'Medal + Jersey Package') : t('Paket Medal Saja', 'Medal Only Package')}</span>
+                    {rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL' && (
+                      <>
+                        <span>·</span>
+                        <span className="text-slate-300">+Rp 20.000 RPC</span>
+                      </>
+                    )}
+                    {mealCouponDiscount > 0 && (
+                      <>
+                        <span>·</span>
+                        <span className="text-emerald-400 font-bold">-Rp 50.000 Kupon</span>
+                      </>
+                    )}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto">
+                <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
                   <button
                     type="button"
                     onClick={() => {
                       setCurrentStep('detail');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="px-6 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white transition-all cursor-pointer"
+                    className="px-6 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/40 transition-all cursor-pointer whitespace-nowrap"
                   >
                     {t('← DETAIL', '← DETAILS')}
                   </button>
@@ -1879,7 +1965,7 @@ export default function RegistrationPage() {
                   <button
                     type="submit"
                     disabled={submitting || !waiverAgreed}
-                    className="relative overflow-hidden flex-1 sm:flex-none px-9 py-4 rounded-full text-xs font-mono font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_30px_rgba(250,109,11,0.4)] hover:bg-[#DE5A00] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:shadow-[0_0_45px_rgba(250,109,11,0.7)] hover:-translate-y-0.5 active:translate-y-0"
+                    className="relative overflow-hidden flex-1 sm:flex-none px-8 sm:px-10 py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
                   >
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none" />
                     {submitting ? (
@@ -1887,7 +1973,7 @@ export default function RegistrationPage() {
                     ) : (
                       <>
                         <span className="relative z-10">{t('KUNCI NOMOR DADA & TERBITKAN INVOICE', 'LOCK BIB NUMBER & ISSUE INVOICE')}</span>
-                        <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
                       </>
                     )}
                   </button>
@@ -1905,10 +1991,14 @@ export default function RegistrationPage() {
         {currentStep === 'invoice' && createdOrder && (
           <div className="max-w-4xl mx-auto space-y-8 animate-slide-up-fade">
             {/* Header Konfirmasi */}
-            <div className="p-8 rounded-2xl border border-white/10 bg-[#121418] text-center space-y-4 relative overflow-hidden shadow-2xl">
+            <div className="p-7 sm:p-9 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md text-center space-y-4 relative overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
               <div className="inline-block">
-                <span className="px-4 py-1.5 text-xs font-mono font-black uppercase tracking-widest bg-[#FA6D0B] text-black">
-                  STATUS: {createdOrder.payment_status === 'PAID' ? t('LUNAS · TERDAFTAR RESMI', 'PAID · OFFICIALLY REGISTERED') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
+                <span className={`px-4 py-1.5 text-xs font-mono font-black uppercase tracking-widest rounded-full border ${
+                  createdOrder.payment_status === 'PAID'
+                    ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+                    : 'bg-[#FA6D0B] text-black border-[#FA6D0B]'
+                }`}>
+                  {t('STATUS:', 'STATUS:')} {createdOrder.payment_status === 'PAID' ? t('LUNAS · TERDAFTAR RESMI', 'PAID · OFFICIALLY REGISTERED') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
                 </span>
               </div>
 
@@ -1922,7 +2012,7 @@ export default function RegistrationPage() {
             </div>
 
             {/* Rincian Tagihan Finansial */}
-            <div className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#121418] space-y-5 font-mono">
+            <div className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-5 font-mono">
               <div className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3 flex justify-between">
                 <span>{t('RINCIAN TRANSAKSI:', 'TRANSACTION BREAKDOWN:')}</span>
                 <span className="text-[#FA6D0B]">{selectedCategory.name}</span>
@@ -1948,21 +2038,21 @@ export default function RegistrationPage() {
                   </div>
                 )}
 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/15 pt-4 text-white gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/15 pt-5 text-white gap-3">
                   <div>
                     <span className="text-xs font-mono text-slate-400 uppercase tracking-widest block">{t('TOTAL TRANSFER WAJIB:', 'TOTAL AMOUNT DUE:')}</span>
-                    <span className="text-[11px] text-slate-500 font-sans">{t('Transfer sesuai nominal persis untuk verifikasi otomatis.', 'Transfer the exact amount for automated system verification.')}</span>
+                    <span className="text-[11px] text-slate-400 font-sans">{t('Transfer sesuai nominal persis untuk verifikasi otomatis.', 'Transfer the exact amount for automated system verification.')}</span>
                   </div>
                   <div className="text-left sm:text-right">
-                    <span className="text-2xl sm:text-3xl font-black text-[#FA6D0B] block font-mono">
+                    <span className="font-display italic text-3xl sm:text-4xl font-black text-[#FA6D0B] block">
                       {formatRupiah(createdOrder.net_amount)}
                     </span>
                     <button
                       type="button"
                       onClick={() => copyToClipboard(createdOrder.net_amount.toString(), 'nominal')}
-                      className="text-[11px] text-slate-400 hover:text-white uppercase font-bold tracking-wider mt-1 cursor-pointer"
+                      className="text-[11px] font-mono text-slate-400 hover:text-white uppercase font-bold tracking-wider mt-1.5 transition-colors cursor-pointer"
                     >
-                      {copiedField === 'nominal' ? t('[NOMINAL DISALIN!]', '[AMOUNT COPIED!]') : t('[SALIN NOMINAL]', '[COPY AMOUNT]')}
+                      {copiedField === 'nominal' ? t('NOMINAL DISALIN', 'AMOUNT COPIED') : t('SALIN NOMINAL', 'COPY AMOUNT')}
                     </button>
                   </div>
                 </div>
@@ -1970,35 +2060,35 @@ export default function RegistrationPage() {
             </div>
 
             {/* Rekening Resmi Panitia */}
-            <div className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#121418] space-y-4 font-mono">
+            <div className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 font-mono">
               <div className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">
-                {t('REKENING PEMBAYARAN PANITIA GX-ID:', 'OFFICIAL GX-ID ORGANIZER BANK ACCOUNTS:')}
+                {t('REKENING RESMI PANITIA GX-ID:', 'OFFICIAL GX-ID ORGANIZER BANK ACCOUNTS:')}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-5 rounded-2xl border border-white/10 bg-black/60 space-y-2">
+                <div className="p-5 rounded-xl border border-white/10 bg-black/60 space-y-2">
                   <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">BCA (BANK CENTRAL ASIA)</span>
                   <div className="text-xl font-black text-white tracking-widest">8831 2948 20</div>
-                  <div className="text-xs text-slate-400">A.N. GX-ID INDONESIA / GRINDURANCE</div>
+                  <div className="text-xs text-slate-400">A.N. GX-ID INDONESIA · GRINDURANCE</div>
                   <button
                     type="button"
                     onClick={() => copyToClipboard('8831294820', 'bca')}
-                    className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block cursor-pointer"
+                    className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block transition-colors cursor-pointer"
                   >
-                    {copiedField === 'bca' ? t('[REKENING DISALIN!]', '[ACCOUNT COPIED!]') : t('[SALIN REKENING BCA]', '[COPY BCA ACCOUNT]')}
+                    {copiedField === 'bca' ? t('REKENING DISALIN', 'ACCOUNT COPIED') : t('SALIN NO. REK BCA', 'COPY BCA ACCOUNT')}
                   </button>
                 </div>
 
-                <div className="p-5 rounded-2xl border border-white/10 bg-black/60 space-y-2">
+                <div className="p-5 rounded-xl border border-white/10 bg-black/60 space-y-2">
                   <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">BANK MANDIRI</span>
                   <div className="text-xl font-black text-white tracking-widest">133 00 2819 4021</div>
                   <div className="text-xs text-slate-400">A.N. PANITIA GRINDURANCE 2026</div>
                   <button
                     type="button"
                     onClick={() => copyToClipboard('1330028194021', 'mandiri')}
-                    className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block cursor-pointer"
+                    className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block transition-colors cursor-pointer"
                   >
-                    {copiedField === 'mandiri' ? t('[REKENING DISALIN!]', '[ACCOUNT COPIED!]') : t('[SALIN REKENING MANDIRI]', '[COPY MANDIRI ACCOUNT]')}
+                    {copiedField === 'mandiri' ? t('REKENING DISALIN', 'ACCOUNT COPIED') : t('SALIN NO. REK MANDIRI', 'COPY MANDIRI ACCOUNT')}
                   </button>
                 </div>
               </div>
@@ -2010,8 +2100,8 @@ export default function RegistrationPage() {
                 <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
                   {t('KARTU BIB DIGITAL SEMENTARA:', 'PREVIEW DIGITAL RACE BIB:')}
                 </span>
-                <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest">
-                  {t('[SIMULASI RACE BIB]', '[RACE BIB SIMULATION]')}
+                <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">
+                  {t('SIMULASI RACE BIB', 'RACE BIB SIMULATION')}
                 </span>
               </div>
 
@@ -2034,22 +2124,22 @@ export default function RegistrationPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="p-6 rounded-3xl border border-white/10 bg-[#121418] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="p-6 sm:p-7 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-center justify-between gap-4">
               {createdOrder.payment_status !== 'PAID' && (
                 <button
                   type="button"
                   disabled={simulatingPayment}
                   onClick={handleSimulatePayment}
-                  className="w-full sm:w-auto px-6 py-3 rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500 hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500 hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap"
                 >
-                  {simulatingPayment ? t('[MEMPROSES SIMULASI...]', '[PROCESSING SIMULATION...]') : t('[SIMULASI PEMBAYARAN BERHASIL (SANDBOX)]', '[SIMULATE PAYMENT SUCCESS (SANDBOX)]')}
+                  {simulatingPayment ? t('MEMPROSES SIMULASI...', 'PROCESSING SIMULATION...') : t('SIMULASI PEMBAYARAN BERHASIL (SANDBOX)', 'SIMULATE PAYMENT SUCCESS (SANDBOX)')}
                 </button>
               )}
 
-              <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-end shrink-0">
                 <Link
                   href="/peserta"
-                  className="px-6 py-3 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
+                  className="px-6 py-3.5 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/40 transition-all flex items-center gap-1.5"
                 >
                   <span>{t('LIHAT START LIST', 'VIEW START LIST')}</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -2057,7 +2147,7 @@ export default function RegistrationPage() {
 
                 <Link
                   href="/"
-                  className="px-7 py-3 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.25)] hover:bg-[#DE5A00] transition-all"
+                  className="px-7 py-3.5 rounded-full text-xs font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.35)] hover:bg-[#DE5A00] transition-all"
                 >
                   {t('BERANDA', 'HOMEPAGE')}
                 </Link>
