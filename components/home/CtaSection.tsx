@@ -10,7 +10,7 @@ export default function CtaSection() {
   return (
     <section className="py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
       
-      {/* 1. Cinematic Action Photography Background with Seamless Fade Dissolve */}
+      {/* 1. Cinematic Drone Action Video Background with Seamless Fade Dissolve */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none overflow-hidden"
         style={{
@@ -18,15 +18,21 @@ export default function CtaSection() {
           WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 10%, black 30%, black 75%, rgba(0,0,0,0.4) 90%, transparent 100%)'
         }}
       >
-        <img
-          src="/perjalanan-siklis-di-jalur-oranye.webp"
-          alt="Gravel Grindurance Ultra Cyclist Action"
-          className="w-full h-full object-cover object-[center_35%] filter brightness-[0.72] contrast-[1.15] saturate-[1.18] blur-[0.4px]"
-        />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/perjalanan-siklis-di-jalur-oranye.webp"
+          className="w-full h-full object-cover object-center filter brightness-[0.65] contrast-[1.15] saturate-[1.2]"
+        >
+          <source src="/cta-background.mp4" type="video/mp4" />
+        </video>
         {/* Soft edge dissolve gradients */}
         <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-[#0B0C0E] via-[#0B0C0E]/85 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#0B0C0E] via-[#0B0C0E]/90 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B0C0E]/85 via-[#0B0C0E]/40 to-[#0B0C0E]/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B0C0E]/80 via-[#0B0C0E]/35 to-[#0B0C0E]/80" />
       </div>
 
       {/* 2. Luminous Orange Aurora Ambient Radial Glow */}
