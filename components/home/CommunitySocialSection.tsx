@@ -7,54 +7,78 @@ import { useLanguage } from '@/lib/context/LanguageContext';
 export default function CommunitySocialSection() {
   const { t } = useLanguage();
 
-  const communityCards = [
+  const communityChannels = [
     {
       title: 'IG : gxid.official',
       category: 'INSTAGRAM // OFFICIAL',
-      subtitle: t('Live Briefing & Galeri', 'Live Briefing & Gallery'),
-      image: '/perjalanan-siklis-di-jalur-oranye.webp',
+      handle: '@gxid.official',
+      description: t('Siaran Live & Galeri', 'Live Streams & Gallery'),
+      bannerImage: '/perjalanan-siklis-di-jalur-oranye.webp',
+      profilePhoto: '/logo-gx-id.webp',
+      ringClass: 'bg-gradient-to-tr from-[#FA6D0B] via-[#E1306C] to-[#FFDC80]',
+      ctaText: t('Buka Instagram', 'Open Instagram'),
       href: 'https://instagram.com/gxid.official',
       isExternal: true,
     },
     {
       title: 'FB GX-ID',
       category: 'FACEBOOK // GROUP',
-      subtitle: t('41.000+ Komunitas', '41,000+ Cyclists'),
-      image: '/pesepeda2.webp',
+      handle: 'GX-ID Group',
+      description: t('41.000+ Komunitas', '41,000+ Cyclists'),
+      bannerImage: '/pesepeda2.webp',
+      profilePhoto: '/logo-gx-id.webp',
+      ringClass: 'bg-gradient-to-tr from-[#1877F2] via-slate-400 to-[#FA6D0B]',
+      ctaText: t('Buka Facebook', 'Open Facebook'),
       href: 'https://www.facebook.com/groups/260107147993705/',
       isExternal: true,
     },
     {
       title: 'FB Marketplace GX-ID',
       category: 'MARKETPLACE // FORUM',
-      subtitle: t('Jual Beli Gear & Part', 'Gear & Parts Trading'),
-      image: '/pesepeda.webp',
+      handle: 'GX-ID Market',
+      description: t('Jual Beli Gear & Part', 'Gear & Parts Trading'),
+      bannerImage: '/pesepeda.webp',
+      profilePhoto: '/logo-gx-id.webp',
+      ringClass: 'bg-gradient-to-tr from-[#00A400] via-[#FA6D0B] to-amber-300',
+      ctaText: t('Buka Marketplace', 'Open Marketplace'),
       href: 'https://www.facebook.com/groups/260107147993705/',
       isExternal: true,
     },
     {
       title: t('Pendaftaran Event', 'Event Registration'),
       category: 'REGISTRATION // 2026',
-      subtitle: t('Pilih 5 Kategori Rute', 'Select 5 Route Categories'),
-      image: '/backgrounds/bg-categories.webp',
+      handle: 'Gravel Grindurance',
+      description: t('5 Kategori Rute Balap', '5 Race Route Categories'),
+      bannerImage: '/backgrounds/bg-categories.webp',
+      profilePhoto: '/logo-gx-id.webp',
+      ringClass: 'bg-gradient-to-tr from-[#FA6D0B] via-white to-[#FA6D0B]',
+      ctaText: t('Daftar Sekarang', 'Register Now'),
       href: '/daftar',
       isInternal: true,
     },
     {
       title: t('Portofolio', 'Portfolio'),
       category: 'TRACK RECORD // 8 YEARS',
-      subtitle: t('Arsip Ekspedisi GX-ID', 'GX-ID Expedition Archive'),
-      image: '/hero.webp',
+      handle: 'Linktree GX-ID',
+      description: t('Dokumentasi & Arsip', 'Archive & Track Record'),
+      bannerImage: '/hero.webp',
+      profilePhoto: '/logo-gx-id.webp',
+      ringClass: 'bg-gradient-to-tr from-amber-400 via-[#FA6D0B] to-purple-500',
+      ctaText: t('Buka Portofolio', 'Open Portfolio'),
       href: 'https://linktr.ee/gxid.official',
       isExternal: true,
     },
     {
       title: t('Region/Chapter GX-ID', 'Region/Chapter GX-ID'),
       category: 'NETWORK // 19 CHAPTERS',
-      subtitle: t('Lihat Daftar Nusantara ↓', 'View Regional Chapters ↓'),
-      image: '/backgrounds/bg-timeline.webp',
+      handle: '19 Chapter Resmi',
+      description: t('Jaringan Seluruh Indonesia', 'Nationwide Network'),
+      bannerImage: '/backgrounds/bg-timeline.webp',
+      profilePhoto: '/logo-gx-id.webp',
+      ringClass: 'bg-gradient-to-tr from-[#FA6D0B] via-white to-amber-400',
+      ctaText: t('Lihat Chapter', 'View Chapters'),
       href: '#chapters',
-      isExternal: false,
+      isInternal: false,
     },
   ];
 
@@ -122,48 +146,71 @@ export default function CommunitySocialSection() {
           </a>
         </div>
 
-        {/* 6 Official Community Cards (Replacing old story cards) */}
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
-          {communityCards.map((card, idx) => {
+        {/* 6 Official Profile Channel Cards (Foto Profil GX-ID Terpajang & Link Langsung) */}
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4">
+          {communityChannels.map((item, idx) => {
             const cardInner = (
               <>
-                {/* Background Photo */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
+                {/* Atmospheric Top Banner */}
+                <div className="h-16 sm:h-20 w-full relative overflow-hidden bg-black/60 border-b border-white/5">
                   <img
-                    src={card.image}
-                    alt={card.title}
-                    className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.15] transition-transform duration-700 group-hover:scale-105"
+                    src={item.bannerImage}
+                    alt={item.title}
+                    className="w-full h-full object-cover filter brightness-[0.4] contrast-125 group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
-                </div>
-
-                {/* Top: Category & Arrow */}
-                <div className="relative z-10 p-3 sm:p-4 flex items-center justify-between">
-                  <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#FA6D0B]">
-                    {card.category}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#0E1013]" />
+                  <span className="absolute top-2.5 left-3 text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-[#FA6D0B]">
+                    {item.category}
                   </span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-white/50 group-hover:text-[#FA6D0B] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  <div className="absolute top-2.5 right-3 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/70 border border-white/10 flex items-center justify-center text-white/50 group-hover:text-[#FA6D0B] group-hover:border-[#FA6D0B] transition-colors">
+                    <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </div>
                 </div>
 
-                {/* Bottom Meta */}
-                <div className="relative z-10 p-3 sm:p-4 space-y-1">
-                  <h3 className="font-display text-sm sm:text-base font-black uppercase text-white tracking-tight leading-snug group-hover:text-[#FA6D0B] transition-colors">
-                    {card.title}
-                  </h3>
-                  <p className="text-[10px] font-mono text-slate-300 font-medium">
-                    {card.subtitle}
-                  </p>
+                {/* Profile Photo (Foto Profil GX ID yg Terpajang) */}
+                <div className="relative -mt-8 sm:-mt-10 mb-1 flex justify-center">
+                  <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full p-[2px] shadow-2xl transition-transform duration-300 group-hover:scale-105 ${item.ringClass}`}>
+                    <div className="w-full h-full rounded-full bg-[#0D0E11] p-2.5 flex items-center justify-center overflow-hidden border border-white/10 shadow-inner">
+                      <img
+                        src={item.profilePhoto}
+                        alt={`Foto Profil ${item.title}`}
+                        className="w-full h-full object-contain filter brightness-110 drop-shadow group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Identity & Meta */}
+                <div className="px-3 pb-3.5 pt-1 flex flex-col items-center text-center flex-1 justify-between space-y-2.5">
+                  <div className="space-y-0.5">
+                    <h3 className="font-display font-black text-xs sm:text-sm uppercase tracking-tight text-white group-hover:text-[#FA6D0B] transition-colors leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-[10px] sm:text-[11px] font-mono text-[#FA6D0B] font-bold">
+                      {item.handle}
+                    </p>
+                    <p className="text-[9px] sm:text-[10px] font-mono text-slate-400 line-clamp-1">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Micro CTA Button */}
+                  <div className="w-full pt-1">
+                    <span className="w-full py-1.5 px-2.5 rounded-full bg-white/[0.04] group-hover:bg-[#FA6D0B] border border-white/10 group-hover:border-[#FA6D0B] text-slate-300 group-hover:text-black font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm">
+                      <span>{item.ctaText}</span>
+                      <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
+                    </span>
+                  </div>
                 </div>
               </>
             );
 
-            if (card.isInternal) {
+            if (item.isInternal) {
               return (
                 <Link
                   key={idx}
-                  href={card.href}
-                  className="group relative rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-md flex flex-col justify-between aspect-[3/4] sm:aspect-[4/5] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)]"
+                  href={item.href}
+                  className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#0E1013] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
                 >
                   {cardInner}
                 </Link>
@@ -173,10 +220,10 @@ export default function CommunitySocialSection() {
             return (
               <a
                 key={idx}
-                href={card.href}
-                target={card.href.startsWith('http') ? '_blank' : undefined}
-                rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-md flex flex-col justify-between aspect-[3/4] sm:aspect-[4/5] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)]"
+                href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#0E1013] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
               >
                 {cardInner}
               </a>
