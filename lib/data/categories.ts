@@ -76,6 +76,22 @@ export const GPX_DISPLAY_INFO: Record<string, { fileName: string; gpxKm: string;
   'VIRTUAL':  { fileName: '',                                       gpxKm: '',       prologKm: 0  },
 };
 
+// PROTOKOL RILIS GPX: File dikunci hingga H-2 sebelum Race Day (11 Desember 2026, 00:00 WIB)
+export const EVENT_DATE_ISO = '2026-12-13T00:00:00+07:00';
+export const GPX_UNLOCK_DATE_ISO = '2026-12-11T00:00:00+07:00';
+
+export function isGpxDownloadLocked(): boolean {
+  if (typeof window !== 'undefined') {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('unlock_gpx') === '1') return false;
+    } catch {
+      // ignore
+    }
+  }
+  return new Date() < new Date(GPX_UNLOCK_DATE_ISO);
+}
+
 export const CATEGORIES: CategoryData[] = [
   {
     id: '60',
