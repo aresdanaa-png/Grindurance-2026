@@ -20,7 +20,7 @@ import ElevationProfile from '@/components/ElevationProfile';
 // Dynamically import RouteMap without SSR
 const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
 
-// 5 KATEGORI RESMI GRINDURANCE 2026
+// 6 KATEGORI RESMI OFFLINE + 1 VIRTUAL GRINDURANCE 2026
 const OFFICIAL_CATEGORIES: Category[] = [
   {
     id: '60',
@@ -28,8 +28,8 @@ const OFFICIAL_CATEGORIES: Category[] = [
     distance_km: 60,
     category_type: 'fun',
     is_pair: false,
-    price_medal_only: 225000,
-    price_medal_jersey: 275000,
+    price_medal_only: 250000,
+    price_medal_jersey: 300000,
     quota: 150,
     current_enrolled: 42,
     cot_hours: 7,
@@ -45,8 +45,8 @@ const OFFICIAL_CATEGORIES: Category[] = [
     distance_km: 100,
     category_type: 'cross',
     is_pair: false,
-    price_medal_only: 275000,
-    price_medal_jersey: 325000,
+    price_medal_only: 300000,
+    price_medal_jersey: 350000,
     quota: 150,
     current_enrolled: 56,
     cot_hours: 9.5,
@@ -57,15 +57,32 @@ const OFFICIAL_CATEGORIES: Category[] = [
     is_active: true,
   },
   {
+    id: '120_SINGLE',
+    name: '120 (Race) Single',
+    distance_km: 120,
+    category_type: 'race',
+    is_pair: false,
+    price_medal_only: 400000,
+    price_medal_jersey: 450000,
+    quota: 100,
+    current_enrolled: 34,
+    cot_hours: 11,
+    wave_start_time: '06:00',
+    prologue_required_km: 0,
+    mandatory_pitstop_cp: 4,
+    tracking_required: true,
+    is_active: true,
+  },
+  {
     id: '120_PAIR',
-    name: '120 (Race Pair Mix)',
+    name: '120 (Race) Pair Mix',
     distance_km: 120,
     category_type: 'race',
     is_pair: true,
     price_medal_only: 700000,
     price_medal_jersey: 750000,
-    quota: 100,
-    current_enrolled: 38,
+    quota: 30,
+    current_enrolled: 12,
     cot_hours: 11,
     wave_start_time: '06:00',
     prologue_required_km: 0,
@@ -79,8 +96,8 @@ const OFFICIAL_CATEGORIES: Category[] = [
     distance_km: 150,
     category_type: 'race',
     is_pair: false,
-    price_medal_only: 350000,
-    price_medal_jersey: 400000,
+    price_medal_only: 400000,
+    price_medal_jersey: 450000,
     quota: 75,
     current_enrolled: 29,
     cot_hours: 15,
@@ -96,8 +113,8 @@ const OFFICIAL_CATEGORIES: Category[] = [
     distance_km: 200,
     category_type: 'ultra',
     is_pair: false,
-    price_medal_only: 350000,
-    price_medal_jersey: 400000,
+    price_medal_only: 400000,
+    price_medal_jersey: 450000,
     quota: 50,
     current_enrolled: 21,
     cot_hours: 19,
@@ -113,8 +130,8 @@ const OFFICIAL_CATEGORIES: Category[] = [
     distance_km: 0,
     category_type: 'virtual',
     is_pair: false,
-    price_medal_only: 175000,
-    price_medal_jersey: 225000,
+    price_medal_only: 200000,
+    price_medal_jersey: 250000,
     quota: 1000,
     current_enrolled: 142,
     cot_hours: null,
@@ -160,15 +177,25 @@ function getCategoryVisual(catId: string, t: (id: string, eng: string) => string
         terrain: t('ROLLING HILLS & MAKADAM SODONG', 'ROLLING HILLS & SODONG MACADAM'),
         callToAction: t('PACU NYALIMU!', 'IGNITE YOUR COURAGE!'),
       };
+    case '120_SINGLE':
+      return {
+        image: '/categories/cat_120_race.jpg?v=landscape_2026',
+        headline: '120 RACE SINGLE',
+        subtitle: t('OFFICIAL RACE · INDIVIDU / SENDIRI (1 RIDER)', 'OFFICIAL RACE · SOLO / INDIVIDUAL (1 RIDER)'),
+        elevation: '+1,450 M GAIN',
+        badge: t('OFFICIAL RACE · PODIUM INDIVIDU', 'OFFICIAL RACE · INDIVIDUAL PODIUM'),
+        terrain: t('KORIDOR JONGGOL RIDGE & SUKAMAKMUR', 'JONGGOL RIDGE & SUKAMAKMUR CORRIDOR'),
+        callToAction: t('REBUT PODIUM SENDIRI!', 'CLAIM YOUR PODIUM!'),
+      };
     case '120_PAIR':
       return {
         image: '/categories/cat_120_race.jpg?v=landscape_2026',
-        headline: '120 (RACE)',
-        subtitle: t('OFFICIAL RACE · SINGLE & PAIR MIX', 'OFFICIAL RACE · SINGLE & PAIR MIX'),
+        headline: '120 RACE PAIR MIX',
+        subtitle: t('OFFICIAL RACE · TANDEM TIM (2 RIDERS)', 'OFFICIAL RACE · TANDEM TEAM (2 RIDERS)'),
         elevation: '+1,450 M GAIN',
-        badge: t('OFFICIAL RACE · PODIUM', 'OFFICIAL RACE · PODIUM'),
+        badge: t('OFFICIAL RACE · PODIUM PAIR MIX', 'OFFICIAL RACE · PAIR MIX PODIUM'),
         terrain: t('KORIDOR JONGGOL RIDGE & SUKAMAKMUR', 'JONGGOL RIDGE & SUKAMAKMUR CORRIDOR'),
-        callToAction: t('REBUT PODIUM JUARAMU!', 'CLAIM YOUR PODIUM!'),
+        callToAction: t('KOMPAK REBUT PODIUM BERDUA!', 'CLAIM PODIUM TOGETHER!'),
       };
     case '150':
       return {
@@ -395,6 +422,7 @@ export default function RegistrationPage() {
             } : off;
           });
           setCategories(matched);
+          setSelectedCategory(prev => matched.find(c => c.id === prev.id) || prev);
         }
       } catch (err) {
         console.error('Menggunakan data kategori default resmi:', err);
@@ -672,8 +700,10 @@ export default function RegistrationPage() {
                       <div className="relative z-20 flex items-start justify-between gap-3 font-mono text-xs border-b border-white/10 pb-3">
                         <div>
                           <span className="font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                            {cat.id === '120_PAIR' 
-                              ? t('OFFICIAL RACE · 120 KM', 'OFFICIAL RACE · 120 KM') 
+                            {cat.id === '120_SINGLE'
+                              ? t('OFFICIAL RACE · 120 KM (SENDIRI)', 'OFFICIAL RACE · 120 KM (SOLO)')
+                              : cat.id === '120_PAIR' 
+                              ? t('OFFICIAL RACE · 120 KM (PAIR MIX)', 'OFFICIAL RACE · 120 KM (PAIR MIX)') 
                               : cat.id === '200' 
                               ? t('ULTRA EXPEDITION · 200 KM', 'ULTRA EXPEDITION · 200 KM') 
                               : cat.id === '150' 
@@ -958,6 +988,53 @@ export default function RegistrationPage() {
                       </span>
                     </div>
                   </div>
+
+                  {/* Race Format Toggle: Single vs Pair */}
+                  {(selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
+                    <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div>
+                        <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
+                          {t('PILIHAN FORMAT RACE 120 KM *', '120 KM RACE FORMAT SELECTION *')}
+                        </span>
+                        <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
+                          {t(
+                            'Pilih bertanding secara individu (Sendiri / 1 Pax) atau tim berpasangan (Pair Mix / 2 Pax).',
+                            'Choose to race individually (Solo / 1 Pax) or tandem team (Pair Mix / 2 Pax).'
+                          )}
+                        </p>
+                      </div>
+                      <div className="inline-flex rounded-xl bg-black/80 p-1.5 border border-white/10 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const singleCat = categories.find(c => c.id === '120_SINGLE') || OFFICIAL_CATEGORIES.find(c => c.id === '120_SINGLE');
+                            if (singleCat) setSelectedCategory(singleCat);
+                          }}
+                          className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                            !selectedCategory.is_pair
+                              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
+                              : 'text-slate-400 hover:text-white font-bold'
+                          }`}
+                        >
+                          {t('👤 SENDIRI (1 RIDER)', '👤 SINGLE (1 RIDER)')}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const pairCat = categories.find(c => c.id === '120_PAIR') || OFFICIAL_CATEGORIES.find(c => c.id === '120_PAIR');
+                            if (pairCat) setSelectedCategory(pairCat);
+                          }}
+                          className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                            selectedCategory.is_pair
+                              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
+                              : 'text-slate-400 hover:text-white font-bold'
+                          }`}
+                        >
+                          {t('👥 PASANGAN (PAIR MIX 2 PAX)', '👥 PAIR MIX (2 PAX)')}
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Prologue Protocol Note if applicable */}
                   {detailVisual.prologueNote && (
@@ -1285,7 +1362,11 @@ export default function RegistrationPage() {
                   </span>
                   <span className="text-[#FA6D0B] font-bold text-sm select-none">//</span>
                   <span className="text-xs sm:text-sm font-semibold text-slate-200 uppercase tracking-wider">
-                    {selectedCategory.is_pair ? t('PAIR MIX · 2 PESERTA (KAPTEN & PARTNER)', 'PAIR MIX · 2 RIDERS (CAPTAIN & PARTNER)') : t('SOLO INDIVIDUAL RIDER', 'SOLO INDIVIDUAL RIDER')}
+                    {selectedCategory.is_pair 
+                      ? t('PAIR MIX · 2 PESERTA (KAPTEN & PARTNER)', 'PAIR MIX · 2 RIDERS (CAPTAIN & PARTNER)') 
+                      : (selectedCategory.id === '120_SINGLE' 
+                          ? t('INDIVIDU · 1 PESERTA (SENDIRI)', 'SOLO · 1 RIDER (INDIVIDUAL)') 
+                          : t('SOLO INDIVIDUAL RIDER', 'SOLO INDIVIDUAL RIDER'))}
                   </span>
                 </div>
                 
@@ -1296,7 +1377,7 @@ export default function RegistrationPage() {
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm sm:text-base font-mono text-slate-300 pt-1">
                   <span>{t('Jarak:', 'Distance:')} <strong className="text-white font-black">{selectedCategory.id === 'VIRTUAL' ? t('Bebas (Rute Domisili)', 'Flexible (Local Course)') : `${selectedCategory.distance_km} KM`}</strong></span>
                   <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                  <span>{t('Format:', 'Format:')} <strong className="text-white font-black">{selectedCategory.is_pair ? t('Tandem Tim (2 Riders)', 'Pair Tandem (2 Riders)') : selectedCategory.id === 'VIRTUAL' ? t('Virtual Ride (19 Chapters)', 'Virtual Ride (19 Chapters)') : t('Solo Rider', 'Solo Rider')}</strong></span>
+                  <span>{t('Format:', 'Format:')} <strong className="text-white font-black">{selectedCategory.is_pair ? t('Tandem Tim (2 Riders)', 'Pair Tandem (2 Riders)') : selectedCategory.id === '120_SINGLE' ? t('Individu / Sendiri (1 Rider)', 'Individual Solo (1 Rider)') : selectedCategory.id === 'VIRTUAL' ? t('Virtual Ride (19 Chapters)', 'Virtual Ride (19 Chapters)') : t('Solo Rider', 'Solo Rider')}</strong></span>
                   <span className="text-[#FA6D0B] font-bold select-none">//</span>
                   <span>{t('COT:', 'COT:')} <strong className="text-white font-black">{selectedCategory.cot_hours ? `${selectedCategory.cot_hours} ${t('Jam', 'Hours')}` : t('Fleksibel', 'Flexible')}</strong></span>
                   <span className="text-[#FA6D0B] font-bold select-none">//</span>
@@ -1315,6 +1396,53 @@ export default function RegistrationPage() {
                 {t('GANTI KATEGORI', 'CHANGE CATEGORY')}
               </button>
             </div>
+
+            {/* Race Format Toggle: Single vs Pair */}
+            {(selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
+              <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
+                    {t('PILIHAN FORMAT RACE 120 KM *', '120 KM RACE FORMAT SELECTION *')}
+                  </span>
+                  <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
+                    {t(
+                      'Pilih bertanding secara individu (Sendiri / 1 Pax) atau tim berpasangan (Pair Mix / 2 Pax). Biaya dan kolom pendaftaran otomatis disesuaikan.',
+                      'Choose to race individually (Solo / 1 Pax) or tandem team (Pair Mix / 2 Pax). Fees and registration fields automatically adjust.'
+                    )}
+                  </p>
+                </div>
+                <div className="inline-flex rounded-xl bg-black/80 p-1.5 border border-white/10 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const singleCat = categories.find(c => c.id === '120_SINGLE') || OFFICIAL_CATEGORIES.find(c => c.id === '120_SINGLE');
+                      if (singleCat) setSelectedCategory(singleCat);
+                    }}
+                    className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                      !selectedCategory.is_pair
+                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
+                        : 'text-slate-400 hover:text-white font-bold'
+                    }`}
+                  >
+                    {t('👤 SENDIRI (1 RIDER)', '👤 SINGLE (1 RIDER)')}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const pairCat = categories.find(c => c.id === '120_PAIR') || OFFICIAL_CATEGORIES.find(c => c.id === '120_PAIR');
+                      if (pairCat) setSelectedCategory(pairCat);
+                    }}
+                    className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                      selectedCategory.is_pair
+                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
+                        : 'text-slate-400 hover:text-white font-bold'
+                    }`}
+                  >
+                    {t('👥 PASANGAN (PAIR MIX 2 PAX)', '👥 PAIR MIX (2 PAX)')}
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Error Message Box */}
             {errorMessage && (
