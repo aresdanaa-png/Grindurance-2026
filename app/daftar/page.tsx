@@ -107,9 +107,26 @@ const OFFICIAL_CATEGORIES: Category[] = [
     tracking_required: true,
     is_active: true,
   },
+  {
+    id: 'VIRTUAL',
+    name: 'Virtual Ride (19 Chapters)',
+    distance_km: 0,
+    category_type: 'virtual',
+    is_pair: false,
+    price_medal_only: 175000,
+    price_medal_jersey: 225000,
+    quota: 1000,
+    current_enrolled: 142,
+    cot_hours: null,
+    wave_start_time: 'Fleksibel',
+    prologue_required_km: 0,
+    mandatory_pitstop_cp: null,
+    tracking_required: true,
+    is_active: true,
+  },
 ];
 
-// Visual Poster & Kata Ajakan Spesifik per 5 Kategori Resmi
+// Visual Poster & Kata Ajakan Spesifik per 6 Kategori Resmi
 const CATEGORY_VISUALS: Record<string, { 
   image: string; 
   headline: string; 
@@ -166,6 +183,16 @@ const CATEGORY_VISUALS: Record<string, {
     terrain: 'RUTE 170 KM DITAMBAH PROLOG 30 KM',
     callToAction: 'UJI KETAHANAN EKSTREM',
     prologueNote: 'Rute resmi disiapkan 170 km, peserta wajib menyelesaikan Prolog 30 km mandiri (Total jarak 200 km).',
+  },
+  'VIRTUAL': {
+    image: '/backgrounds/bg-community.webp',
+    headline: 'VIRTUAL RIDE',
+    subtitle: '19 REGIONAL CHAPTERS · SE-INDONESIA',
+    elevation: 'RUTE DOMISILI',
+    badge: 'VIRTUAL // STRAVA GPS',
+    terrain: 'OUTDOOR DI KOTA DOMISILI ANDA',
+    callToAction: 'GOWES DI KOTA ANDA',
+    prologueNote: 'Khusus cyclist di luar Jabodetabek (19 Chapter GX-ID). Rekam aktivitas via Strava/Garmin, medali finisher resmi dan jersey dikirim langsung ke rumah via DHS Logistik.',
   },
 };
 
@@ -269,8 +296,8 @@ export default function RegistrationPage() {
         const res = await fetch('/api/categories');
         const data = await res.json();
         if (data.categories && Array.isArray(data.categories) && data.categories.length > 0) {
-          // Sinkronisasi dengan official list 60, 100, 120, 150, 200
-          const validIds = ['60', '100', '120_PAIR', '150', '200'];
+          // Sinkronisasi dengan official list 60, 100, 120, 150, 200, VIRTUAL
+          const validIds = ['60', '100', '120_PAIR', '150', '200', 'VIRTUAL'];
           const matched = OFFICIAL_CATEGORIES.map(off => {
             const live = data.categories.find((c: Category) => c.id === off.id);
             return live ? { ...off, current_enrolled: live.current_enrolled, quota: live.quota } : off;
@@ -310,7 +337,7 @@ export default function RegistrationPage() {
       : selectedCategory.price_medal_only
     : 0;
 
-  const rpcHandlingFee = rpcMethod === 'HANDLING' ? 20000 : 0;
+  const rpcHandlingFee = (rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL') ? 20000 : 0;
   const mealCouponDiscount = isEligibleForMealCoupon() ? 50000 : 0;
   const netPrice = Math.max(0, basePrice + rpcHandlingFee - mealCouponDiscount);
 
@@ -442,7 +469,7 @@ export default function RegistrationPage() {
       <div className="max-w-7xl mx-auto relative z-10">
 
         {/* ========================================================================= */}
-        {/* STEP 1: PILIH KATEGORI (5 KATEGORI RESMI GRINDURANCE 2026) */}
+        {/* STEP 1: PILIH KATEGORI (6 KATEGORI RESMI GRINDURANCE 2026) */}
         {/* ========================================================================= */}
         {currentStep === 'select' && (
           <div className="space-y-12 animate-fadeIn">
@@ -451,7 +478,7 @@ export default function RegistrationPage() {
             <div className="text-center space-y-4 max-w-3xl mx-auto">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-mono uppercase tracking-[0.25em] text-[#FA6D0B]">
                 <span className="w-2 h-2 rounded-full bg-[#FA6D0B] animate-pulse" />
-                GRINDURANCE 2026 // 5 KATEGORI RESMI
+                GRINDURANCE 2026 // 6 KATEGORI RESMI (5 ON-SITE + VIRTUAL)
               </div>
 
               <h1 className="font-display text-4xl sm:text-6xl font-black uppercase tracking-tight text-white leading-none">
@@ -459,12 +486,12 @@ export default function RegistrationPage() {
               </h1>
 
               <p className="text-xs sm:text-sm text-slate-400 font-sans leading-relaxed">
-                60 Fun Ride · 100 Fondo · 120 (Race) · 150 Grand Fondo · 200 Ultra.
-                Klik kategori di bawah untuk mempelajari rute GPX, profil elevasi, dan regulasi.
+                60 Fun Ride · 100 Fondo · 120 (Race) · 150 Grand Fondo · 200 Ultra · Virtual Ride (19 Chapters).
+                Klik poster kategori di bawah untuk mempelajari rute, profil elevasi, dan regulasi resmi.
               </p>
             </div>
 
-            {/* Grid 5 Kategori Bergaya Editorial Gravel Monolith */}
+            {/* Grid 6 Kategori Bergaya Editorial Gravel Monolith */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
               {categories.map((cat) => {
                 const visual = CATEGORY_VISUALS[cat.id] || {
@@ -639,22 +666,36 @@ export default function RegistrationPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 p-5 rounded-2xl border border-white/10 bg-[#121418] font-mono text-xs">
               <div className="space-y-1 border-r border-white/10 pr-2">
                 <span className="text-[10px] text-slate-500 uppercase block">JARAK TEMPUH:</span>
-                <span className="text-xl sm:text-2xl font-black text-white block">{selectedCategory.distance_km} KM</span>
+                <span className="text-xl sm:text-2xl font-black text-white block">
+                  {selectedCategory.id === 'VIRTUAL' ? 'BEBAS' : `${selectedCategory.distance_km} KM`}
+                </span>
                 <span className="text-[10px] text-slate-400">
-                  {selectedCategory.id === '150' ? 'Rute 120km + 30km Prolog' : selectedCategory.id === '200' ? 'Rute 170km + 30km Prolog' : 'Rute Penuh'}
+                  {selectedCategory.id === '150' 
+                    ? 'Rute 120km + 30km Prolog' 
+                    : selectedCategory.id === '200' 
+                    ? 'Rute 170km + 30km Prolog' 
+                    : selectedCategory.id === 'VIRTUAL' 
+                    ? 'Rute Domisili Lokal' 
+                    : 'Rute Penuh'}
                 </span>
               </div>
 
               <div className="space-y-1 border-r border-white/10 pr-2 sm:px-2">
                 <span className="text-[10px] text-slate-500 uppercase block">TOTAL ELEVASI:</span>
                 <span className="text-xl sm:text-2xl font-black text-[#FA6D0B] block">{detailCategoryData.elevation}</span>
-                <span className="text-[10px] text-slate-400">Max Alt: {detailCategoryData.maxAlt}</span>
+                <span className="text-[10px] text-slate-400">
+                  {selectedCategory.id === 'VIRTUAL' ? 'Kontur Domisili' : `Max Alt: ${detailCategoryData.maxAlt}`}
+                </span>
               </div>
 
               <div className="space-y-1 border-r border-white/10 pr-2 sm:px-2">
                 <span className="text-[10px] text-slate-500 uppercase block">BATAS WAKTU (COT):</span>
-                <span className="text-xl sm:text-2xl font-black text-white block">{selectedCategory.cot_hours ? `${selectedCategory.cot_hours} JAM` : 'NO COT'}</span>
-                <span className="text-[10px] text-slate-400">Flag-off: {selectedCategory.wave_start_time || '05:30'} WIB</span>
+                <span className="text-xl sm:text-2xl font-black text-white block">
+                  {selectedCategory.cot_hours ? `${selectedCategory.cot_hours} JAM` : 'FLEKSIBEL'}
+                </span>
+                <span className="text-[10px] text-slate-400">
+                  {selectedCategory.id === 'VIRTUAL' ? 'Sinkronisasi Strava Webhook' : `Flag-off: ${selectedCategory.wave_start_time || '05:30'} WIB`}
+                </span>
               </div>
 
               <div className="space-y-1 sm:pl-2">
@@ -664,40 +705,132 @@ export default function RegistrationPage() {
               </div>
             </div>
 
-            {/* PETA BESAR (LARGE GPX LIVE MAP) */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-white/10 pb-2">
-                <span className="font-bold text-white uppercase tracking-wider">[PETA RUTE RESMI // SATELLITE LIVE GPX]</span>
-                <span className="text-[10px] text-[#FA6D0B] uppercase">KORIDOR JONGGOL–SUKAMAKMUR–SENTUL</span>
-              </div>
+            {selectedCategory.id === 'VIRTUAL' ? (
+              /* VIRTUAL RIDE DASHBOARD: 19 CHAPTERS & STRAVA PROTOCOL */
+              <div className="space-y-8">
+                {/* 19 Chapters Network Banner */}
+                <div className="p-6 sm:p-8 rounded-3xl border border-[#FA6D0B]/30 bg-gradient-to-b from-[#181B22] to-[#0E1015] shadow-2xl space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+                    <div>
+                      <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold block">
+                        GX-ID NATIONAL NETWORK // 19 REGIONAL CHAPTERS
+                      </span>
+                      <h3 className="font-display text-xl sm:text-3xl font-black uppercase text-white mt-1">
+                        JARINGAN GOWES SERENTAK SE-INDONESIA
+                      </h3>
+                    </div>
+                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 self-start sm:self-auto">
+                      ● STRAVA WEBHOOK CONNECTED
+                    </span>
+                  </div>
 
-              <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] rounded-3xl overflow-hidden border border-white/15 bg-black/80 shadow-2xl">
-                <RouteMap
-                  gpxFile={GPX_FILE_MAP[selectedCategory.id] ?? null}
-                  categoryKm={detailCategoryData.km}
-                  categoryId={detailCategoryData.id}
-                  gpxTotalKm={GPX_DISPLAY_INFO[detailCategoryData.id]?.gpxKm ?? ''}
-                  prologKm={GPX_DISPLAY_INFO[detailCategoryData.id]?.prologKm ?? 0}
-                  gpxFileName={GPX_DISPLAY_INFO[detailCategoryData.id]?.fileName ?? ''}
-                  accentColor="#FA6D0B"
-                />
-              </div>
-            </div>
+                  <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
+                    Khusus bagi 80.000+ anggota komunitas GX-ID dan pesepeda di luar Jabodetabek. Anda dapat memilih rute outdoor favorit di kota domisili Anda, merekam aktivitas menggunakan GPS cycling computer (Garmin / Wahoo / Strava / Komoot), dan medali cor logam resmi serta jersey finisher akan dikirimkan langsung ke alamat Anda via DHS Logistik.
+                  </p>
 
-            {/* DIAGRAM PROFIL ELEVASI INTERAKTIF */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-white/10 pb-2">
-                <span className="font-bold text-white uppercase tracking-wider">[DIAGRAM KONTUR ELEVASI &amp; CHECKPOINT STATION]</span>
-                <span className="text-[10px] text-slate-500 uppercase">HOVER / SCRUB UNTUK DETAIL KM &amp; TINGGI</span>
-              </div>
+                  {/* 19 Chapters Grid */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">
+                      CHAPTER REGIONAL TERDAFTAR (TIKUM RESMI):
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        'Bandung', 'Surabaya', 'Medan', 'Bali', 'Yogyakarta',
+                        'Makassar', 'Semarang', 'Solo', 'Jabodetabek', 'Palembang',
+                        'Balikpapan', 'Malang', 'Banjarmasin', 'Padang', 'Batam',
+                        'Lampung', 'Manado', 'Samarinda', 'Papua'
+                      ].map((chapter) => (
+                        <span
+                          key={chapter}
+                          className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-[11px] font-mono text-slate-300 font-bold hover:border-[#FA6D0B] hover:text-[#FA6D0B] transition-colors"
+                        >
+                          GX-ID {chapter}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
 
-              <div className="p-4 sm:p-6 rounded-3xl border border-white/15 bg-[#121418]">
-                <ElevationProfile
-                  category={detailCategoryData}
-                  accentColor="#FA6D0B"
-                />
+                {/* 4-Step Virtual Protocol Cards */}
+                <div className="space-y-3">
+                  <div className="font-mono text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-2">
+                    [ALUR 4 TAHAP KELULUSAN VIRTUAL RIDE]
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="p-5 rounded-2xl border border-white/15 bg-[#121418] space-y-2">
+                      <div className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">TAHAP 01</div>
+                      <div className="text-sm font-black text-white font-mono uppercase">REGISTRASI &amp; BIB</div>
+                      <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
+                        Pilih paket medali / jersey, isi identitas dan alamat domisili untuk pengiriman logistik, lalu selesaikan pembayaran.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl border border-white/15 bg-[#121418] space-y-2">
+                      <div className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">TAHAP 02</div>
+                      <div className="text-sm font-black text-white font-mono uppercase">GOWES OUTDOOR</div>
+                      <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
+                        Gowes di rute kota Anda pada periode race window. Wajib outdoor (dilarang indoor roller) dengan GPS tracking aktif.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl border border-white/15 bg-[#121418] space-y-2">
+                      <div className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">TAHAP 03</div>
+                      <div className="text-sm font-black text-white font-mono uppercase">STRAVA SYNC</div>
+                      <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
+                        Sinkronkan URL aktivitas Strava atau file GPX. Server otomatis Grindurance memverifikasi validitas data rekaman.
+                      </p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl border border-white/15 bg-[#121418] space-y-2">
+                      <div className="text-[10px] font-mono font-bold text-emerald-400 uppercase tracking-wider">TAHAP 04</div>
+                      <div className="text-sm font-black text-white font-mono uppercase">MEDALI DIKIRIM</div>
+                      <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
+                        Setelah status FINISHER terverifikasi, medali cor logam resmi dan jersey eksklusif dikirim via DHS Logistik ke rumah.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            ) : (
+              /* ON-SITE CATEGORIES: LARGE GPX LIVE MAP & ELEVATION PROFILE */
+              <>
+                {/* PETA BESAR (LARGE GPX LIVE MAP) */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-white/10 pb-2">
+                    <span className="font-bold text-white uppercase tracking-wider">[PETA RUTE RESMI // SATELLITE LIVE GPX]</span>
+                    <span className="text-[10px] text-[#FA6D0B] uppercase">KORIDOR JONGGOL–SUKAMAKMUR–SENTUL</span>
+                  </div>
+
+                  <div className="relative w-full aspect-[16/10] sm:aspect-[21/9] rounded-3xl overflow-hidden border border-white/15 bg-black/80 shadow-2xl">
+                    <RouteMap
+                      gpxFile={GPX_FILE_MAP[selectedCategory.id] ?? null}
+                      categoryKm={detailCategoryData.km}
+                      categoryId={detailCategoryData.id}
+                      gpxTotalKm={GPX_DISPLAY_INFO[detailCategoryData.id]?.gpxKm ?? ''}
+                      prologKm={GPX_DISPLAY_INFO[detailCategoryData.id]?.prologKm ?? 0}
+                      gpxFileName={GPX_DISPLAY_INFO[detailCategoryData.id]?.fileName ?? ''}
+                      accentColor="#FA6D0B"
+                    />
+                  </div>
+                </div>
+
+                {/* DIAGRAM PROFIL ELEVASI INTERAKTIF */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between font-mono text-xs text-slate-400 border-b border-white/10 pb-2">
+                    <span className="font-bold text-white uppercase tracking-wider">[DIAGRAM KONTUR ELEVASI &amp; CHECKPOINT STATION]</span>
+                    <span className="text-[10px] text-slate-500 uppercase">HOVER / SCRUB UNTUK DETAIL KM &amp; TINGGI</span>
+                  </div>
+
+                  <div className="p-4 sm:p-6 rounded-3xl border border-white/15 bg-[#121418]">
+                    <ElevationProfile
+                      category={detailCategoryData}
+                      accentColor="#FA6D0B"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
 
             {/* GRID DETAIL: PEMBAGIAN PERMUKAAN & MATRIKS CHECKPOINT */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -869,9 +1002,9 @@ export default function RegistrationPage() {
                   {selectedCategory.name}
                 </h2>
                 <div className="text-xs font-mono text-slate-400 mt-1">
-                  Jarak: <span className="text-white font-bold">{selectedCategory.distance_km} KM</span> · 
-                  Format: <span className="text-white font-bold">{selectedCategory.is_pair ? 'Tandem Tim (2 Riders)' : 'Solo Rider'}</span> · 
-                  COT: <span className="text-white font-bold">{selectedCategory.cot_hours} Jam</span>
+                  Jarak: <span className="text-white font-bold">{selectedCategory.id === 'VIRTUAL' ? 'Bebas (Rute Domisili)' : `${selectedCategory.distance_km} KM`}</span> · 
+                  Format: <span className="text-white font-bold">{selectedCategory.is_pair ? 'Tandem Tim (2 Riders)' : selectedCategory.id === 'VIRTUAL' ? 'Virtual Ride (19 Chapters)' : 'Solo Rider'}</span> · 
+                  COT: <span className="text-white font-bold">{selectedCategory.cot_hours ? `${selectedCategory.cot_hours} Jam` : 'Fleksibel'}</span>
                 </div>
               </div>
 
@@ -961,45 +1094,57 @@ export default function RegistrationPage() {
                 {/* Pengambilan Race Pack */}
                 <div className="space-y-3">
                   <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">
-                    PENGAMBILAN RACE PACK (RPC) <span className="text-[#FA6D0B]">*</span>
+                    {selectedCategory.id === 'VIRTUAL' ? 'METODE PENGIRIMAN MEDALI & RACE PACK' : 'PENGAMBILAN RACE PACK (RPC)'} <span className="text-[#FA6D0B]">*</span>
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setRpcMethod('PICKUP')}
-                      className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
-                        rpcMethod === 'PICKUP'
-                          ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
-                          : 'border-white/10 bg-[#121418] hover:border-white/25'
-                      }`}
-                    >
+                  {selectedCategory.id === 'VIRTUAL' ? (
+                    <div className="p-5 rounded-2xl border border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]">
                       <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
-                        [GRATIS // FREE]
+                        [TERMASUK DALAM PAKET VIRTUAL]
                       </span>
-                      <div className="text-sm font-black text-white uppercase">AMBIL DI CIBUBUR</div>
-                      <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                        Lokasi: ABEEY Coffee &amp; Eatery, LRT Harjamukti, Cibubur (11–12 Des 2026).
+                      <div className="text-sm font-black text-white uppercase">PENGIRIMAN DHS LOGISTIK KE ALAMAT RUMAH</div>
+                      <p className="text-[10px] text-slate-300 mt-2 font-sans leading-relaxed">
+                        Medali finisher resmi dan jersey akan dikirim via kurir DHS Logistik langsung ke alamat domisili Anda setelah validasi GPS Strava selesai. Bebas biaya handling on-site.
                       </p>
-                    </button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setRpcMethod('PICKUP')}
+                        className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                          rpcMethod === 'PICKUP'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
+                            : 'border-white/10 bg-[#121418] hover:border-white/25'
+                        }`}
+                      >
+                        <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
+                          [GRATIS // FREE]
+                        </span>
+                        <div className="text-sm font-black text-white uppercase">AMBIL DI CIBUBUR</div>
+                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
+                          Lokasi: ABEEY Coffee &amp; Eatery, LRT Harjamukti, Cibubur (11–12 Des 2026).
+                        </p>
+                      </button>
 
-                    <button
-                      type="button"
-                      onClick={() => setRpcMethod('HANDLING')}
-                      className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
-                        rpcMethod === 'HANDLING'
-                          ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
-                          : 'border-white/10 bg-[#121418] hover:border-white/25'
-                      }`}
-                    >
-                      <span className="text-[9px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block mb-1">
-                        [+RP 20.000]
-                      </span>
-                      <div className="text-sm font-black text-white uppercase">HANDLING &amp; KIRIM</div>
-                      <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                        Paket race pack dikirim langsung ke alamat rumah Anda.
-                      </p>
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        onClick={() => setRpcMethod('HANDLING')}
+                        className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                          rpcMethod === 'HANDLING'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
+                            : 'border-white/10 bg-[#121418] hover:border-white/25'
+                        }`}
+                      >
+                        <span className="text-[9px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block mb-1">
+                          [+RP 20.000]
+                        </span>
+                        <div className="text-sm font-black text-white uppercase">HANDLING &amp; KIRIM</div>
+                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
+                          Paket race pack dikirim langsung ke alamat rumah Anda.
+                        </p>
+                      </button>
+                    </div>
+                  )}
                 </div>
 
               </div>

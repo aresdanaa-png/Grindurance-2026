@@ -66,7 +66,7 @@ export async function POST(req: Request) {
     }
 
     // 2. Hitung Harga Bruto (Gross Amount) termasuk Opsi Handling Fee RPC Rp 20.000 jika dipilih
-    const rpc_handling_fee = rpc_method === 'HANDLING' ? 20000 : 0;
+    const rpc_handling_fee = (rpc_method === 'HANDLING' && category_id !== 'VIRTUAL') ? 20000 : 0;
     const base_amount = package_type === 'MEDAL_JERSEY'
       ? Number(category.price_medal_jersey)
       : Number(category.price_medal_only);
