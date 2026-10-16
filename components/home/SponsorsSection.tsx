@@ -30,9 +30,12 @@ function MainSponsorLogo({ item }: { item: SponsorItem }) {
 }
 
 function SupportingSponsorLogo({ item }: { item: SponsorItem }) {
+  const sizeClass = item.large
+    ? 'h-12 sm:h-14 lg:h-16 w-32 sm:w-36 lg:w-44'
+    : 'h-8 sm:h-9 lg:h-10 w-24 sm:w-28 lg:w-32';
   return (
     <div
-      className="h-8 sm:h-9 lg:h-10 w-24 sm:w-28 lg:w-32 flex items-center justify-center p-1.5 transition-all duration-300 hover:scale-105 opacity-80 hover:opacity-100 group"
+      className={`${sizeClass} flex items-center justify-center p-1.5 transition-all duration-300 hover:scale-105 opacity-80 hover:opacity-100 group`}
       title={item.name}
     >
       {item.logo ? (

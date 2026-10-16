@@ -5,6 +5,7 @@ export interface SponsorItem {
   heightClass?: string;
   maxWidthClass?: string;
   customText?: string;
+  large?: boolean;
 }
 
 // 5 LOGO UTAMA (PRESENTED BY): Abeey, J&T, BYD, RS Hermina Depok, DHS
@@ -46,11 +47,13 @@ export const SUPPORTING_PARTNERS: SponsorItem[] = [
     id: 'hermina-jatinegara',
     name: 'RS Hermina Jatinegara',
     logo: '/sponsors/hermina-jatinegara-tight.png',
+    large: true,
   },
   {
     id: 'hermina-podomoro',
     name: 'RS Hermina Podomoro',
     logo: '/sponsors/hermina-podomoro-tight.png',
+    large: true,
   },
   {
     id: 'ndr',
@@ -66,6 +69,7 @@ export const SUPPORTING_PARTNERS: SponsorItem[] = [
     id: 'raceonebike',
     name: 'RaceOneBike',
     logo: '/sponsors/raceonebike-clean.png',
+    large: true,
   },
   {
     id: 'sorlex',
@@ -76,21 +80,25 @@ export const SUPPORTING_PARTNERS: SponsorItem[] = [
     id: 'miri-miri',
     name: 'Miri-Miri',
     logo: '/sponsors/miri-miri.png',
+    large: true,
   },
   {
     id: 'kedai-vian',
     name: 'Kedai Vian',
     logo: '/sponsors/kedai-vian.png',
+    large: true,
   },
   {
     id: 'jerjhon',
     name: 'Jerjhon',
     logo: '/sponsors/jerjhon.png',
+    large: true,
   },
   {
     id: 'sulep',
     name: 'Sulep Apparel Bags & Parts',
     logo: '/sponsors/sulep-clean.png',
+    large: true,
   },
 
   {
@@ -98,5 +106,6 @@ export const SUPPORTING_PARTNERS: SponsorItem[] = [
     name: 'Pollride',
     logo: null,
     customText: 'POLLRIDE',
+    large: true,
   },
 ];
