@@ -92,11 +92,7 @@ export const SUPPORTING_PARTNERS: SponsorItem[] = [
     name: 'Sulep Apparel Bags & Parts',
     logo: '/sponsors/sulep-clean.png',
   },
-  {
-    id: 'rudeboys',
-    name: 'Rudeboys',
-    logo: '/sponsors/rudeboys.png',
-  },
+
   {
     id: 'pollride',
     name: 'Pollride',
