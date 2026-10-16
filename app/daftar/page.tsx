@@ -138,7 +138,7 @@ const CATEGORY_VISUALS: Record<string, {
   prologueNote?: string;
 }> = {
   '60': {
-    image: '/categories/cat_60_funride.jpg',
+    image: '/categories/cat_60_funride.jpg?v=landscape_2026',
     headline: '60 FUN RIDE',
     subtitle: 'REKREASI & PEMULA · SUKAMAKMUR',
     elevation: '+450 M GAIN',
@@ -147,7 +147,7 @@ const CATEGORY_VISUALS: Record<string, {
     callToAction: 'MULAI PETUALANGAN',
   },
   '100': {
-    image: '/categories/cat_100_fondo.jpg',
+    image: '/categories/cat_100_fondo.jpg?v=landscape_2026',
     headline: '100 FONDO',
     subtitle: 'EKSPLORASI PERSAWAHAN & MAKADAM SODONG',
     elevation: '+850 M GAIN',
@@ -156,7 +156,7 @@ const CATEGORY_VISUALS: Record<string, {
     callToAction: 'JELAJAHI JALUR',
   },
   '120_PAIR': {
-    image: '/categories/cat_120_race.jpg',
+    image: '/categories/cat_120_race.jpg?v=landscape_2026',
     headline: '120 (RACE)',
     subtitle: 'OFFICIAL RACE · SINGLE & PAIR MIX',
     elevation: '+1,450 M GAIN',
@@ -165,7 +165,7 @@ const CATEGORY_VISUALS: Record<string, {
     callToAction: 'REBUT PODIUM DUAL',
   },
   '150': {
-    image: '/categories/cat_150_grandfondo.jpg',
+    image: '/categories/cat_150_grandfondo.jpg?v=landscape_2026',
     headline: '150 GRAND FONDO',
     subtitle: 'RUTE 120 KM + WAJIB PROLOG 30 KM SUBUH',
     elevation: '+1,450 M GAIN',
@@ -175,7 +175,7 @@ const CATEGORY_VISUALS: Record<string, {
     prologueNote: 'Rute 120 km dan 150 km memiliki trek sama, bedanya kategori 150 wajib menyelesaikan Prolog 30 km mandiri (03:00–05:00 WIB).',
   },
   '200': {
-    image: '/categories/cat_200_ultra.jpg',
+    image: '/categories/cat_200_ultra.jpg?v=landscape_2026',
     headline: '200 ULTRA',
     subtitle: 'RUTE 170 KM + WAJIB PROLOG 30 KM',
     elevation: '+3,180 M GAIN',
@@ -185,7 +185,7 @@ const CATEGORY_VISUALS: Record<string, {
     prologueNote: 'Rute resmi disiapkan 170 km, peserta wajib menyelesaikan Prolog 30 km mandiri (Total jarak 200 km).',
   },
   'VIRTUAL': {
-    image: '/categories/cat_virtual_ride.jpg',
+    image: '/categories/cat_virtual_ride.jpg?v=landscape_2026',
     headline: 'VIRTUAL RIDE',
     subtitle: '19 REGIONAL CHAPTERS · SE-INDONESIA',
     elevation: 'RUTE DOMISILI',
@@ -471,37 +471,36 @@ export default function RegistrationPage() {
         {/* ========================================================================= */}
         {/* STEP 1: PILIH KATEGORI (6 KATEGORI RESMI GRINDURANCE 2026) */}
         {/* ========================================================================= */}
+        {/* ========================================================================= */}
+        {/* STEP 1: PILIH KATEGORI (6 KATEGORI RESMI GRINDURANCE 2026) */}
+        {/* ========================================================================= */}
         {currentStep === 'select' && (
-          <div className="space-y-12 animate-fadeIn">
+          <div className="space-y-10 animate-fadeIn">
             
-            {/* Header Telemetri & Title */}
-            <div className="text-center space-y-4 max-w-3xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-mono uppercase tracking-[0.25em] text-[#FA6D0B]">
-                <span className="w-2 h-2 rounded-full bg-[#FA6D0B] animate-pulse" />
-                GRINDURANCE 2026 // 6 KATEGORI RESMI (5 ON-SITE + VIRTUAL)
-              </div>
-
-              <h1 className="font-display text-4xl sm:text-6xl font-black uppercase tracking-tight text-white leading-none">
-                PILIH MEDAN <span className="text-[#FA6D0B]">TEMPUR</span> ANDA
+            {/* Header Telemetri & Title - Format DNA Master Bible */}
+            <div className="border-b border-white/10 pb-6 sm:pb-8 mb-8 sm:mb-12">
+              <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block mb-2">
+                GX-ID OFFICIAL SPEC SHEET // 2026 EDITION
+              </span>
+              <h1 className="font-display italic text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white">
+                PILIH KATEGORI LINTASAN
               </h1>
-
-              <p className="text-xs sm:text-sm text-slate-400 font-sans leading-relaxed">
-                60 Fun Ride · 100 Fondo · 120 (Race) · 150 Grand Fondo · 200 Ultra · Virtual Ride (19 Chapters).
-                Klik poster kategori di bawah untuk mempelajari rute, profil elevasi, dan regulasi resmi.
+              <p className="mt-3 text-xs sm:text-sm md:text-base text-slate-400 max-w-3xl leading-relaxed font-sans">
+                5 kategori etape off-road koridor Jonggol–Sukamakmur dan 1 format Virtual Ride 19 Chapter se-Indonesia. Klik kategori untuk memeriksa peta satelit, profil kontur elevasi, dan regulasi resmi.
               </p>
             </div>
 
             {/* Grid 6 Kategori Bergaya Editorial Gravel Monolith */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {categories.map((cat) => {
                 const visual = CATEGORY_VISUALS[cat.id] || {
-                  image: '/pesepeda.webp',
+                  image: '/categories/cat_60_funride.jpg',
                   headline: cat.name.toUpperCase(),
                   subtitle: 'ULTRA ENDURANCE EXPEDITION',
                   elevation: '+1,450 M GAIN',
                   badge: 'OFFICIAL EXPEDITION',
                   terrain: 'GRAVEL & ASPAL',
-                  callToAction: 'PILIH TANTANGAN INI',
+                  callToAction: 'PILIH KATEGORI',
                 };
                 const quotaPercent = Math.min(100, Math.round((cat.current_enrolled / cat.quota) * 100));
 
@@ -509,102 +508,79 @@ export default function RegistrationPage() {
                   <div
                     key={cat.id}
                     onClick={() => handleSelectToDetail(cat)}
-                    className="relative h-[490px] sm:h-[520px] rounded-3xl overflow-hidden border border-white/15 hover:border-[#FA6D0B] transition-all duration-500 group cursor-pointer flex flex-col justify-between p-6 select-none hover:shadow-[0_0_35px_rgba(250,109,11,0.3)] hover:scale-[1.01]"
+                    className="relative h-[480px] sm:h-[510px] rounded-2xl overflow-hidden border border-white/10 hover:border-[#FA6D0B] transition-all duration-300 group cursor-pointer flex flex-col justify-between p-6 sm:p-7 select-none shadow-[0_15px_50px_rgba(0,0,0,0.5)] hover:shadow-[0_0_35px_rgba(250,109,11,0.25)]"
                   >
                     {/* Background Hero Photography */}
                     <Image
                       src={visual.image}
                       alt={cat.name}
                       fill
-                      className="object-cover object-center filter brightness-90 saturate-95 group-hover:scale-105 group-hover:brightness-105 group-hover:saturate-110 transition-transform duration-700 ease-out"
+                      className="object-cover object-center filter brightness-[0.85] group-hover:brightness-100 group-hover:scale-105 transition-all duration-700 ease-out"
                       priority
                     />
 
                     {/* Dark Vignette & Atmospheric Film Shroud */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/35 z-10 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-[#0A0B0E]/60 to-[#0A0B0E]/30 z-10 pointer-events-none group-hover:via-[#0A0B0E]/50 transition-colors duration-500" />
 
-                    {/* Stencil Grid Pattern Texture Overlay */}
-                    <div 
-                      className="absolute inset-0 opacity-[0.12] z-10 pointer-events-none"
-                      style={{
-                        backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)',
-                        backgroundSize: '16px 16px'
-                      }}
-                    />
-
-                    {/* ── TOP HUD TELEMETRY ── */}
-                    <div className="relative z-20 flex items-start justify-between gap-2">
-                      <div className="space-y-1">
-                        <span className="inline-block px-3 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-wider bg-black/70 backdrop-blur-md text-white border border-white/20 group-hover:border-[#FA6D0B] group-hover:text-[#FA6D0B] transition-colors">
-                          {visual.badge}
+                    {/* ── TOP HUD TELEMETRY (PURE TYPOGRAPHY, NO PILL BADGES) ── */}
+                    <div className="relative z-20 flex items-start justify-between gap-3 font-mono text-xs border-b border-white/10 pb-3">
+                      <div>
+                        <span className="font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                          {cat.id === '120_PAIR' 
+                            ? 'OFFICIAL RACE // 120 KM' 
+                            : cat.id === '200' 
+                            ? 'ULTRA EXPEDITION // 200 KM' 
+                            : cat.id === '150' 
+                            ? 'GRAND FONDO // 150 KM' 
+                            : cat.id === '100' 
+                            ? 'FONDO // 100 KM' 
+                            : cat.id === 'VIRTUAL' 
+                            ? 'VIRTUAL STRAVA // 19 CHAPTERS' 
+                            : 'FUN RIDE // 60 KM'}
                         </span>
-                        <div className="text-[10px] font-mono font-bold text-slate-300 tracking-wider">
-                          {visual.elevation} · COT {cat.cot_hours ? `${cat.cot_hours}H` : '-'}
-                        </div>
+                        <span className="text-[11px] text-slate-400 tracking-wider uppercase block mt-0.5">
+                          {visual.elevation} · {cat.cot_hours ? `COT ${cat.cot_hours}H` : 'RUTE MANDIRI'}
+                        </span>
                       </div>
 
-                      <div className="text-right">
-                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">FLAG-OFF</span>
-                        <span className="text-xs font-mono font-bold text-white">{cat.wave_start_time || '05:30'} WIB</span>
+                      <div className="text-right shrink-0">
+                        <span className="text-[10px] text-slate-400 uppercase tracking-widest block">START</span>
+                        <span className="text-xs font-bold text-white tracking-wider block">{cat.wave_start_time || '05:30'} WIB</span>
                       </div>
                     </div>
 
-                    {/* ── CENTER STENCIL HEROIC TYPOGRAPHY ── */}
-                    <div className="relative z-20 my-auto text-center space-y-2 py-4">
-                      <div 
-                        className="font-display text-4xl sm:text-5xl font-black uppercase tracking-tighter text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)] leading-none transition-transform duration-300 group-hover:scale-105"
-                        style={{
-                          WebkitTextStroke: '1px rgba(255,255,255,0.2)',
-                        }}
-                      >
+                    {/* ── CENTER HEROIC TYPOGRAPHY (CLEAN & AIRY) ── */}
+                    <div className="relative z-20 my-auto space-y-2 py-4">
+                      <h2 className="font-display italic text-4xl sm:text-5xl font-black uppercase tracking-tight text-white drop-shadow-md leading-none">
                         {visual.headline}
-                      </div>
+                      </h2>
 
-                      <p className="text-[11px] sm:text-xs font-mono font-bold text-[#FA6D0B] tracking-wider uppercase drop-shadow-md">
+                      <p className="font-mono text-xs text-slate-300 uppercase tracking-wider">
                         {visual.subtitle}
                       </p>
 
-                      <div className="text-[10px] font-mono text-slate-400 tracking-wider uppercase pt-1">
-                        {visual.terrain}
-                      </div>
-
                       {visual.prologueNote && (
-                        <div className="inline-block px-2.5 py-1 rounded-lg bg-black/70 border border-[#FA6D0B]/40 text-[9px] font-mono text-[#FA6D0B] uppercase tracking-wider mt-2">
-                          [WAJIB PROLOG 30 KM]
-                        </div>
+                        <p className="font-mono text-[11px] font-bold text-[#FA6D0B] uppercase tracking-wider pt-1">
+                          // WAJIB PROLOG 30 KM SUBUH
+                        </p>
                       )}
                     </div>
 
                     {/* ── BOTTOM INDUSTRIAL LEDGER & CALL TO ACTION STRIP ── */}
-                    <div className="relative z-20 space-y-3 border-t border-white/15 pt-3">
-                      {/* Live Quota Progress */}
-                      <div className="space-y-1 font-mono text-[10px]">
-                        <div className="flex justify-between text-slate-300">
-                          <span>KUOTA TERISI:</span>
-                          <span className={quotaPercent > 80 ? 'text-[#FA6D0B] font-bold' : 'text-white font-bold'}>
-                            {cat.current_enrolled}/{cat.quota} ({quotaPercent}%)
-                          </span>
-                        </div>
-                        <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
-                          <div 
-                            className="h-full bg-white/80 group-hover:bg-[#FA6D0B] transition-all duration-500 rounded-full"
-                            style={{ width: `${quotaPercent}%` }}
-                          />
-                        </div>
+                    <div className="relative z-20 space-y-3 border-t border-white/10 pt-4 font-mono">
+                      <div className="flex items-baseline justify-between text-xs">
+                        <span className="text-[11px] text-slate-400 uppercase tracking-widest">BIAYA MULAI DARI</span>
+                        <span className="font-display italic text-xl sm:text-2xl font-black text-white">{formatRupiah(cat.price_medal_only)}</span>
                       </div>
 
-                      {/* Price & Personalized Action Call (KATA AJAKAN) */}
-                      <div className="space-y-2 pt-1">
-                        <div className="flex justify-between items-baseline text-xs font-mono">
-                          <span className="text-[10px] text-slate-400 uppercase">BIAYA MULAI DARI:</span>
-                          <span className="text-sm font-black text-[#FA6D0B]">{formatRupiah(cat.price_medal_only)}</span>
-                        </div>
+                      <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5 pt-2">
+                        <span>KUOTA: <strong className="text-white">{cat.quota - cat.current_enrolled} SLOT</strong></span>
+                        <span className="text-[#FA6D0B] font-bold">{quotaPercent}% TERISI</span>
+                      </div>
 
-                        {/* KATA AJAKAN YANG MENGGELORA (BUKAN PILIH RUTE) */}
-                        <div className="w-full py-3 rounded-2xl bg-black/85 backdrop-blur-md border border-white/20 group-hover:border-[#FA6D0B] group-hover:bg-[#FA6D0B] group-hover:text-black text-white font-mono text-xs font-black uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-lg">
-                          <span>{visual.callToAction}</span>
-                          <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </div>
+                      <div className="w-full py-3.5 rounded-full bg-[#FA6D0B] group-hover:bg-[#DE5A00] text-black font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,109,11,0.25)] group-hover:shadow-[0_0_35px_rgba(250,109,11,0.65)]">
+                        <span>PILIH KATEGORI</span>
+                        <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out" />
                       </div>
                     </div>
 
@@ -641,23 +617,23 @@ export default function RegistrationPage() {
             </div>
 
             {/* Hero Category Title Header */}
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-wider bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30">
+            <div className="border-b border-white/10 pb-6 mb-6">
+              <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block mb-2">
                 {CATEGORY_VISUALS[selectedCategory.id]?.badge || 'OFFICIAL CATEGORY'}
-              </div>
+              </span>
 
-              <h1 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white tracking-tight leading-none">
+              <h1 className="font-display italic text-3xl sm:text-5xl lg:text-6xl font-black uppercase text-white tracking-tight leading-none">
                 {selectedCategory.name}
               </h1>
 
-              <p className="text-xs sm:text-sm text-slate-400 font-sans max-w-3xl leading-relaxed">
+              <p className="mt-3 text-xs sm:text-sm text-slate-400 font-sans max-w-3xl leading-relaxed">
                 {detailCategoryData.desc}
               </p>
 
               {CATEGORY_VISUALS[selectedCategory.id]?.prologueNote && (
-                <div className="p-4 rounded-2xl border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 font-mono text-xs text-[#FA6D0B] space-y-1">
-                  <span className="font-bold uppercase tracking-wider block">[INFORMASI KHUSUS PROLOG 30 KM]</span>
-                  <p className="text-slate-200">{CATEGORY_VISUALS[selectedCategory.id]?.prologueNote}</p>
+                <div className="mt-4 p-4 rounded-xl border border-white/10 bg-black/40 font-mono text-xs text-[#FA6D0B] space-y-1">
+                  <span className="font-bold uppercase tracking-wider block">// PROTOKOL WAJIB PROLOG 30 KM</span>
+                  <p className="text-slate-300 font-sans">{CATEGORY_VISUALS[selectedCategory.id]?.prologueNote}</p>
                 </div>
               )}
             </div>
@@ -715,12 +691,12 @@ export default function RegistrationPage() {
                       <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold block">
                         GX-ID NATIONAL NETWORK // 19 REGIONAL CHAPTERS
                       </span>
-                      <h3 className="font-display text-xl sm:text-3xl font-black uppercase text-white mt-1">
+                      <h3 className="font-display italic text-xl sm:text-3xl font-black uppercase text-white mt-1">
                         JARINGAN GOWES SERENTAK SE-INDONESIA
                       </h3>
                     </div>
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 self-start sm:self-auto">
-                      ● STRAVA WEBHOOK CONNECTED
+                    <span className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-widest self-start sm:self-auto">
+                      STRAVA WEBHOOK // CONNECTED
                     </span>
                   </div>
 
@@ -992,13 +968,12 @@ export default function RegistrationPage() {
             </div>
 
             {/* Selected Category Sticky Banner */}
-            <div className="p-6 rounded-3xl border border-[#FA6D0B]/40 bg-[#15171C] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="p-6 rounded-2xl border border-white/10 bg-[#121418] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#FA6D0B] animate-pulse" />
-                  <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">KATEGORI PILIHAN ANDA:</span>
-                </div>
-                <h2 className="font-display text-2xl font-black uppercase text-white mt-0.5">
+                <span className="text-xs font-mono text-[#FA6D0B] uppercase tracking-widest font-bold block">
+                  KATEGORI PILIHAN // ACTIVE SELECTION
+                </span>
+                <h2 className="font-display italic text-2xl font-black uppercase text-white mt-0.5">
                   {selectedCategory.name}
                 </h2>
                 <div className="text-xs font-mono text-slate-400 mt-1">
@@ -1671,14 +1646,14 @@ export default function RegistrationPage() {
         {currentStep === 'invoice' && createdOrder && (
           <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
             {/* Header Konfirmasi */}
-            <div className="p-8 rounded-3xl border border-[#FA6D0B]/50 bg-gradient-to-b from-[#1C1F26] to-[#121418] text-center space-y-3 relative overflow-hidden shadow-2xl">
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FA6D0B] to-transparent" />
-              
-              <span className="px-3.5 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-widest bg-[#FA6D0B] text-black inline-block shadow-[0_0_15px_rgba(250,109,11,0.5)]">
-                {createdOrder.payment_status === 'PAID' ? 'LUNAS // TERDAFTAR RESMI' : 'MENUNGGU PEMBAYARAN // PAYMENT PENDING'}
-              </span>
+            <div className="p-8 rounded-2xl border border-white/10 bg-[#121418] text-center space-y-4 relative overflow-hidden shadow-2xl">
+              <div className="inline-block">
+                <span className="px-4 py-1.5 text-xs font-mono font-black uppercase tracking-widest bg-[#FA6D0B] text-black">
+                  STATUS: {createdOrder.payment_status === 'PAID' ? 'LUNAS // TERDAFTAR RESMI' : 'MENUNGGU PEMBAYARAN // PAYMENT PENDING'}
+                </span>
+              </div>
 
-              <h1 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
+              <h1 className="font-display italic text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
                 INVOICE RESERVASI RESMI
               </h1>
 
