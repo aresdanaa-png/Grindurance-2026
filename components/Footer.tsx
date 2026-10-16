@@ -26,15 +26,15 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* 2. Custom Event Logo Graphic Watermark (Pure White & Transparent) */}
+      {/* 2. Custom Event Logo Graphic Watermark (Enlarged Full-Bleed Beyond Screen) */}
       <div 
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 w-full max-w-5xl pointer-events-none select-none overflow-hidden opacity-[0.035] z-0 flex justify-center pb-2"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[135vw] min-w-[1200px] max-w-none pointer-events-none select-none overflow-hidden opacity-[0.035] z-0 flex justify-center translate-y-8 sm:translate-y-12"
         aria-hidden="true"
       >
         <img
           src="/nama_event.webp"
           alt=""
-          className="w-[90%] max-w-4xl h-auto object-contain filter brightness-0 invert"
+          className="w-full h-auto object-contain filter brightness-0 invert"
         />
       </div>
 
