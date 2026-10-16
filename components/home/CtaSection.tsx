@@ -124,10 +124,11 @@ export default function CtaSection() {
         <div className="pt-3 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
           <Link
             href="/daftar"
-            className="group relative w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-sans font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,109,11,0.6)] flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95"
+            className="group relative w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-sans font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all duration-300 hover:shadow-[0_0_35px_rgba(250,109,11,0.65)] flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95 overflow-hidden"
           >
-            <span>{t('DAFTAR SEKARANG — PILIH KATEGORI', 'REGISTER NOW — SELECT CATEGORY')}</span>
-            <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span className="absolute inset-0 w-1/3 bg-white/20 blur-sm -skew-x-12 animate-sheen-sweep pointer-events-none opacity-40 group-hover:opacity-80 transition-opacity" />
+            <span className="relative z-10">{t('DAFTAR SEKARANG — PILIH KATEGORI', 'REGISTER NOW — SELECT CATEGORY')}</span>
+            <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out" />
           </Link>
 
           <Link

@@ -271,15 +271,17 @@ export default function ElevationProfile({
           {/* Area Fill */}
           {areaPath && (
             <path
+              key={`area-${category.id}`}
               d={areaPath}
               fill={`url(#elevGradient-${category.id})`}
-              className="transition-all duration-300"
+              className="animate-fade-in-area transition-all duration-300"
             />
           )}
 
-          {/* Main Ridge Line */}
+          {/* Main Ridge Line (Kinetically self-drawing on category change) */}
           {linePath && (
             <path
+              key={`ridge-${category.id}`}
               d={linePath}
               fill="none"
               stroke={accentColor}
@@ -287,7 +289,7 @@ export default function ElevationProfile({
               strokeLinecap="round"
               strokeLinejoin="round"
               filter="url(#glow)"
-              className="transition-all duration-300"
+              className="animate-draw-ridge transition-all duration-300"
             />
           )}
 
@@ -329,7 +331,7 @@ export default function ElevationProfile({
             );
           })}
 
-          {/* Interactive Crosshair & Dot */}
+          {/* Interactive Crosshair & Dot with Radar Pulse */}
           {activePoint && (
             <g className="pointer-events-none">
               {/* Vertical Crosshair Line */}
@@ -344,14 +346,21 @@ export default function ElevationProfile({
                 opacity={0.8}
               />
 
-              {/* Pulsing Dot */}
+              {/* Radar Ping Ripple */}
               <circle
                 cx={getX(activePoint.d)}
                 cy={getY(activePoint.e)}
-                r="6"
+                r="10"
                 fill={accentColor}
-                opacity={0.35}
+                opacity={0.25}
                 className="animate-ping"
+              />
+              <circle
+                cx={getX(activePoint.d)}
+                cy={getY(activePoint.e)}
+                r="5.5"
+                fill={accentColor}
+                opacity={0.4}
               />
               <circle
                 cx={getX(activePoint.d)}

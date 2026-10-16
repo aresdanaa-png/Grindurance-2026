@@ -219,3 +219,136 @@ body {
   background-size: 220px 220px;
 }
 
+/* ========================================================================= */
+/* ULTRA-FLUID ATHLETIC ANIMATIONS (60 FPS HARDWARE ACCELERATED)            */
+/* ========================================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* 1. Self-drawing elevation ridge path */
+@keyframes drawRidge {
+  0% {
+    stroke-dashoffset: 1400;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw-ridge {
+  stroke-dasharray: 1400;
+  animation: drawRidge 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 2. Elevation gradient area fade-in */
+@keyframes fadeInArea {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-area {
+  animation: fadeInArea 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+/* 3. Radar Halo (Pulsing telemetry beacon for Start/Finish pins) */
+@keyframes radarHalo {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.95;
+  }
+  70% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.animate-radar-halo {
+  animation: radarHalo 2.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+/* 4. Subtle Route Glow Breathing (Telemetry Polyline Underlay) */
+@keyframes breathingGlow {
+  0%, 100% {
+    opacity: 0.2;
+    filter: drop-shadow(0 0 4px rgba(250, 109, 11, 0.3));
+  }
+  50% {
+    opacity: 0.45;
+    filter: drop-shadow(0 0 14px rgba(250, 109, 11, 0.85));
+  }
+}
+
+.animate-breathing-glow {
+  animation: breathingGlow 3s ease-in-out infinite;
+}
+
+/* 5. Spring Pop-in Dialog Modal */
+@keyframes popInSpring {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-pop-in-spring {
+  animation: popInSpring 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 6. Ambient Sheen Sweep across CTA buttons */
+@keyframes sheenSweep {
+  0% {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(260%) skewX(-20deg);
+  }
+}
+
+.animate-sheen-sweep {
+  animation: sheenSweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* 7. Scroll-driven reveal (Smooth glide-up fade-in) */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-draw-ridge,
+  .animate-fade-in-area,
+  .animate-radar-halo,
+  .animate-breathing-glow,
+  .animate-pop-in-spring,
+  .animate-sheen-sweep,
+  .reveal-on-scroll {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+

@@ -232,18 +232,24 @@ export default function RouteMap({
           direction: 'top',
         });
 
-        // Start marker (green dot)
+        // Start marker (green dot with animated radar halo)
         const startIcon = L.divIcon({
-          html: `<div style="width:13px;height:13px;background:#22C55E;border:2.5px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(34,197,94,0.95);"></div>`,
+          html: `<div style="position:relative;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">
+            <div class="animate-radar-halo" style="position:absolute;inset:0;border-radius:50%;background:rgba(34,197,94,0.4);"></div>
+            <div style="position:relative;width:12px;height:12px;background:#22C55E;border:2.5px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(34,197,94,0.95);"></div>
+          </div>`,
           className: '',
-          iconAnchor: [6, 6],
+          iconAnchor: [12, 12],
         });
 
-        // Finish marker (orange dot)
+        // Finish marker (orange dot with animated radar halo)
         const finishIcon = L.divIcon({
-          html: `<div style="width:13px;height:13px;background:${accentColor};border:2.5px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(250,109,11,0.95);"></div>`,
+          html: `<div style="position:relative;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">
+            <div class="animate-radar-halo" style="position:absolute;inset:0;border-radius:50%;background:rgba(250,109,11,0.4);animation-delay:0.7s;"></div>
+            <div style="position:relative;width:12px;height:12px;background:${accentColor};border:2.5px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(250,109,11,0.95);"></div>
+          </div>`,
           className: '',
-          iconAnchor: [6, 6],
+          iconAnchor: [12, 12],
         });
 
         L.marker(latLngs[0], { icon: startIcon })
@@ -458,7 +464,7 @@ export default function RouteMap({
           onClick={() => setShowLockModal(false)}
         >
           <div
-            className="relative w-full max-w-lg bg-[#0D0E11] border border-white/20 rounded-2xl p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.85)] text-left"
+            className="relative w-full max-w-lg bg-[#0D0E11] border border-white/20 rounded-2xl p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.85)] text-left animate-pop-in-spring"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Ambient top glow */}

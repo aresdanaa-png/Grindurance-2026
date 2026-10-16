@@ -65,10 +65,12 @@ export default function HeroSection() {
             {/* Primary Action Button (REGISTER NOW — Solid Orange Pill) */}
             <Link
               href="/daftar"
-              className="group relative px-8 sm:px-9 py-3 rounded-full text-[13px] sm:text-sm font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] border border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,109,11,0.55)] flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95"
+              className="group relative px-8 sm:px-9 py-3 rounded-full text-[13px] sm:text-sm font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] border border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_35px_rgba(250,109,11,0.65)] flex items-center justify-center gap-2.5 transform hover:-translate-y-0.5 active:scale-95 overflow-hidden"
             >
-              <span>{t('DAFTAR SEKARANG · GABUNG EKSPEDISI', 'REGISTER NOW · JOIN THE EXPEDITION')}</span>
-              <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+              {/* Subtle Ambient Sheen Sweep */}
+              <span className="absolute inset-0 w-1/3 bg-white/20 blur-sm -skew-x-12 animate-sheen-sweep pointer-events-none opacity-40 group-hover:opacity-80 transition-opacity" />
+              <span className="relative z-10">{t('DAFTAR SEKARANG · GABUNG EKSPEDISI', 'REGISTER NOW · JOIN THE EXPEDITION')}</span>
+              <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out" />
             </Link>
 
             {/* Secondary Action Button (PANDUAN LOMBA & PERATURAN) */}

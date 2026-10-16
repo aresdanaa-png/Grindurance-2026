@@ -453,9 +453,9 @@ export default function CategoryCockpit() {
                   </div>
                   {/* Progress multi-segment bar */}
                   <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden flex">
-                    <div style={{ width: currentCategory.surfaceBreakdown.asphalt }} className="h-full bg-slate-400" title="Aspal" />
-                    <div style={{ width: currentCategory.surfaceBreakdown.gravel }} className="h-full bg-[#FA6D0B]" title="Makadam" />
-                    <div style={{ width: currentCategory.surfaceBreakdown.unpaved }} className="h-full bg-white/30" title="Tanah/Batu" />
+                    <div style={{ width: currentCategory.surfaceBreakdown.asphalt }} className="h-full bg-slate-400 transition-all duration-700 ease-out" title="Aspal" />
+                    <div style={{ width: currentCategory.surfaceBreakdown.gravel }} className="h-full bg-[#FA6D0B] transition-all duration-700 ease-out" title="Makadam" />
+                    <div style={{ width: currentCategory.surfaceBreakdown.unpaved }} className="h-full bg-white/30 transition-all duration-700 ease-out" title="Tanah/Batu" />
                   </div>
                 </div>
 
