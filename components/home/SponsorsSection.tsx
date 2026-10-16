@@ -132,14 +132,14 @@ export default function SponsorsSection() {
           </div>
 
           {/* Row 1: first 6 */}
-          <div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-5 max-w-6xl mx-auto px-4">
+          <div className="flex items-center justify-center gap-1 sm:gap-2 lg:gap-2 max-w-6xl mx-auto px-4">
             {SUPPORTING_PARTNERS.slice(0, 6).map((item) => (
               <SupportingSponsorLogo key={item.id} item={item} />
             ))}
           </div>
 
           {/* Row 2: last 5 */}
-          <div className="flex items-center justify-center gap-3 sm:gap-4 lg:gap-5 max-w-6xl mx-auto px-4">
+          <div className="flex items-center justify-center gap-1 sm:gap-2 lg:gap-2 max-w-6xl mx-auto px-4">
             {SUPPORTING_PARTNERS.slice(6).map((item) => (
               <SupportingSponsorLogo key={item.id} item={item} />
             ))}
