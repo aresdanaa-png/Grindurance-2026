@@ -7,70 +7,52 @@ import { useLanguage } from '@/lib/context/LanguageContext';
 export default function CommunitySocialSection() {
   const { t } = useLanguage();
 
-  const communityChannels = [
+  const communityCards = [
     {
       title: 'IG : gxid.official',
       category: 'INSTAGRAM // OFFICIAL',
-      handle: '@gxid.official',
-      description: t('Siaran Live & Galeri', 'Live Streams & Gallery'),
-      bannerImage: '/perjalanan-siklis-di-jalur-oranye.webp',
-      platformType: 'instagram',
-      ctaText: t('Buka Instagram', 'Open Instagram'),
+      subtitle: t('Dokumentasi Ekspedisi & Live Feed', 'Expedition Media & Live Feed'),
+      image: '/perjalanan-siklis-di-jalur-oranye.webp',
       href: 'https://instagram.com/gxid.official',
       isExternal: true,
     },
     {
       title: 'FB GX-ID',
       category: 'FACEBOOK // GROUP',
-      handle: 'GX-ID Group',
-      description: t('41.000+ Komunitas', '41,000+ Cyclists'),
-      bannerImage: '/pesepeda2.webp',
-      platformType: 'facebook',
-      ctaText: t('Buka Facebook', 'Open Facebook'),
+      subtitle: t('41.000+ Pesepeda Ultra Nusantara', '41,000+ Ultra Cyclists Community'),
+      image: '/pesepeda2.webp',
       href: 'https://www.facebook.com/groups/260107147993705/',
       isExternal: true,
     },
     {
       title: 'FB Marketplace GX-ID',
       category: 'MARKETPLACE // FORUM',
-      handle: 'GX-ID Market',
-      description: t('Jual Beli Gear & Part', 'Gear & Parts Trading'),
-      bannerImage: '/pesepeda.webp',
-      platformType: 'marketplace',
-      ctaText: t('Buka Marketplace', 'Open Marketplace'),
+      subtitle: t('Jual Beli Gear, Frame & Apparel', 'Bikepacking Gear & Bike Trading'),
+      image: '/pesepeda.webp',
       href: 'https://www.facebook.com/groups/260107147993705/',
       isExternal: true,
     },
     {
       title: t('Pendaftaran Event', 'Event Registration'),
       category: 'REGISTRATION // 2026',
-      handle: 'Gravel Grindurance',
-      description: t('5 Kategori Rute Balap', '5 Race Route Categories'),
-      bannerImage: '/backgrounds/bg-categories.webp',
-      platformType: 'registration',
-      ctaText: t('Daftar Sekarang', 'Register Now'),
+      subtitle: t('5 Kategori Rute 60K–200K', '5 Route Categories 60K–200K'),
+      image: '/backgrounds/bg-categories.webp',
       href: '/daftar',
       isInternal: true,
     },
     {
       title: t('Portofolio', 'Portfolio'),
       category: 'TRACK RECORD // 8 YEARS',
-      handle: 'Linktree GX-ID',
-      description: t('Dokumentasi & Arsip', 'Archive & Track Record'),
-      bannerImage: '/hero.webp',
-      platformType: 'portfolio',
-      ctaText: t('Buka Portofolio', 'Open Portfolio'),
+      subtitle: t('Arsip Seri Urban Gravel & Feudax', 'Urban Gravel & Feudax Archive'),
+      image: '/hero.webp',
       href: 'https://linktr.ee/gxid.official',
       isExternal: true,
     },
     {
       title: t('Region/Chapter GX-ID', 'Region/Chapter GX-ID'),
       category: 'NETWORK // 19 CHAPTERS',
-      handle: '19 Chapter Resmi',
-      description: t('Jaringan Seluruh Indonesia', 'Nationwide Network'),
-      bannerImage: '/backgrounds/bg-timeline.webp',
-      platformType: 'chapter',
-      ctaText: t('Lihat Chapter', 'View Chapters'),
+      subtitle: t('Jaringan Wilayah Seluruh Indonesia', 'Official Nationwide Chapters'),
+      image: '/backgrounds/bg-timeline.webp',
       href: '#chapters',
       isInternal: false,
     },
@@ -82,79 +64,6 @@ export default function CommunitySocialSection() {
     'Lampung', 'Pekanbaru', 'Balikpapan', 'Samarinda', 'Banjarmasin',
     'Makassar', 'Manado', 'Lombok', 'Virtual Nationwide'
   ];
-
-  const renderProfileAvatar = (type: string) => {
-    switch (type) {
-      case 'instagram':
-        return (
-          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] shadow-lg flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center p-3">
-              <svg viewBox="0 0 24 24" className="w-full h-full fill-white" strokeWidth="0">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-            </div>
-          </div>
-        );
-      case 'facebook':
-        return (
-          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#1877F2] to-blue-400 shadow-lg flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#1877F2] flex items-center justify-center p-2.5">
-              <svg viewBox="0 0 24 24" className="w-full h-full fill-white">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-            </div>
-          </div>
-        );
-      case 'marketplace':
-        return (
-          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#0084FF] via-[#00A400] to-[#FA6D0B] shadow-lg flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#0E1013] border border-white/10 flex items-center justify-center p-3">
-              <svg viewBox="0 0 24 24" className="w-full h-full" fill="none">
-                <path d="M3 9l1.5-6h15L21 9v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" fill="#0084FF" />
-                <path d="M2 9h20M7 9v11M17 9v11" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" />
-                <path d="M3 9c0 1.657 1.343 3 3 3s3-1.343 3-3M9 9c0 1.657 1.343 3 3 3s3-1.343 3-3M15 9c0 1.657 1.343 3 3 3s3-1.343 3-3" stroke="#ffffff" strokeWidth="1.4" />
-              </svg>
-            </div>
-          </div>
-        );
-      case 'registration':
-        return (
-          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#FA6D0B] via-white to-[#FA6D0B] shadow-lg flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#0B0C0E] border border-white/10 flex items-center justify-center p-2 overflow-hidden">
-              <img
-                src="/nama_event.webp"
-                alt="Gravel Grindurance 2026"
-                className="w-full h-full object-contain filter brightness-110 drop-shadow"
-              />
-            </div>
-          </div>
-        );
-      case 'portfolio':
-        return (
-          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#39E09B] via-emerald-400 to-[#FA6D0B] shadow-lg flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#39E09B] flex items-center justify-center p-3">
-              <svg viewBox="0 0 24 24" className="w-full h-full fill-black">
-                <path d="M10.8 13.2V8.4l-3 3-1.7-1.7 4.9-4.9h2v4.9l3-3 1.7 1.7-3 3v4.8h4.8l-3-3 1.7-1.7 4.9 4.9v2l-4.9 4.9-1.7-1.7 3-3h-4.8v4.8l3-3 1.7 1.7-4.9 4.9h-2l-4.9-4.9 1.7-1.7 3 3V18H6.5l3 3-1.7 1.7L2.9 17.8v-2l4.9-4.9 1.7 1.7-3 3h4.3z" />
-              </svg>
-            </div>
-          </div>
-        );
-      case 'chapter':
-        return (
-          <div className="w-full h-full rounded-full p-[2px] bg-gradient-to-tr from-[#FA6D0B] via-amber-400 to-white shadow-lg flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#0D0E11] border border-white/10 flex items-center justify-center p-2.5 overflow-hidden">
-              <img
-                src="/logo-gx-id.webp"
-                alt="19 Chapter Regional GX-ID"
-                className="w-full h-full object-contain filter brightness-110 drop-shadow"
-              />
-            </div>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (
     <section id="komunitas" className="pt-8 sm:pt-10 pb-8 sm:pb-10 border-t border-white/10 bg-[#0B0C0E] relative overflow-hidden">
@@ -213,65 +122,51 @@ export default function CommunitySocialSection() {
           </a>
         </div>
 
-        {/* 6 Official Profile Channel Cards (Profil Asli Tiap Platform & Link Langsung) */}
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4">
-          {communityChannels.map((item, idx) => {
+        {/* 6 Official Community Editorial Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3.5 sm:gap-4">
+          {communityCards.map((card, idx) => {
             const cardInner = (
               <>
-                {/* Atmospheric Top Banner */}
-                <div className="h-16 sm:h-20 w-full relative overflow-hidden bg-black/60 border-b border-white/5">
+                {/* Full-bleed Gritty Background Photography */}
+                <div className="absolute inset-0 z-0 overflow-hidden">
                   <img
-                    src={item.bannerImage}
-                    alt={item.title}
-                    className="w-full h-full object-cover filter brightness-[0.4] contrast-125 group-hover:scale-105 transition-transform duration-500"
+                    src={card.image}
+                    alt={card.title}
+                    className="w-full h-full object-cover object-center filter brightness-[0.7] contrast-[1.15] transition-transform duration-700 ease-out group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#0E1013]" />
-                  <span className="absolute top-2.5 left-3 text-[8px] sm:text-[9px] font-mono font-bold uppercase tracking-wider text-[#FA6D0B]">
-                    {item.category}
+                  {/* Cinematic Dark Dissolve Overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-transparent" />
+                </div>
+
+                {/* Top: Category Tag & Arrow */}
+                <div className="relative z-10 p-3.5 sm:p-4 flex items-center justify-between">
+                  <span className="text-[9px] font-mono font-bold uppercase tracking-wider text-[#FA6D0B]">
+                    {card.category}
                   </span>
-                  <div className="absolute top-2.5 right-3 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-black/70 border border-white/10 flex items-center justify-center text-white/50 group-hover:text-[#FA6D0B] group-hover:border-[#FA6D0B] transition-colors">
-                    <ArrowUpRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  <div className="w-6 h-6 rounded-full bg-black/60 border border-white/10 flex items-center justify-center text-white/50 group-hover:text-black group-hover:bg-[#FA6D0B] group-hover:border-[#FA6D0B] transition-all">
+                    <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
                   </div>
                 </div>
 
-                {/* Profile Photo (Gambar Profil Asli Tiap Platform) */}
-                <div className="relative -mt-8 sm:-mt-10 mb-1 flex justify-center">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full shadow-2xl transition-transform duration-300 group-hover:scale-110">
-                    {renderProfileAvatar(item.platformType)}
-                  </div>
-                </div>
-
-                {/* Identity & Meta */}
-                <div className="px-3 pb-3.5 pt-1 flex flex-col items-center text-center flex-1 justify-between space-y-2.5">
-                  <div className="space-y-0.5">
-                    <h3 className="font-display font-black text-xs sm:text-sm uppercase tracking-tight text-white group-hover:text-[#FA6D0B] transition-colors leading-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-[10px] sm:text-[11px] font-mono text-[#FA6D0B] font-bold">
-                      {item.handle}
-                    </p>
-                    <p className="text-[9px] sm:text-[10px] font-mono text-slate-400 line-clamp-1">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Micro CTA Button */}
-                  <div className="w-full pt-1">
-                    <span className="w-full py-1.5 px-2.5 rounded-full bg-white/[0.04] group-hover:bg-[#FA6D0B] border border-white/10 group-hover:border-[#FA6D0B] text-slate-300 group-hover:text-black font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm">
-                      <span>{item.ctaText}</span>
-                      <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
-                    </span>
-                  </div>
+                {/* Bottom Meta */}
+                <div className="relative z-10 p-3.5 sm:p-4 space-y-1">
+                  <h3 className="font-display text-sm sm:text-base font-black uppercase text-white tracking-tight leading-snug group-hover:text-[#FA6D0B] transition-colors">
+                    {card.title}
+                  </h3>
+                  <p className="text-[10px] font-mono text-slate-300 font-medium line-clamp-1">
+                    {card.subtitle}
+                  </p>
                 </div>
               </>
             );
 
-            if (item.isInternal) {
+            if (card.isInternal) {
               return (
                 <Link
                   key={idx}
-                  href={item.href}
-                  className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#0E1013] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
+                  href={card.href}
+                  className="group relative rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-md flex flex-col justify-between aspect-[3/4] sm:aspect-[4/5] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_12px_40px_rgba(250,109,11,0.3)] hover:-translate-y-1"
                 >
                   {cardInner}
                 </Link>
@@ -281,10 +176,10 @@ export default function CommunitySocialSection() {
             return (
               <a
                 key={idx}
-                href={item.href}
-                target={item.href.startsWith('http') ? '_blank' : undefined}
-                rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#0E1013] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
+                href={card.href}
+                target={card.href.startsWith('http') ? '_blank' : undefined}
+                rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-md flex flex-col justify-between aspect-[3/4] sm:aspect-[4/5] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_12px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_12px_40px_rgba(250,109,11,0.3)] hover:-translate-y-1"
               >
                 {cardInner}
               </a>
