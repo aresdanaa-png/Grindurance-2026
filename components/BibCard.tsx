@@ -77,11 +77,11 @@ export default function BibCard({
 
   // Tentukan warna badge kategori
   const getCategoryColor = () => {
-    if (distanceKm === 60 || distanceKm === 80) return 'bg-sky-500 text-white';
-    if (distanceKm === 120) return 'bg-brand-gold text-brand-dark';
-    if (distanceKm === 150) return 'bg-brand-orange text-white';
-    if (distanceKm === 200) return 'bg-purple-600 text-white';
-    return 'bg-emerald-500 text-white';
+    if (distanceKm === 60 || distanceKm === 80) return 'bg-[#15171C] text-slate-200 border border-white/20';
+    if (distanceKm === 120) return 'bg-[#FA6D0B] text-black font-black';
+    if (distanceKm === 150) return 'bg-white text-black font-black';
+    if (distanceKm === 200) return 'bg-[#DE5A00] text-white font-black';
+    return 'bg-[#FA6D0B] text-black font-black';
   };
 
   return (

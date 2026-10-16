@@ -212,20 +212,20 @@ export default function IndonesiaAddressSelect({
   };
 
   return (
-    <div className="space-y-4 pt-3 border-t border-white/10 font-sans">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-        <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-wider">
-          {t('ALAMAT DOMISILI · PENGIRIMAN RACEPACK', 'DOMICILE ADDRESS · RACE PACK SHIPPING')} {required && <span className="text-[#FA6D0B]">*</span>}
+    <div className="space-y-5 pt-4 border-t border-white/10 font-sans">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+        <label className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
+          {t('ALAMAT DOMISILI // PENGIRIMAN RACE PACK', 'DOMICILE ADDRESS // RACE PACK SHIPPING')} {required && <span className="text-[#FA6D0B] font-bold text-base">*</span>}
         </label>
-        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">{t('DATABASE RESMI WILAYAH RI', 'OFFICIAL RI REGIONAL DATABASE')}</span>
+        <span className="text-xs font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">{t('DATABASE WILAYAH RESMI RI', 'OFFICIAL RI REGIONAL DATABASE')}</span>
       </div>
 
       {/* Grid 4 Kolom Dropdown Berjenjang (Provinsi, Kab/Kota, Kecamatan, Desa/Kelurahan) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* 1. PROVINSI */}
         <div>
-          <label htmlFor={`${prefixId}-prov`} className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
-            {t('PROVINSI', 'PROVINCE')} {required && '*'}
+          <label htmlFor={`${prefixId}-prov`} className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+            {t('PROVINSI', 'PROVINCE')} {required && <span className="text-[#FA6D0B]">*</span>}
           </label>
           <div className="relative">
             <select
@@ -234,7 +234,7 @@ export default function IndonesiaAddressSelect({
               value={value.province_id}
               onChange={handleProvinceChange}
               disabled={loadingProvinces}
-              className="w-full px-3 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-50 pr-8"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-50 pr-8 transition-all cursor-pointer"
             >
               <option value="">{loadingProvinces ? t('MEMUAT...', 'LOADING...') : t('PILIH PROVINSI', 'SELECT PROVINCE')}</option>
               {provinces.map((prov) => (
@@ -248,8 +248,8 @@ export default function IndonesiaAddressSelect({
 
         {/* 2. KABUPATEN / KOTA */}
         <div>
-          <label htmlFor={`${prefixId}-reg`} className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
-            {t('KABUPATEN / KOTA', 'REGENCY / CITY')} {required && '*'}
+          <label htmlFor={`${prefixId}-reg`} className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+            {t('KABUPATEN / KOTA', 'REGENCY / CITY')} {required && <span className="text-[#FA6D0B]">*</span>}
           </label>
           <div className="relative">
             <select
@@ -258,7 +258,7 @@ export default function IndonesiaAddressSelect({
               value={value.regency_id}
               onChange={handleRegencyChange}
               disabled={!value.province_id || loadingRegencies}
-              className="w-full px-3 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
             >
               <option value="">
                 {!value.province_id
@@ -278,8 +278,8 @@ export default function IndonesiaAddressSelect({
 
         {/* 3. KECAMATAN */}
         <div>
-          <label htmlFor={`${prefixId}-dist`} className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
-            {t('KECAMATAN', 'DISTRICT')} {required && '*'}
+          <label htmlFor={`${prefixId}-dist`} className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+            {t('KECAMATAN', 'DISTRICT')} {required && <span className="text-[#FA6D0B]">*</span>}
           </label>
           <div className="relative">
             <select
@@ -288,7 +288,7 @@ export default function IndonesiaAddressSelect({
               value={value.district_id}
               onChange={handleDistrictChange}
               disabled={!value.regency_id || loadingDistricts}
-              className="w-full px-3 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
             >
               <option value="">
                 {!value.regency_id
@@ -308,8 +308,8 @@ export default function IndonesiaAddressSelect({
 
         {/* 4. KELURAHAN / DESA */}
         <div>
-          <label htmlFor={`${prefixId}-vill`} className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
-            {t('KELURAHAN / DESA', 'SUB-DISTRICT / VILLAGE')} {required && '*'}
+          <label htmlFor={`${prefixId}-vill`} className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+            {t('KELURAHAN / DESA', 'SUB-DISTRICT / VILLAGE')} {required && <span className="text-[#FA6D0B]">*</span>}
           </label>
           <div className="relative">
             <select
@@ -318,7 +318,7 @@ export default function IndonesiaAddressSelect({
               value={value.village_id}
               onChange={handleVillageChange}
               disabled={!value.district_id || loadingVillages}
-              className="w-full px-3 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
             >
               <option value="">
                 {!value.district_id
@@ -338,10 +338,10 @@ export default function IndonesiaAddressSelect({
       </div>
 
       {/* Baris Detail Alamat & Kode Pos */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="sm:col-span-3">
-          <label htmlFor={`${prefixId}-detail`} className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
-            {t('DETAIL JALAN, NOMOR, RT/RW, PATOKAN', 'STREET ADDRESS, NUMBER, LANDMARK')} {required && '*'}
+          <label htmlFor={`${prefixId}-detail`} className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+            {t('DETAIL JALAN, NOMOR, RT/RW, PATOKAN', 'STREET ADDRESS, NUMBER, LANDMARK')} {required && <span className="text-[#FA6D0B]">*</span>}
           </label>
           <input
             id={`${prefixId}-detail`}
@@ -350,13 +350,13 @@ export default function IndonesiaAddressSelect({
             value={value.address_detail}
             onChange={(e) => onChange({ ...value, address_detail: e.target.value })}
             placeholder={t('Cth: Jl. Raya Jonggol No. 88 RT 02/05, Samping Indomaret', 'E.g., 88 Jonggol Main St, Near Community Center')}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-600"
+            className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-500 transition-all"
           />
         </div>
 
         <div>
-          <label htmlFor={`${prefixId}-postal`} className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block mb-1">
-            {t('KODE POS', 'POSTAL CODE')} {required && '*'}
+          <label htmlFor={`${prefixId}-postal`} className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider block mb-1.5">
+            {t('KODE POS', 'POSTAL CODE')} {required && <span className="text-[#FA6D0B]">*</span>}
           </label>
           <input
             id={`${prefixId}-postal`}
@@ -366,7 +366,7 @@ export default function IndonesiaAddressSelect({
             value={value.postal_code}
             onChange={(e) => onChange({ ...value, postal_code: e.target.value.replace(/\D/g, '') })}
             placeholder={t('Cth: 16830', 'E.g. 16830')}
-            className="w-full px-3.5 py-2.5 rounded-xl bg-black/60 border border-white/15 text-white text-xs font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-600"
+            className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-500 transition-all"
           />
         </div>
       </div>
