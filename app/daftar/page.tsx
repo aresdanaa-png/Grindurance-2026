@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
-import { Category, PackageType, JerseySize, Gender, Order, Participant } from '@/lib/types';
+import { Category, PackageType, JerseySize, Gender, Order, Participant, RegistrationPayload } from '@/lib/types';
 import BibCard from '@/components/BibCard';
 import IndonesiaAddressSelect from '@/components/IndonesiaAddressSelect';
 import { useLanguage } from '@/lib/context/LanguageContext';
@@ -58,12 +58,12 @@ const OFFICIAL_CATEGORIES: Category[] = [
   },
   {
     id: '120_PAIR',
-    name: '120 (Race)',
+    name: '120 (Race Pair Mix)',
     distance_km: 120,
     category_type: 'race',
     is_pair: true,
-    price_medal_only: 350000,
-    price_medal_jersey: 400000,
+    price_medal_only: 700000,
+    price_medal_jersey: 750000,
     quota: 100,
     current_enrolled: 38,
     cot_hours: 11,
@@ -318,6 +318,65 @@ export default function RegistrationPage() {
   const [simulatingPayment, setSimulatingPayment] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
+  // Promo Code State
+  const [promoCodeInput, setPromoCodeInput] = useState('');
+  const [appliedPromo, setAppliedPromo] = useState<{ code: string; discount: number; label: string } | null>(null);
+  const [promoFeedback, setPromoFeedback] = useState<{ status: 'idle' | 'success' | 'error'; message: string }>({
+    status: 'idle',
+    message: '',
+  });
+
+  const PROMO_REGISTRY: Record<string, { discount: number; label: string }> = {
+    'GRIND2026': { discount: 50000, label: 'Official Launch Privilege' },
+    'GXID2026': { discount: 50000, label: 'GX-ID Community Partner' },
+    'GRAVELID': { discount: 75000, label: 'Gravel Enthusiast Reward' },
+    'EARLYBIRD': { discount: 50000, label: 'Early Bird Privilege' },
+    'KOMUNITAS': { discount: 40000, label: 'Komunitas Sepeda Nasional' },
+    'SPECIALPAIR': { discount: 100000, label: 'Duo Tandem Team Privilege' },
+  };
+
+  const handleApplyPromo = () => {
+    const clean = promoCodeInput.trim().toUpperCase();
+    if (!clean) {
+      setPromoFeedback({
+        status: 'error',
+        message: t('Silakan masukkan kode promo.', 'Please enter a promo code.'),
+      });
+      return;
+    }
+
+    const match = PROMO_REGISTRY[clean];
+    if (match) {
+      if (clean === 'SPECIALPAIR' && !selectedCategory.is_pair) {
+        setPromoFeedback({
+          status: 'error',
+          message: t('Voucher SPECIALPAIR hanya berlaku untuk kategori Pair / Tandem.', 'SPECIALPAIR voucher is only valid for Pair category.'),
+        });
+        return;
+      }
+      setAppliedPromo({
+        code: clean,
+        discount: match.discount,
+        label: match.label,
+      });
+      setPromoFeedback({
+        status: 'success',
+        message: t(`Kode promo ${clean} aktif! Hemat ${formatRupiah(match.discount)}.`, `Promo code ${clean} applied! Saved ${formatRupiah(match.discount)}.`),
+      });
+    } else {
+      setPromoFeedback({
+        status: 'error',
+        message: t('Kode promo tidak valid atau kuota telah habis.', 'Invalid promo code or voucher expired.'),
+      });
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoCodeInput('');
+    setPromoFeedback({ status: 'idle', message: '' });
+  };
+
   // Ambil data live dari Supabase (filter hanya kategori aktif dan cocokkan ke official list)
   useEffect(() => {
     async function fetchCategories() {
@@ -325,11 +384,15 @@ export default function RegistrationPage() {
         const res = await fetch('/api/categories');
         const data = await res.json();
         if (data.categories && Array.isArray(data.categories) && data.categories.length > 0) {
-          // Sinkronisasi dengan official list 60, 100, 120, 150, 200, VIRTUAL
-          const validIds = ['60', '100', '120_PAIR', '150', '200', 'VIRTUAL'];
           const matched = OFFICIAL_CATEGORIES.map(off => {
             const live = data.categories.find((c: Category) => c.id === off.id);
-            return live ? { ...off, current_enrolled: live.current_enrolled, quota: live.quota } : off;
+            return live ? {
+              ...off,
+              current_enrolled: live.current_enrolled,
+              quota: live.quota,
+              price_medal_only: live.price_medal_only || off.price_medal_only,
+              price_medal_jersey: live.price_medal_jersey || off.price_medal_jersey,
+            } : off;
           });
           setCategories(matched);
         }
@@ -368,7 +431,8 @@ export default function RegistrationPage() {
 
   const rpcHandlingFee = (rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL') ? 20000 : 0;
   const mealCouponDiscount = isEligibleForMealCoupon() ? 50000 : 0;
-  const netPrice = Math.max(0, basePrice + rpcHandlingFee - mealCouponDiscount);
+  const promoDiscount = appliedPromo ? appliedPromo.discount : 0;
+  const netPrice = Math.max(0, basePrice + rpcHandlingFee - mealCouponDiscount - promoDiscount);
 
   // Navigasi Step 1 -> Step 2
   const handleSelectToDetail = (cat: Category) => {
@@ -424,10 +488,11 @@ export default function RegistrationPage() {
     setSubmitting(true);
 
     try {
-      const payload = {
+      const payload: RegistrationPayload = {
         category_id: selectedCategory.id,
         package_type: packageType,
         rpc_method: rpcMethod,
+        promo_code: appliedPromo?.code,
         rider_1: rider1,
         rider_2: selectedCategory.is_pair ? rider2 : undefined,
         waiver_agreed: waiverAgreed,
@@ -1190,7 +1255,7 @@ export default function RegistrationPage() {
         {/* STEP 3: FORMULIR PENDAFTARAN ATLET & WAIVER */}
         {/* ========================================================================= */}
         {currentStep === 'form' && (
-          <div className="space-y-8 animate-slide-up-fade max-w-4xl mx-auto">
+          <div className="space-y-8 animate-slide-up-fade w-full max-w-7xl mx-auto">
             
             {/* Top Navigation Bar */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
@@ -1211,24 +1276,28 @@ export default function RegistrationPage() {
             </div>
 
             {/* Selected Category Cockpit Strip */}
-            <div className="rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row md:items-center justify-between gap-5">
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
+            <div className="rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md p-6 sm:p-7 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-2">
+                <div className="flex flex-wrap items-center gap-2.5">
                   <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">
                     {t('KATEGORI TERPILIH · OFFICIAL STAGE', 'SELECTED CATEGORY · OFFICIAL STAGE')}
                   </span>
-                  {selectedCategory.is_pair && (
-                    <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30 font-bold uppercase">
-                      PAIR MIX · 2 PAX
+                  {selectedCategory.is_pair ? (
+                    <span className="text-[10px] font-mono px-3 py-0.5 rounded-full bg-[#FA6D0B]/20 text-[#FA6D0B] border border-[#FA6D0B]/40 font-bold uppercase tracking-wider">
+                      {t('PAIR MIX · 2 PESERTA (KAPTEN & PARTNER)', 'PAIR MIX · 2 RIDERS (CAPTAIN & PARTNER)')}
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-mono px-3 py-0.5 rounded-full bg-white/10 text-slate-300 border border-white/15 font-bold uppercase tracking-wider">
+                      {t('INDIVIDUAL SOLO RIDER', 'INDIVIDUAL SOLO RIDER')}
                     </span>
                   )}
                 </div>
                 
-                <h2 className="font-display italic text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">
+                <h2 className="font-display italic text-3xl sm:text-4xl font-black uppercase text-white tracking-tight">
                   {selectedCategory.name}
                 </h2>
 
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-slate-400">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs sm:text-sm font-mono text-slate-400">
                   <span>{t('Jarak:', 'Distance:')} <strong className="text-white">{selectedCategory.id === 'VIRTUAL' ? t('Bebas (Rute Domisili)', 'Flexible (Local Course)') : `${selectedCategory.distance_km} KM`}</strong></span>
                   <span>·</span>
                   <span>{t('Format:', 'Format:')} <strong className="text-white">{selectedCategory.is_pair ? t('Tandem Tim (2 Riders)', 'Pair Tandem (2 Riders)') : selectedCategory.id === 'VIRTUAL' ? t('Virtual Ride (19 Chapters)', 'Virtual Ride (19 Chapters)') : t('Solo Rider', 'Solo Rider')}</strong></span>
@@ -1245,7 +1314,7 @@ export default function RegistrationPage() {
                   setCurrentStep('select');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-[#FA6D0B] transition-all cursor-pointer self-start md:self-center shrink-0"
+                className="px-6 py-3 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-[#FA6D0B] transition-all cursor-pointer self-start lg:self-center shrink-0"
               >
                 {t('GANTI KATEGORI', 'CHANGE CATEGORY')}
               </button>
@@ -1253,7 +1322,7 @@ export default function RegistrationPage() {
 
             {/* Error Message Box */}
             {errorMessage && (
-              <div className="p-4 sm:p-5 rounded-2xl border border-red-500/40 bg-red-500/10 text-red-300 font-mono text-xs flex items-center justify-between gap-3 animate-shake">
+              <div className="p-4 sm:p-5 rounded-2xl border border-red-500/40 bg-red-500/10 text-red-300 font-mono text-xs sm:text-sm flex items-center justify-between gap-3 animate-shake">
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-red-400 uppercase tracking-wider">{t('PERINGATAN DATA ·', 'DATA ALERT ·')}</span>
                   <span>{errorMessage}</span>
@@ -1270,138 +1339,238 @@ export default function RegistrationPage() {
             {/* Formulir Pendaftaran */}
             <form onSubmit={handleFinalSubmit} className="space-y-8">
 
-              {/* 3.1 Pilihan Paket & RPC Method */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+              {/* 3.1 Pilihan Paket, RPC Method, & Kode Promo (3-Column Desktop Grid) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
                 
-                {/* Paket Jersey vs Medal */}
-                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
-                    <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest block">
-                      {t('PILIHAN PAKET ATLET', 'ATHLETE PACKAGE SELECTION')} <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <span className="text-[10px] font-mono text-[#FA6D0B] uppercase font-bold">GX-ID TIER</span>
+                {/* 1. Paket Jersey vs Medal (col-span-5) */}
+                <div className="lg:col-span-5 rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3.5">
+                      <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest block">
+                        {t('PILIHAN PAKET ATLET', 'ATHLETE PACKAGE SELECTION')} <span className="text-[#FA6D0B]">*</span>
+                      </label>
+                      <span className="text-[10px] font-mono text-[#FA6D0B] uppercase font-bold">
+                        {selectedCategory.is_pair ? t('PAKET 2 RIDER', '2 RIDERS BUNDLE') : 'OFFICIAL TIER'}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {/* Opsi 1: Medal + Finisher Jersey */}
+                      <button
+                        type="button"
+                        onClick={() => setPackageType('MEDAL_JERSEY')}
+                        className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden flex flex-col justify-between ${
+                          packageType === 'MEDAL_JERSEY'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
+                            : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
+                        }`}
+                      >
+                        <div>
+                          <span className="text-[9px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block mb-1">
+                            {selectedCategory.is_pair ? t('2 RIDER · BEST VALUE', '2 RIDERS · BEST VALUE') : t('KOMUNITAS GX-ID · BEST VALUE', 'COMMUNITY CHOICE · BEST VALUE')}
+                          </span>
+                          <div className="text-sm font-black text-white uppercase font-sans leading-snug">
+                            {selectedCategory.is_pair ? t('MEDALI + FINISHER JERSEY (2 PAX)', 'MEDAL + FINISHER JERSEY (2 PAX)') : t('MEDALI + FINISHER JERSEY', 'MEDAL + FINISHER JERSEY')}
+                          </div>
+                          <div className="font-display italic text-2xl font-black text-[#FA6D0B] mt-2">
+                            {formatRupiah(selectedCategory.price_medal_jersey)}
+                          </div>
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-2.5 font-sans leading-relaxed">
+                          {selectedCategory.is_pair
+                            ? t('Termasuk 2 medali cor resmi + 2 aero jersey finisher Pollride untuk Kapten & Partner.', 'Includes 2 official medals + 2 Pollride finisher jerseys for Captain & Partner.')
+                            : t('Termasuk aero jersey finisher eksklusif Pollride (senilai Rp 350.000).', 'Includes official Pollride aero finisher jersey (IDR 350K value).')}
+                        </p>
+                      </button>
+
+                      {/* Opsi 2: Medal Saja */}
+                      <button
+                        type="button"
+                        onClick={() => setPackageType('MEDAL_ONLY')}
+                        className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden flex flex-col justify-between ${
+                          packageType === 'MEDAL_ONLY'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
+                            : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
+                        }`}
+                      >
+                        <div>
+                          <span className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                            {selectedCategory.is_pair ? t('2 RIDER · ESENSIAL', '2 RIDERS · ESSENTIAL') : t('PAKET ESENSIAL', 'ESSENTIAL PACKAGE')}
+                          </span>
+                          <div className="text-sm font-black text-white uppercase font-sans leading-snug">
+                            {selectedCategory.is_pair ? t('MEDALI SAJA (2 PAX)', 'MEDAL ONLY (2 PAX)') : t('MEDALI SAJA', 'MEDAL ONLY')}
+                          </div>
+                          <div className="font-display italic text-2xl font-black text-white mt-2">
+                            {formatRupiah(selectedCategory.price_medal_only)}
+                          </div>
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-2.5 font-sans leading-relaxed">
+                          {selectedCategory.is_pair
+                            ? t('Termasuk 2 medali cor logam resmi hari-H untuk Kapten & Partner (tanpa jersey finisher).', 'Includes 2 official medals for Captain & Partner (without finisher jersey).')
+                            : t('Hanya medali cor logam resmi hari-H (tanpa jersey finisher).', 'Official die-cast medal only (without finisher jersey).')}
+                        </p>
+                      </button>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {/* Opsi 1: Medal + Finisher Jersey */}
-                    <button
-                      type="button"
-                      onClick={() => setPackageType('MEDAL_JERSEY')}
-                      className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
-                        packageType === 'MEDAL_JERSEY'
-                          ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                          : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
-                      }`}
-                    >
-                      <span className="text-[9px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block mb-1">
-                        {t('KOMUNITAS GX-ID · BEST VALUE', 'COMMUNITY CHOICE · BEST VALUE')}
-                      </span>
-                      <div className="text-sm font-black text-white uppercase font-sans">
-                        {t('MEDALI + FINISHER JERSEY', 'MEDAL + FINISHER JERSEY')}
-                      </div>
-                      <div className="font-display italic text-xl font-black text-[#FA6D0B] mt-1.5">
-                        {formatRupiah(selectedCategory.price_medal_jersey)}
-                      </div>
-                      <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                        {t('Termasuk aero jersey finisher eksklusif Pollride (nilai Rp 350.000).', 'Includes official Pollride aero finisher jersey (IDR 350K value).')}
-                      </p>
-                    </button>
+                  {selectedCategory.is_pair && (
+                    <div className="text-[10px] font-mono text-[#FA6D0B] pt-2 border-t border-white/10 flex items-center gap-1.5">
+                      <span>·</span>
+                      <span>{t('Biaya pendaftaran di atas sudah mencakup total untuk kedua atlet tim tandem.', 'Registration fee above covers the total cost for both team riders.')}</span>
+                    </div>
+                  )}
+                </div>
 
-                    {/* Opsi 2: Medal Saja */}
-                    <button
-                      type="button"
-                      onClick={() => setPackageType('MEDAL_ONLY')}
-                      className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
-                        packageType === 'MEDAL_ONLY'
-                          ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                          : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
-                      }`}
-                    >
-                      <span className="text-[9px] font-mono font-bold text-slate-500 uppercase tracking-wider block mb-1">
-                        {t('PAKET ESENSIAL', 'ESSENTIAL PACKAGE')}
-                      </span>
-                      <div className="text-sm font-black text-white uppercase font-sans">
-                        {t('MEDALI SAJA', 'MEDAL ONLY')}
+                {/* 2. Pengambilan Race Pack (col-span-4) */}
+                <div className="lg:col-span-4 rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3.5">
+                      <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest block">
+                        {selectedCategory.id === 'VIRTUAL' ? t('METODE PENGIRIMAN LOGISTIK', 'LOGISTICS SHIPPING METHOD') : t('PENGAMBILAN RACE PACK (RPC)', 'RACE PACK COLLECTION (RPC)')} <span className="text-[#FA6D0B]">*</span>
+                      </label>
+                      <span className="text-[10px] font-mono text-slate-400 uppercase">LOGISTICS</span>
+                    </div>
+
+                    {selectedCategory.id === 'VIRTUAL' ? (
+                      <div className="p-4 sm:p-5 rounded-xl border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]/40 space-y-2">
+                        <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block">
+                          {t('TERMASUK DALAM PAKET VIRTUAL · GRATIS', 'INCLUDED IN VIRTUAL PACKAGE · FREE')}
+                        </span>
+                        <div className="text-sm font-black text-white uppercase font-sans">
+                          {t('PENGIRIMAN DHS LOGISTIK KE ALAMAT RUMAH', 'DHS LOGISTICS HOME DELIVERY')}
+                        </div>
+                        <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
+                          {t(
+                            'Medali cor logam resmi dan jersey akan dikirim via kurir DHS Logistik langsung ke alamat domisili Anda setelah validasi data Strava selesai. Bebas biaya handling.',
+                            'Official medal and jersey delivered directly via DHS Logistics after Strava validation is complete. Free of handling charges.'
+                          )}
+                        </p>
                       </div>
-                      <div className="font-display italic text-xl font-black text-white mt-1.5">
-                        {formatRupiah(selectedCategory.price_medal_only)}
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {/* Opsi 1: Ambil di Cibubur (Gratis) */}
+                        <button
+                          type="button"
+                          onClick={() => setRpcMethod('PICKUP')}
+                          className={`p-4 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden flex flex-col justify-between ${
+                            rpcMethod === 'PICKUP'
+                              ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
+                              : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
+                          }`}
+                        >
+                          <div>
+                            <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
+                              {t('GRATIS · BEBAS BIAYA', 'FREE · NO EXTRA CHARGE')}
+                            </span>
+                            <div className="text-sm font-black text-white uppercase font-sans leading-snug">
+                              {t('AMBIL DI CIBUBUR', 'PICK UP AT CIBUBUR')}
+                            </div>
+                          </div>
+                          <p className="text-[10px] text-slate-400 mt-2.5 font-sans leading-relaxed">
+                            {t('Lokasi: ABEEY Coffee, LRT Harjamukti, Cibubur (11–12 Des 2026).', 'Location: ABEEY Coffee, LRT Harjamukti, Cibubur (Dec 11–12, 2026).')}
+                          </p>
+                        </button>
+
+                        {/* Opsi 2: Handling & Kirim (+Rp 20.000) */}
+                        <button
+                          type="button"
+                          onClick={() => setRpcMethod('HANDLING')}
+                          className={`p-4 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden flex flex-col justify-between ${
+                            rpcMethod === 'HANDLING'
+                              ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
+                              : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
+                          }`}
+                        >
+                          <div>
+                            <span className="text-[9px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block mb-1">
+                              {t('+RP 20.000 · LAYANAN KIRIM', '+RP 20,000 · SHIPPING')}
+                            </span>
+                            <div className="text-sm font-black text-white uppercase font-sans leading-snug">
+                              {t('HANDLING & KIRIM RUMAH', 'HANDLING & HOME DELIVERY')}
+                            </div>
+                          </div>
+                          <p className="text-[10px] text-slate-400 mt-2.5 font-sans leading-relaxed">
+                            {t('Paket race pack dikirim aman langsung ke alamat rumah Anda sebelum hari-H.', 'Race pack safely shipped directly to your home address prior to race day.')}
+                          </p>
+                        </button>
                       </div>
-                      <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                        {t('Hanya medali cor logam resmi hari-H (tanpa jersey finisher).', 'Official die-cast medal only (without finisher jersey).')}
-                      </p>
-                    </button>
+                    )}
+                  </div>
+
+                  <div className="text-[10px] font-mono text-slate-400 pt-2 border-t border-white/10">
+                    {t('Pengambilan wajib membawa konfirmasi invoice & KTP terdaftar.', 'Collection requires official invoice confirmation & registered ID.')}
                   </div>
                 </div>
 
-                {/* Pengambilan Race Pack */}
-                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-2.5">
-                    <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest block">
-                      {selectedCategory.id === 'VIRTUAL' ? t('METODE PENGIRIMAN LOGISTIK', 'LOGISTICS SHIPPING METHOD') : t('PENGAMBILAN RACE PACK (RPC)', 'RACE PACK COLLECTION (RPC)')} <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <span className="text-[10px] font-mono text-slate-400 uppercase">LOGISTICS</span>
+                {/* 3. Kode Promo / Voucher Komunitas (col-span-3) */}
+                <div className="lg:col-span-3 rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3.5">
+                      <label className="text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest block">
+                        {t('KODE PROMO / VOUCHER', 'PROMO CODE / VOUCHER')}
+                      </label>
+                      <span className="text-[10px] font-mono text-emerald-400 uppercase font-bold">POTONGAN BIAYA</span>
+                    </div>
+
+                    {!appliedPromo ? (
+                      <div className="space-y-3">
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            value={promoCodeInput}
+                            onChange={(e) => {
+                              setPromoCodeInput(e.target.value.toUpperCase());
+                              if (promoFeedback.message) setPromoFeedback({ status: 'idle', message: '' });
+                            }}
+                            placeholder={t('KODE PROMO', 'PROMO CODE')}
+                            className="flex-1 px-3.5 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-xs uppercase placeholder:text-slate-600 outline-none transition-all"
+                          />
+                          <button
+                            type="button"
+                            onClick={handleApplyPromo}
+                            className="px-4 py-3 rounded-xl text-xs font-mono font-black uppercase tracking-wider bg-[#FA6D0B] text-black hover:bg-[#DE5A00] transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                          >
+                            {t('TERAPKAN', 'APPLY')}
+                          </button>
+                        </div>
+
+                        {promoFeedback.message && (
+                          <div className={`text-[11px] font-mono leading-relaxed ${promoFeedback.status === 'success' ? 'text-emerald-400 font-bold' : 'text-red-400 font-bold'}`}>
+                            {promoFeedback.message}
+                          </div>
+                        )}
+
+                        <p className="text-[10px] text-slate-400 font-sans leading-relaxed">
+                          {t('Masukkan kode voucher resmi komunitas GX-ID atau early bird untuk diskon otomatis.', 'Enter official GX-ID community voucher code for instant discount.')}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="p-4 rounded-xl border border-emerald-500/40 bg-emerald-500/10 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[9px] font-mono font-bold text-emerald-400 uppercase tracking-wider">
+                            {t('KODE PROMO AKTIF', 'ACTIVE PROMO CODE')}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={handleRemovePromo}
+                            className="text-[10px] font-mono text-red-400 hover:text-white uppercase font-bold cursor-pointer transition-colors"
+                          >
+                            {t('HAPUS', 'REMOVE')}
+                          </button>
+                        </div>
+                        <div className="font-mono text-sm font-black text-white tracking-wider">
+                          {appliedPromo.code}
+                        </div>
+                        <div className="text-xs text-emerald-300 font-bold font-mono">
+                          - {formatRupiah(appliedPromo.discount)} ({appliedPromo.label})
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  {selectedCategory.id === 'VIRTUAL' ? (
-                    <div className="p-4 sm:p-5 rounded-xl border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]/40 space-y-2">
-                      <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block">
-                        {t('TERMASUK DALAM PAKET VIRTUAL · GRATIS', 'INCLUDED IN VIRTUAL PACKAGE · FREE')}
-                      </span>
-                      <div className="text-sm font-black text-white uppercase font-sans">
-                        {t('PENGIRIMAN DHS LOGISTIK KE ALAMAT RUMAH', 'DHS LOGISTICS HOME DELIVERY')}
-                      </div>
-                      <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
-                        {t(
-                          'Medali cor logam resmi dan jersey akan dikirim via kurir DHS Logistik langsung ke alamat domisili Anda setelah validasi data Strava selesai. Bebas biaya handling.',
-                          'Official medal and jersey delivered directly via DHS Logistics after Strava validation is complete. Free of handling charges.'
-                        )}
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {/* Opsi 1: Ambil di Cibubur (Gratis) */}
-                      <button
-                        type="button"
-                        onClick={() => setRpcMethod('PICKUP')}
-                        className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
-                          rpcMethod === 'PICKUP'
-                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                            : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
-                        }`}
-                      >
-                        <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
-                          {t('GRATIS · BEBAS BIAYA', 'FREE · NO EXTRA CHARGE')}
-                        </span>
-                        <div className="text-sm font-black text-white uppercase font-sans">
-                          {t('AMBIL DI CIBUBUR', 'PICK UP AT CIBUBUR')}
-                        </div>
-                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                          {t('Lokasi: ABEEY Coffee, LRT Harjamukti, Cibubur (11–12 Des 2026).', 'Location: ABEEY Coffee, LRT Harjamukti, Cibubur (Dec 11–12, 2026).')}
-                        </p>
-                      </button>
-
-                      {/* Opsi 2: Handling & Kirim (+Rp 20.000) */}
-                      <button
-                        type="button"
-                        onClick={() => setRpcMethod('HANDLING')}
-                        className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 hover:-translate-y-0.5 cursor-pointer relative overflow-hidden ${
-                          rpcMethod === 'HANDLING'
-                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.2)]'
-                            : 'border-white/10 bg-black/40 hover:border-white/25 hover:bg-black/60'
-                        }`}
-                      >
-                        <span className="text-[9px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block mb-1">
-                          {t('+RP 20.000 · LAYANAN KIRIM', '+RP 20,000 · SHIPPING')}
-                        </span>
-                        <div className="text-sm font-black text-white uppercase font-sans">
-                          {t('HANDLING & KIRIM RUMAH', 'HANDLING & HOME DELIVERY')}
-                        </div>
-                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                          {t('Paket race pack dikirim aman langsung ke alamat rumah Anda sebelum hari-H.', 'Race pack safely shipped directly to your home address prior to race day.')}
-                        </p>
-                      </button>
-                    </div>
-                  )}
+                  <div className="text-[10px] font-mono text-slate-500 pt-2 border-t border-white/10">
+                    {t('Cth: GRIND2026, GXID2026, GRAVELID', 'E.g. GRIND2026, GXID2026, GRAVELID')}
+                  </div>
                 </div>
 
               </div>
@@ -1432,7 +1601,7 @@ export default function RegistrationPage() {
                   <button
                     type="button"
                     onClick={() => setPairActiveTab('rider1')}
-                    className={`py-3 px-4 rounded-xl text-xs font-mono font-black uppercase tracking-wider transition-all cursor-pointer ${
+                    className={`py-3.5 px-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase tracking-wider transition-all cursor-pointer ${
                       pairActiveTab === 'rider1'
                         ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
                         : 'text-slate-400 hover:text-white bg-transparent'
@@ -1443,7 +1612,7 @@ export default function RegistrationPage() {
                   <button
                     type="button"
                     onClick={() => setPairActiveTab('rider2')}
-                    className={`py-3 px-4 rounded-xl text-xs font-mono font-black uppercase tracking-wider transition-all cursor-pointer ${
+                    className={`py-3.5 px-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase tracking-wider transition-all cursor-pointer ${
                       pairActiveTab === 'rider2'
                         ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
                         : 'text-slate-400 hover:text-white bg-transparent'
@@ -1456,19 +1625,20 @@ export default function RegistrationPage() {
 
               {/* 3.2 Form Fields: Rider 1 */}
               {(!selectedCategory.is_pair || pairActiveTab === 'rider1') ? (
-                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-7 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-6">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3.5">
+                    <span className="font-mono text-sm font-bold text-[#FA6D0B] uppercase tracking-widest block">
                       {t('IDENTITAS ATLET RIDER 1', 'RIDER 1 ATHLETE IDENTITY')} {selectedCategory.is_pair && t('· KAPTEN TIM', '· TEAM CAPTAIN')}
                     </span>
-                    <span className="text-[10px] font-mono text-slate-400 uppercase">
-                      {t('DATA WAJIB SESUAI KTP/PASPOR', 'REQUIRED AS IN ID/PASSPORT')}
+                    <span className="text-[10px] font-mono text-slate-400 uppercase font-bold">
+                      {t('DATA WAJIB SESUAI KTP / PASPOR', 'OFFICIAL GOVERNMENT ID DATA')}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Row 1: Nama, NIK, Agama/Kepercayaan (3 Kolom Proporsional) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('NAMA LENGKAP (SESUAI KTP/PASPOR)', 'FULL NAME (AS IN ID/PASSPORT)')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1476,13 +1646,13 @@ export default function RegistrationPage() {
                         required
                         value={rider1.full_name}
                         onChange={(e) => setRider1({ ...rider1, full_name: e.target.value })}
-                        placeholder={t('Nama Lengkap', 'Full Name')}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        placeholder={t('Nama Lengkap Atlet', 'Athlete Full Name')}
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('NOMOR NIK / PASPOR (16 DIGIT KTP)', 'ID / PASSPORT NUMBER (16 DIGIT ID)')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1492,21 +1662,41 @@ export default function RegistrationPage() {
                         value={rider1.nik}
                         onChange={(e) => setRider1({ ...rider1, nik: e.target.value.replace(/\D/g, '') })}
                         placeholder="3201012345670001"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
+                        {t('AGAMA / KEPERCAYAAN', 'RELIGION / BELIEF')} <span className="text-[#FA6D0B]">*</span>
+                      </label>
+                      <select
+                        value={rider1.religion}
+                        onChange={(e) => setRider1({ ...rider1, religion: e.target.value })}
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                      >
+                        <option value="Islam" className="bg-[#15171C]">Islam</option>
+                        <option value="Kristen Protestan" className="bg-[#15171C]">Kristen Protestan</option>
+                        <option value="Katolik" className="bg-[#15171C]">Katolik</option>
+                        <option value="Hindu" className="bg-[#15171C]">Hindu</option>
+                        <option value="Buddha" className="bg-[#15171C]">Buddha</option>
+                        <option value="Khonghucu" className="bg-[#15171C]">Khonghucu</option>
+                        <option value="Lainnya" className="bg-[#15171C]">{t('Lainnya / Penghayat Kepercayaan', 'Other / Traditional Belief')}</option>
+                      </select>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {/* Row 2: Jenis Kelamin, Tanggal Lahir, Golongan Darah, Alergi / Medic Alert (4 Kolom) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('JENIS KELAMIN', 'GENDER')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           type="button"
                           onClick={() => setRider1({ ...rider1, gender: 'male' })}
-                          className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                          className={`py-3.5 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider1.gender === 'male'
                               ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
                               : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
@@ -1517,7 +1707,7 @@ export default function RegistrationPage() {
                         <button
                           type="button"
                           onClick={() => setRider1({ ...rider1, gender: 'female' })}
-                          className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                          className={`py-3.5 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider1.gender === 'female'
                               ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
                               : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
@@ -1529,7 +1719,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('TANGGAL LAHIR', 'DATE OF BIRTH')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1537,18 +1727,18 @@ export default function RegistrationPage() {
                         required
                         value={rider1.birth_date}
                         onChange={(e) => setRider1({ ...rider1, birth_date: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('GOLONGAN DARAH', 'BLOOD TYPE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <select
                         value={rider1.blood_type}
                         onChange={(e) => setRider1({ ...rider1, blood_type: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
                       >
                         <option value="A" className="bg-[#15171C]">{t('GOLONGAN DARAH A', 'BLOOD TYPE A')}</option>
                         <option value="B" className="bg-[#15171C]">{t('GOLONGAN DARAH B', 'BLOOD TYPE B')}</option>
@@ -1557,11 +1747,25 @@ export default function RegistrationPage() {
                         <option value="-" className="bg-[#15171C]">{t('TIDAK TAHU (-)', 'UNKNOWN (-)')}</option>
                       </select>
                     </div>
+
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
+                        {t('ALERGI / MEDIC ALERT', 'ALLERGY / MEDIC ALERT')} <span className="text-[#FA6D0B]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={rider1.medical_notes}
+                        onChange={(e) => setRider1({ ...rider1, medical_notes: e.target.value })}
+                        placeholder={t('Cth: Asma, Alergi Antibiotik, atau -', 'E.g. Asthma, Penicillin allergy, or -')}
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                      />
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Row 3: Email & WhatsApp */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('EMAIL AKTIF', 'ACTIVE EMAIL')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1570,12 +1774,12 @@ export default function RegistrationPage() {
                         value={rider1.email}
                         onChange={(e) => setRider1({ ...rider1, email: e.target.value })}
                         placeholder="nama@email.com"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('NOMOR WHATSAPP AKTIF', 'ACTIVE WHATSAPP NUMBER')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1584,14 +1788,15 @@ export default function RegistrationPage() {
                         value={rider1.phone_number}
                         onChange={(e) => setRider1({ ...rider1, phone_number: e.target.value })}
                         placeholder="081234567890"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Row 4: Kontak Darurat */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('NAMA KONTAK DARURAT', 'EMERGENCY CONTACT NAME')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1599,13 +1804,13 @@ export default function RegistrationPage() {
                         required
                         value={rider1.emergency_contact_name}
                         onChange={(e) => setRider1({ ...rider1, emergency_contact_name: e.target.value })}
-                        placeholder={t('Keluarga / Kerabat', 'Family / Relative')}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        placeholder={t('Nama Keluarga / Kerabat', 'Family / Relative Full Name')}
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('NOMOR HP KONTAK DARURAT', 'EMERGENCY CONTACT PHONE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1614,26 +1819,27 @@ export default function RegistrationPage() {
                         value={rider1.emergency_contact_phone}
                         onChange={(e) => setRider1({ ...rider1, emergency_contact_phone: e.target.value })}
                         placeholder="08xxxxxxxxxx"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
                   </div>
 
+                  {/* Row 5: Jersey Finisher Size (jika Paket MEDAL_JERSEY) */}
                   {packageType === 'MEDAL_JERSEY' && (
-                    <div className="space-y-2 pt-2 border-t border-white/10">
+                    <div className="space-y-3 pt-3 border-t border-white/10">
                       <div className="flex items-center justify-between">
                         <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest">
                           {t('UKURAN JERSEY FINISHER RIDER 1', 'RIDER 1 FINISHER JERSEY SIZE')} <span className="text-[#FA6D0B]">*</span>
                         </label>
-                        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase">POLLRIDE AERO FIT</span>
+                        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase font-bold">POLLRIDE AERO FIT</span>
                       </div>
-                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
                         {JERSEY_SIZES.map((sz) => (
                           <button
                             type="button"
                             key={sz}
                             onClick={() => setRider1({ ...rider1, jersey_size: sz })}
-                            className={`py-3 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
+                            className={`py-3.5 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
                               rider1.jersey_size === sz
                                 ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.5)]'
                                 : 'border-white/15 bg-black/60 text-slate-400 hover:border-white/30 hover:text-white'
@@ -1646,7 +1852,8 @@ export default function RegistrationPage() {
                     </div>
                   )}
 
-                  <div className="pt-2 border-t border-white/10">
+                  {/* Row 6: Alamat Domisili */}
+                  <div className="pt-3 border-t border-white/10">
                     <IndonesiaAddressSelect
                       prefixId="r1"
                       value={{
@@ -1667,20 +1874,21 @@ export default function RegistrationPage() {
                 </div>
               ) : (
                 /* 3.3 Form Fields: Rider 2 (Partner Tim) */
-                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-7 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-6">
-                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3.5">
+                    <span className="font-mono text-sm font-bold text-[#FA6D0B] uppercase tracking-widest block">
                       {t('IDENTITAS ATLET RIDER 2 · PARTNER TIM', 'RIDER 2 ATHLETE IDENTITY · TEAM PARTNER')}
                     </span>
-                    <span className="text-[10px] font-mono text-slate-400 uppercase">
-                      {t('DATA PARTNER RESMI', 'OFFICIAL PARTNER DATA')}
+                    <span className="text-[10px] font-mono text-slate-400 uppercase font-bold">
+                      {t('DATA RESMI PARTNER', 'OFFICIAL PARTNER GOVERNMENT ID DATA')}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Row 1: Nama, NIK, Agama/Kepercayaan (3 Kolom) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
-                        {t('NAMA LENGKAP PARTNER', 'PARTNER FULL NAME')} <span className="text-[#FA6D0B]">*</span>
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
+                        {t('NAMA LENGKAP PARTNER (SESUAI KTP/PASPOR)', 'PARTNER FULL NAME (AS IN ID/PASSPORT)')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
                         type="text"
@@ -1688,12 +1896,12 @@ export default function RegistrationPage() {
                         value={rider2.full_name}
                         onChange={(e) => setRider2({ ...rider2, full_name: e.target.value })}
                         placeholder={t('Nama Lengkap Partner', 'Partner Full Name')}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('NIK PARTNER (16 DIGIT KTP)', 'PARTNER ID NUMBER (16 DIGIT ID)')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1703,21 +1911,41 @@ export default function RegistrationPage() {
                         value={rider2.nik}
                         onChange={(e) => setRider2({ ...rider2, nik: e.target.value.replace(/\D/g, '') })}
                         placeholder="3201012345670002"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
+                        {t('AGAMA / KEPERCAYAAN', 'RELIGION / BELIEF')} <span className="text-[#FA6D0B]">*</span>
+                      </label>
+                      <select
+                        value={rider2.religion}
+                        onChange={(e) => setRider2({ ...rider2, religion: e.target.value })}
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                      >
+                        <option value="Islam" className="bg-[#15171C]">Islam</option>
+                        <option value="Kristen Protestan" className="bg-[#15171C]">Kristen Protestan</option>
+                        <option value="Katolik" className="bg-[#15171C]">Katolik</option>
+                        <option value="Hindu" className="bg-[#15171C]">Hindu</option>
+                        <option value="Buddha" className="bg-[#15171C]">Buddha</option>
+                        <option value="Khonghucu" className="bg-[#15171C]">Khonghucu</option>
+                        <option value="Lainnya" className="bg-[#15171C]">{t('Lainnya / Penghayat Kepercayaan', 'Other / Traditional Belief')}</option>
+                      </select>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {/* Row 2: Jenis Kelamin, Tanggal Lahir, Golongan Darah, Alergi / Medic Alert */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('JENIS KELAMIN PARTNER', 'PARTNER GENDER')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           type="button"
                           onClick={() => setRider2({ ...rider2, gender: 'male' })}
-                          className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                          className={`py-3.5 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider2.gender === 'male'
                               ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
                               : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
@@ -1728,7 +1956,7 @@ export default function RegistrationPage() {
                         <button
                           type="button"
                           onClick={() => setRider2({ ...rider2, gender: 'female' })}
-                          className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                          className={`py-3.5 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
                             rider2.gender === 'female'
                               ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
                               : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
@@ -1740,7 +1968,7 @@ export default function RegistrationPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('TANGGAL LAHIR', 'DATE OF BIRTH')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1748,18 +1976,18 @@ export default function RegistrationPage() {
                         required
                         value={rider2.birth_date}
                         onChange={(e) => setRider2({ ...rider2, birth_date: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('GOLONGAN DARAH', 'BLOOD TYPE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <select
                         value={rider2.blood_type}
                         onChange={(e) => setRider2({ ...rider2, blood_type: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
                       >
                         <option value="A" className="bg-[#15171C]">{t('GOLONGAN DARAH A', 'BLOOD TYPE A')}</option>
                         <option value="B" className="bg-[#15171C]">{t('GOLONGAN DARAH B', 'BLOOD TYPE B')}</option>
@@ -1768,11 +1996,25 @@ export default function RegistrationPage() {
                         <option value="-" className="bg-[#15171C]">{t('TIDAK TAHU (-)', 'UNKNOWN (-)')}</option>
                       </select>
                     </div>
+
+                    <div>
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
+                        {t('ALERGI / MEDIC ALERT', 'ALLERGY / MEDIC ALERT')} <span className="text-[#FA6D0B]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={rider2.medical_notes}
+                        onChange={(e) => setRider2({ ...rider2, medical_notes: e.target.value })}
+                        placeholder={t('Cth: Asma, Alergi Makanan, atau -', 'E.g. Asthma, Food allergy, or -')}
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                      />
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Row 3: Email & WhatsApp */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('EMAIL PARTNER', 'PARTNER EMAIL')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1781,12 +2023,12 @@ export default function RegistrationPage() {
                         value={rider2.email}
                         onChange={(e) => setRider2({ ...rider2, email: e.target.value })}
                         placeholder="partner@email.com"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('WHATSAPP PARTNER', 'PARTNER WHATSAPP')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1795,15 +2037,16 @@ export default function RegistrationPage() {
                         value={rider2.phone_number}
                         onChange={(e) => setRider2({ ...rider2, phone_number: e.target.value })}
                         placeholder="08xxxxxxxxxx"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Row 4: Kontak Darurat */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
-                        {t('KONTAK DARURAT (NAMA)', 'EMERGENCY CONTACT NAME')} <span className="text-[#FA6D0B]">*</span>
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
+                        {t('KONTAK DARURAT PARTNER (NAMA)', 'PARTNER EMERGENCY CONTACT NAME')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
                         type="text"
@@ -1811,12 +2054,12 @@ export default function RegistrationPage() {
                         value={rider2.emergency_contact_name}
                         onChange={(e) => setRider2({ ...rider2, emergency_contact_name: e.target.value })}
                         placeholder={t('Nama Kontak Darurat Partner', 'Partner Emergency Contact')}
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-1.5">
+                      <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest mb-2">
                         {t('NOMOR HP KONTAK DARURAT', 'EMERGENCY CONTACT PHONE')} <span className="text-[#FA6D0B]">*</span>
                       </label>
                       <input
@@ -1825,26 +2068,27 @@ export default function RegistrationPage() {
                         value={rider2.emergency_contact_phone}
                         onChange={(e) => setRider2({ ...rider2, emergency_contact_phone: e.target.value })}
                         placeholder="08xxxxxxxxxx"
-                        className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
                       />
                     </div>
                   </div>
 
+                  {/* Row 5: Jersey Finisher Size (jika Paket MEDAL_JERSEY) */}
                   {packageType === 'MEDAL_JERSEY' && (
-                    <div className="space-y-2 pt-2 border-t border-white/10">
+                    <div className="space-y-3 pt-3 border-t border-white/10">
                       <div className="flex items-center justify-between">
                         <label className="block text-[11px] font-mono font-bold text-slate-300 uppercase tracking-widest">
                           {t('UKURAN JERSEY FINISHER PARTNER', 'PARTNER FINISHER JERSEY SIZE')} <span className="text-[#FA6D0B]">*</span>
                         </label>
-                        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase">POLLRIDE AERO FIT</span>
+                        <span className="text-[10px] font-mono text-[#FA6D0B] uppercase font-bold">POLLRIDE AERO FIT</span>
                       </div>
-                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                      <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
                         {JERSEY_SIZES.map((sz) => (
                           <button
                             type="button"
                             key={sz}
                             onClick={() => setRider2({ ...rider2, jersey_size: sz })}
-                            className={`py-3 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
+                            className={`py-3.5 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
                               rider2.jersey_size === sz
                                 ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.5)]'
                                 : 'border-white/15 bg-black/60 text-slate-400 hover:border-white/30 hover:text-white'
@@ -1857,7 +2101,8 @@ export default function RegistrationPage() {
                     </div>
                   )}
 
-                  <div className="pt-2 border-t border-white/10">
+                  {/* Row 6: Alamat Domisili Partner */}
+                  <div className="pt-3 border-t border-white/10">
                     <IndonesiaAddressSelect
                       prefixId="r2"
                       value={{
@@ -1879,9 +2124,9 @@ export default function RegistrationPage() {
               )}
 
               {/* 3.4 Safety Waiver & Agreement */}
-              <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                  <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+              <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-6 sm:p-7 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3.5">
+                  <span className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider block">
                     {t('SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (WAIVER) ·', 'SAFETY STATEMENT & LIABILITY WAIVER ·')}
                   </span>
                   <span className="text-[10px] font-mono text-[#FA6D0B] font-bold uppercase">
@@ -1889,7 +2134,7 @@ export default function RegistrationPage() {
                   </span>
                 </div>
 
-                <div className="p-4 sm:p-5 rounded-xl border border-white/10 bg-black/60 text-xs font-mono text-slate-300 leading-relaxed space-y-2.5">
+                <div className="p-5 rounded-xl border border-white/10 bg-black/60 text-xs sm:text-sm font-mono text-slate-300 leading-relaxed space-y-3">
                   <p>
                     {t(
                       '1. Saya menyadari bahwa Gravel Grindurance 2026 adalah ekspedisi bersepeda mandiri (unsupported) di jalan raya umum dan pedesaan yang tidak steril dari lalu lintas.',
@@ -1910,14 +2155,14 @@ export default function RegistrationPage() {
                   </p>
                 </div>
 
-                <label className="p-4 sm:p-5 rounded-xl border border-white/15 hover:border-[#FA6D0B] bg-black/60 transition-all flex items-start gap-3.5 cursor-pointer select-none">
+                <label className="p-4 sm:p-5 rounded-xl border border-white/15 hover:border-[#FA6D0B] bg-black/60 transition-all flex items-start gap-4 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={waiverAgreed}
                     onChange={(e) => setWaiverAgreed(e.target.checked)}
                     className="mt-1 w-4 h-4 rounded border-white/20 text-[#FA6D0B] focus:ring-[#FA6D0B] bg-black/80 accent-[#FA6D0B] shrink-0"
                   />
-                  <span className="text-xs text-white font-mono leading-relaxed">
+                  <span className="text-xs sm:text-sm text-white font-mono leading-relaxed">
                     {t(
                       'SAYA TELAH MEMBACA, MEMAHAMI, DAN SECARA SADAR MENYETUJUI SELURUH PROTOKOL KESELAMATAN SERTA SURAT PERNYATAAN MANDIRI (WAIVER) GRINDURANCE 2026.',
                       'I HAVE READ, UNDERSTOOD, AND CONSCIOUSLY AGREE TO ALL SAFETY PROTOCOLS AND THE OFFICIAL GRINDURANCE 2026 WAIVER.'
@@ -1927,13 +2172,13 @@ export default function RegistrationPage() {
               </div>
 
               {/* 3.5 Submit Action Bar */}
-              <div className="p-5 sm:p-7 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-center justify-between gap-5">
+              <div className="p-6 sm:p-8 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div>
                   <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">{t('TOTAL BIAYA REGISTRASI:', 'TOTAL REGISTRATION FEE:')}</span>
-                  <div className="font-display italic text-3xl sm:text-4xl font-black text-[#FA6D0B] leading-none mt-1">
+                  <div className="font-display italic text-3xl sm:text-5xl font-black text-[#FA6D0B] leading-none mt-1.5">
                     {formatRupiah(netPrice)}
                   </div>
-                  <div className="text-[11px] font-mono text-slate-400 mt-1.5 flex flex-wrap items-center gap-x-2">
+                  <div className="text-xs font-mono text-slate-400 mt-2 flex flex-wrap items-center gap-x-2.5 gap-y-1">
                     <span>{packageType === 'MEDAL_JERSEY' ? t('Paket Medal + Jersey', 'Medal + Jersey Package') : t('Paket Medal Saja', 'Medal Only Package')}</span>
                     {rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL' && (
                       <>
@@ -1947,10 +2192,16 @@ export default function RegistrationPage() {
                         <span className="text-emerald-400 font-bold">-Rp 50.000 Kupon</span>
                       </>
                     )}
+                    {promoDiscount > 0 && appliedPromo && (
+                      <>
+                        <span>·</span>
+                        <span className="text-emerald-400 font-bold">-{formatRupiah(promoDiscount)} ({appliedPromo.code})</span>
+                      </>
+                    )}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto shrink-0">
+                <div className="flex items-center gap-3.5 w-full sm:w-auto shrink-0">
                   <button
                     type="button"
                     onClick={() => {
@@ -1965,7 +2216,7 @@ export default function RegistrationPage() {
                   <button
                     type="submit"
                     disabled={submitting || !waiverAgreed}
-                    className="relative overflow-hidden flex-1 sm:flex-none px-8 sm:px-10 py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
+                    className="relative overflow-hidden flex-1 sm:flex-none px-8 sm:px-11 py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
                   >
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none" />
                     {submitting ? (
@@ -1989,7 +2240,7 @@ export default function RegistrationPage() {
         {/* STEP 4: INVOICE RESMI, BOOKING ID & PEMBAYARAN */}
         {/* ========================================================================= */}
         {currentStep === 'invoice' && createdOrder && (
-          <div className="max-w-4xl mx-auto space-y-8 animate-slide-up-fade">
+          <div className="w-full max-w-7xl mx-auto space-y-8 animate-slide-up-fade">
             {/* Header Konfirmasi */}
             <div className="p-7 sm:p-9 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md text-center space-y-4 relative overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
               <div className="inline-block">
@@ -2035,6 +2286,13 @@ export default function RegistrationPage() {
                   <div className="flex justify-between text-emerald-400 font-bold">
                     <span>{t('INSENTIF KUPON MAKAN GX-ID:', 'GX-ID MEAL COUPON INCENTIVE:')}</span>
                     <span>- {formatRupiah(createdOrder.discount_meal_coupon)}</span>
+                  </div>
+                )}
+
+                {(createdOrder.discount_promo || promoDiscount) > 0 && (
+                  <div className="flex justify-between text-emerald-400 font-bold">
+                    <span>{t('DISKON KODE PROMO KOMUNITAS:', 'COMMUNITY PROMO CODE DISCOUNT:')}</span>
+                    <span>- {formatRupiah(createdOrder.discount_promo || promoDiscount)}</span>
                   </div>
                 )}
 

@@ -19,7 +19,7 @@ function calculateAge(birthDateString?: string): number {
 export async function POST(req: Request) {
   try {
     const body: RegistrationPayload = await req.json();
-    const { category_id, package_type, rpc_method, rider_1, rider_2, waiver_agreed } = body;
+    const { category_id, package_type, rpc_method, promo_code, rider_1, rider_2, waiver_agreed } = body;
 
     if (!waiver_agreed) {
       return NextResponse.json(
@@ -97,7 +97,22 @@ export async function POST(req: Request) {
       }
     }
 
-    const net_amount = Math.max(0, gross_amount - discount_meal_coupon);
+    // 3.5 Diskon Kode Promo / Voucher Komunitas
+    let discount_promo = 0;
+    const cleanPromo = (promo_code || '').trim().toUpperCase();
+    const VALID_PROMOS: Record<string, number> = {
+      'GRIND2026': 50000,
+      'GXID2026': 50000,
+      'GRAVELID': 75000,
+      'EARLYBIRD': 50000,
+      'KOMUNITAS': 40000,
+      'SPECIALPAIR': 100000,
+    };
+    if (cleanPromo && VALID_PROMOS[cleanPromo]) {
+      discount_promo = VALID_PROMOS[cleanPromo];
+    }
+
+    const net_amount = Math.max(0, gross_amount - discount_meal_coupon - discount_promo);
 
     // Generate kode unik
     const randomSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();
@@ -122,6 +137,8 @@ export async function POST(req: Request) {
           package_type,
           rpc_method: rpc_method ?? 'PICKUP',
           rpc_handling_fee,
+          promo_code: cleanPromo || null,
+          discount_promo,
           registered_at: new Date().toISOString(),
         },
       })

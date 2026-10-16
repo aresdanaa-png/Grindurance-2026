@@ -31,6 +31,8 @@ export interface Order {
   package_type: PackageType;
   gross_amount: number;
   discount_meal_coupon: number;
+  discount_promo?: number;
+  promo_code?: string | null;
   net_amount: number;
   payment_status: PaymentStatus;
   payment_channel?: string | null;
@@ -112,6 +114,7 @@ export interface RegistrationPayload {
   category_id: string;
   package_type: PackageType;
   rpc_method?: 'PICKUP' | 'HANDLING';
+  promo_code?: string;
   rider_1: RiderFormData;
   rider_2?: RiderFormData; // Wajib jika category_id === '120_PAIR'
   waiver_agreed: boolean;
