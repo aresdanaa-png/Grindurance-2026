@@ -76,42 +76,47 @@ export default function CtaSection() {
           )}
         </p>
 
-        {/* Athletic Telemetry Cockpit Badges (4 Monolith Strips) */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 max-w-4xl mx-auto pt-2">
-          <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-md p-3 sm:p-3.5 space-y-0.5">
-            <span className="text-[9px] sm:text-[10px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block">
-              {t('KATEGORI RUTE', 'ROUTE CATEGORIES')}
-            </span>
-            <span className="font-display font-black text-xs sm:text-sm text-white uppercase italic">
-              {t('5 PILIHAN (60K–200K)', '5 CHOICES (60K–200K)')}
-            </span>
-          </div>
+        {/* Unified Aerodynamic Cockpit Telemetry Strip (Single Monolith Panel) */}
+        <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-black/60 backdrop-blur-xl overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,0.7)] relative group">
+          {/* Subtle Top Kinetic Orange Edge */}
+          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#FA6D0B] to-transparent opacity-80" />
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/10">
+            <div className="py-3 sm:py-3.5 px-3 sm:px-4 text-center space-y-1">
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest block">
+                {t('KATEGORI RUTE', 'ROUTE CATEGORIES')}
+              </span>
+              <span className="font-display font-black text-xs sm:text-[13px] text-white uppercase italic tracking-wide block">
+                5 PILIHAN <span className="text-[#FA6D0B]">·</span> 60K–200K
+              </span>
+            </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-md p-3 sm:p-3.5 space-y-0.5">
-            <span className="text-[9px] sm:text-[10px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block">
-              {t('FORMAT RACE', 'RACE FORMAT')}
-            </span>
-            <span className="font-display font-black text-xs sm:text-sm text-white uppercase italic">
-              {t('100% UN-SUPPORTED', '100% UN-SUPPORTED')}
-            </span>
-          </div>
+            <div className="py-3 sm:py-3.5 px-3 sm:px-4 text-center space-y-1">
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest block">
+                {t('FORMAT RACE', 'RACE FORMAT')}
+              </span>
+              <span className="font-display font-black text-xs sm:text-[13px] text-white uppercase italic tracking-wide block">
+                100% UN-SUPPORTED
+              </span>
+            </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-md p-3 sm:p-3.5 space-y-0.5">
-            <span className="text-[9px] sm:text-[10px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block">
-              {t('LOKASI HOST', 'HOST VENUE')}
-            </span>
-            <span className="font-display font-black text-xs sm:text-sm text-white uppercase italic">
-              ABEEY LRT HARJAMUKTI
-            </span>
-          </div>
+            <div className="py-3 sm:py-3.5 px-3 sm:px-4 text-center space-y-1">
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest block">
+                {t('LOKASI HOST', 'HOST VENUE')}
+              </span>
+              <span className="font-display font-black text-xs sm:text-[13px] text-white uppercase italic tracking-wide block">
+                ABEEY LRT HARJAMUKTI
+              </span>
+            </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/50 backdrop-blur-md p-3 sm:p-3.5 space-y-0.5">
-            <span className="text-[9px] sm:text-[10px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block">
-              {t('PILIHAN PAKET', 'PACKAGE OPTIONS')}
-            </span>
-            <span className="font-display font-black text-xs sm:text-sm text-white uppercase italic">
-              {t('MEDAL / MEDAL+JERSEY', 'MEDAL / MEDAL+JERSEY')}
-            </span>
+            <div className="py-3 sm:py-3.5 px-3 sm:px-4 text-center space-y-1">
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest block">
+                {t('PILIHAN PAKET', 'PACKAGE OPTIONS')}
+              </span>
+              <span className="font-display font-black text-xs sm:text-[13px] text-white uppercase italic tracking-wide block">
+                MEDAL <span className="text-[#FA6D0B]">·</span> JERSEY
+              </span>
+            </div>
           </div>
         </div>
 
