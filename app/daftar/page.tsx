@@ -20,70 +20,54 @@ import ElevationProfile from '@/components/ElevationProfile';
 // Dynamically import RouteMap without SSR
 const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
 
-const DEFAULT_CATEGORIES: Category[] = [
+// 5 KATEGORI RESMI GRINDURANCE 2026
+const OFFICIAL_CATEGORIES: Category[] = [
   {
     id: '60',
-    name: '60K Gravel Discovery',
+    name: '60 Fun Ride',
     distance_km: 60,
     category_type: 'fun',
     is_pair: false,
-    price_medal_only: 290000,
-    price_medal_jersey: 540000,
-    quota: 100,
-    current_enrolled: 24,
-    cot_hours: 6,
-    wave_start_time: '06:00',
+    price_medal_only: 225000,
+    price_medal_jersey: 275000,
+    quota: 150,
+    current_enrolled: 42,
+    cot_hours: 7,
+    wave_start_time: '07:00',
     prologue_required_km: 0,
-    mandatory_pitstop_cp: null,
+    mandatory_pitstop_cp: 6,
     tracking_required: false,
     is_active: true,
   },
   {
-    id: '120_SINGLE',
-    name: '120K Gravel Explorer (Solo)',
-    distance_km: 120,
-    category_type: 'race',
+    id: '100',
+    name: '100 Fondo',
+    distance_km: 100,
+    category_type: 'cross',
     is_pair: false,
-    price_medal_only: 390000,
-    price_medal_jersey: 640000,
-    quota: 100,
-    current_enrolled: 42,
-    cot_hours: 11,
-    wave_start_time: '05:30',
+    price_medal_only: 275000,
+    price_medal_jersey: 325000,
+    quota: 150,
+    current_enrolled: 56,
+    cot_hours: 9.5,
+    wave_start_time: '07:00',
     prologue_required_km: 0,
-    mandatory_pitstop_cp: null,
-    tracking_required: true,
+    mandatory_pitstop_cp: 6,
+    tracking_required: false,
     is_active: true,
   },
   {
     id: '120_PAIR',
-    name: '120K Pair Challenge (2 Riders)',
+    name: '120 (Race)',
     distance_km: 120,
     category_type: 'race',
     is_pair: true,
-    price_medal_only: 780000,
-    price_medal_jersey: 1280000,
-    quota: 50,
-    current_enrolled: 18,
+    price_medal_only: 350000,
+    price_medal_jersey: 400000,
+    quota: 100,
+    current_enrolled: 38,
     cot_hours: 11,
-    wave_start_time: '05:30',
-    prologue_required_km: 0,
-    mandatory_pitstop_cp: null,
-    tracking_required: true,
-    is_active: true,
-  },
-  {
-    id: '200',
-    name: '200K Gravel Adventure',
-    distance_km: 200,
-    category_type: 'ultra',
-    is_pair: false,
-    price_medal_only: 490000,
-    price_medal_jersey: 740000,
-    quota: 75,
-    current_enrolled: 31,
-    cot_hours: 16,
-    wave_start_time: '05:00',
+    wave_start_time: '06:00',
     prologue_required_km: 0,
     mandatory_pitstop_cp: 4,
     tracking_required: true,
@@ -91,24 +75,41 @@ const DEFAULT_CATEGORIES: Category[] = [
   },
   {
     id: '150',
-    name: '200K Road Challenge',
-    distance_km: 200,
-    category_type: 'cross',
+    name: '150 Grand Fondo',
+    distance_km: 150,
+    category_type: 'race',
     is_pair: false,
-    price_medal_only: 450000,
-    price_medal_jersey: 700000,
+    price_medal_only: 350000,
+    price_medal_jersey: 400000,
     quota: 75,
-    current_enrolled: 28,
-    cot_hours: 14,
-    wave_start_time: '05:15',
-    prologue_required_km: 0,
-    mandatory_pitstop_cp: 3,
+    current_enrolled: 29,
+    cot_hours: 15,
+    wave_start_time: '05:30',
+    prologue_required_km: 30, // Route 120/150 sama bedanya yg 150 Prolog 30 km
+    mandatory_pitstop_cp: 4,
+    tracking_required: true,
+    is_active: true,
+  },
+  {
+    id: '200',
+    name: '200 Ultra',
+    distance_km: 200,
+    category_type: 'ultra',
+    is_pair: false,
+    price_medal_only: 350000,
+    price_medal_jersey: 400000,
+    quota: 50,
+    current_enrolled: 21,
+    cot_hours: 19,
+    wave_start_time: '05:30',
+    prologue_required_km: 30, // Route 200 hanya disiapkan 170 km yg 30 km Prolog
+    mandatory_pitstop_cp: 4,
     tracking_required: true,
     is_active: true,
   },
 ];
 
-// Visual Poster & Kata Ajakan Spesifik per Kategori
+// Visual Poster & Kata Ajakan Spesifik per 5 Kategori Resmi
 const CATEGORY_VISUALS: Record<string, { 
   image: string; 
   headline: string; 
@@ -117,51 +118,54 @@ const CATEGORY_VISUALS: Record<string, {
   badge: string; 
   terrain: string;
   callToAction: string;
+  prologueNote?: string;
 }> = {
   '60': {
     image: '/backgrounds/bg-categories.webp',
-    headline: 'DISCOVERY 60KM',
+    headline: '60 FUN RIDE',
     subtitle: 'REKREASI & PEMULA · SUKAMAKMUR',
     elevation: '+450 M GAIN',
-    badge: 'NON-RACE // FUN',
+    badge: 'FUN RIDE // REKREASI',
     terrain: '65% ASPAL · 35% MAKADAM HALUS',
     callToAction: 'MULAI PETUALANGAN',
   },
-  '120_SINGLE': {
-    image: '/pesepeda.webp',
-    headline: 'EXPLORER 120KM',
-    subtitle: 'SOLO EXPEDITION · JONGGOL RIDGE',
-    elevation: '+1,450 M GAIN',
-    badge: 'SOLO EXPEDITION',
-    terrain: 'GRAVEL & TANJAKAN JONGGOL',
-    callToAction: 'TAKLUKKAN JONGGOL',
+  '100': {
+    image: '/hero.webp',
+    headline: '100 FONDO',
+    subtitle: 'EKSPLORASI PERSAWAHAN & MAKADAM SODONG',
+    elevation: '+850 M GAIN',
+    badge: 'FONDO // EKSPLORASI',
+    terrain: 'ROLLING HILLS & MAKADAM SODONG',
+    callToAction: 'JELAJAHI JALUR',
   },
   '120_PAIR': {
     image: '/pesepeda2.webp',
-    headline: 'PAIR RACE 120KM',
-    subtitle: '2-RIDER TANDEM · PODIUM TOP 3',
+    headline: '120 (RACE)',
+    subtitle: 'OFFICIAL RACE · SINGLE & PAIR MIX',
     elevation: '+1,450 M GAIN',
     badge: 'OFFICIAL RACE // PODIUM',
-    terrain: 'KOMPETISI TANDEM CAMPURAN',
+    terrain: 'KORIDOR JONGGOL RIDGE & SUKAMAKMUR',
     callToAction: 'REBUT PODIUM DUAL',
+  },
+  '150': {
+    image: '/pesepeda.webp',
+    headline: '150 GRAND FONDO',
+    subtitle: 'RUTE 120 KM + WAJIB PROLOG 30 KM SUBUH',
+    elevation: '+1,450 M GAIN',
+    badge: 'GRAND FONDO // PROLOG 30K',
+    terrain: 'RUTE 120 KM DITAMBAH PROLOG 30 KM',
+    callToAction: 'TAKLUKKAN TANTANGAN',
+    prologueNote: 'Rute 120 km dan 150 km memiliki trek sama, bedanya kategori 150 wajib menyelesaikan Prolog 30 km mandiri (03:00–05:00 WIB).',
   },
   '200': {
     image: '/perjalanan-siklis-di-jalur-oranye.webp',
-    headline: 'ULTRA 200KM',
-    subtitle: 'BRUTAL UNSUPPORTED · PITSTOP CP4',
-    elevation: '+2,800 M GAIN',
-    badge: 'ULTRA EXPEDITION',
-    terrain: 'EKSPEDISI HUJAN & JALUR LIAR',
+    headline: '200 ULTRA',
+    subtitle: 'RUTE 170 KM + WAJIB PROLOG 30 KM',
+    elevation: '+3,180 M GAIN',
+    badge: 'ULTRA EXPEDITION // PROLOG 30K',
+    terrain: 'RUTE 170 KM DITAMBAH PROLOG 30 KM',
     callToAction: 'UJI KETAHANAN EKSTREM',
-  },
-  '150': {
-    image: '/hero.webp',
-    headline: 'ROAD 200KM',
-    subtitle: 'ENDURANCE ASPHALT LOOP · SENTUL',
-    elevation: '+2,100 M GAIN',
-    badge: 'ROAD CHALLENGE',
-    terrain: '100% ASPAL BERGELOMBANG',
-    callToAction: 'PACU ASPAL SENTUL',
+    prologueNote: 'Rute resmi disiapkan 170 km, peserta wajib menyelesaikan Prolog 30 km mandiri (Total jarak 200 km).',
   },
 };
 
@@ -173,10 +177,10 @@ function formatRupiah(amount: number): string {
 
 // Helper untuk mengambil data briefing teknis
 function getCategoryDetail(id: string): CategoryData {
-  if (id === '120_SINGLE') {
-    return CATEGORIES.find(c => c.id === '120_PAIR') || CATEGORIES[2];
-  }
-  return CATEGORIES.find(c => c.id === id) || CATEGORIES[2];
+  const match = CATEGORIES.find(c => c.id === id);
+  if (match) return match;
+  if (id === '120_SINGLE') return CATEGORIES.find(c => c.id === '120_PAIR') || CATEGORIES[2];
+  return CATEGORIES[2];
 }
 
 export default function RegistrationPage() {
@@ -185,8 +189,8 @@ export default function RegistrationPage() {
   // Step state: 'select' (Pilih Gambar) -> 'detail' (Peta Besar & Briefing) -> 'form' (Isi Form) -> 'invoice' (Tagihan)
   const [currentStep, setCurrentStep] = useState<'select' | 'detail' | 'form' | 'invoice'>('select');
   
-  const [categories, setCategories] = useState<Category[]>(DEFAULT_CATEGORIES);
-  const [selectedCategory, setSelectedCategory] = useState<Category>(DEFAULT_CATEGORIES[2]); // Default 120_PAIR
+  const [categories, setCategories] = useState<Category[]>(OFFICIAL_CATEGORIES);
+  const [selectedCategory, setSelectedCategory] = useState<Category>(OFFICIAL_CATEGORIES[2]); // Default 120 (Race)
   const [packageType, setPackageType] = useState<PackageType>('MEDAL_JERSEY');
   const [rpcMethod, setRpcMethod] = useState<'PICKUP' | 'HANDLING'>('PICKUP');
 
@@ -258,17 +262,23 @@ export default function RegistrationPage() {
   const [simulatingPayment, setSimulatingPayment] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
 
-  // Ambil data live dari Supabase
+  // Ambil data live dari Supabase (filter hanya kategori aktif dan cocokkan ke official list)
   useEffect(() => {
     async function fetchCategories() {
       try {
         const res = await fetch('/api/categories');
         const data = await res.json();
         if (data.categories && Array.isArray(data.categories) && data.categories.length > 0) {
-          setCategories(data.categories);
+          // Sinkronisasi dengan official list 60, 100, 120, 150, 200
+          const validIds = ['60', '100', '120_PAIR', '150', '200'];
+          const matched = OFFICIAL_CATEGORIES.map(off => {
+            const live = data.categories.find((c: Category) => c.id === off.id);
+            return live ? { ...off, current_enrolled: live.current_enrolled, quota: live.quota } : off;
+          });
+          setCategories(matched);
         }
       } catch (err) {
-        console.error('Menggunakan data kategori default:', err);
+        console.error('Menggunakan data kategori default resmi:', err);
       }
     }
     fetchCategories();
@@ -432,7 +442,7 @@ export default function RegistrationPage() {
       <div className="max-w-7xl mx-auto relative z-10">
 
         {/* ========================================================================= */}
-        {/* STEP 1: PILIH KATEGORI (DIRTYLAND PHOTOGRAPHIC POSTER CARDS) */}
+        {/* STEP 1: PILIH KATEGORI (5 KATEGORI RESMI GRINDURANCE 2026) */}
         {/* ========================================================================= */}
         {currentStep === 'select' && (
           <div className="space-y-12 animate-fadeIn">
@@ -441,7 +451,7 @@ export default function RegistrationPage() {
             <div className="text-center space-y-4 max-w-3xl mx-auto">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-mono uppercase tracking-[0.25em] text-[#FA6D0B]">
                 <span className="w-2 h-2 rounded-full bg-[#FA6D0B] animate-pulse" />
-                GX-ID ATHLETE ROSTER // SEASON 2026
+                GRINDURANCE 2026 // 5 KATEGORI RESMI
               </div>
 
               <h1 className="font-display text-4xl sm:text-6xl font-black uppercase tracking-tight text-white leading-none">
@@ -449,7 +459,8 @@ export default function RegistrationPage() {
               </h1>
 
               <p className="text-xs sm:text-sm text-slate-400 font-sans leading-relaxed">
-                Tentukan batas daya tahan Anda. Klik kategori di bawah untuk mempelajari rute, profil elevasi, dan regulasi balap.
+                60 Fun Ride · 100 Fondo · 120 (Race) · 150 Grand Fondo · 200 Ultra.
+                Klik kategori di bawah untuk mempelajari rute GPX, profil elevasi, dan regulasi.
               </p>
             </div>
 
@@ -471,7 +482,7 @@ export default function RegistrationPage() {
                   <div
                     key={cat.id}
                     onClick={() => handleSelectToDetail(cat)}
-                    className="relative h-[480px] sm:h-[510px] rounded-3xl overflow-hidden border border-white/15 hover:border-[#FA6D0B] transition-all duration-500 group cursor-pointer flex flex-col justify-between p-6 select-none hover:shadow-[0_0_35px_rgba(250,109,11,0.3)] hover:scale-[1.01]"
+                    className="relative h-[490px] sm:h-[520px] rounded-3xl overflow-hidden border border-white/15 hover:border-[#FA6D0B] transition-all duration-500 group cursor-pointer flex flex-col justify-between p-6 select-none hover:shadow-[0_0_35px_rgba(250,109,11,0.3)] hover:scale-[1.01]"
                   >
                     {/* Background Hero Photography */}
                     <Image
@@ -529,6 +540,12 @@ export default function RegistrationPage() {
                       <div className="text-[10px] font-mono text-slate-400 tracking-wider uppercase pt-1">
                         {visual.terrain}
                       </div>
+
+                      {visual.prologueNote && (
+                        <div className="inline-block px-2.5 py-1 rounded-lg bg-black/70 border border-[#FA6D0B]/40 text-[9px] font-mono text-[#FA6D0B] uppercase tracking-wider mt-2">
+                          [WAJIB PROLOG 30 KM]
+                        </div>
+                      )}
                     </div>
 
                     {/* ── BOTTOM INDUSTRIAL LEDGER & CALL TO ACTION STRIP ── */}
@@ -609,6 +626,13 @@ export default function RegistrationPage() {
               <p className="text-xs sm:text-sm text-slate-400 font-sans max-w-3xl leading-relaxed">
                 {detailCategoryData.desc}
               </p>
+
+              {CATEGORY_VISUALS[selectedCategory.id]?.prologueNote && (
+                <div className="p-4 rounded-2xl border border-[#FA6D0B]/40 bg-[#FA6D0B]/10 font-mono text-xs text-[#FA6D0B] space-y-1">
+                  <span className="font-bold uppercase tracking-wider block">[INFORMASI KHUSUS PROLOG 30 KM]</span>
+                  <p className="text-slate-200">{CATEGORY_VISUALS[selectedCategory.id]?.prologueNote}</p>
+                </div>
+              )}
             </div>
 
             {/* 4-Metric Bar Telemetry */}
@@ -616,7 +640,9 @@ export default function RegistrationPage() {
               <div className="space-y-1 border-r border-white/10 pr-2">
                 <span className="text-[10px] text-slate-500 uppercase block">JARAK TEMPUH:</span>
                 <span className="text-xl sm:text-2xl font-black text-white block">{selectedCategory.distance_km} KM</span>
-                <span className="text-[10px] text-slate-400">{detailCategoryData.terrain.split(',')[0]}</span>
+                <span className="text-[10px] text-slate-400">
+                  {selectedCategory.id === '150' ? 'Rute 120km + 30km Prolog' : selectedCategory.id === '200' ? 'Rute 170km + 30km Prolog' : 'Rute Penuh'}
+                </span>
               </div>
 
               <div className="space-y-1 border-r border-white/10 pr-2 sm:px-2">
