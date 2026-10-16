@@ -13,22 +13,22 @@ export const PRESENTING_TOP_TIER: SponsorItem[] = [
     id: 'abeey',
     name: 'Abeey Coffee & Eatery',
     logo: '/sponsors/cafe abeey white.png',
-    heightClass: 'h-20 sm:h-24 lg:h-28 xl:h-30',
-    maxWidthClass: 'max-w-[240px] sm:max-w-[300px] lg:max-w-[360px]',
+    heightClass: 'h-14 sm:h-16 lg:h-20 xl:h-22',
+    maxWidthClass: 'max-w-[160px] sm:max-w-[200px] lg:max-w-[240px]',
   },
   {
     id: 'jnt',
     name: 'J&T Express',
     logo: '/sponsors/jnt.svg',
-    heightClass: 'h-12 sm:h-15 lg:h-18 xl:h-20',
-    maxWidthClass: 'max-w-[190px] sm:max-w-[240px] lg:max-w-[290px]',
+    heightClass: 'h-8 sm:h-10 lg:h-12 xl:h-13',
+    maxWidthClass: 'max-w-[140px] sm:max-w-[180px] lg:max-w-[210px]',
   },
   {
     id: 'byd',
     name: 'BYD Auto',
     logo: '/sponsors/byd.svg',
-    heightClass: 'h-13 sm:h-16 lg:h-19 xl:h-21',
-    maxWidthClass: 'max-w-[220px] sm:max-w-[290px] lg:max-w-[350px]',
+    heightClass: 'h-8 sm:h-10 lg:h-12 xl:h-13',
+    maxWidthClass: 'max-w-[140px] sm:max-w-[170px] lg:max-w-[200px]',
   },
 ];
 
@@ -38,15 +38,15 @@ export const PRESENTING_BOTTOM_TIER: SponsorItem[] = [
     id: 'hermina-depok',
     name: 'RS Hermina Depok',
     logo: '/sponsors/hermina-depok-tight.png',
-    heightClass: 'h-26 sm:h-34 lg:h-40 xl:h-44',
-    maxWidthClass: 'max-w-[220px] sm:max-w-[280px] lg:max-w-[320px]',
+    heightClass: 'h-14 sm:h-18 lg:h-20 xl:h-22',
+    maxWidthClass: 'max-w-[110px] sm:max-w-[130px] lg:max-w-[150px]',
   },
   {
     id: 'dhs',
     name: 'DHS Logistik',
     logo: '/sponsors/dhs-logo.png',
-    heightClass: 'h-16 sm:h-22 lg:h-26 xl:h-28',
-    maxWidthClass: 'max-w-[220px] sm:max-w-[280px] lg:max-w-[340px]',
+    heightClass: 'h-11 sm:h-14 lg:h-16 xl:h-18',
+    maxWidthClass: 'max-w-[140px] sm:max-w-[180px] lg:max-w-[210px]',
   },
 ];
 
