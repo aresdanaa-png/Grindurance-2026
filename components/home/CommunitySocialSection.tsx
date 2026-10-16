@@ -85,7 +85,7 @@ export default function CommunitySocialSection() {
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
               {t(
                 'Bukan sekadar event sehari, melainkan rumah persaudaraan ultra-cycling mandiri terbesar di Indonesia. Bagikan kisah perjuangan Anda di koridor Jonggol bersama ribuan petualang lainnya.',
-                'More than a one-day race, GX-ID is Indonesia's largest grassroots ultra-cycling camaraderie. Share your endurance tales across the Jonggol corridor with thousands of fellow adventurers.'
+                "More than a one-day race, GX-ID is Indonesia's largest grassroots ultra-cycling camaraderie. Share your endurance tales across the Jonggol corridor with thousands of fellow adventurers."
               )}
             </p>
           </div>
