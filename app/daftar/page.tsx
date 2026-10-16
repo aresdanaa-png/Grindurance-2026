@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { Category, PackageType, JerseySize, Gender, Order, Participant } from '@/lib/types';
 import BibCard from '@/components/BibCard';
@@ -96,6 +97,57 @@ const DEFAULT_CATEGORIES: Category[] = [
   },
 ];
 
+// Visual Poster & Stencil Identity per Kategori
+const CATEGORY_VISUALS: Record<string, { 
+  image: string; 
+  headline: string; 
+  subtitle: string; 
+  elevation: string;
+  badge: string; 
+  terrain: string;
+}> = {
+  '60': {
+    image: '/backgrounds/bg-categories.webp',
+    headline: 'DISCOVERY 60KM',
+    subtitle: 'REKREASI & PEMULA · SUKAMAKMUR',
+    elevation: '+450 M GAIN',
+    badge: 'NON-RACE // FUN',
+    terrain: '65% ASPAL · 35% MAKADAM HALUS',
+  },
+  '120_SINGLE': {
+    image: '/pesepeda.webp',
+    headline: 'EXPLORER 120KM',
+    subtitle: 'SOLO EXPEDITION · JONGGOL RIDGE',
+    elevation: '+1,450 M GAIN',
+    badge: 'SOLO EXPEDITION',
+    terrain: 'GRAVEL & TANJAKAN JONGGOL',
+  },
+  '120_PAIR': {
+    image: '/pesepeda2.webp',
+    headline: 'PAIR RACE 120KM',
+    subtitle: '2-RIDER TANDEM · PODIUM TOP 3',
+    elevation: '+1,450 M GAIN',
+    badge: 'OFFICIAL RACE // PODIUM',
+    terrain: 'KOMPETISI TANDEM CAMPURAN',
+  },
+  '200': {
+    image: '/perjalanan-siklis-di-jalur-oranye.webp',
+    headline: 'ULTRA 200KM',
+    subtitle: 'BRUTAL UNSUPPORTED · PITSTOP CP4',
+    elevation: '+2,800 M GAIN',
+    badge: 'ULTRA EXPEDITION',
+    terrain: 'EKSPEDISI HUJAN & JALUR LIAR',
+  },
+  '150': {
+    image: '/hero.webp',
+    headline: 'ROAD 200KM',
+    subtitle: 'ENDURANCE ASPHALT LOOP · SENTUL',
+    elevation: '+2,100 M GAIN',
+    badge: 'ROAD CHALLENGE',
+    terrain: '100% ASPAL BERGELOMBANG',
+  },
+};
+
 const JERSEY_SIZES: JerseySize[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
 function formatRupiah(amount: number): string {
@@ -104,13 +156,14 @@ function formatRupiah(amount: number): string {
 
 export default function RegistrationPage() {
   const { t } = useLanguage();
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [categories, setCategories] = useState<Category[]>(DEFAULT_CATEGORIES);
-  const [selectedCategory, setSelectedCategory] = useState<Category>(DEFAULT_CATEGORIES[1]);
+  const [selectedCategory, setSelectedCategory] = useState<Category>(DEFAULT_CATEGORIES[2]); // Default 120_PAIR
   const [packageType, setPackageType] = useState<PackageType>('MEDAL_JERSEY');
   const [rpcMethod, setRpcMethod] = useState<'PICKUP' | 'HANDLING'>('PICKUP');
 
-  // Pair Active Tab in Step 2
+  const formSectionRef = useRef<HTMLDivElement>(null);
+
+  // Pair Active Tab
   const [pairActiveTab, setPairActiveTab] = useState<'rider1' | 'rider2'>('rider1');
 
   // Input Rider 1
@@ -167,12 +220,12 @@ export default function RegistrationPage() {
     jersey_size: 'M' as JerseySize,
   });
 
-  // Step 3 Waiver
+  // Waiver & Submission
   const [waiverAgreed, setWaiverAgreed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Step 4 (Order & Confirmation)
+  // Order Result
   const [createdOrder, setCreatedOrder] = useState<Order | null>(null);
   const [createdParticipants, setCreatedParticipants] = useState<Participant[]>([]);
   const [simulatingPayment, setSimulatingPayment] = useState(false);
@@ -186,8 +239,6 @@ export default function RegistrationPage() {
         const data = await res.json();
         if (data.categories && Array.isArray(data.categories) && data.categories.length > 0) {
           setCategories(data.categories);
-          const defaultCat = data.categories.find((c: Category) => c.id === '120_SINGLE') || data.categories[0];
-          setSelectedCategory(defaultCat);
         }
       } catch (err) {
         console.error('Menggunakan data kategori default:', err);
@@ -196,7 +247,6 @@ export default function RegistrationPage() {
     fetchCategories();
   }, []);
 
-  // Hitung Umur untuk Insentif Kupon Makan Rp 50.000
   const getAge = (birthDateString: string) => {
     if (!birthDateString) return 25;
     const today = new Date();
@@ -217,7 +267,6 @@ export default function RegistrationPage() {
     }
   };
 
-  // Kalkulasi Harga
   const basePrice = selectedCategory
     ? packageType === 'MEDAL_JERSEY'
       ? selectedCategory.price_medal_jersey
@@ -228,8 +277,16 @@ export default function RegistrationPage() {
   const mealCouponDiscount = isEligibleForMealCoupon() ? 50000 : 0;
   const netPrice = Math.max(0, basePrice + rpcHandlingFee - mealCouponDiscount);
 
-  // Validasi Step 2
-  const handleProceedToStep3 = (e: React.FormEvent) => {
+  const handleSelectCategory = (cat: Category) => {
+    setSelectedCategory(cat);
+    // Smooth scroll down to registration configuration section
+    setTimeout(() => {
+      formSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+
+  // Submit Final
+  const handleFinalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
@@ -242,7 +299,7 @@ export default function RegistrationPage() {
       return;
     }
     if (!rider1.province_id || !rider1.regency_id || !rider1.district_id || !rider1.address_detail) {
-      setErrorMessage('MOHON LENGKAPI ALAMAT DOMISILI RIDER 1 DENGAN JELAS.');
+      setErrorMessage('MOHON LENGKAPI ALAMAT DOMISILI RIDER 1.');
       return;
     }
 
@@ -256,23 +313,17 @@ export default function RegistrationPage() {
         return;
       }
       if (!rider2.province_id || !rider2.regency_id || !rider2.district_id || !rider2.address_detail) {
-        setErrorMessage('MOHON LENGKAPI ALAMAT DOMISILI RIDER 2 DENGAN JELAS.');
+        setErrorMessage('MOHON LENGKAPI ALAMAT DOMISILI RIDER 2.');
         return;
       }
     }
 
-    setStep(3);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Submit Final
-  const handleFinalSubmit = async () => {
     if (!waiverAgreed) {
       setErrorMessage('ANDA WAJIB MENYETUJUI SURAT PERNYATAAN KESELAMATAN (WAIVER) SEBELUM MELANJUTKAN.');
       return;
     }
+
     setSubmitting(true);
-    setErrorMessage('');
 
     try {
       const payload = {
@@ -297,7 +348,6 @@ export default function RegistrationPage() {
 
       setCreatedOrder(result.order);
       setCreatedParticipants(result.participants);
-      setStep(4);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {
       setErrorMessage(err.message || 'Terjadi kesalahan sistem saat menghubungi server.');
@@ -306,7 +356,6 @@ export default function RegistrationPage() {
     }
   };
 
-  // Simulasi Bayar
   const handleSimulatePayment = async () => {
     if (!createdOrder) return;
     setSimulatingPayment(true);
@@ -335,977 +384,55 @@ export default function RegistrationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] font-sans selection:bg-[#FA6D0B] selection:text-black pt-24 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0A0B0E] text-[#F3F4F6] font-sans selection:bg-[#FA6D0B] selection:text-black pt-20 sm:pt-24 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       
-      {/* Background Subtle Ambience */}
+      {/* Background Ambience */}
       <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[550px] pointer-events-none opacity-20 z-0 bg-radial-gradient"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[120vw] h-[600px] pointer-events-none opacity-20 z-0"
         style={{
-          background: 'radial-gradient(circle at 50% 15%, rgba(250,109,11,0.18) 0%, transparent 70%)'
+          background: 'radial-gradient(circle at 50% 10%, rgba(250,109,11,0.2) 0%, transparent 65%)'
         }}
       />
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
 
-        {/* ── 1. Telemetry Top Header ── */}
-        <div className="text-center mb-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-mono uppercase tracking-[0.2em] text-[#FA6D0B]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-            GX-ID ATHLETE TELEMETRY // PORTAL PENDAFTARAN RESMI 2026
-          </div>
-          
-          <h1 className="font-display text-2xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white">
-            REGISTRASI ATLET <span className="text-[#FA6D0B]">GRINDURANCE 2026</span>
-          </h1>
-          
-          <p className="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto font-sans leading-relaxed">
-            Ekspedisi balap sepeda ultra-endurance dan gravel mandiri (*unsupported*) koridor Jonggol–Sukamakmur–Sentul.
-            Minggu, 13 Desember 2026.
-          </p>
-        </div>
-
-        {/* ── 2. Industrial Stepper Navigation (RULES.md) ── */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-10">
-          {[
-            { num: 1, code: '01/04', title: 'KATEGORI & PAKET' },
-            { num: 2, code: '02/04', title: 'DATA ATLET' },
-            { num: 3, code: '03/04', title: 'SAFETY & WAIVER' },
-            { num: 4, code: '04/04', title: 'INVOICE & BOOKING' },
-          ].map((s) => {
-            const isActive = step === s.num;
-            const isDone = step > s.num;
-            return (
-              <div
-                key={s.num}
-                className={`p-3 rounded-xl border transition-all duration-300 font-mono ${
-                  isActive
-                    ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 shadow-[0_0_20px_rgba(250,109,11,0.15)]'
-                    : isDone
-                    ? 'border-white/20 bg-white/[0.04] text-white'
-                    : 'border-white/10 bg-black/40 text-slate-500'
-                }`}
-              >
-                <div className="flex items-center justify-between text-[10px] tracking-widest uppercase mb-1">
-                  <span className={isActive ? 'text-[#FA6D0B] font-bold' : isDone ? 'text-slate-300' : 'text-slate-600'}>
-                    [{s.code}]
-                  </span>
-                  {isDone && <span className="text-emerald-400 font-bold">[SELESAI]</span>}
-                  {isActive && <span className="text-[#FA6D0B] font-bold animate-pulse">[AKTIF]</span>}
-                </div>
-                <div className={`text-xs font-bold uppercase tracking-wider truncate ${isActive ? 'text-white' : isDone ? 'text-slate-200' : 'text-slate-500'}`}>
-                  {s.title}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Error Alert Box */}
-        {errorMessage && (
-          <div className="mb-6 p-4 rounded-xl border border-red-500/40 bg-red-500/10 text-red-300 font-mono text-xs flex items-center justify-between gap-3">
-            <div>
-              <span className="font-bold text-red-400">[PERINGATAN SISTEM]</span> {errorMessage}
-            </div>
-            <button
-              onClick={() => setErrorMessage('')}
-              className="text-red-400 hover:text-white uppercase font-bold text-[10px] shrink-0"
-            >
-              [TUTUP]
-            </button>
-          </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* STEP 1: KATEGORI & PAKET LOMBA */}
-        {/* ========================================================================= */}
-        {step === 1 && (
-          <div className="space-y-8">
-            
-            {/* Header Bagian */}
-            <div className="border-b border-white/10 pb-3 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest block">TAHAP 01 // SELEKSI RUTE</span>
-                <h2 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-white">PILIH KATEGORI JARAK EKSPEDISI</h2>
-              </div>
-              <span className="text-[11px] font-mono text-slate-400 hidden sm:block">5 PILIHAN TERSERTIFIKASI</span>
-            </div>
-
-            {/* Grid Kartu Kategori */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {categories.map((cat) => {
-                const isSelected = selectedCategory?.id === cat.id;
-                const quotaPercent = Math.min(100, Math.round((cat.current_enrolled / cat.quota) * 100));
-
-                return (
-                  <button
-                    type="button"
-                    key={cat.id}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`text-left p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden flex flex-col justify-between group cursor-pointer ${
-                      isSelected
-                        ? 'border-[#FA6D0B] bg-[#15171C] shadow-[0_0_25px_rgba(250,109,11,0.2)] ring-1 ring-[#FA6D0B]'
-                        : 'border-white/10 bg-[#121418] hover:border-white/20 hover:bg-[#15171C]'
-                    }`}
-                  >
-                    <div>
-                      {/* Top Metric Bar */}
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider ${
-                          isSelected ? 'bg-[#FA6D0B] text-black' : 'bg-white/10 text-white'
-                        }`}>
-                          {cat.distance_km} KM
-                        </span>
-                        <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
-                          {cat.is_pair ? '[PAIR 2 RIDERS]' : '[SOLO RIDER]'}
-                        </span>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="font-display text-base sm:text-lg font-black uppercase text-white tracking-wide mb-1 group-hover:text-[#FA6D0B] transition-colors">
-                        {cat.name}
-                      </h3>
-
-                      {/* COT & Wave */}
-                      <div className="font-mono text-[11px] text-slate-400 space-y-1 mb-4">
-                        <div>COT: <span className="text-white font-bold">{cat.cot_hours ? `${cat.cot_hours} JAM` : 'NO COT'}</span></div>
-                        <div>FLAG-OFF: <span className="text-white font-bold">{cat.wave_start_time || '05:30'} WIB</span></div>
-                      </div>
-
-                      {/* Quota Meter */}
-                      <div className="space-y-1.5 mb-4 font-mono text-[10px]">
-                        <div className="flex justify-between text-slate-400">
-                          <span>KUOTA TERISI:</span>
-                          <span className={quotaPercent > 80 ? 'text-[#FA6D0B] font-bold' : 'text-slate-300 font-bold'}>
-                            {cat.current_enrolled}/{cat.quota} ({quotaPercent}%)
-                          </span>
-                        </div>
-                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-[#FA6D0B] transition-all duration-500 rounded-full"
-                            style={{ width: `${quotaPercent}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Price Tag */}
-                    <div className="border-t border-white/10 pt-3 flex items-center justify-between font-mono">
-                      <div>
-                        <span className="text-[9px] text-slate-500 block uppercase">MULAI DARI:</span>
-                        <span className="text-sm font-bold text-[#FA6D0B]">
-                          {formatRupiah(cat.price_medal_only)}
-                        </span>
-                      </div>
-                      <span className={`text-[10px] font-bold uppercase tracking-wider ${isSelected ? 'text-[#FA6D0B]' : 'text-slate-500'}`}>
-                        {isSelected ? '[TERPILIH]' : '[PILIH]'}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Pilihan Paket & RPC Method */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
-              
-              {/* Paket Lomba */}
-              <div className="space-y-3">
-                <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">
-                  PILIHAN PAKET ATLET <span className="text-[#FA6D0B]">*</span>
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setPackageType('MEDAL_JERSEY')}
-                    className={`p-4 rounded-xl border text-left transition-all ${
-                      packageType === 'MEDAL_JERSEY'
-                        ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
-                        : 'border-white/10 bg-[#121418] hover:border-white/20'
-                    }`}
-                  >
-                    <span className="text-[9px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block mb-1">
-                      [REKOMENDASI KOMUNITAS]
-                    </span>
-                    <div className="text-sm font-bold text-white uppercase">MEDALI + JERSEY</div>
-                    <div className="font-mono text-xs text-[#FA6D0B] font-bold mt-1">
-                      {formatRupiah(selectedCategory?.price_medal_jersey || 0)}
-                    </div>
-                    <p className="text-[10px] text-slate-400 mt-2 font-sans">
-                      Termasuk Jersey Finisher eksklusif GX-ID edisi ulang tahun ke-8.
-                    </p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setPackageType('MEDAL_ONLY')}
-                    className={`p-4 rounded-xl border text-left transition-all ${
-                      packageType === 'MEDAL_ONLY'
-                        ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
-                        : 'border-white/10 bg-[#121418] hover:border-white/20'
-                    }`}
-                  >
-                    <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider block mb-1">
-                      [PAKET BASE]
-                    </span>
-                    <div className="text-sm font-bold text-white uppercase">MEDALI SAJA</div>
-                    <div className="font-mono text-xs text-white font-bold mt-1">
-                      {formatRupiah(selectedCategory?.price_medal_only || 0)}
-                    </div>
-                    <p className="text-[10px] text-slate-400 mt-2 font-sans">
-                      Paket hemat tanpa finisher jersey, medali tetap diberikan di garis finish.
-                    </p>
-                  </button>
-                </div>
-              </div>
-
-              {/* Metode Pengambilan Race Pack */}
-              <div className="space-y-3">
-                <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">
-                  PENGAMBILAN RACE PACK (RPC) <span className="text-[#FA6D0B]">*</span>
-                </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setRpcMethod('PICKUP')}
-                    className={`p-4 rounded-xl border text-left transition-all ${
-                      rpcMethod === 'PICKUP'
-                        ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
-                        : 'border-white/10 bg-[#121418] hover:border-white/20'
-                    }`}
-                  >
-                    <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
-                      [GRATIS // FREE]
-                    </span>
-                    <div className="text-sm font-bold text-white uppercase">AMBIL DI CIBUBUR</div>
-                    <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                      Lokasi: ABEEY Coffee &amp; Eatery, LRT Harjamukti, Cibubur (11–12 Des 2026).
-                    </p>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setRpcMethod('HANDLING')}
-                    className={`p-4 rounded-xl border text-left transition-all ${
-                      rpcMethod === 'HANDLING'
-                        ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
-                        : 'border-white/10 bg-[#121418] hover:border-white/20'
-                    }`}
-                  >
-                    <span className="text-[9px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block mb-1">
-                      [+RP 20.000]
-                    </span>
-                    <div className="text-sm font-bold text-white uppercase">HANDLING &amp; KIRIM</div>
-                    <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
-                      Paket race pack dikirim langsung ke alamat domisili atlet sebelum event.
-                    </p>
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Bottom Bar Estimasi & Tombol Next */}
-            <div className="p-5 rounded-2xl border border-white/15 bg-[#15171C] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">RINGKASAN PILIHAN:</span>
-                <div className="text-sm font-bold text-white uppercase">
-                  {selectedCategory?.name} · {packageType === 'MEDAL_JERSEY' ? 'MEDALI + JERSEY' : 'MEDALI SAJA'}
-                </div>
-                <div className="font-mono text-xs text-[#FA6D0B] font-bold mt-0.5">
-                  ESTIMASI BIAYA: {formatRupiah(netPrice)}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setStep(2);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_25px_rgba(250,109,11,0.3)] hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 group cursor-pointer"
-              >
-                <span>LANJUT: INPUT DATA ATLET</span>
-                <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
-            </div>
-
-          </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* STEP 2: FORMULIR DATA ATLET */}
-        {/* ========================================================================= */}
-        {step === 2 && (
-          <form onSubmit={handleProceedToStep3} className="space-y-8">
-            
-            {/* Header Bagian */}
-            <div className="border-b border-white/10 pb-3 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest block">TAHAP 02 // DATA ATLET &amp; TIM</span>
-                <h2 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-white">
-                  {selectedCategory?.is_pair ? 'TELEMETRI RIDER PAIR (2 PESERTA)' : 'TELEMETRI RIDER TUNGGAL'}
-                </h2>
-              </div>
-              <span className="text-[11px] font-mono text-slate-400 hidden sm:block">KATEGORI: {selectedCategory?.name}</span>
-            </div>
-
-            {/* Banner Insentif Kupon Makan Jika Memenuhi Syarat */}
-            {isEligibleForMealCoupon() && (
-              <div className="p-4 rounded-xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-mono text-xs flex items-center justify-between">
-                <div>
-                  <span className="font-bold text-emerald-400">[INSENTIF GX-ID AKTIF]</span> Diskon Kupon Makan Rp 50.000 otomatis dipotong dari invoice Anda.
-                </div>
-                <span className="text-emerald-400 font-bold shrink-0 text-[10px] uppercase tracking-wider">[-RP 50.000]</span>
-              </div>
-            )}
-
-            {/* Switcher Tab untuk Kategori Pair */}
-            {selectedCategory?.is_pair && (
-              <div className="flex border-b border-white/10">
-                <button
-                  type="button"
-                  onClick={() => setPairActiveTab('rider1')}
-                  className={`flex-1 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all ${
-                    pairActiveTab === 'rider1'
-                      ? 'border-[#FA6D0B] text-[#FA6D0B] bg-white/[0.02]'
-                      : 'border-transparent text-slate-500 hover:text-white'
-                  }`}
-                >
-                  [01] RIDER 1 // KAPTEN TIM
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPairActiveTab('rider2')}
-                  className={`flex-1 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all ${
-                    pairActiveTab === 'rider2'
-                      ? 'border-[#FA6D0B] text-[#FA6D0B] bg-white/[0.02]'
-                      : 'border-transparent text-slate-500 hover:text-white'
-                  }`}
-                >
-                  [02] RIDER 2 // PARTNER TIM
-                </button>
-              </div>
-            )}
-
-            {/* Form Fields: Rider 1 (atau Rider 2 jika pairActiveTab === 'rider2') */}
-            {(!selectedCategory?.is_pair || pairActiveTab === 'rider1') ? (
-              <div className="space-y-6">
-                <div className="text-xs font-mono text-slate-400 uppercase tracking-widest pb-1 border-b border-white/5">
-                  IDENTITAS RESMI RIDER 1 {selectedCategory?.is_pair && '(KAPTEN)'}
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NAMA LENGKAP (SESUAI KTP/PASPOR) <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={rider1.full_name}
-                      onChange={(e) => setRider1({ ...rider1, full_name: e.target.value })}
-                      placeholder="Contoh: Raden Bagus Prakoso"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NOMOR INDUK KEPENDUDUKAN (NIK / PASPOR) <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      maxLength={16}
-                      value={rider1.nik}
-                      onChange={(e) => setRider1({ ...rider1, nik: e.target.value.replace(/\D/g, '') })}
-                      placeholder="Contoh: 3201012345670001 (16 digit)"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      JENIS KELAMIN <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setRider1({ ...rider1, gender: 'male' })}
-                        className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all ${
-                          rider1.gender === 'male'
-                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                            : 'border-white/15 bg-black/60 text-slate-400'
-                        }`}
-                      >
-                        LAKI-LAKI
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setRider1({ ...rider1, gender: 'female' })}
-                        className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all ${
-                          rider1.gender === 'female'
-                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                            : 'border-white/15 bg-black/60 text-slate-400'
-                        }`}
-                      >
-                        PEREMPUAN
-                      </button>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      TANGGAL LAHIR <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      required
-                      value={rider1.birth_date}
-                      onChange={(e) => setRider1({ ...rider1, birth_date: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      GOLONGAN DARAH <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <select
-                      value={rider1.blood_type}
-                      onChange={(e) => setRider1({ ...rider1, blood_type: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
-                    >
-                      <option value="A" className="bg-[#15171C]">GOLONGAN DARAH A</option>
-                      <option value="B" className="bg-[#15171C]">GOLONGAN DARAH B</option>
-                      <option value="AB" className="bg-[#15171C]">GOLONGAN DARAH AB</option>
-                      <option value="O" className="bg-[#15171C]">GOLONGAN DARAH O</option>
-                      <option value="-" className="bg-[#15171C]">TIDAK TAHU (-)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      EMAIL AKTIF <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={rider1.email}
-                      onChange={(e) => setRider1({ ...rider1, email: e.target.value })}
-                      placeholder="nama@email.com"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NOMOR WHATSAPP AKTIF <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={rider1.phone_number}
-                      onChange={(e) => setRider1({ ...rider1, phone_number: e.target.value })}
-                      placeholder="081234567890"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NAMA KONTAK DARURAT <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={rider1.emergency_contact_name}
-                      onChange={(e) => setRider1({ ...rider1, emergency_contact_name: e.target.value })}
-                      placeholder="Nama Keluarga / Pasangan"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NOMOR HP KONTAK DARURAT <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={rider1.emergency_contact_phone}
-                      onChange={(e) => setRider1({ ...rider1, emergency_contact_phone: e.target.value })}
-                      placeholder="08xxxxxxxxxx"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      KOMUNITAS / KLUB SEPEDA (OPSIONAL)
-                    </label>
-                    <input
-                      type="text"
-                      value={rider1.community_chapter}
-                      onChange={(e) => setRider1({ ...rider1, community_chapter: e.target.value })}
-                      placeholder="Contoh: GX-ID Bogor / Solo Gravel Club"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-
-                  {packageType === 'MEDAL_JERSEY' && (
-                    <div>
-                      <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                        UKURAN JERSEY FINISHER <span className="text-[#FA6D0B]">*</span>
-                      </label>
-                      <div className="grid grid-cols-6 gap-1.5">
-                        {JERSEY_SIZES.map((sz) => (
-                          <button
-                            type="button"
-                            key={sz}
-                            onClick={() => setRider1({ ...rider1, jersey_size: sz })}
-                            className={`py-3 rounded-lg border text-xs font-mono font-bold transition-all ${
-                              rider1.jersey_size === sz
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black'
-                                : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
-                            }`}
-                          >
-                            {sz}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Integrasi Alamat Domisili */}
-                <IndonesiaAddressSelect
-                  prefixId="r1"
-                  value={{
-                    address_detail: rider1.address_detail,
-                    province_id: rider1.province_id,
-                    province_name: rider1.province_name,
-                    regency_id: rider1.regency_id,
-                    regency_name: rider1.regency_name,
-                    district_id: rider1.district_id,
-                    district_name: rider1.district_name,
-                    village_id: rider1.village_id,
-                    village_name: rider1.village_name,
-                    postal_code: rider1.postal_code,
-                  }}
-                  onChange={(addr) => setRider1({ ...rider1, ...addr })}
-                />
-              </div>
-            ) : (
-              /* Form Fields: Rider 2 (Jika Pair) */
-              <div className="space-y-6">
-                <div className="text-xs font-mono text-slate-400 uppercase tracking-widest pb-1 border-b border-white/5">
-                  IDENTITAS RESMI RIDER 2 (PARTNER TIM)
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NAMA LENGKAP PARTNER <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={rider2.full_name}
-                      onChange={(e) => setRider2({ ...rider2, full_name: e.target.value })}
-                      placeholder="Nama Sesuai KTP"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NIK PARTNER (16 DIGIT) <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      maxLength={16}
-                      value={rider2.nik}
-                      onChange={(e) => setRider2({ ...rider2, nik: e.target.value.replace(/\D/g, '') })}
-                      placeholder="Contoh: 3201012345670002"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      JENIS KELAMIN PARTNER <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setRider2({ ...rider2, gender: 'male' })}
-                        className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all ${
-                          rider2.gender === 'male'
-                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                            : 'border-white/15 bg-black/60 text-slate-400'
-                        }`}
-                      >
-                        LAKI-LAKI
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setRider2({ ...rider2, gender: 'female' })}
-                        className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all ${
-                          rider2.gender === 'female'
-                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
-                            : 'border-white/15 bg-black/60 text-slate-400'
-                        }`}
-                      >
-                        PEREMPUAN
-                      </button>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      TANGGAL LAHIR <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="date"
-                      required
-                      value={rider2.birth_date}
-                      onChange={(e) => setRider2({ ...rider2, birth_date: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      GOLONGAN DARAH <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <select
-                      value={rider2.blood_type}
-                      onChange={(e) => setRider2({ ...rider2, blood_type: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
-                    >
-                      <option value="A" className="bg-[#15171C]">GOLONGAN DARAH A</option>
-                      <option value="B" className="bg-[#15171C]">GOLONGAN DARAH B</option>
-                      <option value="AB" className="bg-[#15171C]">GOLONGAN DARAH AB</option>
-                      <option value="O" className="bg-[#15171C]">GOLONGAN DARAH O</option>
-                      <option value="-" className="bg-[#15171C]">TIDAK TAHU (-)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      EMAIL PARTNER <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      value={rider2.email}
-                      onChange={(e) => setRider2({ ...rider2, email: e.target.value })}
-                      placeholder="partner@email.com"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      WHATSAPP PARTNER <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={rider2.phone_number}
-                      onChange={(e) => setRider2({ ...rider2, phone_number: e.target.value })}
-                      placeholder="08xxxxxxxxxx"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      KONTAK DARURAT (NAMA) <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={rider2.emergency_contact_name}
-                      onChange={(e) => setRider2({ ...rider2, emergency_contact_name: e.target.value })}
-                      placeholder="Nama Kontak Darurat Partner"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      NOMOR HP KONTAK DARURAT <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={rider2.emergency_contact_phone}
-                      onChange={(e) => setRider2({ ...rider2, emergency_contact_phone: e.target.value })}
-                      placeholder="08xxxxxxxxxx"
-                      className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
-                    />
-                  </div>
-                </div>
-
-                {packageType === 'MEDAL_JERSEY' && (
-                  <div>
-                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
-                      UKURAN JERSEY PARTNER <span className="text-[#FA6D0B]">*</span>
-                    </label>
-                    <div className="grid grid-cols-6 gap-1.5">
-                      {JERSEY_SIZES.map((sz) => (
-                        <button
-                          type="button"
-                          key={sz}
-                          onClick={() => setRider2({ ...rider2, jersey_size: sz })}
-                          className={`py-3 rounded-lg border text-xs font-mono font-bold transition-all ${
-                            rider2.jersey_size === sz
-                              ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black'
-                              : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
-                          }`}
-                        >
-                          {sz}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <IndonesiaAddressSelect
-                  prefixId="r2"
-                  value={{
-                    address_detail: rider2.address_detail,
-                    province_id: rider2.province_id,
-                    province_name: rider2.province_name,
-                    regency_id: rider2.regency_id,
-                    regency_name: rider2.regency_name,
-                    district_id: rider2.district_id,
-                    district_name: rider2.district_name,
-                    village_id: rider2.village_id,
-                    village_name: rider2.village_name,
-                    postal_code: rider2.postal_code,
-                  }}
-                  onChange={(addr) => setRider2({ ...rider2, ...addr })}
-                />
-              </div>
-            )}
-
-            {/* Navigation Buttons Step 2 */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/10">
-              <button
-                type="button"
-                onClick={() => {
-                  setStep(1);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="w-full sm:w-auto px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/30 transition-all cursor-pointer"
-              >
-                ← KEMBALI // GANTI KATEGORI
-              </button>
-
-              <button
-                type="submit"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_25px_rgba(250,109,11,0.3)] hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 group cursor-pointer"
-              >
-                <span>LANJUT: PROTOKOL KESELAMATAN</span>
-                <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
-            </div>
-
-          </form>
-        )}
-
-        {/* ========================================================================= */}
-        {/* STEP 3: PROTOKOL KESELAMATAN & WAIVER */}
-        {/* ========================================================================= */}
-        {step === 3 && (
-          <div className="space-y-8">
-            
-            {/* Header Bagian */}
-            <div className="border-b border-white/10 pb-3 flex items-center justify-between">
-              <div>
-                <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest block">TAHAP 03 // SAFETY &amp; WAIVER</span>
-                <h2 className="text-lg sm:text-xl font-bold uppercase tracking-wide text-white">PROTOKOL KESELAMATAN MANDIRI (UNSUPPORTED)</h2>
-              </div>
-              <span className="text-[11px] font-mono text-slate-400 hidden sm:block">PERNYATAAN RESMI ATLET</span>
-            </div>
-
-            {/* Kotak Protokol Ultra-Endurance */}
-            <div className="p-6 rounded-2xl border border-white/15 bg-[#121418] space-y-4 font-mono text-xs leading-relaxed text-slate-300">
-              <div className="text-[#FA6D0B] font-bold text-sm tracking-wider uppercase border-b border-white/10 pb-2">
-                5 PRINSIP DASAR KESELAMATAN GRINDURANCE 2026:
-              </div>
-
-              <div className="space-y-3 pt-1">
-                <div className="flex gap-3">
-                  <span className="text-[#FA6D0B] font-bold shrink-0">[01]</span>
-                  <div>
-                    <strong className="text-white block">LALU LINTAS TERBUKA (OPEN TRAFFIC ROAD):</strong>
-                    Jalur lomba adalah jalan raya umum yang tidak disterilkan. Peserta wajib mematuhi seluruh peraturan lalu lintas RI, rambu jalan, dan mengutamakan keselamatan diri serta pengguna jalan lainnya.
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <span className="text-[#FA6D0B] font-bold shrink-0">[02]</span>
-                  <div>
-                    <strong className="text-white block">PERLENGKAPAN WAJIB (MANDATORY GEAR):</strong>
-                    Peserta wajib memakai helm standar keselamatan bersepeda yang terkunci selama gowes, lampu depan (min. 400 lumens), lampu belakang merah (statis &amp; berkedip), dan rompi/tali reflektif bercahaya di malam hari.
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <span className="text-[#FA6D0B] font-bold shrink-0">[03]</span>
-                  <div>
-                    <strong className="text-white block">PRINSIP MANDIRI (SELF-SUPPORTED):</strong>
-                    Dilarang menggunakan kendaraan pengawal pribadi (*support car*), mobil evakuasi khusus, atau melakukan *drafting* di belakang kendaraan bermotor. Bantuan pihak ketiga hanya diperbolehkan jika tersedia untuk umum secara komersial di rute.
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <span className="text-[#FA6D0B] font-bold shrink-0">[04]</span>
-                  <div>
-                    <strong className="text-white block">PROTOKOL DNF (DID NOT FINISH):</strong>
-                    Jika peserta tidak mampu melanjutkan karena kendala fisik, mekanik, atau cuaca ekstrem, wajib melapor ke Race Control Center melalui WhatsApp darurat panitia dan mengatur evakuasi mandiri.
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <span className="text-[#FA6D0B] font-bold shrink-0">[05]</span>
-                  <div>
-                    <strong className="text-white block">PELEPASAN TANGGUNG JAWAB (LIABILITY WAIVER):</strong>
-                    Peserta secara sadar memahami risiko cedera fisik dalam olahraga endurance luar ruang dan membebaskan panitia GX-ID serta sponsor dari segala tuntutan hukum akibat kelalaian pribadi.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Interactive Checkbox Persetujuan */}
-            <label className="p-4 rounded-xl border border-white/15 bg-[#15171C] flex items-start gap-3 cursor-pointer hover:border-[#FA6D0B] transition-colors select-none">
-              <input
-                type="checkbox"
-                checked={waiverAgreed}
-                onChange={(e) => setWaiverAgreed(e.target.checked)}
-                className="mt-1 w-4 h-4 rounded border-white/20 text-[#FA6D0B] focus:ring-[#FA6D0B] bg-black/60 accent-[#FA6D0B]"
-              />
-              <span className="text-xs text-white font-mono leading-relaxed">
-                SAYA TELAH MEMBACA, MEMAHAMI, DAN SECARA SADAR MENYETUJUI SELURUH PROTOKOL KESELAMATAN SERTA SURAT PERNYATAAN MANDIRI (WAIVER) GRINDURANCE 2026. SAYA MENJAMIN DATA YANG DIINPUT ADALAH BENAR DAN VALID.
-              </span>
-            </label>
-
-            {/* Ringkasan Final Sebelum Submit */}
-            <div className="p-5 rounded-2xl border border-white/10 bg-black/40 font-mono text-xs space-y-2">
-              <span className="text-[10px] text-slate-500 uppercase tracking-widest block mb-2 border-b border-white/5 pb-1">
-                RINGKASAN TELEMETRI TRANSAKSI:
-              </span>
-              <div className="flex justify-between">
-                <span className="text-slate-400">KATEGORI:</span>
-                <span className="text-white font-bold">{selectedCategory?.name}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400">PAKET ATLET:</span>
-                <span className="text-white font-bold">{packageType === 'MEDAL_JERSEY' ? 'MEDALI + JERSEY FINISHER' : 'MEDALI SAJA'}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-400">PENGAMBILAN RPC:</span>
-                <span className="text-white font-bold">{rpcMethod === 'PICKUP' ? 'AMBIL DI CIBUBUR (GRATIS)' : 'HANDLING & KIRIM (+RP 20.000)'}</span>
-              </div>
-              {mealCouponDiscount > 0 && (
-                <div className="flex justify-between text-emerald-400 font-bold">
-                  <span>INSENTIF KUPON MAKAN GX-ID:</span>
-                  <span>- Rp 50.000</span>
-                </div>
-              )}
-              <div className="flex justify-between border-t border-white/10 pt-2 text-sm">
-                <span className="text-white font-bold">TOTAL NOMINAL:</span>
-                <span className="text-[#FA6D0B] font-bold">{formatRupiah(netPrice)}</span>
-              </div>
-            </div>
-
-            {/* Tombol Aksi Step 3 */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/10">
-              <button
-                type="button"
-                onClick={() => {
-                  setStep(2);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="w-full sm:w-auto px-6 py-3 rounded-full border border-white/15 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/30 transition-all cursor-pointer"
-              >
-                ← KEMBALI // EDIT DATA ATLET
-              </button>
-
-              <button
-                type="button"
-                disabled={submitting || !waiverAgreed}
-                onClick={handleFinalSubmit}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_30px_rgba(250,109,11,0.35)] hover:bg-[#DE5A00] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer"
-              >
-                {submitting ? (
-                  <span>MEMPROSES PENDAFTARAN...</span>
-                ) : (
-                  <>
-                    <span>KONFIRMASI &amp; BUAT INVOICE PENDAFTARAN</span>
-                    <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                  </>
-                )}
-              </button>
-            </div>
-
-          </div>
-        )}
-
-        {/* ========================================================================= */}
-        {/* STEP 4: INVOICE RESMI, BOOKING ID & PEMBAYARAN */}
-        {/* ========================================================================= */}
-        {step === 4 && createdOrder && (
-          <div className="space-y-8">
-            
+        {/* ── JIKA ORDER SUDAH DIBUAT (HALAMAN INVOICE / SUKSES) ── */}
+        {createdOrder ? (
+          <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
             {/* Header Konfirmasi */}
-            <div className="p-6 rounded-2xl border border-[#FA6D0B]/50 bg-[#FA6D0B]/10 text-center space-y-2">
-              <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-widest bg-[#FA6D0B] text-black inline-block">
-                STATUS: {createdOrder.payment_status === 'PAID' ? 'LUNAS // TERDAFTAR RESMI' : 'MENUNGGU PEMBAYARAN // PAYMENT PENDING'}
+            <div className="p-8 rounded-3xl border border-[#FA6D0B]/50 bg-gradient-to-b from-[#1C1F26] to-[#121418] text-center space-y-3 relative overflow-hidden shadow-2xl">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FA6D0B] to-transparent" />
+              
+              <span className="px-3.5 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-widest bg-[#FA6D0B] text-black inline-block shadow-[0_0_15px_rgba(250,109,11,0.5)]">
+                {createdOrder.payment_status === 'PAID' ? 'LUNAS // TERDAFTAR RESMI' : 'MENUNGGU PEMBAYARAN // PAYMENT PENDING'}
               </span>
-              <h2 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-wide">
-                INVOICE RESERVASI PENDAFTARAN
-              </h2>
-              <div className="font-mono text-sm text-slate-300">
-                KODE ORDER: <span className="text-[#FA6D0B] font-bold text-base">{createdOrder.order_id}</span>
+
+              <h1 className="font-display text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
+                INVOICE RESERVASI RESMI
+              </h1>
+
+              <div className="font-mono text-sm sm:text-base text-slate-300">
+                BOOKING ID: <span className="text-[#FA6D0B] font-bold tracking-widest">{createdOrder.order_id}</span>
               </div>
             </div>
 
             {/* Rincian Tagihan Finansial */}
-            <div className="p-6 rounded-2xl border border-white/15 bg-[#15171C] space-y-4 font-mono">
-              <div className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-2">
-                RINCIAN PEMBAYARAN RESMI:
+            <div className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#121418] space-y-5 font-mono">
+              <div className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3 flex justify-between">
+                <span>RINCIAN TRANSAKSI:</span>
+                <span className="text-[#FA6D0B]">{selectedCategory.name}</span>
               </div>
 
-              <div className="space-y-2 text-xs">
+              <div className="space-y-3 text-xs sm:text-sm">
                 <div className="flex justify-between text-slate-300">
-                  <span>BIAYA PENDAFTARAN KATEGORI:</span>
-                  <span className="font-bold">{formatRupiah(createdOrder.gross_amount - (rpcMethod === 'HANDLING' ? 20000 : 0))}</span>
+                  <span>TIKET KATEGORI:</span>
+                  <span className="font-bold text-white">{formatRupiah(createdOrder.gross_amount - (rpcMethod === 'HANDLING' ? 20000 : 0))}</span>
                 </div>
 
                 {rpcMethod === 'HANDLING' && (
                   <div className="flex justify-between text-slate-300">
-                    <span>BIAYA LAYANAN HANDLING &amp; PACKAGING:</span>
-                    <span className="font-bold">Rp 20.000</span>
+                    <span>LAYANAN HANDLING &amp; PACKAGING RPC:</span>
+                    <span className="font-bold text-white">Rp 20.000</span>
                   </div>
                 )}
 
@@ -1316,19 +443,19 @@ export default function RegistrationPage() {
                   </div>
                 )}
 
-                <div className="flex justify-between items-center border-t border-white/10 pt-3 text-base text-white">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/15 pt-4 text-white gap-2">
                   <div>
-                    <span className="font-bold block">TOTAL TRANSFER RESMI:</span>
-                    <span className="text-[10px] text-slate-400 block font-normal">Pastikan nominal transfer sesuai angka di bawah.</span>
+                    <span className="text-xs font-mono text-slate-400 uppercase tracking-widest block">TOTAL TRANSFER WAJIB:</span>
+                    <span className="text-[11px] text-slate-500 font-sans">Transfer sesuai nominal persis untuk verifikasi otomatis.</span>
                   </div>
-                  <div className="text-right">
-                    <span className="text-xl sm:text-2xl font-black text-[#FA6D0B] block">
+                  <div className="text-left sm:text-right">
+                    <span className="text-2xl sm:text-3xl font-black text-[#FA6D0B] block font-mono">
                       {formatRupiah(createdOrder.net_amount)}
                     </span>
                     <button
                       type="button"
                       onClick={() => copyToClipboard(createdOrder.net_amount.toString(), 'nominal')}
-                      className="text-[10px] text-slate-400 hover:text-white uppercase font-bold tracking-wider mt-1"
+                      className="text-[11px] text-slate-400 hover:text-white uppercase font-bold tracking-wider mt-1 cursor-pointer"
                     >
                       {copiedField === 'nominal' ? '[NOMINAL DISALIN!]' : '[SALIN NOMINAL]'}
                     </button>
@@ -1337,36 +464,36 @@ export default function RegistrationPage() {
               </div>
             </div>
 
-            {/* Instruksi Transfer Bank / QRIS */}
-            <div className="p-6 rounded-2xl border border-white/15 bg-[#121418] space-y-4 font-mono">
-              <div className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-2">
-                REKENING RESMI PANITIA GX-ID:
+            {/* Rekening Resmi Panitia */}
+            <div className="p-6 sm:p-8 rounded-3xl border border-white/15 bg-[#121418] space-y-4 font-mono">
+              <div className="text-xs font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">
+                REKENING PEMBAYARAN PANITIA GX-ID:
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl border border-white/10 bg-black/60 space-y-1.5">
-                  <span className="text-[10px] text-slate-400 uppercase tracking-widest block">BANK CENTRAL ASIA (BCA)</span>
-                  <div className="text-lg font-bold text-white tracking-widest">8831 2948 20</div>
-                  <div className="text-[11px] text-slate-400">A.N. GX-ID INDONESIA / GRINDURANCE</div>
+                <div className="p-5 rounded-2xl border border-white/10 bg-black/60 space-y-2">
+                  <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">BCA (BANK CENTRAL ASIA)</span>
+                  <div className="text-xl font-black text-white tracking-widest">8831 2948 20</div>
+                  <div className="text-xs text-slate-400">A.N. GX-ID INDONESIA / GRINDURANCE</div>
                   <button
                     type="button"
                     onClick={() => copyToClipboard('8831294820', 'bca')}
-                    className="text-[10px] text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-1 block"
+                    className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block cursor-pointer"
                   >
-                    {copiedField === 'bca' ? '[REKENING DISALIN!]' : '[SALIN NO REKENING]'}
+                    {copiedField === 'bca' ? '[REKENING DISALIN!]' : '[SALIN REKENING BCA]'}
                   </button>
                 </div>
 
-                <div className="p-4 rounded-xl border border-white/10 bg-black/60 space-y-1.5">
-                  <span className="text-[10px] text-slate-400 uppercase tracking-widest block">BANK MANDIRI</span>
-                  <div className="text-lg font-bold text-white tracking-widest">133 00 2819 4021</div>
-                  <div className="text-[11px] text-slate-400">A.N. PANITIA GRINDURANCE 2026</div>
+                <div className="p-5 rounded-2xl border border-white/10 bg-black/60 space-y-2">
+                  <span className="text-[10px] text-slate-400 uppercase tracking-widest block font-bold">BANK MANDIRI</span>
+                  <div className="text-xl font-black text-white tracking-widest">133 00 2819 4021</div>
+                  <div className="text-xs text-slate-400">A.N. PANITIA GRINDURANCE 2026</div>
                   <button
                     type="button"
                     onClick={() => copyToClipboard('1330028194021', 'mandiri')}
-                    className="text-[10px] text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-1 block"
+                    className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block cursor-pointer"
                   >
-                    {copiedField === 'mandiri' ? '[REKENING DISALIN!]' : '[SALIN NO REKENING]'}
+                    {copiedField === 'mandiri' ? '[REKENING DISALIN!]' : '[SALIN REKENING MANDIRI]'}
                   </button>
                 </div>
               </div>
@@ -1374,7 +501,7 @@ export default function RegistrationPage() {
 
             {/* Digital BIB Preview */}
             <div className="space-y-4">
-              <div className="border-b border-white/10 pb-2 flex items-center justify-between">
+              <div className="border-b border-white/10 pb-3 flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
                   KARTU BIB DIGITAL SEMENTARA:
                 </span>
@@ -1399,14 +526,14 @@ export default function RegistrationPage() {
               </div>
             </div>
 
-            {/* Sandbox Testing Action & Navigation Buttons */}
-            <div className="p-5 rounded-2xl border border-white/10 bg-[#15171C] flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Action Buttons */}
+            <div className="p-6 rounded-3xl border border-white/10 bg-[#121418] flex flex-col sm:flex-row items-center justify-between gap-4">
               {createdOrder.payment_status !== 'PAID' && (
                 <button
                   type="button"
                   disabled={simulatingPayment}
                   onClick={handleSimulatePayment}
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500 hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3 rounded-full border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500 hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer"
                 >
                   {simulatingPayment ? '[MEMPROSES SIMULASI...]' : '[SIMULASI PEMBAYARAN BERHASIL (SANDBOX)]'}
                 </button>
@@ -1415,7 +542,7 @@ export default function RegistrationPage() {
               <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
                 <Link
                   href="/peserta"
-                  className="px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
+                  className="px-6 py-3 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white transition-all flex items-center gap-1.5"
                 >
                   <span>LIHAT START LIST</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
@@ -1423,11 +550,823 @@ export default function RegistrationPage() {
 
                 <Link
                   href="/"
-                  className="px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.25)] hover:bg-[#DE5A00] transition-all"
+                  className="px-7 py-3 rounded-full text-xs font-mono font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.25)] hover:bg-[#DE5A00] transition-all"
                 >
                   BERANDA
                 </Link>
               </div>
+            </div>
+          </div>
+        ) : (
+          /* ── JIKA FORMULIR NORMAL (DIRTYLAND-INSPIRED BUT FRESH & BESPOKE) ── */
+          <div className="space-y-16">
+
+            {/* Header Telemetri & Title */}
+            <div className="text-center space-y-4 max-w-3xl mx-auto">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-mono uppercase tracking-[0.25em] text-[#FA6D0B]">
+                <span className="w-2 h-2 rounded-full bg-[#FA6D0B] animate-pulse" />
+                GX-ID ATHLETE ROSTER // SEASON 2026
+              </div>
+
+              <h1 className="font-display text-4xl sm:text-6xl font-black uppercase tracking-tight text-white leading-none">
+                PILIH MEDAN <span className="text-[#FA6D0B]">TEMPUR</span> ANDA
+              </h1>
+
+              <p className="text-xs sm:text-sm text-slate-400 font-sans leading-relaxed">
+                Setiap kategori adalah ekspedisi mandiri (*unsupported*) menembus koridor Jonggol–Sukamakmur–Sentul.
+                Klik kategori di bawah untuk mengunci slot nomor dada Anda.
+              </p>
+            </div>
+
+            {/* ── SECTION 1: ART-DIRECTED PHOTOGRAPHIC CATEGORY MONOLITHS ── */}
+            <div>
+              <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-2 font-mono text-xs text-slate-400">
+                <span className="text-[#FA6D0B] font-bold uppercase tracking-widest">[01 // 5 KATEGORI RESMI]</span>
+                <span className="uppercase tracking-widest text-[10px] text-slate-500">KLIK KARTU UNTUK MEMILIH</span>
+              </div>
+
+              {/* Grid 5 Kategori Bergaya Editorial Gravel Monolith */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+                {categories.map((cat) => {
+                  const isSelected = selectedCategory?.id === cat.id;
+                  const visual = CATEGORY_VISUALS[cat.id] || {
+                    image: '/pesepeda.webp',
+                    headline: cat.name.toUpperCase(),
+                    subtitle: 'ULTRA ENDURANCE EXPEDITION',
+                    elevation: '+1,450 M GAIN',
+                    badge: 'OFFICIAL EXPEDITION',
+                    terrain: 'GRAVEL & ASPAL',
+                  };
+                  const quotaPercent = Math.min(100, Math.round((cat.current_enrolled / cat.quota) * 100));
+
+                  return (
+                    <div
+                      key={cat.id}
+                      onClick={() => handleSelectCategory(cat)}
+                      className={`relative h-[460px] sm:h-[490px] rounded-3xl overflow-hidden border transition-all duration-500 group cursor-pointer flex flex-col justify-between p-6 select-none ${
+                        isSelected
+                          ? 'border-2 border-[#FA6D0B] shadow-[0_0_40px_rgba(250,109,11,0.35)] ring-2 ring-[#FA6D0B]/40 scale-[1.01]'
+                          : 'border-white/15 hover:border-white/40 hover:shadow-2xl hover:scale-[1.008]'
+                      }`}
+                    >
+                      {/* Background Hero Photography */}
+                      <Image
+                        src={visual.image}
+                        alt={cat.name}
+                        fill
+                        className={`object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 ${
+                          isSelected ? 'filter brightness-105 saturate-110' : 'filter brightness-90 saturate-95 group-hover:brightness-100'
+                        }`}
+                        priority
+                      />
+
+                      {/* Dark Vignette & Atmospheric Film Shroud */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/35 z-10 pointer-events-none" />
+
+                      {/* Stencil Grid Pattern Texture Overlay */}
+                      <div 
+                        className="absolute inset-0 opacity-[0.12] z-10 pointer-events-none"
+                        style={{
+                          backgroundImage: 'radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)',
+                          backgroundSize: '16px 16px'
+                        }}
+                      />
+
+                      {/* ── TOP HUD TELEMETRY ── */}
+                      <div className="relative z-20 flex items-start justify-between gap-2">
+                        <div className="space-y-1">
+                          <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-mono font-black uppercase tracking-wider ${
+                            isSelected ? 'bg-[#FA6D0B] text-black shadow-[0_0_15px_rgba(250,109,11,0.5)]' : 'bg-black/70 backdrop-blur-md text-white border border-white/20'
+                          }`}>
+                            {visual.badge}
+                          </span>
+                          <div className="text-[10px] font-mono font-bold text-slate-300 tracking-wider">
+                            {visual.elevation} · COT {cat.cot_hours ? `${cat.cot_hours}H` : '-'}
+                          </div>
+                        </div>
+
+                        <div className="text-right">
+                          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">FLAG-OFF</span>
+                          <span className="text-xs font-mono font-bold text-white">{cat.wave_start_time || '05:30'} WIB</span>
+                        </div>
+                      </div>
+
+                      {/* ── CENTER STENCIL HEROIC TYPOGRAPHY ── */}
+                      <div className="relative z-20 my-auto text-center space-y-2 py-4">
+                        <div 
+                          className="font-display text-4xl sm:text-5xl font-black uppercase tracking-tighter text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)] leading-none transition-transform duration-300 group-hover:scale-105"
+                          style={{
+                            WebkitTextStroke: isSelected ? '1px rgba(250,109,11,0.8)' : '1px rgba(255,255,255,0.2)',
+                            textShadow: isSelected ? '0 0 25px rgba(250,109,11,0.5)' : 'none'
+                          }}
+                        >
+                          {visual.headline}
+                        </div>
+
+                        <p className="text-[11px] sm:text-xs font-mono font-bold text-[#FA6D0B] tracking-wider uppercase drop-shadow-md">
+                          {visual.subtitle}
+                        </p>
+
+                        <div className="text-[10px] font-mono text-slate-400 tracking-wider uppercase pt-1">
+                          {visual.terrain}
+                        </div>
+                      </div>
+
+                      {/* ── BOTTOM INDUSTRIAL LEDGER & SELECTION BAR ── */}
+                      <div className="relative z-20 space-y-3 border-t border-white/15 pt-3">
+                        {/* Live Quota Progress */}
+                        <div className="space-y-1 font-mono text-[10px]">
+                          <div className="flex justify-between text-slate-300">
+                            <span>KUOTA TERISI:</span>
+                            <span className={quotaPercent > 80 ? 'text-[#FA6D0B] font-bold' : 'text-white font-bold'}>
+                              {cat.current_enrolled}/{cat.quota} ({quotaPercent}%)
+                            </span>
+                          </div>
+                          <div className="h-1.5 w-full bg-white/20 rounded-full overflow-hidden backdrop-blur-sm">
+                            <div 
+                              className={`h-full transition-all duration-500 rounded-full ${isSelected ? 'bg-[#FA6D0B]' : 'bg-white/80'}`}
+                              style={{ width: `${quotaPercent}%` }}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Price & Action Button */}
+                        <div className="flex items-center justify-between gap-3 pt-1">
+                          <div>
+                            <span className="text-[9px] font-mono text-slate-400 block uppercase">STARTING FROM:</span>
+                            <span className="text-base font-mono font-black text-[#FA6D0B]">
+                              {formatRupiah(cat.price_medal_only)}
+                            </span>
+                          </div>
+
+                          <div className={`px-4 py-2.5 rounded-xl font-mono text-xs font-black uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.6)]'
+                              : 'bg-black/80 backdrop-blur-md text-white border border-white/25 group-hover:border-[#FA6D0B] group-hover:text-[#FA6D0B]'
+                          }`}>
+                            <span>{isSelected ? 'TERPILIH' : 'PILIH RUTE'}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Active Corner Accent */}
+                      {isSelected && (
+                        <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none overflow-hidden z-30">
+                          <div className="absolute top-2 right-[-24px] rotate-45 bg-[#FA6D0B] text-black font-mono font-black text-[9px] py-0.5 px-8 uppercase shadow-lg">
+                            ACTIVE
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* ── SECTION 2: REGISTRATION CONFIGURATION & TELEMETRY FORM ── */}
+            <div ref={formSectionRef} className="pt-8 border-t border-white/10 space-y-12">
+              
+              {/* Active Selected Category Banner */}
+              <div className="p-6 rounded-3xl border border-[#FA6D0B]/40 bg-[#15171C] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#FA6D0B] animate-pulse" />
+                    <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">KATEGORI TERKUNCI:</span>
+                  </div>
+                  <h3 className="font-display text-2xl font-black uppercase text-white mt-0.5">
+                    {selectedCategory.name}
+                  </h3>
+                  <div className="text-xs font-mono text-slate-400 mt-1">
+                    Jarak: <span className="text-white font-bold">{selectedCategory.distance_km} KM</span> · 
+                    Format: <span className="text-white font-bold">{selectedCategory.is_pair ? 'Tandem Tim (2 Riders)' : 'Solo Rider'}</span> · 
+                    COT: <span className="text-white font-bold">{selectedCategory.cot_hours} Jam</span>
+                  </div>
+                </div>
+
+                <div className="text-left md:text-right">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">ESTIMASI BIAYA DASAR:</span>
+                  <span className="text-2xl font-mono font-black text-[#FA6D0B]">
+                    {formatRupiah(netPrice)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Error Message Box */}
+              {errorMessage && (
+                <div className="p-4 rounded-2xl border border-red-500/40 bg-red-500/10 text-red-300 font-mono text-xs flex items-center justify-between gap-3">
+                  <div>
+                    <span className="font-bold text-red-400">[PERINGATAN]</span> {errorMessage}
+                  </div>
+                  <button
+                    onClick={() => setErrorMessage('')}
+                    className="text-red-400 hover:text-white uppercase font-bold text-[10px] shrink-0 cursor-pointer"
+                  >
+                    [TUTUP]
+                  </button>
+                </div>
+              )}
+
+              {/* Form Input Container */}
+              <form onSubmit={handleFinalSubmit} className="space-y-10">
+
+                {/* 2.1 Konfigurasi Paket & RPC Handling */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Paket Medali vs Jersey */}
+                  <div className="space-y-3">
+                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">
+                      PILIHAN PAKET LOMBA <span className="text-[#FA6D0B]">*</span>
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setPackageType('MEDAL_JERSEY')}
+                        className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                          packageType === 'MEDAL_JERSEY'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
+                            : 'border-white/10 bg-[#121418] hover:border-white/25'
+                        }`}
+                      >
+                        <span className="text-[9px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block mb-1">
+                          [REKOMENDASI GX-ID]
+                        </span>
+                        <div className="text-sm font-black text-white uppercase">MEDALI + FINISHER JERSEY</div>
+                        <div className="font-mono text-sm text-[#FA6D0B] font-bold mt-1">
+                          {formatRupiah(selectedCategory.price_medal_jersey)}
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
+                          Termasuk official finisher jersey edisi spesial 8 tahun GX-ID.
+                        </p>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setPackageType('MEDAL_ONLY')}
+                        className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                          packageType === 'MEDAL_ONLY'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
+                            : 'border-white/10 bg-[#121418] hover:border-white/25'
+                        }`}
+                      >
+                        <span className="text-[9px] font-mono text-slate-500 uppercase tracking-wider block mb-1">
+                          [PAKET DASAR]
+                        </span>
+                        <div className="text-sm font-black text-white uppercase">MEDALI SAJA</div>
+                        <div className="font-mono text-sm text-white font-bold mt-1">
+                          {formatRupiah(selectedCategory.price_medal_only)}
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
+                          Hanya medali finisher (tanpa jersey), slot dan asuransi tetap aktif.
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Pengambilan Race Pack */}
+                  <div className="space-y-3">
+                    <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest">
+                      DISTRIBUSI RACE PACK (RPC) <span className="text-[#FA6D0B]">*</span>
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setRpcMethod('PICKUP')}
+                        className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                          rpcMethod === 'PICKUP'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
+                            : 'border-white/10 bg-[#121418] hover:border-white/25'
+                        }`}
+                      >
+                        <span className="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider block mb-1">
+                          [GRATIS // FREE]
+                        </span>
+                        <div className="text-sm font-black text-white uppercase">AMBIL DI CIBUBUR</div>
+                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
+                          Lokasi: ABEEY Coffee &amp; Eatery, LRT Harjamukti, Cibubur (11–12 Des 2026).
+                        </p>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setRpcMethod('HANDLING')}
+                        className={`p-5 rounded-2xl border text-left transition-all cursor-pointer ${
+                          rpcMethod === 'HANDLING'
+                            ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 ring-1 ring-[#FA6D0B]'
+                            : 'border-white/10 bg-[#121418] hover:border-white/25'
+                        }`}
+                      >
+                        <span className="text-[9px] font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block mb-1">
+                          [+RP 20.000]
+                        </span>
+                        <div className="text-sm font-black text-white uppercase">HANDLING &amp; KIRIM</div>
+                        <p className="text-[10px] text-slate-400 mt-2 font-sans leading-relaxed">
+                          Paket race pack dipersiapkan khusus dan dikirim ke alamat rumah Anda.
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Banner Insentif Kupon Makan Jika Memenuhi Syarat */}
+                {isEligibleForMealCoupon() && (
+                  <div className="p-4 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-mono text-xs flex items-center justify-between">
+                    <div>
+                      <span className="font-bold text-emerald-400">[INSENTIF GX-ID AKTIF]</span> Diskon Kupon Makan Rp 50.000 otomatis dipotong dari invoice Anda.
+                    </div>
+                    <span className="text-emerald-400 font-bold shrink-0 text-xs uppercase tracking-wider">[-RP 50.000]</span>
+                  </div>
+                )}
+
+                {/* Tab Switcher Jika Kategori Pair */}
+                {selectedCategory.is_pair && (
+                  <div className="flex border-b border-white/10">
+                    <button
+                      type="button"
+                      onClick={() => setPairActiveTab('rider1')}
+                      className={`flex-1 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
+                        pairActiveTab === 'rider1'
+                          ? 'border-[#FA6D0B] text-[#FA6D0B] bg-white/[0.02]'
+                          : 'border-transparent text-slate-500 hover:text-white'
+                      }`}
+                    >
+                      [01] RIDER 1 // KAPTEN TIM
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPairActiveTab('rider2')}
+                      className={`flex-1 py-3 text-xs font-mono font-bold uppercase tracking-wider border-b-2 transition-all cursor-pointer ${
+                        pairActiveTab === 'rider2'
+                          ? 'border-[#FA6D0B] text-[#FA6D0B] bg-white/[0.02]'
+                          : 'border-transparent text-slate-500 hover:text-white'
+                      }`}
+                    >
+                      [02] RIDER 2 // PARTNER TIM
+                    </button>
+                  </div>
+                )}
+
+                {/* 2.2 Form Fields Rider 1 */}
+                {(!selectedCategory.is_pair || pairActiveTab === 'rider1') ? (
+                  <div className="space-y-6">
+                    <div className="text-xs font-mono text-slate-400 uppercase tracking-widest pb-1 border-b border-white/10">
+                      IDENTITAS ATLET RIDER 1 {selectedCategory.is_pair && '(KAPTEN TIM)'}
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NAMA LENGKAP (SESUAI KTP/PASPOR) <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={rider1.full_name}
+                          onChange={(e) => setRider1({ ...rider1, full_name: e.target.value })}
+                          placeholder="Nama Lengkap"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NOMOR NIK / PASPOR (16 DIGIT KTP) <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          maxLength={16}
+                          value={rider1.nik}
+                          onChange={(e) => setRider1({ ...rider1, nik: e.target.value.replace(/\D/g, '') })}
+                          placeholder="3201012345670001"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          JENIS KELAMIN <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setRider1({ ...rider1, gender: 'male' })}
+                            className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                              rider1.gender === 'male'
+                                ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
+                                : 'border-white/15 bg-black/60 text-slate-400'
+                            }`}
+                          >
+                            LAKI-LAKI
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setRider1({ ...rider1, gender: 'female' })}
+                            className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                              rider1.gender === 'female'
+                                ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
+                                : 'border-white/15 bg-black/60 text-slate-400'
+                            }`}
+                          >
+                            PEREMPUAN
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          TANGGAL LAHIR <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="date"
+                          required
+                          value={rider1.birth_date}
+                          onChange={(e) => setRider1({ ...rider1, birth_date: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          GOLONGAN DARAH <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <select
+                          value={rider1.blood_type}
+                          onChange={(e) => setRider1({ ...rider1, blood_type: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        >
+                          <option value="A" className="bg-[#15171C]">GOLONGAN DARAH A</option>
+                          <option value="B" className="bg-[#15171C]">GOLONGAN DARAH B</option>
+                          <option value="AB" className="bg-[#15171C]">GOLONGAN DARAH AB</option>
+                          <option value="O" className="bg-[#15171C]">GOLONGAN DARAH O</option>
+                          <option value="-" className="bg-[#15171C]">TIDAK TAHU (-)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          EMAIL AKTIF <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={rider1.email}
+                          onChange={(e) => setRider1({ ...rider1, email: e.target.value })}
+                          placeholder="nama@email.com"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NOMOR WHATSAPP AKTIF <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={rider1.phone_number}
+                          onChange={(e) => setRider1({ ...rider1, phone_number: e.target.value })}
+                          placeholder="081234567890"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NAMA KONTAK DARURAT <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={rider1.emergency_contact_name}
+                          onChange={(e) => setRider1({ ...rider1, emergency_contact_name: e.target.value })}
+                          placeholder="Keluarga / Kerabat"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NOMOR HP KONTAK DARURAT <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={rider1.emergency_contact_phone}
+                          onChange={(e) => setRider1({ ...rider1, emergency_contact_phone: e.target.value })}
+                          placeholder="08xxxxxxxxxx"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    {packageType === 'MEDAL_JERSEY' && (
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          UKURAN JERSEY FINISHER RIDER 1 <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <div className="grid grid-cols-6 gap-2">
+                          {JERSEY_SIZES.map((sz) => (
+                            <button
+                              type="button"
+                              key={sz}
+                              onClick={() => setRider1({ ...rider1, jersey_size: sz })}
+                              className={`py-3 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
+                                rider1.jersey_size === sz
+                                  ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black'
+                                  : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
+                              }`}
+                            >
+                              {sz}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <IndonesiaAddressSelect
+                      prefixId="r1"
+                      value={{
+                        address_detail: rider1.address_detail,
+                        province_id: rider1.province_id,
+                        province_name: rider1.province_name,
+                        regency_id: rider1.regency_id,
+                        regency_name: rider1.regency_name,
+                        district_id: rider1.district_id,
+                        district_name: rider1.district_name,
+                        village_id: rider1.village_id,
+                        village_name: rider1.village_name,
+                        postal_code: rider1.postal_code,
+                      }}
+                      onChange={(addr) => setRider1({ ...rider1, ...addr })}
+                    />
+                  </div>
+                ) : (
+                  /* 2.3 Form Fields Rider 2 */
+                  <div className="space-y-6">
+                    <div className="text-xs font-mono text-slate-400 uppercase tracking-widest pb-1 border-b border-white/10">
+                      IDENTITAS ATLET RIDER 2 (PARTNER TIM)
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NAMA LENGKAP PARTNER <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={rider2.full_name}
+                          onChange={(e) => setRider2({ ...rider2, full_name: e.target.value })}
+                          placeholder="Nama Lengkap Partner"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NIK PARTNER (16 DIGIT KTP) <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          maxLength={16}
+                          value={rider2.nik}
+                          onChange={(e) => setRider2({ ...rider2, nik: e.target.value.replace(/\D/g, '') })}
+                          placeholder="3201012345670002"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          JENIS KELAMIN PARTNER <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setRider2({ ...rider2, gender: 'male' })}
+                            className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                              rider2.gender === 'male'
+                                ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
+                                : 'border-white/15 bg-black/60 text-slate-400'
+                            }`}
+                          >
+                            LAKI-LAKI
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setRider2({ ...rider2, gender: 'female' })}
+                            className={`py-3 rounded-xl border text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+                              rider2.gender === 'female'
+                                ? 'border-[#FA6D0B] bg-[#FA6D0B]/10 text-[#FA6D0B]'
+                                : 'border-white/15 bg-black/60 text-slate-400'
+                            }`}
+                          >
+                            PEREMPUAN
+                          </button>
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          TANGGAL LAHIR <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="date"
+                          required
+                          value={rider2.birth_date}
+                          onChange={(e) => setRider2({ ...rider2, birth_date: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          GOLONGAN DARAH <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <select
+                          value={rider2.blood_type}
+                          onChange={(e) => setRider2({ ...rider2, blood_type: e.target.value })}
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm transition-all outline-none"
+                        >
+                          <option value="A" className="bg-[#15171C]">GOLONGAN DARAH A</option>
+                          <option value="B" className="bg-[#15171C]">GOLONGAN DARAH B</option>
+                          <option value="AB" className="bg-[#15171C]">GOLONGAN DARAH AB</option>
+                          <option value="O" className="bg-[#15171C]">GOLONGAN DARAH O</option>
+                          <option value="-" className="bg-[#15171C]">TIDAK TAHU (-)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          EMAIL PARTNER <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={rider2.email}
+                          onChange={(e) => setRider2({ ...rider2, email: e.target.value })}
+                          placeholder="partner@email.com"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          WHATSAPP PARTNER <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={rider2.phone_number}
+                          onChange={(e) => setRider2({ ...rider2, phone_number: e.target.value })}
+                          placeholder="08xxxxxxxxxx"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          KONTAK DARURAT (NAMA) <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={rider2.emergency_contact_name}
+                          onChange={(e) => setRider2({ ...rider2, emergency_contact_name: e.target.value })}
+                          placeholder="Nama Kontak Darurat Partner"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          NOMOR HP KONTAK DARURAT <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          value={rider2.emergency_contact_phone}
+                          onChange={(e) => setRider2({ ...rider2, emergency_contact_phone: e.target.value })}
+                          placeholder="08xxxxxxxxxx"
+                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm placeholder:text-slate-600 transition-all outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    {packageType === 'MEDAL_JERSEY' && (
+                      <div>
+                        <label className="block text-[11px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1.5">
+                          UKURAN JERSEY FINISHER PARTNER <span className="text-[#FA6D0B]">*</span>
+                        </label>
+                        <div className="grid grid-cols-6 gap-2">
+                          {JERSEY_SIZES.map((sz) => (
+                            <button
+                              type="button"
+                              key={sz}
+                              onClick={() => setRider2({ ...rider2, jersey_size: sz })}
+                              className={`py-3 rounded-xl border text-xs font-mono font-bold transition-all cursor-pointer ${
+                                rider2.jersey_size === sz
+                                  ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black'
+                                  : 'border-white/15 bg-black/60 text-slate-400 hover:text-white'
+                              }`}
+                            >
+                              {sz}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <IndonesiaAddressSelect
+                      prefixId="r2"
+                      value={{
+                        address_detail: rider2.address_detail,
+                        province_id: rider2.province_id,
+                        province_name: rider2.province_name,
+                        regency_id: rider2.regency_id,
+                        regency_name: rider2.regency_name,
+                        district_id: rider2.district_id,
+                        district_name: rider2.district_name,
+                        village_id: rider2.village_id,
+                        village_name: rider2.village_name,
+                        postal_code: rider2.postal_code,
+                      }}
+                      onChange={(addr) => setRider2({ ...rider2, ...addr })}
+                    />
+                  </div>
+                )}
+
+                {/* 2.4 Safety Waiver & Agreement */}
+                <div className="space-y-4 pt-6 border-t border-white/10">
+                  <div className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+                    SURAT PERNYATAAN &amp; PELEPASAN TANGGUNG JAWAB (WAIVER):
+                  </div>
+
+                  <div className="p-5 rounded-2xl border border-white/10 bg-[#121418] text-xs font-mono text-slate-300 leading-relaxed space-y-2">
+                    <p>
+                      1. Saya menyadari bahwa Gravel Grindurance 2026 adalah ekspedisi bersepeda mandiri (*unsupported*) di jalan raya umum yang tidak steril.
+                    </p>
+                    <p>
+                      2. Saya wajib memakai helm keselamatan, lampu depan min 400 lumen, lampu belakang merah, serta mematuhi aturan lalu lintas dan arahan marshal.
+                    </p>
+                    <p>
+                      3. Saya bertanggung jawab penuh atas kondisi fisik, sepeda, dan keselamatan pribadi selama kegiatan berlangsung.
+                    </p>
+                  </div>
+
+                  <label className="p-4 rounded-xl border border-white/15 bg-[#15171C] flex items-start gap-3 cursor-pointer hover:border-[#FA6D0B] transition-colors select-none">
+                    <input
+                      type="checkbox"
+                      checked={waiverAgreed}
+                      onChange={(e) => setWaiverAgreed(e.target.checked)}
+                      className="mt-1 w-4 h-4 rounded border-white/20 text-[#FA6D0B] focus:ring-[#FA6D0B] bg-black/60 accent-[#FA6D0B]"
+                    />
+                    <span className="text-xs text-white font-mono leading-relaxed">
+                      SAYA TELAH MEMBACA, MEMAHAMI, DAN SECARA SADAR MENYETUJUI SELURUH PROTOKOL KESELAMATAN SERTA SURAT PERNYATAAN MANDIRI (WAIVER) GRINDURANCE 2026.
+                    </span>
+                  </label>
+                </div>
+
+                {/* 2.5 Submit Action Bar */}
+                <div className="p-6 rounded-3xl border border-white/15 bg-gradient-to-r from-[#15171C] via-[#1A1D24] to-[#15171C] flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">NOMINAL AKHIR PEMBAYARAN:</span>
+                    <span className="text-2xl sm:text-3xl font-mono font-black text-[#FA6D0B] block">
+                      {formatRupiah(netPrice)}
+                    </span>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitting || !waiverAgreed}
+                    className="w-full sm:w-auto px-9 py-4 rounded-full text-xs font-mono font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_30px_rgba(250,109,11,0.4)] hover:bg-[#DE5A00] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer"
+                  >
+                    {submitting ? (
+                      <span>MEMPROSES PENDAFTARAN...</span>
+                    ) : (
+                      <>
+                        <span>KUNCI NOMOR DADA &amp; TERBITKAN INVOICE</span>
+                        <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </>
+                    )}
+                  </button>
+                </div>
+
+              </form>
+
             </div>
 
           </div>
