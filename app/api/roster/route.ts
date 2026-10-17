@@ -313,7 +313,8 @@ export async function GET(req: Request) {
           ),
           order:orders (
             package_type,
-            payment_status
+            payment_status,
+            raw_payload
           )
         `)
         .order('bib_number', { ascending: true });
@@ -331,9 +332,16 @@ export async function GET(req: Request) {
 
           const prolReq = (categoryObj?.prologue_required_km || 0) > 0;
 
+          // Cek fallback BIB dari raw_payload jika p.bib_number null
+          let bibNum = p.bib_number;
+          if (!bibNum && orderObj?.raw_payload?.paid_participants) {
+            const found = (orderObj.raw_payload.paid_participants as any[]).find((pp) => pp.id === p.id);
+            if (found && found.bib_number) bibNum = found.bib_number;
+          }
+
           return {
             id: p.id,
-            bib_number: p.bib_number || 1000,
+            bib_number: bibNum || 1201,
             full_name: p.full_name,
             rider_role: p.rider_role,
             category_id: p.category_id,

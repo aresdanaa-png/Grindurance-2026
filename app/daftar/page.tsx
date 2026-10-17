@@ -406,6 +406,21 @@ export default function RegistrationPage() {
 
   // Ambil data live dari Supabase (filter hanya kategori aktif dan cocokkan ke official list)
   useEffect(() => {
+    // Baca parameter kategori dari URL jika diarahkan dari halaman kategori / homepage (cth: /daftar?category=120_PAIR)
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const catParam = params.get('category');
+      if (catParam) {
+        const found = OFFICIAL_CATEGORIES.find(
+          c => c.id.toLowerCase() === catParam.toLowerCase() || (catParam === '120' && c.id === '120_SINGLE')
+        );
+        if (found) {
+          setSelectedCategory(found);
+          setCurrentStep('detail');
+        }
+      }
+    }
+
     async function fetchCategories() {
       try {
         const res = await fetch('/api/categories');
@@ -482,34 +497,41 @@ export default function RegistrationPage() {
 
     if (!rider1.full_name || !rider1.nik || !rider1.email || !rider1.phone_number || !rider1.emergency_contact_phone) {
       setErrorMessage(t('MOHON LENGKAPI SELURUH DATA WAJIB RIDER 1 (TERMASUK NIK DAN KONTAK DARURAT).', 'PLEASE COMPLETE ALL REQUIRED FIELDS FOR RIDER 1 (INCLUDING ID & EMERGENCY CONTACT).'));
+      window.scrollTo({ top: 250, behavior: 'smooth' });
       return;
     }
     if (rider1.nik.trim().length !== 16) {
       setErrorMessage(t('NOMOR NIK RIDER 1 WAJIB 16 DIGIT SESUAI KTP.', 'RIDER 1 ID NUMBER MUST BE EXACTLY 16 DIGITS.'));
+      window.scrollTo({ top: 250, behavior: 'smooth' });
       return;
     }
     if (!rider1.province_id || !rider1.regency_id || !rider1.district_id || !rider1.address_detail) {
       setErrorMessage(t('MOHON LENGKAPI ALAMAT DOMISILI RIDER 1.', 'PLEASE COMPLETE RESIDENTIAL ADDRESS FOR RIDER 1.'));
+      window.scrollTo({ top: 250, behavior: 'smooth' });
       return;
     }
 
     if (selectedCategory.is_pair) {
       if (!rider2.full_name || !rider2.nik || !rider2.email || !rider2.phone_number || !rider2.emergency_contact_phone) {
         setErrorMessage(t('MOHON LENGKAPI SELURUH DATA WAJIB RIDER 2 (PARTNER).', 'PLEASE COMPLETE ALL REQUIRED FIELDS FOR RIDER 2 (PARTNER).'));
+        window.scrollTo({ top: 250, behavior: 'smooth' });
         return;
       }
       if (rider2.nik.trim().length !== 16) {
         setErrorMessage(t('NOMOR NIK RIDER 2 WAJIB 16 DIGIT SESUAI KTP.', 'RIDER 2 ID NUMBER MUST BE EXACTLY 16 DIGITS.'));
+        window.scrollTo({ top: 250, behavior: 'smooth' });
         return;
       }
       if (!rider2.province_id || !rider2.regency_id || !rider2.district_id || !rider2.address_detail) {
         setErrorMessage(t('MOHON LENGKAPI ALAMAT DOMISILI RIDER 2.', 'PLEASE COMPLETE RESIDENTIAL ADDRESS FOR RIDER 2.'));
+        window.scrollTo({ top: 250, behavior: 'smooth' });
         return;
       }
     }
 
     if (!waiverAgreed) {
       setErrorMessage(t('ANDA WAJIB MENYETUJUI SURAT PERNYATAAN KESELAMATAN (WAIVER) SEBELUM MELANJUTKAN.', 'YOU MUST AGREE TO THE SAFETY WAIVER BEFORE PROCEEDING.'));
+      window.scrollTo({ top: 250, behavior: 'smooth' });
       return;
     }
 
@@ -976,17 +998,27 @@ export default function RegistrationPage() {
                       </h1>
                     </div>
 
-                    <div className="font-mono text-xs sm:text-sm text-slate-300 self-start sm:self-auto">
-                      {t('KUOTA:', 'QUOTA:')} <strong className="text-white font-bold">{selectedCategory.quota - selectedCategory.current_enrolled} {t('SLOT', 'SLOTS')}</strong>
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4 self-start sm:self-auto">
+                      <div className="font-mono text-xs sm:text-sm text-slate-300">
+                        {t('KUOTA:', 'QUOTA:')} <strong className="text-white font-bold">{selectedCategory.quota - selectedCategory.current_enrolled} {t('SLOT', 'SLOTS')}</strong>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleProceedToForm}
+                        className="px-5 py-2.5 rounded-full text-xs font-mono font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] hover:bg-[#DE5A00] transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
+                      >
+                        <span>{t('LANJUT DAFTAR', 'REGISTER NOW')}</span>
+                        <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+                      </button>
                     </div>
                   </div>
 
                   {/* Race Format Toggle: Single vs Pair */}
                   {(selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
-                    <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(250,109,11,0.12)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div>
                         <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                          {t('PILIHAN FORMAT RACE 120 KM *', '120 KM RACE FORMAT SELECTION *')}
+                          {t('PILIHAN FORMAT // 120 KM RACE', '120 KM RACE // FORMAT SELECTION')}
                         </span>
                         <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
                           {t(
@@ -1002,13 +1034,13 @@ export default function RegistrationPage() {
                             const singleCat = categories.find(c => c.id === '120_SINGLE') || OFFICIAL_CATEGORIES.find(c => c.id === '120_SINGLE');
                             if (singleCat) setSelectedCategory(singleCat);
                           }}
-                          className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                          className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                             !selectedCategory.is_pair
-                              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
-                              : 'text-slate-400 hover:text-white font-bold'
+                              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
+                              : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                           }`}
                         >
-                          {t('👤 SENDIRI (1 RIDER)', '👤 SINGLE (1 RIDER)')}
+                          {t('SENDIRI // 1 RIDER', 'SINGLE // 1 RIDER')}
                         </button>
                         <button
                           type="button"
@@ -1016,13 +1048,13 @@ export default function RegistrationPage() {
                             const pairCat = categories.find(c => c.id === '120_PAIR') || OFFICIAL_CATEGORIES.find(c => c.id === '120_PAIR');
                             if (pairCat) setSelectedCategory(pairCat);
                           }}
-                          className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                          className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                             selectedCategory.is_pair
-                              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
-                              : 'text-slate-400 hover:text-white font-bold'
+                              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
+                              : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                           }`}
                         >
-                          {t('👥 PASANGAN (PAIR MIX 2 PAX)', '👥 PAIR MIX (2 PAX)')}
+                          {t('PAIR MIX // 2 PAX', 'PAIR MIX // 2 PAX')}
                         </button>
                       </div>
                     </div>
@@ -1385,10 +1417,10 @@ export default function RegistrationPage() {
 
             {/* Race Format Toggle: Single vs Pair */}
             {(selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
-              <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(250,109,11,0.12)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                    {t('PILIHAN FORMAT RACE 120 KM *', '120 KM RACE FORMAT SELECTION *')}
+                    {t('PILIHAN FORMAT // 120 KM RACE', '120 KM RACE // FORMAT SELECTION')}
                   </span>
                   <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
                     {t(
@@ -1404,13 +1436,13 @@ export default function RegistrationPage() {
                       const singleCat = categories.find(c => c.id === '120_SINGLE') || OFFICIAL_CATEGORIES.find(c => c.id === '120_SINGLE');
                       if (singleCat) setSelectedCategory(singleCat);
                     }}
-                    className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                    className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                       !selectedCategory.is_pair
-                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
-                        : 'text-slate-400 hover:text-white font-bold'
+                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
+                        : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                     }`}
                   >
-                    {t('👤 SENDIRI (1 RIDER)', '👤 SINGLE (1 RIDER)')}
+                    {t('SENDIRI // 1 RIDER', 'SINGLE // 1 RIDER')}
                   </button>
                   <button
                     type="button"
@@ -1418,13 +1450,13 @@ export default function RegistrationPage() {
                       const pairCat = categories.find(c => c.id === '120_PAIR') || OFFICIAL_CATEGORIES.find(c => c.id === '120_PAIR');
                       if (pairCat) setSelectedCategory(pairCat);
                     }}
-                    className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                    className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                       selectedCategory.is_pair
-                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] font-black'
-                        : 'text-slate-400 hover:text-white font-bold'
+                        ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
+                        : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                     }`}
                   >
-                    {t('👥 PASANGAN (PAIR MIX 2 PAX)', '👥 PAIR MIX (2 PAX)')}
+                    {t('PAIR MIX // 2 PAX', 'PAIR MIX // 2 PAX')}
                   </button>
                 </div>
               </div>
