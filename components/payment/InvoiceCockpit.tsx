@@ -150,10 +150,20 @@ export default function InvoiceCockpit({
             <span className="font-bold text-white">{formatRupiah(order.gross_amount)}</span>
           </div>
 
-          {order.discount_meal_coupon > 0 && (
-            <div className="flex justify-between text-[#FA6D0B] font-bold">
-              <span>{t('INSENTIF KUPON MAKAN GX-ID:', 'GX-ID MEAL COUPON INCENTIVE:')}</span>
-              <span>- {formatRupiah(order.discount_meal_coupon)}</span>
+          {participants.some((p) => p.has_meal_coupon) && (
+            <div className="p-3.5 rounded-xl bg-black/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+              <div>
+                <span className="text-[#FA6D0B] font-bold block">// HAK BENEFIT: E-VOUCHER KUPON MAKAN RP 50.000</span>
+                <span className="text-slate-400 text-[11px]">
+                  {t(
+                    'Khusus peserta berumur <17 tahun & wanita · Otomatis aktif saat lunas (bukan potongan tagihan)',
+                    'For riders <17 yrs & women · Automatically issued upon payment confirmation (not deducted from total)'
+                  )}
+                </span>
+              </div>
+              <span className="text-white font-bold px-2.5 py-1 rounded bg-white/10 uppercase text-[10px] self-start sm:self-auto shrink-0">
+                {t('VOUCHER TERMASUK', 'VOUCHER INCLUDED')}
+              </span>
             </div>
           )}
 
@@ -344,6 +354,51 @@ export default function InvoiceCockpit({
           ))}
         </div>
       </div>
+
+      {/* Post-Payment Issued Meal Voucher Card (Khusus Peserta <17 Thn & Wanita) */}
+      {isPaid && participants.some((p) => p.has_meal_coupon) && (
+        <div className="rounded-2xl bg-[#121418]/90 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.7)] space-y-4 font-mono">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+            <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-widest">
+              // E-VOUCHER BENEFIT RESMI · TERBIT PASCA-BAYAR
+            </span>
+            <span className="text-[11px] text-white px-3 py-1 rounded-full bg-[#FA6D0B]/20 font-bold uppercase">
+              STATUS: VOUCHER AKTIF
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="font-display italic text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
+              {t('KUPON MAKAN RP 50.000 (KHUSUS <17 THN & WANITA)', 'IDR 50,000 MEAL VOUCHER (<17 YRS & WOMEN)')}
+            </h4>
+            <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+              {t(
+                'Tunjukkan voucher ini beserta kartu BIB saat pengambilan Race Pack di ABEEY Coffee & Eatery / Staging Arena LRT Harjamukti untuk ditukarkan dengan kupon konsumsi makan di venue.',
+                'Present this voucher along with your rider BIB during Race Pack Collection at ABEEY Coffee & Eatery / LRT Harjamukti Staging Arena to redeem your meal consumption ticket.'
+              )}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            {participants.filter((p) => p.has_meal_coupon).map((p, idx) => (
+              <div key={p.id || idx} className="rounded-xl bg-black/70 p-4 shadow-inner flex items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                    KODE VOUCHER · {p.full_name}
+                  </span>
+                  <span className="font-mono text-sm sm:text-base font-bold text-[#FA6D0B] tracking-wider block">
+                    VCH-MEAL-{p.bib_number || p.registration_code.replace('GX26-', '')}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-xs font-bold text-white font-display italic block">RP 50.000</span>
+                  <span className="text-[10px] text-slate-400 font-mono block">1x KLAIM VENUE</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Action & Simulation Bar */}
       <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono relative overflow-hidden">

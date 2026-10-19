@@ -76,28 +76,22 @@ export async function POST(req: Request) {
       : Number(category.price_medal_only);
     const gross_amount = base_amount + rpc_handling_fee;
 
-    // 3. Hitung Insentif Meal Coupon Rp 50.000 sesuai aturan resmi GX-ID
-    // Aturan: Wanita, Remaja <= 17 th, Pair Mix (Men & Women), atau Pair (Women & Women)
-    // Pengecualian: Pair (Men & Men) TIDAK DAPAT kupon
-    let discount_meal_coupon = 0;
+    // 3. Hitung Hak Entitlement Meal Coupon Rp 50.000 sesuai aturan resmi GX-ID
+    // Aturan Resmi: Peserta yang berumur di bawah 17 tahun (< 17 th) dan wanita
+    // BUKAN DISKON / BUKAN PENGURANGAN TOTALAN (berupa voucher pasca-bayar)
+    const discount_meal_coupon = 0; // Tidak memotong total tagihan
     let rider_1_has_coupon = false;
     let rider_2_has_coupon = false;
 
-    if (!category.is_pair) {
-      // Single Rider
-      const age1 = calculateAge(rider_1.birth_date);
-      if (rider_1.gender === 'female' || age1 <= 17) {
-        discount_meal_coupon = 50000;
-        rider_1_has_coupon = true;
-      }
-    } else if (rider_2) {
-      // Pair Rider
-      const isMenAndMen = rider_1.gender === 'male' && rider_2.gender === 'male';
-      if (!isMenAndMen) {
-        // Pair Mix atau Pair Women & Women berhak 1 kupon per pair (Rp 50.000)
-        discount_meal_coupon = 50000;
-        rider_1_has_coupon = true;
-        rider_2_has_coupon = false;
+    const age1 = calculateAge(rider_1.birth_date);
+    if (rider_1.gender === 'female' || age1 < 17) {
+      rider_1_has_coupon = true;
+    }
+
+    if (category.is_pair && rider_2) {
+      const age2 = calculateAge(rider_2.birth_date);
+      if (rider_2.gender === 'female' || age2 < 17) {
+        rider_2_has_coupon = true;
       }
     }
 
@@ -116,7 +110,8 @@ export async function POST(req: Request) {
       discount_promo = VALID_PROMOS[cleanPromo];
     }
 
-    const net_amount = Math.max(0, gross_amount - discount_meal_coupon - discount_promo);
+    // Total tagihan: tidak dipotong kupon makan (meal coupon adalah voucher bonus pasca-bayar)
+    const net_amount = Math.max(0, gross_amount - discount_promo);
 
     // Generate kode unik
     const randomSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();

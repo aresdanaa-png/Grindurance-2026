@@ -539,11 +539,12 @@ export default function RegistrationPage() {
 
   const isEligibleForMealCoupon = () => {
     if (!selectedCategory) return false;
+    const r1Eligible = rider1.gender === 'female' || (Boolean(rider1.birth_date) && getAge(rider1.birth_date) < 17);
     if (!selectedCategory.is_pair) {
-      return rider1.gender === 'female' || getAge(rider1.birth_date) <= 17;
+      return r1Eligible;
     } else {
-      const isMenAndMen = rider1.gender === 'male' && rider2.gender === 'male';
-      return !isMenAndMen;
+      const r2Eligible = rider2.gender === 'female' || (Boolean(rider2.birth_date) && getAge(rider2.birth_date) < 17);
+      return r1Eligible || r2Eligible;
     }
   };
 
@@ -554,9 +555,10 @@ export default function RegistrationPage() {
     : 0;
 
   const rpcHandlingFee = (rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL') ? 20000 : 0;
-  const mealCouponDiscount = isEligibleForMealCoupon() ? 50000 : 0;
   const promoDiscount = appliedPromo ? appliedPromo.discount : 0;
-  const netPrice = Math.max(0, basePrice + rpcHandlingFee - mealCouponDiscount - promoDiscount);
+  // KUPON MAKAN RP 50.000 BUKAN PENGURANGAN JUMLAH TOTALAN (BENTUK VOUCHER PASCA-BAYAR)
+  const hasMealCouponPerk = isEligibleForMealCoupon();
+  const netPrice = Math.max(0, basePrice + rpcHandlingFee - promoDiscount);
 
   // Navigasi Step 1 -> Step 2
   const handleSelectToDetail = (cat: Category) => {
@@ -1863,23 +1865,28 @@ export default function RegistrationPage() {
               </div>
 
               {/* ========================================================================= */}
-              {/* 3.3 INSENTIF KUPON MAKAN (JIKA MEMENUHI KRITERIA ATLET) */}
+              {/* 3.3 HAK BENEFIT KUPON MAKAN (PESERTA <17 THN & WANITA) */}
               {/* ========================================================================= */}
               {isEligibleForMealCoupon() && (
-                <div className="p-6 sm:p-7 rounded-2xl border-l-4 border-l-[#FA6D0B] bg-black/60 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-5 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+                <div className="p-6 sm:p-7 rounded-2xl bg-black/60 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-5 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2.5">
                       <span className="font-mono font-bold text-xs sm:text-sm text-[#FA6D0B] uppercase tracking-wider">
-                        {t('INSENTIF KHUSUS GX-ID AKTIF //', 'GX-ID SPECIAL INCENTIVE ACTIVE //')}
+                        {t('HAK BENEFIT KHUSUS ATLET //', 'SPECIAL ATHLETE PRIVILEGE //')}
                       </span>
-                      <span className="text-white font-bold font-mono text-xs sm:text-sm uppercase">{t('POTONGAN KUPON MAKAN', 'MEAL COUPON DISCOUNT')}</span>
+                      <span className="text-white font-bold font-mono text-xs sm:text-sm uppercase">
+                        {t('E-VOUCHER KUPON MAKAN RP 50.000', 'IDR 50,000 MEAL COUPON VOUCHER')}
+                      </span>
                     </div>
-                    <p className="text-slate-200 font-sans text-xs sm:text-sm md:text-base leading-relaxed">
-                      {t('Kategori berhak mendapatkan insentif kupon makan resmi (Peserta Wanita / Usia ≤17 Tahun / Tim Pair Mix). Potongan Rp 50.000 otomatis terpotong pada total tagihan.', 'Eligible for official meal coupon incentive (Women riders / Age ≤17 / Pair Mix teams). IDR 50,000 deduction is automatically applied to invoice total.')}
+                    <p className="text-slate-300 font-sans text-xs sm:text-sm leading-relaxed max-w-2xl">
+                      {t(
+                        'Peserta berumur di bawah 17 tahun dan wanita berhak menerima E-Voucher Kupon Makan senilai Rp 50.000. Voucher ini otomatis terbit dan siap ditukarkan di venue setelah pendaftaran dan pembayaran selesai (bukan berupa pengurangan total tagihan).',
+                        'Participants under 17 years old and female riders are entitled to an official IDR 50,000 Meal Coupon Voucher. This voucher is issued upon completed registration and payment for redemption at the venue (not deducted from invoice total).'
+                      )}
                     </p>
                   </div>
-                  <div className="font-display italic text-3xl sm:text-4xl lg:text-5xl font-black text-[#FA6D0B] shrink-0 self-start sm:self-auto px-4 py-2 rounded-xl bg-black/80 shadow-inner">
-                    -RP 50.000
+                  <div className="font-display italic text-2xl sm:text-3xl font-black text-[#FA6D0B] shrink-0 self-start sm:self-auto px-5 py-3 rounded-xl bg-black/80 shadow-inner">
+                    +VOUCHER 50K
                   </div>
                 </div>
               )}
@@ -2524,10 +2531,10 @@ export default function RegistrationPage() {
                         <span className="text-slate-200 font-semibold">+Rp 20.000 RPC</span>
                       </>
                     )}
-                    {mealCouponDiscount > 0 && (
+                    {hasMealCouponPerk && (
                       <>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="text-[#FA6D0B] font-bold">-Rp 50.000 Kupon</span>
+                        <span className="text-white font-semibold">{t('+Voucher Makan Rp 50.000', '+IDR 50k Meal Voucher')}</span>
                       </>
                     )}
                     {promoDiscount > 0 && appliedPromo && (

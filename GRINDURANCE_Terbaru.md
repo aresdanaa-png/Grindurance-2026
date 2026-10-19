@@ -452,3 +452,10 @@ km; 200 km menggabungkan rute utama 170 km dengan prolog mandiri 30 km
 dan batas 17 jam. Tanggal event, biaya, pendaftaran, GPX, checkpoint,
 serta sebagian aturan resmi tidak tersedia di ketiga PDF dan harus
 dikonfirmasi, bukan ditebak.
+
+## 12. Regulasi Resmi Kupon Makan (Meal Coupon Rp 50.000)
+
+- **Penerima yang Berhak:** Khusus untuk peserta yang **berumur di bawah 17 tahun (< 17 tahun)** dan **wanita**.
+- **Bentuk & Sifat:** **BUKAN DISKON** dan **BUKAN PENGURANGAN JUMLAH TOTALAN BIAYA PENDAFTARAN**.
+- **Mekanisme Penyerahan:** Berbentuk **E-Voucher Kupon Konsumsi senilai Rp 50.000** yang didapatkan secara otomatis **SETELAH** peserta menyelesaikan pendaftaran dan melunasi pembayaran (status PAID / bersamaan dengan penerbitan nomor BIB), untuk ditukarkan di venue event (ABBEY Coffee & Eatery / Staging Arena LRT Harjamukti).
+
