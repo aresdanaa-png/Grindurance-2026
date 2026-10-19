@@ -6,6 +6,11 @@ import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import BibCard from '@/components/BibCard';
 import { Category, Order, Participant } from '@/lib/types';
+import {
+  generateInvoiceWhatsAppMessage,
+  generatePaymentSuccessWhatsAppMessage,
+  createWhatsAppDirectUrl,
+} from '@/lib/services/whatsapp';
 
 interface InvoiceCockpitProps {
   order: Order;
@@ -60,6 +65,35 @@ export default function InvoiceCockpit({
   };
 
   const isPaid = order.payment_status === 'PAID';
+  const primaryParticipant = participants[0];
+
+  const directPaymentUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/pembayaran?code=${primaryParticipant?.registration_code || order.order_id}`
+    : `/pembayaran?code=${primaryParticipant?.registration_code || order.order_id}`;
+
+  const eticketUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/cek-bib?query=${primaryParticipant?.bib_number || primaryParticipant?.registration_code || ''}`
+    : `/cek-bib?query=${primaryParticipant?.bib_number || primaryParticipant?.registration_code || ''}`;
+
+  const whatsappMessageText = primaryParticipant
+    ? isPaid
+      ? generatePaymentSuccessWhatsAppMessage({
+          order,
+          category,
+          participant: primaryParticipant,
+          eticketUrl,
+        })
+      : generateInvoiceWhatsAppMessage({
+          order,
+          category,
+          participant: primaryParticipant,
+          directPaymentUrl,
+        })
+    : '';
+
+  const whatsappDirectUrl = primaryParticipant
+    ? createWhatsAppDirectUrl(primaryParticipant.phone_number || '', whatsappMessageText)
+    : '#';
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 animate-slide-up-fade relative">
@@ -325,6 +359,77 @@ export default function InvoiceCockpit({
           </div>
         )}
       </div>
+
+      {/* 1-Click WhatsApp Direct Dispatch & Message Simulator Card */}
+      {primaryParticipant && (
+        <div className="p-6 sm:p-8 rounded-2xl bg-[#121418]/90 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] space-y-5 font-mono relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-widest">
+                // WHATSAPP DIRECT DISPATCH · 1-KLIK SIMPAN CHAT
+              </span>
+            </div>
+            <span className="text-[11px] text-slate-400 uppercase tracking-wider">
+              {t('GRATIS · TANPA PERLU AKUN GATEWAY', 'FREE · NO GATEWAY ACCOUNT NEEDED')}
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="font-display italic text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
+              {!isPaid
+                ? t('SIMPAN & LANJUTKAN PEMBAYARAN VIA WHATSAPP', 'SAVE & RESUME PAYMENT VIA WHATSAPP')
+                : t('BAGIKAN TIKET BIB & VOUCHER KE WHATSAPP', 'SHARE BIB TICKET & VOUCHER TO WHATSAPP')}
+            </h4>
+            <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+              {!isPaid
+                ? t(
+                    `Pesan resmi panitia siap disimpan ke nomor WhatsApp Anda (${primaryParticipant.phone_number || '-'}). Klik tombol di bawah untuk langsung membuka chat WhatsApp yang sudah terisi otomatis tanpa perlu mengetik ulang.`,
+                    `Official committee message is ready for your WhatsApp (${primaryParticipant.phone_number || '-'}). Click below to instantly launch WhatsApp with pre-filled invoice details.`
+                  )
+                : t(
+                    `Nomor dada resmi BIB #${primaryParticipant.bib_number || ''} dan E-Voucher Kupon Makan Rp 50.000 Anda siap disimpan ke WhatsApp untuk ditunjukkan saat pengambilan race pack di venue.`,
+                    `Your official rider BIB #${primaryParticipant.bib_number || ''} and IDR 50,000 Meal Voucher are ready to be saved to WhatsApp for venue check-in.`
+                  )}
+            </p>
+          </div>
+
+          {/* Live Message Preview Box (Dark Carbon Terminal Style) */}
+          <div className="rounded-xl bg-black/70 p-4 sm:p-5 shadow-inner space-y-3">
+            <div className="flex items-center justify-between text-[11px] text-slate-400 border-b border-white/5 pb-2">
+              <span>{t('PREVIEW PESAN RESMI WHATSAPP:', 'OFFICIAL WHATSAPP MESSAGE PREVIEW:')}</span>
+              <span className="text-[#FA6D0B] font-bold">TUJUAN: +{primaryParticipant.phone_number || ''}</span>
+            </div>
+            <pre className="text-xs text-slate-200 font-mono whitespace-pre-wrap leading-relaxed select-all">
+              {whatsappMessageText}
+            </pre>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+            <a
+              href={whatsappDirectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#FA6D0B] text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,109,11,0.35)] cursor-pointer"
+            >
+              <span>{t('BUKA DI WHATSAPP SEKARANG', 'OPEN IN WHATSAPP NOW')}</span>
+              <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+            </a>
+
+            <button
+              type="button"
+              onClick={() => {
+                copyToClipboard(whatsappMessageText, 'wa_message');
+              }}
+              className="w-full sm:w-auto px-6 py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center"
+            >
+              {copiedField === 'wa_message'
+                ? t('TEKS PESAN TERSALIN //', 'MESSAGE TEXT COPIED //')
+                : t('SALIN TEKS PESAN //', 'COPY MESSAGE TEXT //')}
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Digital BIB Voucher Preview */}
       <div className="space-y-4">
