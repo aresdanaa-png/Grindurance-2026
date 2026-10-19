@@ -103,6 +103,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/pembayaran" className="hover:text-[#FA6D0B] transition-colors flex items-center justify-between">
+                  <span>{t('Lacak & Bayar Tagihan', 'Track & Resume Payment')}</span>
+                  <span className="text-[10px] text-[#FA6D0B]">24H COT</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/peraturan" className="hover:text-[#FA6D0B] transition-colors">
                   {t('Regulasi & Athlete Guide', 'Rules & Athlete Guide')}
                 </Link>

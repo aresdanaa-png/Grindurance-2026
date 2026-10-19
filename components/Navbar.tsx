@@ -12,6 +12,7 @@ const navLinks = [
   { href: '/#jadwal', labelId: 'Jadwal', labelEng: 'Timeline' },
   { href: '/peraturan', labelId: 'Regulasi', labelEng: 'Rules' },
   { href: '/peserta', labelId: 'Daftar Peserta', labelEng: 'Start List' },
+  { href: '/pembayaran', labelId: 'Cek Tagihan', labelEng: 'Payment' },
 ];
 
 export default function Navbar() {
