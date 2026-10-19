@@ -88,7 +88,7 @@ export default function CommunitySocialSection() {
     switch (type) {
       case 'instagram':
         return (
-          <div className="w-full h-full rounded-full bg-[#0D0E11] border-2 border-white/15 group-hover:border-[#FA6D0B] group-hover:shadow-[0_0_24px_rgba(250,109,11,0.4)] flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
             <svg viewBox="0 0 24 24" className="w-full h-full fill-white group-hover:fill-[#FA6D0B] transition-colors duration-300">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
             </svg>
@@ -96,7 +96,7 @@ export default function CommunitySocialSection() {
         );
       case 'facebook':
         return (
-          <div className="w-full h-full rounded-full bg-[#0D0E11] border-2 border-white/15 group-hover:border-[#FA6D0B] group-hover:shadow-[0_0_24px_rgba(250,109,11,0.4)] flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
             <svg viewBox="0 0 24 24" className="w-full h-full fill-white group-hover:fill-[#FA6D0B] transition-colors duration-300">
               <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
             </svg>
@@ -104,7 +104,7 @@ export default function CommunitySocialSection() {
         );
       case 'marketplace':
         return (
-          <div className="w-full h-full rounded-full bg-[#0D0E11] border-2 border-white/15 group-hover:border-[#FA6D0B] group-hover:shadow-[0_0_24px_rgba(250,109,11,0.4)] flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
             <svg viewBox="0 0 24 24" className="w-full h-full stroke-white group-hover:stroke-[#FA6D0B] transition-colors duration-300" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 9l2-5h14l2 5v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" />
               <path d="M3 9h18" />
@@ -116,7 +116,7 @@ export default function CommunitySocialSection() {
         );
       case 'registration':
         return (
-          <div className="w-full h-full rounded-full bg-[#0D0E11] border-2 border-white/15 group-hover:border-[#FA6D0B] group-hover:shadow-[0_0_24px_rgba(250,109,11,0.4)] flex items-center justify-center p-2.5 overflow-hidden transition-all duration-300">
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-2.5 overflow-hidden transition-all duration-300">
             <img
               src="/nama_event.webp"
               alt="Gravel Grindurance 2026"
@@ -126,7 +126,7 @@ export default function CommunitySocialSection() {
         );
       case 'portfolio':
         return (
-          <div className="w-full h-full rounded-full bg-[#0D0E11] border-2 border-white/15 group-hover:border-[#FA6D0B] group-hover:shadow-[0_0_24px_rgba(250,109,11,0.4)] flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
             <svg viewBox="0 0 24 24" className="w-full h-full fill-white group-hover:fill-[#FA6D0B] transition-colors duration-300">
               <path d="M10.8 13.2V8.4l-3 3-1.7-1.7 4.9-4.9h2v4.9l3-3 1.7 1.7-3 3v4.8h4.8l-3-3 1.7-1.7 4.9 4.9v2l-4.9 4.9-1.7-1.7 3-3h-4.8v4.8l3-3 1.7 1.7-4.9 4.9h-2l-4.9-4.9 1.7-1.7 3 3V18H6.5l3 3-1.7 1.7L2.9 17.8v-2l4.9-4.9 1.7 1.7-3 3h4.3z" />
             </svg>
@@ -134,7 +134,7 @@ export default function CommunitySocialSection() {
         );
       case 'chapter':
         return (
-          <div className="w-full h-full rounded-full bg-[#0D0E11] border-2 border-white/15 group-hover:border-[#FA6D0B] group-hover:shadow-[0_0_24px_rgba(250,109,11,0.4)] flex items-center justify-center p-2.5 overflow-hidden transition-all duration-300">
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-2.5 overflow-hidden transition-all duration-300">
             <img
               src="/logo-gx-id.webp"
               alt="19 Chapter Regional GX-ID"
@@ -262,7 +262,7 @@ export default function CommunitySocialSection() {
                 <Link
                   key={idx}
                   href={item.href}
-                  className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#0E1013] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
+                  className="group relative rounded-2xl overflow-hidden bg-black/60 backdrop-blur-xl transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_50px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
                 >
                   {cardInner}
                 </Link>
@@ -275,7 +275,7 @@ export default function CommunitySocialSection() {
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group relative rounded-2xl overflow-hidden border border-white/10 bg-[#0E1013] hover:border-[#FA6D0B] transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_12px_36px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
+                className="group relative rounded-2xl overflow-hidden bg-black/60 backdrop-blur-xl transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_20px_50px_rgba(250,109,11,0.25)] flex flex-col justify-between hover:-translate-y-1"
               >
                 {cardInner}
               </a>
@@ -284,7 +284,7 @@ export default function CommunitySocialSection() {
         </div>
 
         {/* 19 Chapters Strip & Action Bar */}
-        <div id="chapters" className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-5 sm:p-6 space-y-4 shadow-[0_15px_40px_rgba(0,0,0,0.4)]">
+        <div id="chapters" className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3.5">
             {/* Pure mono industrial label — no icon */}
             <span className="text-xs font-mono font-bold uppercase text-white tracking-wider">

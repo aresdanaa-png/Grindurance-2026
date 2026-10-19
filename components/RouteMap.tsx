@@ -232,11 +232,11 @@ export default function RouteMap({
           direction: 'top',
         });
 
-        // Start marker (green dot with animated radar halo)
+        // Start marker (white dot with animated radar halo)
         const startIcon = L.divIcon({
           html: `<div style="position:relative;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">
-            <div class="animate-radar-halo" style="position:absolute;inset:0;border-radius:50%;background:rgba(34,197,94,0.4);"></div>
-            <div style="position:relative;width:12px;height:12px;background:#22C55E;border:2.5px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(34,197,94,0.95);"></div>
+            <div class="animate-radar-halo" style="position:absolute;inset:0;border-radius:50%;background:rgba(255,255,255,0.4);"></div>
+            <div style="position:relative;width:12px;height:12px;background:#FFFFFF;border:2.5px solid #0D0E11;border-radius:50%;box-shadow:0 0 10px rgba(255,255,255,0.95);"></div>
           </div>`,
           className: '',
           iconAnchor: [12, 12],
@@ -463,7 +463,7 @@ export default function RouteMap({
           onClick={() => setShowLockModal(false)}
         >
           <div
-            className="relative w-full max-w-lg bg-[#0D0E11] border border-white/20 rounded-2xl p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.85)] text-left animate-pop-in-spring"
+            className="relative w-full max-w-lg bg-[#0D0E11] rounded-2xl p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-left animate-pop-in-spring"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Ambient top glow */}
@@ -480,7 +480,7 @@ export default function RouteMap({
             </div>
 
             {/* Telemetry specs box */}
-            <div className="my-5 p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-2 font-mono text-xs">
+            <div className="my-5 p-4 rounded-xl bg-white/[0.04] space-y-2 font-mono text-xs shadow-sm">
               <div className="flex justify-between items-center text-slate-400">
                 <span>{t('STATUS FILE:', 'FILE STATUS:')}</span>
                 <span className="text-[#FA6D0B] font-bold">

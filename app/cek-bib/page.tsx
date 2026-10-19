@@ -40,7 +40,7 @@ export default function CekBibPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10 font-sans selection:bg-[#FA6D0B] selection:text-black">
+    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-10 font-sans selection:bg-[#FA6D0B] selection:text-black animate-slide-up-fade">
       {/* Header */}
       <div className="border-b border-white/10 pb-8 text-center space-y-3">
         <span className="font-mono font-bold text-xs sm:text-sm text-[#FA6D0B] uppercase tracking-widest block">
@@ -81,7 +81,7 @@ export default function CekBibPage() {
       </form>
 
       {errorMsg && (
-        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs sm:text-sm font-mono max-w-xl mx-auto text-center font-bold">
+        <div className="p-4 rounded-xl bg-black/80 text-[#FA6D0B] text-xs sm:text-sm font-mono max-w-xl mx-auto text-center font-bold shadow-md">
           // {errorMsg}
         </div>
       )}
@@ -90,7 +90,7 @@ export default function CekBibPage() {
       {searched && (
         <div className="space-y-8 pt-4">
           {results.length === 0 ? (
-            <div className="text-center py-12 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md max-w-xl mx-auto space-y-3 p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+            <div className="text-center py-12 rounded-2xl bg-black/60 backdrop-blur-xl max-w-xl mx-auto space-y-3 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
               <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
                 STATUS // NOT FOUND
               </span>
@@ -127,7 +127,7 @@ export default function CekBibPage() {
                       registrationCode={p.registration_code}
                     />
                   ) : (
-                    <div className="max-w-md mx-auto rounded-2xl border border-[#FA6D0B]/40 bg-black/60 p-6 sm:p-7 text-center space-y-3 shadow-[0_15px_50px_rgba(0,0,0,0.5)] font-mono">
+                    <div className="max-w-md mx-auto rounded-2xl bg-gradient-to-br from-[#FA6D0B]/10 via-black/70 to-black/85 backdrop-blur-xl p-6 sm:p-7 text-center space-y-3 shadow-[0_20px_60px_rgba(250,109,11,0.2)] font-mono">
                       <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
                         // {t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
                       </span>

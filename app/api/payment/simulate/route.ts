@@ -45,6 +45,7 @@ export async function POST(req: Request) {
             case '60': return 6001;
             case '80':
             case '100': return 8001;
+            case '120':
             case '120_SINGLE': return 1201;
             case '120_PAIR': return 2201;
             case '150': return 1501;

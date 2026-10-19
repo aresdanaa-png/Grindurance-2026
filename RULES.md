@@ -60,19 +60,25 @@ Gunakan pembatas teknis balap:
 
 ---
 
-## 5. Palet Warna Resmi (Brand Color Tokens)
+## 5. 🚫 ATURAN MUTLAK #3: STRICT TRI-COLOR PALETTE (ONLY BLACK, WHITE, & ORANGE)
 
-* **Deep Carbon Background**: `#0D0E11` (Hero & Primary Body) dan `#0B0C0E` (Timeline, Dark Sections, & Footer).
-* **Grindurance Electric Orange**: `#FA6D0B` (Accent primer, glowing borders, active tabs, route track line, active elevation curve).
-* **Orange Hover State**: `#DE5A00` (Hover effect untuk tombol solid).
-* **Text High-Contrast**:
-  * Heading / Primary: `#FFFFFF` (Putih murni).
-  * Sub-accent / Telemetry: `#FA6D0B` (Oranye brand).
-  * Body text: `#CBD5E1` (`text-slate-300`) atau `#94A3B8` (`text-slate-400`).
-* **Borders & Dividers**:
-  * Standar: `border-white/10` (transparan elegan).
-  * Aksen aktif: `border-[#FA6D0B]/40` atau `border-[#FA6D0B]`.
-* **Glassmorphism**: `bg-black/40 backdrop-blur-md` atau `bg-black/50 backdrop-blur-xl`.
+> **"SAYA TIDAK SUKA ADA WARNA LAIN SELAIN PUTIH, HITAM, DAN ORANGE. MAU ITU BIRU, HIJAU, ATAU MERAH — SAYA TIDAK SUKA (UNTUK UI/UX). TIDAK BOLEH BERLEBIHAN."**
+
+1. **Hanya 3 Warna Utama yang Diizinkan di Seluruh Antarmuka (Tri-Color Master Canon)**:
+   - **Deep Carbon / Hitam**: `#0D0E11` (Hero & Primary Canvas), `#0B0C0E` (Sections & Footer), dan `bg-black/60` – `bg-black/80` untuk card/container.
+   - **Putih / Slate Monokrom**: `#FFFFFF` (Heading utama, kontras tinggi), `#E2E8F0` / `#CBD5E1` (`text-slate-200..300` untuk body text), dan `#94A3B8` (`text-slate-400` untuk sub-telemetri).
+   - **Grindurance Electric High-Vis Orange**: `#FA6D0B` (Aksen primer, garis rute, tombol CTA utama, active tab/selection, glowing indicator).
+   - **Orange Hover State**: `#DE5A00` (Hover effect untuk tombol solid).
+
+2. **Dilarang Keras Menggunakan Warna Lain di Seluruh UI/UX**:
+   - ❌ **DILARANG MERAH / ROSE (`red-*`, `rose-*`)**: Untuk status error, peringatan, diskualifikasi, penalti, atau emergency, **JANGAN** gunakan merah. Gunakan tipografi bold putih, badge `bg-white/10 text-white`, atau aksen `#FA6D0B` dengan label tegas `// PERINGATAN`.
+   - ❌ **DILARANG HIJAU / EMERALD (`green-*`, `emerald-*`)**: Untuk status lolos, sukses, checklist, stempel cleared, atau marker start, **JANGAN** gunakan hijau. Gunakan putih bersih atau aksen oranye `#FA6D0B`.
+   - ❌ **DILARANG BIRU / INDIGO / CYAN (`blue-*`, `indigo-*`, `cyan-*`)**: Dilarang total dalam gradien, latar belakang, maupun badge.
+   - ❌ **DILARANG KUNING / AMBER / UNGU / PINK**: Dilarang total. Komposisi makadam/tanah harus menggunakan nuansa monokromatik putih/slate (`bg-white/40`), bukan kuning/amber.
+
+3. **Prinsip "Tidak Boleh Berlebihan" (Tactical Balance)**:
+   - Oranye `#FA6D0B` adalah **warna aksen taktis**, bukan cat dinding. Dominasi visual tetap pada atmosfer gelap Deep Carbon yang tenang dan maskulin.
+   - Jangan menyalakan semua tombol/border dengan warna oranye bersamaan. Oranye hanya untuk titik fokus interaksi utama (Primary CTA, tab yang sedang aktif, dan data metrik kunci).
 
 ---
 

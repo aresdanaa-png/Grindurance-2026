@@ -325,12 +325,27 @@ html {
 /* 7. Scroll-driven reveal (Smooth glide-up fade-in) */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-.reveal-on-scroll.is-revealed {
+.reveal-down {
+  opacity: 0;
+  transform: translateY(-24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.reveal-on-scroll.is-revealed,
+.reveal-down.is-revealed,
+.reveal-fade.is-revealed {
   opacity: 1;
   transform: translateY(0);
 }
@@ -339,7 +354,7 @@ html {
 @keyframes slideUpFade {
   0% {
     opacity: 0;
-    transform: translateY(28px) scale(0.98);
+    transform: translateY(24px) scale(0.98);
   }
   100% {
     opacity: 1;
@@ -407,18 +422,11 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-draw-ridge,
-  .animate-fade-in-area,
-  .animate-radar-halo,
-  .animate-breathing-glow,
-  .animate-pop-in-spring,
-  .animate-sheen-sweep,
-  .reveal-on-scroll {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    stroke-dashoffset: 0 !important;
+  .reveal-on-scroll,
+  .reveal-down,
+  .reveal-fade {
+    transform: none;
+    transition: opacity 0.3s ease;
   }
 }
 

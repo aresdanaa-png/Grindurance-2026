@@ -148,7 +148,7 @@ export default function BibCard({
                 {t('GOL', 'BLOOD')}: {bloodType}
               </span>
               {medicalNotes && medicalNotes !== 'Tidak Ada' && medicalNotes !== 'None' && (
-                <span className="bg-red-100 text-red-800 border border-red-300 px-1.5 py-0.5 truncate max-w-[120px]" title={medicalNotes}>
+                <span className="bg-slate-200 text-black border border-slate-400 px-1.5 py-0.5 truncate max-w-[120px]" title={medicalNotes}>
                   {t('MEDIS', 'ALERT')}: {medicalNotes}
                 </span>
               )}

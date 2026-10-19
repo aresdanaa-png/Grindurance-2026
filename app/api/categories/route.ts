@@ -20,10 +20,11 @@ export async function GET() {
       '60': 7.0,
       '80': 9.5,
       '100': 9.5,
+      '120': 11.0,
       '120_SINGLE': 11.0,
       '120_PAIR': 11.0,
       '150': 15.0,
-      '200': 19.0,
+      '200': 17.0,
     };
 
     const updatedCategories = (categories || []).map((cat) => ({

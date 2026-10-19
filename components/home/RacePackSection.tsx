@@ -77,7 +77,7 @@ export default function RacePackSection() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
             {/* Tier 1: Medal Only */}
-            <div className="p-7 sm:p-8 rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md flex flex-col justify-between space-y-6 hover:border-white/20 transition-all duration-300 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+            <div className="p-7 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-xl flex flex-col justify-between space-y-6 transition-all duration-300 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
@@ -137,7 +137,7 @@ export default function RacePackSection() {
             </div>
 
             {/* Tier 2: Medal & Jersey */}
-            <div className="p-7 sm:p-8 rounded-2xl border-2 border-[#FA6D0B] bg-black/20 backdrop-blur-md flex flex-col justify-between space-y-6 shadow-[0_0_45px_rgba(250,109,11,0.18)] transition-all duration-300">
+            <div className="p-7 sm:p-8 rounded-2xl bg-gradient-to-b from-[#FA6D0B]/15 via-black/60 to-black/80 backdrop-blur-xl flex flex-col justify-between space-y-6 shadow-[0_20px_60px_rgba(250,109,11,0.22)] transition-all duration-300">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
@@ -199,7 +199,7 @@ export default function RacePackSection() {
           </div>
 
           {/* LOGISTIK RACE PACK (RPC) — 2-COLUMN ATHLETIC TELEMETRY STRIP */}
-          <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+          <div className="rounded-2xl bg-black/60 backdrop-blur-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
             <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 p-6 sm:p-7 gap-6 md:gap-0">
               
               {/* Column 1: Ambil Mandiri saat RPC Day */}
@@ -265,9 +265,9 @@ export default function RacePackSection() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
               {/* ITEM 1: JERSEY */}
-              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
                 <div className="space-y-4">
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
                     {/* Top Badges */}
                     <div className="flex items-center justify-between w-full">
                       <span className="text-[10px] font-sans font-black uppercase tracking-wider px-3 py-1 rounded-full bg-[#FA6D0B] text-black">
@@ -337,9 +337,9 @@ export default function RacePackSection() {
               </div>
 
               {/* ITEM 2: MEDAL */}
-              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
                 <div className="space-y-4">
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
                     {/* Top Badges */}
                     <div className="flex items-center justify-between w-full">
                       <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
@@ -409,9 +409,9 @@ export default function RacePackSection() {
               </div>
 
               {/* ITEM 3: RACE PACK KIT */}
-              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-5 sm:p-6 flex flex-col justify-between space-y-5 hover:border-[#FA6D0B]/40 transition-all duration-300 group shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
                 <div className="space-y-4">
-                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 border border-white/10 group-hover:border-[#FA6D0B]/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
+                  <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
                     {/* Top Badges */}
                     <div className="flex items-center justify-between w-full">
                       <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-black/80 border border-white/20 text-white backdrop-blur-sm">
@@ -484,7 +484,7 @@ export default function RacePackSection() {
           </div>
 
           {/* Minimalist Bottom CTA Strip */}
-          <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+          <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
             <div className="space-y-1 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start gap-2 text-[11px] font-sans font-bold uppercase tracking-widest text-[#FA6D0B]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />

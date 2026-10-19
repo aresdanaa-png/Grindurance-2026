@@ -12,7 +12,7 @@ const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
 
 export default function CategoryCockpit() {
   const { language, t } = useLanguage();
-  const [selectedId, setSelectedId] = useState<string>('120_PAIR');
+  const [selectedId, setSelectedId] = useState<string>('120');
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
 
   const handleCategorySelect = (id: string) => {
@@ -31,23 +31,23 @@ export default function CategoryCockpit() {
     <>
       {/* 2. HYBRID COCKPIT TELEMETRY & ATHLETIC MONOLITHS (NIKE TRAIL X GARMIN HUD) */}
       {/* ========================================================================= */}
-      <section id="kategori" className="relative pt-4 sm:pt-6 pb-0">
+      <section id="kategori" className="relative pt-3 sm:pt-4 pb-0">
         
         {/* Cinematic Action Cyclist Motion Background (pesepeda.webp) - MIDDLE IMAGE: Solo Aero Cyclist */}
         <div 
           className="absolute -top-96 sm:-top-[420px] -bottom-72 inset-x-0 z-0 pointer-events-none overflow-hidden"
           style={{
-            maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, black 22%, black 85%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 8%, black 22%, black 85%, transparent 100%)'
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, black 8%, black 85%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, black 8%, black 85%, transparent 100%)'
           }}
         >
           <img
             src="/backgrounds/bg-categories.webp"
             alt="Grindurance High Speed Gravel Cyclist"
-            className="w-full h-full object-cover object-[center_20%] lg:object-[72%_15%] opacity-90 filter contrast-[1.18] saturate-[1.2] brightness-[0.95] blur-[0.4px]"
+            className="w-full h-full object-cover object-[center_8%] lg:object-[72%_5%] opacity-90 filter contrast-[1.18] saturate-[1.2] brightness-[0.95] blur-[0.4px]"
           />
           {/* Seamless gradient overlays for extreme typographic legibility without cutting off the bottom */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E11] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0D0E11]/30 via-transparent to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0D0E11]/90 via-[#0D0E11]/55 to-[#0D0E11]/25" />
         </div>
 
@@ -84,7 +84,7 @@ export default function CategoryCockpit() {
                 {t(
                   'Tanpa mobil pengawal. Menembus guyuran hujan lebat, bebatuan makadam, dan tanjakan brutal hingga ',
                   'Self-supported. Braving heavy downpours, rough macadam, and brutal climbs up to '
-                )}<span className="text-[#FA6D0B] font-bold font-mono">+3.180 meter</span>{t(
+                )}<span className="text-[#FA6D0B] font-bold font-mono">+2.530 meter</span>{t(
                   ' di koridor liar Jonggol–Sukamakmur.',
                   ' in the wild Jonggol–Sukamakmur corridor.'
                 )}
@@ -143,145 +143,142 @@ export default function CategoryCockpit() {
           </defs>
         </svg>
 
-        {/* Full-Bleed Edge-to-Edge Category Stage Bar (Translucent Glass to Let BG Glow Through) */}
-        <div className="relative z-10 w-full border-y border-white/10 bg-black/40 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
-          <div className="flex lg:grid lg:grid-cols-6 divide-x divide-white/10 overflow-x-auto no-scrollbar scroll-smooth">
-            {categories.map((c) => {
-              const isActive = c.id === selectedId;
-              const isRace = c.isRace || c.id === '120_PAIR';
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => handleCategorySelect(c.id)}
-                  className={`group relative text-left py-2.5 sm:py-3.5 px-3.5 sm:px-4 lg:px-5 transition-all duration-300 flex flex-col justify-between overflow-hidden focus:outline-none min-w-[175px] sm:min-w-[195px] lg:min-w-0 flex-shrink-0 lg:flex-shrink ${
-                    isRace
-                      ? isActive
-                        ? 'bg-gradient-to-b from-[#FA6D0B]/20 via-[#FA6D0B]/10 to-transparent text-white shadow-[inset_0_0_24px_rgba(250,109,11,0.2)] border-x border-[#FA6D0B]/40 z-20'
-                        : 'bg-gradient-to-b from-[#FA6D0B]/[0.06] via-white/[0.02] to-transparent hover:from-[#FA6D0B]/[0.12] hover:via-white/[0.03] hover:to-transparent text-slate-300 border-x border-[#FA6D0B]/20'
-                      : isActive
-                        ? 'bg-gradient-to-b from-[#FA6D0B]/25 via-[#FA6D0B]/10 to-transparent text-white'
-                        : 'bg-transparent hover:bg-white/[0.04] text-slate-400 hover:text-white'
-                  }`}
-                >
-                  {/* Unified Aerodynamic Speed Pattern Layer across the column */}
-                  {isRace && (
-                    <div 
-                      className={`absolute inset-0 pointer-events-none transition-opacity duration-500 overflow-hidden ${
-                        isActive ? 'opacity-40 group-hover:opacity-55' : 'opacity-20 group-hover:opacity-35'
-                      }`}
-                      style={{
-                        maskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 75%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 75%, transparent 100%)',
-                      }}
-                    >
-                      <div 
-                        className="absolute inset-x-0 -top-12 -bottom-12 animate-race-flow group-hover:animate-race-flow-fast"
-                      >
-                        <svg className="w-full h-full">
-                          <rect width="100%" height="100%" fill="url(#grinduranceSpeedPattern)" />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
+        {/* Athletic Telemetry Monolith Matrix (Seamless Unified Chassis inside max-w-7xl, Tight & Compact) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2.5 sm:mb-3">
+          <div className="rounded-xl sm:rounded-2xl bg-white/[0.08] backdrop-blur-md shadow-[0_25px_60px_rgba(0,0,0,0.7)] overflow-hidden">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-px">
+              {categories.map((c, idx) => {
+                const isActive = c.id === selectedId;
+                const isRace = c.isRace || c.id === '120';
+                const etapeNumber = `0${idx + 1}`;
 
-                  {/* Top Glowing Indicator Bar */}
-                  <div
-                    className={`absolute top-0 inset-x-0 transition-all duration-300 ${
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => handleCategorySelect(c.id)}
+                    className={`group relative text-left px-3.5 py-2.5 sm:px-4.5 sm:py-3 lg:px-5 lg:py-3.5 transition-all duration-200 flex flex-col justify-between overflow-hidden focus:outline-none cursor-pointer ${
                       isRace
                         ? isActive
-                          ? 'bg-[#FA6D0B] shadow-[0_0_24px_#FA6D0B] h-[3px]'
-                          : 'bg-[#FA6D0B]/40 group-hover:bg-[#FA6D0B] h-[2px]'
+                          ? 'bg-gradient-to-b from-[#FA6D0B]/25 via-[#FA6D0B]/[0.08] to-[#0B0C0E] text-white shadow-[inset_0_0_30px_rgba(250,109,11,0.18)] z-10'
+                          : 'bg-[#0B0C0E] hover:bg-[#131519] text-slate-300'
                         : isActive
-                          ? 'bg-[#FA6D0B] shadow-[0_0_18px_#FA6D0B] h-1'
-                          : 'bg-transparent group-hover:bg-white/20 h-1'
+                          ? 'bg-gradient-to-b from-[#FA6D0B]/20 via-[#FA6D0B]/[0.05] to-[#0B0C0E] text-white shadow-[inset_0_0_25px_rgba(250,109,11,0.12)] z-10'
+                          : 'bg-[#0B0C0E] hover:bg-[#131519] text-slate-400 hover:text-white'
                     }`}
-                  />
+                  >
+                    {/* Unified Aerodynamic Speed Pattern Layer across the cell for Race */}
+                    {isRace && (
+                      <div 
+                        className={`absolute inset-0 pointer-events-none transition-opacity duration-500 overflow-hidden ${
+                          isActive ? 'opacity-35 group-hover:opacity-50' : 'opacity-15 group-hover:opacity-25'
+                        }`}
+                        style={{
+                          maskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 75%, transparent 100%)',
+                          WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 75%, transparent 100%)',
+                        }}
+                      >
+                        <div 
+                          className="absolute inset-x-0 -top-12 -bottom-12 animate-race-flow group-hover:animate-race-flow-fast"
+                        >
+                          <svg className="w-full h-full">
+                            <rect width="100%" height="100%" fill="url(#grinduranceSpeedPattern)" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
 
-                  {/* Micro Racing Pill Badge */}
-                  {isRace ? (
-                    <div className="relative z-10 flex items-center justify-between gap-1 mb-1.5">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider transition-all ${
-                        isActive
-                          ? 'bg-[#FA6D0B] text-black shadow-[0_0_14px_rgba(250,109,11,0.6)]'
-                          : 'bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/40 group-hover:border-[#FA6D0B]'
-                      }`}>
-                        PODIUM TOP 3
-                      </span>
-                      <span className="text-[9px] font-mono font-bold tracking-wider text-[#FA6D0B] uppercase">
-                        PAIR MIX · DUAL
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="relative z-10 flex items-center justify-between gap-1 mb-1.5">
-                      <span className="text-[9px] font-mono text-slate-500 font-semibold uppercase">
-                        {t('KUOTA:', 'QUOTA:')} {c.quota.split(' ')[0]}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Header Row: Big Bold Distance + Telemetry Badge */}
-                  <div className="relative z-10 flex items-center justify-between gap-2 mb-2">
-                    <span
-                      className={`font-display text-2xl sm:text-3xl font-black italic tracking-tight uppercase transition-all leading-none inline-block pr-1.5 ${
-                        isRace
-                          ? isActive
-                            ? 'text-white drop-shadow-[0_0_24px_rgba(250,109,11,0.75)]'
-                            : 'text-white/90 group-hover:text-white drop-shadow-[0_0_12px_rgba(250,109,11,0.3)]'
-                          : isActive
-                            ? 'text-white drop-shadow-[0_0_20px_rgba(250,109,11,0.65)]'
-                            : 'text-slate-300 group-hover:text-white'
-                      }`}
-                    >
-                      {c.km === 'BEBAS' ? 'VIRTUAL' : c.km}
-                    </span>
-                    <span
-                      className={`text-[11px] sm:text-xs font-mono font-bold tracking-tight shrink-0 transition-all duration-300 ${
-                        isRace
-                          ? isActive
-                            ? 'text-white drop-shadow-[0_0_14px_rgba(250,109,11,0.9)] font-black'
-                            : 'text-[#FA6D0B] group-hover:text-white'
-                          : isActive
-                            ? 'text-[#FA6D0B] drop-shadow-[0_0_14px_rgba(250,109,11,0.9)] font-black'
-                            : 'text-slate-400 group-hover:text-slate-200'
-                      }`}
-                    >
-                      {c.elevation === 'Rute Lokal' ? 'GPS LOG' : c.elevation}
-                    </span>
-                  </div>
-
-                  {/* Subtitle & Telemetry Meta */}
-                  <div className="relative z-10 space-y-0.5">
+                    {/* Top Laser Accent Line */}
                     <div
-                      className={`text-xs font-bold uppercase tracking-wider truncate ${
-                        isRace
-                          ? isActive
-                            ? 'text-[#FA6D0B] font-black'
-                            : 'text-[#FA6D0B]/90 group-hover:text-[#FA6D0B]'
-                          : isActive
-                            ? 'text-[#FA6D0B]'
-                            : 'text-slate-400 group-hover:text-slate-200'
+                      className={`absolute top-0 inset-x-0 transition-all duration-300 ${
+                        isActive
+                          ? 'bg-[#FA6D0B] shadow-[0_0_16px_#FA6D0B] h-[2.5px]'
+                          : 'bg-transparent group-hover:bg-white/20 h-[1.5px]'
                       }`}
-                    >
-                      {isRace ? 'AMAZING RACE · PODIUM' : c.subtitle}
+                    />
+
+                    {/* Telemetry Header Row (Pure Typography, Compact) */}
+                    <div className="relative z-10 flex items-center justify-between gap-2 mb-1">
+                      <span className={`font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest leading-none ${
+                        isRace ? 'text-[#FA6D0B]' : (isActive ? 'text-[#FA6D0B]' : 'text-slate-400 group-hover:text-slate-300')
+                      }`}>
+                        ETAPE // {etapeNumber}
+                      </span>
+                      {isRace ? (
+                        <span className="font-mono text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-black bg-[#FA6D0B] px-1.5 py-0.5 rounded-sm shadow-[0_0_10px_rgba(250,109,11,0.5)] leading-none">
+                          PODIUM TOP 3
+                        </span>
+                      ) : (
+                        <span className="font-mono text-[9px] sm:text-[10px] text-slate-400 tracking-wider uppercase font-medium leading-none">
+                          {t('KUOTA //', 'QUOTA //')} {c.quota.split(' ')[0]}
+                        </span>
+                      )}
                     </div>
-                    <div className={`text-[10px] truncate font-mono ${
-                      isRace
-                        ? isActive 
-                        ? 'text-white/90 font-medium' 
-                        : 'text-slate-300 group-hover:text-white'
-                        : 'text-slate-300'
-                    }`}>
-                      {c.cot !== 'Fleksibel' ? `COT ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'Hours')) : c.cot} · ${c.wave}` : t('19 CHAPTER NASIONAL', '19 NATIONAL CHAPTERS')}
+
+                    {/* Middle Row: Bold Distance & Elevation Telemetry */}
+                    <div className="relative z-10 flex items-baseline justify-between gap-2 my-1 sm:my-1.5">
+                      <span
+                        className={`font-display text-2xl sm:text-3xl lg:text-4xl font-black italic tracking-tight uppercase transition-all leading-none ${
+                          isRace
+                            ? isActive
+                              ? 'text-white drop-shadow-[0_0_24px_rgba(250,109,11,0.75)]'
+                              : 'text-white/90 group-hover:text-white drop-shadow-[0_0_12px_rgba(250,109,11,0.3)]'
+                            : isActive
+                              ? 'text-white drop-shadow-[0_0_20px_rgba(250,109,11,0.65)]'
+                              : 'text-slate-200 group-hover:text-white'
+                        }`}
+                      >
+                        {c.km === 'BEBAS' ? 'VIRTUAL' : c.km}
+                      </span>
+                      <span
+                        className={`text-xs sm:text-[13px] font-mono font-bold tracking-tight shrink-0 transition-all duration-300 leading-none ${
+                          isRace
+                            ? isActive
+                              ? 'text-white drop-shadow-[0_0_12px_rgba(250,109,11,0.9)] font-black'
+                              : 'text-[#FA6D0B] group-hover:text-white'
+                            : isActive
+                              ? 'text-[#FA6D0B] drop-shadow-[0_0_12px_rgba(250,109,11,0.9)] font-black'
+                              : 'text-slate-400 group-hover:text-slate-200'
+                        }`}
+                      >
+                        {c.elevation === 'Rute Lokal' ? 'GPS LOG' : c.elevation}
+                      </span>
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+
+                    {/* Bottom Metadata & Telemetry Spec */}
+                    <div className="relative z-10 space-y-0.5 border-t border-white/10 pt-1.5 sm:pt-2">
+                      <div
+                        className={`font-mono text-[11px] sm:text-xs font-black uppercase tracking-wider truncate leading-tight ${
+                          isRace
+                            ? isActive
+                              ? 'text-[#FA6D0B]'
+                              : 'text-[#FA6D0B]/90 group-hover:text-[#FA6D0B]'
+                            : isActive
+                              ? 'text-[#FA6D0B]'
+                              : 'text-slate-300 group-hover:text-white'
+                        }`}
+                      >
+                        {isRace ? 'OFFICIAL RACE // SINGLE & PAIR' : c.subtitle}
+                      </div>
+                      <div className={`text-[9px] sm:text-[10px] truncate font-mono leading-tight ${
+                        isRace
+                          ? isActive 
+                            ? 'text-white/90 font-medium' 
+                            : 'text-slate-300 group-hover:text-white'
+                          : 'text-slate-400'
+                      }`}>
+                        {c.cot !== 'Fleksibel' ? `COT // ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'HOURS')) : c.cot.toUpperCase()} · ${c.wave}` : t('19 CHAPTER // SE-INDONESIA', '19 CHAPTERS // NATIONWIDE')}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         {/* THE CENTERPIECE: OPEN ATHLETIC SHOWCASE */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 sm:mt-5">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-0">
           
           {/* Smooth Cross-Fade Transition Container */}
           <div className={`transition-all duration-300 transform ${
@@ -294,7 +291,7 @@ export default function CategoryCockpit() {
               <div className="lg:col-span-5 select-none flex flex-col gap-4">
                 
                 {/* KOTAK MAP GPX LIVE */}
-                <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[5/4] rounded-xl overflow-hidden bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[5/4] rounded-xl overflow-hidden bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col">
                   
                   {/* HEADER: Title + Telemetry */}
                   <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-4 sm:px-5 py-3 shrink-0 bg-black/40">
@@ -330,7 +327,7 @@ export default function CategoryCockpit() {
               </div>
 
               {/* KOLOM KANAN (7 COLS): TATA LETAK DATA & TELEMETRI DENGAN FROSTED CARD ELEGAN */}
-              <div className="lg:col-span-7 rounded-xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 flex flex-col justify-between shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+              <div className="lg:col-span-7 rounded-xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.6)] space-y-4">
                 
                 {/* 1. Header Etape */}
                 <div>
@@ -627,12 +624,12 @@ export default function CategoryCockpit() {
                     return (
                       <div 
                         key={sIdx}
-                        className={`p-3 rounded-xl border text-left flex flex-col justify-between backdrop-blur-sm shadow-sm ${
+                        className={`p-3 rounded-xl text-left flex flex-col justify-between backdrop-blur-md shadow-[0_8px_20px_rgba(0,0,0,0.4)] ${
                           isPitstop 
-                            ? 'bg-[#FA6D0B]/10 border-[#FA6D0B]/50' 
+                            ? 'bg-[#FA6D0B]/20' 
                             : isKOM
-                            ? 'bg-[#FA6D0B]/10 border-[#FA6D0B]/50'
-                            : 'bg-black/50 border-white/10'
+                            ? 'bg-[#FA6D0B]/20'
+                            : 'bg-black/60'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-1">
@@ -656,7 +653,7 @@ export default function CategoryCockpit() {
               </div>
 
               {/* Safety & Protocol Box (Pure Typography, Icon-free) */}
-              <div className="p-4 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 space-y-1.5 text-xs">
+              <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] space-y-1.5 text-xs">
                 <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
                   {t('REGULASI TEKNIS & PROTOKOL //', 'TECHNICAL REGULATIONS & PROTOCOLS //')}
                 </span>

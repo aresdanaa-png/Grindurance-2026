@@ -24,7 +24,7 @@ export default function Error({
         }}
       />
 
-      <div className="relative z-10 max-w-lg w-full text-center space-y-6 p-8 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md shadow-2xl">
+      <div className="relative z-10 max-w-lg w-full text-center space-y-6 p-8 rounded-2xl bg-black/70 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FA6D0B]/30 bg-[#FA6D0B]/10 text-[#FA6D0B] font-mono text-xs uppercase tracking-wider">
           <span>// SYSTEM TELEMETRY ERROR</span>
         </div>
@@ -53,7 +53,7 @@ export default function Error({
 
           <Link
             href="/"
-            className="w-full sm:w-auto px-6 py-3 border border-white/20 hover:border-white/40 text-white font-mono text-xs uppercase tracking-wider rounded-xl transition-all hover:bg-white/[0.04]"
+            className="w-full sm:w-auto px-6 py-3 bg-white/[0.06] hover:bg-white/[0.12] text-white font-mono text-xs uppercase tracking-wider rounded-xl transition-all shadow-md"
           >
             KEMBALI KE BERANDA
           </Link>

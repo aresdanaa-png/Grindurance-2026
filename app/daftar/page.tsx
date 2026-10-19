@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { Category, PackageType, JerseySize, Gender, Order, Participant, RegistrationPayload } from '@/lib/types';
 import BibCard from '@/components/BibCard';
+import InvoiceCockpit from '@/components/payment/InvoiceCockpit';
 import IndonesiaAddressSelect from '@/components/IndonesiaAddressSelect';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import { 
@@ -20,7 +21,43 @@ import ElevationProfile from '@/components/ElevationProfile';
 // Dynamically import RouteMap without SSR
 const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
 
-// 6 KATEGORI RESMI OFFLINE + 1 VIRTUAL GRINDURANCE 2026
+// 6 PILIHAN RESMI KATEGORI GRINDURANCE 2026 (120 KM RACE MERUPAKAN 1 KATEGORI DENGAN OPSI SINGLE/PAIR DI DALAMNYA)
+const RACE_120_SINGLE_CONFIG: Category = {
+  id: '120_SINGLE',
+  name: '120 (Race) Single',
+  distance_km: 120,
+  category_type: 'race',
+  is_pair: false,
+  price_medal_only: 400000,
+  price_medal_jersey: 450000,
+  quota: 100,
+  current_enrolled: 34,
+  cot_hours: 11,
+  wave_start_time: '06:00',
+  prologue_required_km: 0,
+  mandatory_pitstop_cp: 4,
+  tracking_required: true,
+  is_active: true,
+};
+
+const RACE_120_PAIR_CONFIG: Category = {
+  id: '120_PAIR',
+  name: '120 (Race) Pair Mix',
+  distance_km: 120,
+  category_type: 'race',
+  is_pair: true,
+  price_medal_only: 700000,
+  price_medal_jersey: 750000,
+  quota: 30,
+  current_enrolled: 12,
+  cot_hours: 11,
+  wave_start_time: '06:00',
+  prologue_required_km: 0,
+  mandatory_pitstop_cp: 4,
+  tracking_required: true,
+  is_active: true,
+};
+
 const OFFICIAL_CATEGORIES: Category[] = [
   {
     id: '60',
@@ -57,8 +94,8 @@ const OFFICIAL_CATEGORIES: Category[] = [
     is_active: true,
   },
   {
-    id: '120_SINGLE',
-    name: '120 (Race) Single',
+    id: '120',
+    name: '120 Amazing Race',
     distance_km: 120,
     category_type: 'race',
     is_pair: false,
@@ -66,23 +103,6 @@ const OFFICIAL_CATEGORIES: Category[] = [
     price_medal_jersey: 450000,
     quota: 100,
     current_enrolled: 34,
-    cot_hours: 11,
-    wave_start_time: '06:00',
-    prologue_required_km: 0,
-    mandatory_pitstop_cp: 4,
-    tracking_required: true,
-    is_active: true,
-  },
-  {
-    id: '120_PAIR',
-    name: '120 (Race) Pair Mix',
-    distance_km: 120,
-    category_type: 'race',
-    is_pair: true,
-    price_medal_only: 700000,
-    price_medal_jersey: 750000,
-    quota: 30,
-    current_enrolled: 12,
     cot_hours: 11,
     wave_start_time: '06:00',
     prologue_required_km: 0,
@@ -171,20 +191,30 @@ function getCategoryVisual(catId: string, t: (id: string, eng: string) => string
       return {
         image: '/categories/cat_100_fondo.jpg?v=landscape_2026',
         headline: '100 FONDO',
-        subtitle: t('EKSPLORASI PERSAWAHAN & MAKADAM SODONG', 'RICE FIELDS & SODONG MACADAM'),
-        elevation: '+850 M GAIN',
+        subtitle: t('101 KM · 3 TANJAKAN UTAMA · MAKADAM SODONG', '101 KM · 3 MAIN CLIMBS · SODONG MACADAM'),
+        elevation: '+1,070 M GAIN',
         badge: t('FONDO · EKSPLORASI', 'FONDO · EXPLORATION'),
-        terrain: t('ROLLING HILLS & MAKADAM SODONG', 'ROLLING HILLS & SODONG MACADAM'),
+        terrain: t('PATH 3.02 KM & OFF-GRID 5.11 KM · PERSAWAHAN SODONG', '3.02 KM PATH & 5.11 KM OFF-GRID · SODONG RICE FIELDS'),
         callToAction: t('PACU NYALIMU!', 'IGNITE YOUR COURAGE!'),
+      };
+    case '120':
+      return {
+        image: '/categories/cat_120_race.jpg?v=landscape_2026',
+        headline: '120 AMAZING RACE',
+        subtitle: t('OFFICIAL RACE · 7 TANJAKAN · PODIUM TOP 3', 'OFFICIAL RACE · 7 CLIMBS · TOP 3 PODIUM'),
+        elevation: '+1,760 M GAIN',
+        badge: t('OFFICIAL RACE · PODIUM TOP 3', 'OFFICIAL RACE · TOP 3 PODIUM'),
+        terrain: t('UNPAVED 16.5 KM · OFF-GRID 3.77 KM · JONGGOL RIDGE', 'UNPAVED 16.5 KM · OFF-GRID 3.77 KM · JONGGOL RIDGE'),
+        callToAction: t('REBUT PODIUM JUARA!', 'CLAIM YOUR PODIUM!'),
       };
     case '120_SINGLE':
       return {
         image: '/categories/cat_120_race.jpg?v=landscape_2026',
         headline: '120 RACE SINGLE',
         subtitle: t('OFFICIAL RACE · INDIVIDU / SENDIRI (1 RIDER)', 'OFFICIAL RACE · SOLO / INDIVIDUAL (1 RIDER)'),
-        elevation: '+1,450 M GAIN',
+        elevation: '+1,760 M GAIN',
         badge: t('OFFICIAL RACE · PODIUM INDIVIDU', 'OFFICIAL RACE · INDIVIDUAL PODIUM'),
-        terrain: t('KORIDOR JONGGOL RIDGE & SUKAMAKMUR', 'JONGGOL RIDGE & SUKAMAKMUR CORRIDOR'),
+        terrain: t('UNPAVED 16.5 KM · OFF-GRID 3.77 KM · JONGGOL RIDGE', 'UNPAVED 16.5 KM · OFF-GRID 3.77 KM · JONGGOL RIDGE'),
         callToAction: t('REBUT PODIUM SENDIRI!', 'CLAIM YOUR PODIUM!'),
       };
     case '120_PAIR':
@@ -192,37 +222,37 @@ function getCategoryVisual(catId: string, t: (id: string, eng: string) => string
         image: '/categories/cat_120_race.jpg?v=landscape_2026',
         headline: '120 RACE PAIR MIX',
         subtitle: t('OFFICIAL RACE · TANDEM TIM (2 RIDERS)', 'OFFICIAL RACE · TANDEM TEAM (2 RIDERS)'),
-        elevation: '+1,450 M GAIN',
+        elevation: '+1,760 M GAIN',
         badge: t('OFFICIAL RACE · PODIUM PAIR MIX', 'OFFICIAL RACE · PAIR MIX PODIUM'),
-        terrain: t('KORIDOR JONGGOL RIDGE & SUKAMAKMUR', 'JONGGOL RIDGE & SUKAMAKMUR CORRIDOR'),
+        terrain: t('UNPAVED 16.5 KM · OFF-GRID 3.77 KM · JONGGOL RIDGE', 'UNPAVED 16.5 KM · OFF-GRID 3.77 KM · JONGGOL RIDGE'),
         callToAction: t('KOMPAK REBUT PODIUM BERDUA!', 'CLAIM PODIUM TOGETHER!'),
       };
     case '150':
       return {
         image: '/categories/cat_150_grandfondo.jpg?v=landscape_2026',
         headline: '150 GRAND FONDO',
-        subtitle: t('KORIDOR JONGGOL RIDGE & SUKAMAKMUR', 'JONGGOL RIDGE & SUKAMAKMUR CORRIDOR'),
-        elevation: '+1,450 M GAIN',
+        subtitle: t('120 KM UTAMA + 30 KM PROLOG MANDIRI', '120 KM MAIN COURSE + 30 KM PROLOGUE'),
+        elevation: '+1,760 M GAIN',
         badge: t('GRAND FONDO · PROLOG 30K', 'GRAND FONDO · 30K PROLOGUE'),
-        terrain: t('RUTE 120 KM DITAMBAH PROLOG 30 KM', '120 KM ROUTE PLUS 30 KM PROLOGUE'),
+        terrain: t('RUTE UTAMA 120 KM (+1.760 M) + PROLOG 30 KM', '120 KM MAIN ROUTE (+1,760 M) + 30 KM PROLOGUE'),
         callToAction: t('TEMBUS BATAS 150 KM!', 'BREAK THE 150K LIMIT!'),
         prologueNote: t(
-          'Rute 120 km dan 150 km memiliki trek sama, bedanya kategori 150 wajib menyelesaikan Prolog 30 km mandiri (03:00–05:00 WIB).',
-          'The 120 km and 150 km courses share the same route; 150 category riders must complete a 30 km independent prologue (03:00–05:00 WIB).'
+          'Total 150 km terdiri dari rute utama 120 km (+1.760 m elevasi) ditambah 30 km prolog yang dirancang & diselesaikan mandiri oleh peserta sebelum start.',
+          'Total 150 km consists of 120 km main course (+1,760 m elevation) plus 30 km self-designed prologue completed before wave start.'
         ),
       };
     case '200':
       return {
         image: '/categories/cat_200_ultra.jpg?v=landscape_2026',
         headline: '200 ULTRA',
-        subtitle: t('RUTE EKSPEDISI ULTRA GRAVEL', 'ULTRA GRAVEL EXPEDITION ROUTE'),
-        elevation: '+3,180 M GAIN',
+        subtitle: t('170 KM UTAMA + 30 KM PROLOG MANDIRI · COT 17 JAM', '170 KM MAIN + 30 KM PROLOGUE · 17-HOUR COT'),
+        elevation: '+2,530 M GAIN',
         badge: t('ULTRA EXPEDITION · PROLOG 30K', 'ULTRA EXPEDITION · 30K PROLOGUE'),
-        terrain: t('RUTE 170 KM DITAMBAH PROLOG 30 KM', '170 KM ROUTE PLUS 30 KM PROLOGUE'),
+        terrain: t('8 TANJAKAN (MAX 1.110 M MDPL) · DAYLIGHT RIDGE & NIGHT NAV', '8 CLIMBS (MAX 1,110 M MDPL) · DAYLIGHT RIDGE & NIGHT NAV'),
         callToAction: t('JADI LEGENDA 200 KM!', 'BECOME A 200K LEGEND!'),
         prologueNote: t(
-          'Rute resmi disiapkan 170 km, peserta wajib menyelesaikan Prolog 30 km mandiri (Total jarak 200 km).',
-          'Official course is 170 km; riders must complete a 30 km independent prologue (200 km total).'
+          'Rute resmi 170 km (+2.530 m elevasi, titik tertinggi 1.110 m MDPL). Peserta wajib menyelesaikan Prolog 30 km mandiri (Total 200 km). Batas Waktu (COT) Resmi: 17 Jam dari start.',
+          'Official course is 170 km (+2,530 m elevation, peak 1,110 m MDPL). Mandatory 30 km self-prologue (Total 200 km). Official Cut-Off Time: 17 Hours from wave start.'
         ),
       };
     case 'VIRTUAL':
@@ -244,7 +274,7 @@ function getCategoryVisual(catId: string, t: (id: string, eng: string) => string
         image: '/categories/cat_60_funride.jpg',
         headline: catId,
         subtitle: t('EKSPEDISI RESMI · GRINDURANCE 2026', 'OFFICIAL EXPEDITION · GRINDURANCE 2026'),
-        elevation: '+1,450 M GAIN',
+        elevation: '+1,760 M GAIN',
         badge: t('OFFICIAL EXPEDITION', 'OFFICIAL EXPEDITION'),
         terrain: t('GRAVEL & ASPAL', 'GRAVEL & ASPHALT'),
         callToAction: t('PILIH KATEGORI INI', 'SELECT THIS CATEGORY'),
@@ -262,7 +292,7 @@ function formatRupiah(amount: number): string {
 function getCategoryDetail(id: string): CategoryData {
   const match = CATEGORIES.find(c => c.id === id);
   if (match) return match;
-  if (id === '120_SINGLE') return CATEGORIES.find(c => c.id === '120_PAIR') || CATEGORIES[2];
+  if (id === '120_SINGLE' || id === '120_PAIR') return CATEGORIES.find(c => c.id === '120') || CATEGORIES[2];
   return CATEGORIES[2];
 }
 
@@ -273,7 +303,7 @@ export default function RegistrationPage() {
   const [currentStep, setCurrentStep] = useState<'select' | 'detail' | 'form' | 'invoice'>('select');
   
   const [categories, setCategories] = useState<Category[]>(OFFICIAL_CATEGORIES);
-  const [selectedCategory, setSelectedCategory] = useState<Category>(OFFICIAL_CATEGORIES[2]); // Default 120 (Race)
+  const [selectedCategory, setSelectedCategory] = useState<Category>(RACE_120_SINGLE_CONFIG); // Default 120 Single
   const [packageType, setPackageType] = useState<PackageType>('MEDAL_JERSEY');
   const [rpcMethod, setRpcMethod] = useState<'PICKUP' | 'HANDLING'>('PICKUP');
 
@@ -344,6 +374,7 @@ export default function RegistrationPage() {
   const [createdParticipants, setCreatedParticipants] = useState<Participant[]>([]);
   const [simulatingPayment, setSimulatingPayment] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [paymentMethodTab, setPaymentMethodTab] = useState<'qris' | 'bank'>('qris');
 
   // Promo Code State
   const [promoCodeInput, setPromoCodeInput] = useState('');
@@ -411,13 +442,64 @@ export default function RegistrationPage() {
       const params = new URLSearchParams(window.location.search);
       const catParam = params.get('category');
       if (catParam) {
-        const found = OFFICIAL_CATEGORIES.find(
-          c => c.id.toLowerCase() === catParam.toLowerCase() || (catParam === '120' && c.id === '120_SINGLE')
-        );
-        if (found) {
-          setSelectedCategory(found);
+        const p = catParam.toLowerCase();
+        if (p === '120_pair') {
+          setSelectedCategory(RACE_120_PAIR_CONFIG);
           setCurrentStep('detail');
+        } else if (p === '120' || p === '120_single') {
+          setSelectedCategory(RACE_120_SINGLE_CONFIG);
+          setCurrentStep('detail');
+        } else {
+          const found = OFFICIAL_CATEGORIES.find(c => c.id.toLowerCase() === p);
+          if (found) {
+            setSelectedCategory(found);
+            setCurrentStep('detail');
+          }
         }
+      }
+
+      const stepParam = params.get('step') || params.get('preview');
+      if (stepParam === 'invoice' || stepParam === 'payment' || params.get('demo') === '1' || params.get('demo') === 'true') {
+        const demoOrder: Order = {
+          id: 'demo-order-uuid-8829',
+          order_id: 'GX-2026-DEMO-8829',
+          category_id: '120_SINGLE',
+          package_type: 'MEDAL_JERSEY',
+          gross_amount: 450000,
+          discount_meal_coupon: 50000,
+          discount_promo: 50000,
+          promo_code: 'GXID2026',
+          net_amount: 350000,
+          payment_status: 'PENDING',
+          created_at: new Date().toISOString(),
+        };
+        const demoParticipant: Participant = {
+          id: 'demo-part-uuid-1',
+          order_id: 'demo-order-uuid-8829',
+          registration_code: 'GX26-DEMO-1201',
+          bib_number: 1201,
+          rider_role: 'SINGLE',
+          full_name: 'ADITYA PRATAMA',
+          gender: 'male',
+          birth_date: '1995-04-12',
+          email: 'aditya.pratama@grindurance.id',
+          phone_number: '081234567890',
+          emergency_contact_name: 'Budi Santoso',
+          emergency_contact_phone: '081298765432',
+          blood_type: 'O+',
+          community_chapter: 'GX-ID Jabodetabek',
+          category_id: '120_SINGLE',
+          jersey_size: 'L',
+          has_meal_coupon: true,
+          status: 'REGISTERED',
+          prologue_status: 'NOT_REQUIRED',
+          qr_checkin_hash: 'GXID-1201-DEMO-2026',
+          created_at: new Date().toISOString(),
+        };
+        setSelectedCategory(RACE_120_SINGLE_CONFIG);
+        setCreatedOrder(demoOrder);
+        setCreatedParticipants([demoParticipant]);
+        setCurrentStep('invoice');
       }
     }
 
@@ -427,7 +509,7 @@ export default function RegistrationPage() {
         const data = await res.json();
         if (data.categories && Array.isArray(data.categories) && data.categories.length > 0) {
           const matched = OFFICIAL_CATEGORIES.map(off => {
-            const live = data.categories.find((c: Category) => c.id === off.id);
+            const live = data.categories.find((c: Category) => c.id === off.id || (off.id === '120' && c.id === '120_SINGLE'));
             return live ? {
               ...off,
               current_enrolled: live.current_enrolled,
@@ -437,7 +519,6 @@ export default function RegistrationPage() {
             } : off;
           });
           setCategories(matched);
-          setSelectedCategory(prev => matched.find(c => c.id === prev.id) || prev);
         }
       } catch (err) {
         console.error('Menggunakan data kategori default resmi:', err);
@@ -479,7 +560,11 @@ export default function RegistrationPage() {
 
   // Navigasi Step 1 -> Step 2
   const handleSelectToDetail = (cat: Category) => {
-    setSelectedCategory(cat);
+    if (cat.id === '120') {
+      setSelectedCategory(RACE_120_SINGLE_CONFIG);
+    } else {
+      setSelectedCategory(cat);
+    }
     setCurrentStep('detail');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -644,6 +729,27 @@ export default function RegistrationPage() {
 
       <div className="max-w-7xl mx-auto relative z-10">
 
+        {/* Quick Testing Bar to Jump Directly to Payment Page */}
+        {currentStep !== 'invoice' && (
+          <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+            <div className="flex items-center gap-3">
+              <span className="text-[#FA6D0B] font-bold uppercase tracking-wider">// AKSES LANGSUNG:</span>
+              <span className="text-slate-300">
+                {t('Ingin memeriksa halaman pembayaran & QRIS tanpa mengisi formulir?', 'Want to review payment page & QRIS directly without filling registration form?')}
+              </span>
+            </div>
+            <div className="flex items-center gap-3 shrink-0">
+              <Link
+                href="/pembayaran"
+                className="px-5 py-2.5 rounded-full bg-[#FA6D0B] text-black font-black uppercase tracking-wider hover:bg-[#DE5A00] transition-all flex items-center gap-1.5 shadow-[0_0_20px_rgba(250,109,11,0.35)]"
+              >
+                <span>{t('BUKA HALAMAN PEMBAYARAN', 'OPEN PAYMENT PAGE')}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+              </Link>
+            </div>
+          </div>
+        )}
+
         {/* ========================================================================= */}
         {/* STEP 1: PILIH KATEGORI (6 KATEGORI RESMI GRINDURANCE 2026) */}
         {/* ========================================================================= */}
@@ -697,7 +803,7 @@ export default function RegistrationPage() {
                       animationDelay: `${idx * 90}ms`,
                       animationFillMode: 'forwards',
                     }}
-                    className="opacity-0 animate-slide-up-fade relative h-[500px] sm:h-[520px] rounded-2xl overflow-hidden border border-white/10 hover:border-[#FA6D0B] transition-all duration-500 hover:-translate-y-2 group cursor-pointer flex flex-col justify-between select-none shadow-[0_15px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_40px_rgba(250,109,11,0.35)]"
+                    className="opacity-0 animate-slide-up-fade relative h-[500px] sm:h-[520px] rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-pointer flex flex-col justify-between select-none shadow-[0_15px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_40px_rgba(250,109,11,0.35)]"
                   >
                     {/* Top Visual & Telemetry Section */}
                     <div className="relative flex-1 p-6 sm:p-7 flex flex-col justify-between overflow-hidden">
@@ -722,10 +828,8 @@ export default function RegistrationPage() {
                       <div className="relative z-20 flex items-start justify-between gap-3 font-mono text-xs border-b border-white/10 pb-3">
                         <div>
                           <span className="font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                            {cat.id === '120_SINGLE'
-                              ? t('OFFICIAL RACE · 120 KM (SENDIRI)', 'OFFICIAL RACE · 120 KM (SOLO)')
-                              : cat.id === '120_PAIR' 
-                              ? t('OFFICIAL RACE · 120 KM (PAIR MIX)', 'OFFICIAL RACE · 120 KM (PAIR MIX)') 
+                            {cat.id === '120' || cat.id === '120_SINGLE' || cat.id === '120_PAIR'
+                              ? t('OFFICIAL RACE · 120 KM (SINGLE & PAIR)', 'OFFICIAL RACE · 120 KM (SOLO & PAIR)')
                               : cat.id === '200' 
                               ? t('ULTRA EXPEDITION · 200 KM', 'ULTRA EXPEDITION · 200 KM') 
                               : cat.id === '150' 
@@ -751,7 +855,7 @@ export default function RegistrationPage() {
 
                       {/* ── CENTER HEROIC TYPOGRAPHY ── */}
                       <div className="relative z-20 my-auto space-y-2 py-4">
-                        <h2 className="font-display italic text-4xl sm:text-5xl font-black uppercase tracking-tight text-white drop-shadow-md leading-none group-hover:text-amber-100 transition-colors duration-300">
+                        <h2 className="font-display italic text-4xl sm:text-5xl font-black uppercase tracking-tight text-white drop-shadow-md leading-none group-hover:text-[#FA6D0B] transition-colors duration-300">
                           {visual.headline}
                         </h2>
 
@@ -777,7 +881,7 @@ export default function RegistrationPage() {
                     </div>
 
                     {/* ── FULL-WIDTH FLUSH FOOTER BUTTON BAR (KATA PENYEMANGAT SPESIFIK TIAP KATEGORI) ── */}
-                    <div className="relative z-20 w-full py-4 sm:py-4.5 bg-[#17191E] group-hover:bg-[#FA6D0B] border-t border-white/10 group-hover:border-[#FA6D0B] text-center transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden shadow-inner">
+                    <div className="relative z-20 w-full py-4 sm:py-4.5 bg-[#17191E] group-hover:bg-[#FA6D0B] text-center transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden shadow-inner">
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none" />
                       <span className="relative z-10 font-mono font-black text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] text-[#E5E7EB] group-hover:text-black uppercase transition-colors duration-300">
                         {visual.callToAction}
@@ -822,7 +926,7 @@ export default function RegistrationPage() {
               <div className="space-y-6">
                 
                 {/* Top Summary Card */}
-                <div className="rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
                     <div>
                       <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block mb-1">
@@ -881,7 +985,7 @@ export default function RegistrationPage() {
 
                   {/* Logistics Note */}
                   {detailVisual.prologueNote && (
-                    <div className="p-3.5 rounded-xl border border-[#FA6D0B]/30 bg-[#FA6D0B]/[0.05] font-mono text-xs space-y-1">
+                    <div className="p-3.5 rounded-xl bg-[#FA6D0B]/10 font-mono text-xs space-y-1 shadow-md">
                       <span className="font-bold text-[#FA6D0B] uppercase tracking-wider block">
                         {t('PROTOKOL LOGISTIK & STRAVA VIRTUAL RIDE', 'LOGISTICS & STRAVA PROTOCOL')}
                       </span>
@@ -891,7 +995,7 @@ export default function RegistrationPage() {
                 </div>
 
                 {/* 19 Chapters Network Banner */}
-                <div className="rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
                     <div>
                       <span className="text-[10px] font-mono text-[#FA6D0B] uppercase tracking-widest font-bold block">
@@ -926,7 +1030,7 @@ export default function RegistrationPage() {
                       ].map((chapter) => (
                         <span
                           key={chapter}
-                          className="px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-[11px] font-mono text-slate-300 font-bold hover:border-[#FA6D0B] hover:text-[#FA6D0B] transition-colors"
+                          className="px-3 py-1.5 rounded-xl bg-white/[0.06] text-[11px] font-mono text-slate-300 font-bold hover:bg-[#FA6D0B]/20 hover:text-[#FA6D0B] transition-colors shadow-sm"
                         >
                           GX-ID {chapter}
                         </span>
@@ -942,7 +1046,7 @@ export default function RegistrationPage() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="p-5 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md space-y-2">
+                    <div className="p-5 rounded-2xl bg-black/60 backdrop-blur-xl space-y-2 shadow-lg">
                       <div className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">{t('TAHAP 01', 'STAGE 01')}</div>
                       <div className="text-sm font-black text-white font-mono uppercase">{t('REGISTRASI & BIB', 'REGISTRATION & BIB')}</div>
                       <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
@@ -950,7 +1054,7 @@ export default function RegistrationPage() {
                       </p>
                     </div>
 
-                    <div className="p-5 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md space-y-2">
+                    <div className="p-5 rounded-2xl bg-black/60 backdrop-blur-xl space-y-2 shadow-lg">
                       <div className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">{t('TAHAP 02', 'STAGE 02')}</div>
                       <div className="text-sm font-black text-white font-mono uppercase">{t('GOWES OUTDOOR', 'OUTDOOR RIDE')}</div>
                       <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
@@ -958,7 +1062,7 @@ export default function RegistrationPage() {
                       </p>
                     </div>
 
-                    <div className="p-5 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md space-y-2">
+                    <div className="p-5 rounded-2xl bg-black/60 backdrop-blur-xl space-y-2 shadow-lg">
                       <div className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">{t('TAHAP 03', 'STAGE 03')}</div>
                       <div className="text-sm font-black text-white font-mono uppercase">{t('STRAVA SYNC', 'STRAVA SYNC')}</div>
                       <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
@@ -966,7 +1070,7 @@ export default function RegistrationPage() {
                       </p>
                     </div>
 
-                    <div className="p-5 rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md space-y-2">
+                    <div className="p-5 rounded-2xl bg-black/60 backdrop-blur-xl space-y-2 shadow-lg">
                       <div className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">{t('TAHAP 04', 'STAGE 04')}</div>
                       <div className="text-sm font-black text-white font-mono uppercase">{t('MEDALI DIKIRIM', 'MEDAL DISPATCH')}</div>
                       <p className="text-[11px] text-slate-300 font-sans leading-relaxed">
@@ -1014,26 +1118,23 @@ export default function RegistrationPage() {
                   </div>
 
                   {/* Race Format Toggle: Single vs Pair */}
-                  {(selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
-                    <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(250,109,11,0.12)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  {(selectedCategory.id === '120' || selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
+                    <div className="p-4 sm:p-5 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div>
                         <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
                           {t('PILIHAN FORMAT // 120 KM RACE', '120 KM RACE // FORMAT SELECTION')}
                         </span>
                         <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
                           {t(
-                            'Pilih bertanding secara individu (Sendiri / 1 Pax) atau tim berpasangan (Pair Mix / 2 Pax).',
-                            'Choose to race individually (Solo / 1 Pax) or tandem team (Pair Mix / 2 Pax).'
+                            'Pilih bertanding secara individu (Sendiri / 1 Pax) atau tim berpasangan (Pair Mix / 2 Pax). Biaya dan formulir otomatis disesuaikan.',
+                            'Choose to race individually (Solo / 1 Pax) or tandem team (Pair Mix / 2 Pax). Fees and form fields automatically adjust.'
                           )}
                         </p>
                       </div>
-                      <div className="inline-flex rounded-xl bg-black/80 p-1.5 border border-white/10 shrink-0">
+                      <div className="inline-flex rounded-xl bg-black/80 p-1.5 shrink-0 shadow-inner">
                         <button
                           type="button"
-                          onClick={() => {
-                            const singleCat = categories.find(c => c.id === '120_SINGLE') || OFFICIAL_CATEGORIES.find(c => c.id === '120_SINGLE');
-                            if (singleCat) setSelectedCategory(singleCat);
-                          }}
+                          onClick={() => setSelectedCategory(RACE_120_SINGLE_CONFIG)}
                           className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                             !selectedCategory.is_pair
                               ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
@@ -1044,10 +1145,7 @@ export default function RegistrationPage() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => {
-                            const pairCat = categories.find(c => c.id === '120_PAIR') || OFFICIAL_CATEGORIES.find(c => c.id === '120_PAIR');
-                            if (pairCat) setSelectedCategory(pairCat);
-                          }}
+                          onClick={() => setSelectedCategory(RACE_120_PAIR_CONFIG)}
                           className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                             selectedCategory.is_pair
                               ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
@@ -1062,7 +1160,7 @@ export default function RegistrationPage() {
 
                   {/* Prologue Protocol Note if applicable */}
                   {detailVisual.prologueNote && (
-                    <div className="p-3.5 sm:p-4 rounded-2xl border border-[#FA6D0B]/30 bg-[#FA6D0B]/[0.05] font-mono text-xs space-y-1">
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-[#FA6D0B]/10 font-mono text-xs space-y-1 shadow-md">
                       <span className="font-bold text-[#FA6D0B] uppercase tracking-wider block">
                         {t('PROTOKOL WAJIB PROLOG 30 KM', 'MANDATORY 30 KM PROLOGUE PROTOCOL')}
                       </span>
@@ -1071,7 +1169,7 @@ export default function RegistrationPage() {
                   )}
 
                   {/* 2. OPEN TELEMETRY BAR (4 METRICS FULL WIDTH) */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0 sm:divide-x divide-white/10 py-5 px-5 sm:px-6 rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 shadow-[0_15px_50px_rgba(0,0,0,0.5)] font-mono">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-0 sm:divide-x divide-white/10 py-5 px-5 sm:px-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_15px_50px_rgba(0,0,0,0.5)] font-mono">
                     {/* Jarak */}
                     <div className="space-y-1 sm:pr-4">
                       <span className="text-xs sm:text-sm font-bold text-slate-300 uppercase tracking-wider block">{t('JARAK TEMPUH', 'TOTAL DISTANCE')}</span>
@@ -1147,7 +1245,7 @@ export default function RegistrationPage() {
                 </div>
 
                 {/* 3. THE BIG ROUTE MAP (FULL WIDTH & EXPANSIVE HEIGHT) */}
-                <div className="relative w-full h-[460px] sm:h-[560px] lg:h-[660px] xl:h-[720px] rounded-2xl overflow-hidden bg-black/45 backdrop-blur-md border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] flex flex-col">
+                <div className="relative w-full h-[460px] sm:h-[560px] lg:h-[660px] xl:h-[720px] rounded-2xl overflow-hidden bg-black/60 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.6)] flex flex-col">
                   
                   {/* Map Header Bar */}
                   <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 px-4 sm:px-6 py-3 shrink-0 bg-black/60 backdrop-blur-md">
@@ -1190,7 +1288,7 @@ export default function RegistrationPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6 items-stretch">
                   
                   {/* Left Column: Karakteristik Etape & Komposisi Medan */}
-                  <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-5 flex flex-col justify-between">
+                  <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-5 flex flex-col justify-between">
                     
                     {/* Narasi Karakteristik Etape */}
                     <div className="space-y-2">
@@ -1209,7 +1307,7 @@ export default function RegistrationPage() {
                         <span className="text-slate-300">
                           <span className="text-slate-300 font-bold">{detailCategoryData.surfaceBreakdown.asphalt}</span> {t('Aspal', 'Asphalt')} ·{' '}
                           <span className="text-[#FA6D0B] font-bold">{detailCategoryData.surfaceBreakdown.gravel}</span> {t('Makadam', 'Gravel')} ·{' '}
-                          <span className="text-amber-400 font-bold">{detailCategoryData.surfaceBreakdown.unpaved}</span> {t('Tanah/Batu', 'Dirt/Rocky')}
+                          <span className="text-slate-400 font-bold">{detailCategoryData.surfaceBreakdown.unpaved}</span> {t('Tanah/Batu', 'Dirt/Rocky')}
                         </span>
                       </div>
                       
@@ -1217,7 +1315,7 @@ export default function RegistrationPage() {
                       <div className="h-2.5 w-full rounded-full bg-white/10 overflow-hidden flex">
                         <div style={{ width: detailCategoryData.surfaceBreakdown.asphalt }} className="h-full bg-slate-300 transition-all duration-700 ease-out" title="Aspal" />
                         <div style={{ width: detailCategoryData.surfaceBreakdown.gravel }} className="h-full bg-[#FA6D0B] transition-all duration-700 ease-out" title="Makadam" />
-                        <div style={{ width: detailCategoryData.surfaceBreakdown.unpaved }} className="h-full bg-amber-400/80 transition-all duration-700 ease-out" title="Tanah/Batu" />
+                        <div style={{ width: detailCategoryData.surfaceBreakdown.unpaved }} className="h-full bg-white/40 transition-all duration-700 ease-out" title="Tanah/Batu" />
                       </div>
 
                       <div className="pt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-slate-400">
@@ -1230,7 +1328,7 @@ export default function RegistrationPage() {
                   </div>
 
                   {/* Right Column: Regulasi & Aturan Teknis */}
-                  <div className="rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 flex flex-col justify-between">
+                  <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 flex flex-col justify-between">
                     
                     <div className="space-y-3">
                       <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
@@ -1238,18 +1336,18 @@ export default function RegistrationPage() {
                       </span>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                        <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1 font-mono">
+                        <div className="p-3.5 rounded-xl bg-black/50 space-y-1 font-mono shadow-inner">
                           <strong className="text-white block uppercase text-[10px] tracking-wider">{t('FORMAT KOMPETISI:', 'COMPETITION FORMAT:')}</strong>
                           <p className="text-slate-300 font-sans text-xs leading-relaxed">{language === 'ENG' && detailCategoryData.formatEng ? detailCategoryData.formatEng : detailCategoryData.format}</p>
                         </div>
-                        <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1 font-mono">
+                        <div className="p-3.5 rounded-xl bg-black/50 space-y-1 font-mono shadow-inner">
                           <strong className="text-[#FA6D0B] block uppercase text-[10px] tracking-wider">{t('GEAR WAJIB & ATURAN TEKNIS:', 'MANDATORY GEAR & RULES:')}</strong>
                           <p className="text-slate-300 font-sans text-xs leading-relaxed">{language === 'ENG' && detailCategoryData.specialRulesEng ? detailCategoryData.specialRulesEng : detailCategoryData.specialRules}</p>
                         </div>
                       </div>
 
                       {detailCategoryData.routeHighlights && (
-                        <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-1 font-mono text-xs">
+                        <div className="p-3.5 rounded-xl bg-black/50 space-y-1 font-mono text-xs shadow-inner">
                           <strong className="text-white block uppercase text-[10px] tracking-wider">{t('HIGHLIGHT RUTE KORIDOR:', 'CORRIDOR ROUTE HIGHLIGHTS:')}</strong>
                           <p className="text-slate-300 font-sans text-xs leading-relaxed">{detailCategoryData.routeHighlights}</p>
                         </div>
@@ -1278,10 +1376,10 @@ export default function RegistrationPage() {
                       return (
                         <div
                           key={idx}
-                          className={`p-3 rounded-xl border text-left flex flex-col justify-between backdrop-blur-sm shadow-sm ${
+                          className={`p-3 rounded-xl text-left flex flex-col justify-between backdrop-blur-sm shadow-sm ${
                             isPitstop || isKOM
-                              ? 'bg-[#FA6D0B]/10 border-[#FA6D0B]/50'
-                              : 'bg-black/45 border-white/10'
+                              ? 'bg-[#FA6D0B]/20 shadow-[0_4px_20px_rgba(250,109,11,0.2)]'
+                              : 'bg-black/50'
                           }`}
                         >
                           <div className="flex items-center justify-between mb-1">
@@ -1308,7 +1406,7 @@ export default function RegistrationPage() {
             )}
 
             {/* BOTTOM STICKY ACTION BANNER: TOMBOL DAFTAR DI PALING BAWAH */}
-            <div className="p-5 sm:p-6 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div className="p-5 sm:p-6 rounded-2xl bg-black/80 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col md:flex-row md:items-center justify-between gap-5">
               <div>
                 <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">
                   {t('SIAP UNTUK TANTANGAN INI?', 'READY FOR THIS CHALLENGE?')}
@@ -1378,7 +1476,7 @@ export default function RegistrationPage() {
             </div>
 
             {/* Selected Category Cockpit Strip */}
-            <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div className="space-y-3">
                 <div className="font-mono text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
                   {selectedCategory.is_pair 
@@ -1416,8 +1514,8 @@ export default function RegistrationPage() {
             </div>
 
             {/* Race Format Toggle: Single vs Pair */}
-            {(selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
-              <div className="p-4 sm:p-5 rounded-2xl border border-[#FA6D0B]/40 bg-black/60 backdrop-blur-md shadow-[0_15px_50px_rgba(250,109,11,0.12)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {(selectedCategory.id === '120' || selectedCategory.id === '120_SINGLE' || selectedCategory.id === '120_PAIR') && (
+              <div className="p-4 sm:p-5 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
                     {t('PILIHAN FORMAT // 120 KM RACE', '120 KM RACE // FORMAT SELECTION')}
@@ -1429,13 +1527,10 @@ export default function RegistrationPage() {
                     )}
                   </p>
                 </div>
-                <div className="inline-flex rounded-xl bg-black/80 p-1.5 border border-white/10 shrink-0">
+                <div className="inline-flex rounded-xl bg-black/80 p-1.5 shrink-0 shadow-inner">
                   <button
                     type="button"
-                    onClick={() => {
-                      const singleCat = categories.find(c => c.id === '120_SINGLE') || OFFICIAL_CATEGORIES.find(c => c.id === '120_SINGLE');
-                      if (singleCat) setSelectedCategory(singleCat);
-                    }}
+                    onClick={() => setSelectedCategory(RACE_120_SINGLE_CONFIG)}
                     className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                       !selectedCategory.is_pair
                         ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
@@ -1446,10 +1541,7 @@ export default function RegistrationPage() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      const pairCat = categories.find(c => c.id === '120_PAIR') || OFFICIAL_CATEGORIES.find(c => c.id === '120_PAIR');
-                      if (pairCat) setSelectedCategory(pairCat);
-                    }}
+                    onClick={() => setSelectedCategory(RACE_120_PAIR_CONFIG)}
                     className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                       selectedCategory.is_pair
                         ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
@@ -1464,15 +1556,15 @@ export default function RegistrationPage() {
 
             {/* Error Message Box */}
             {errorMessage && (
-              <div className="p-4 sm:p-5 rounded-2xl border border-red-500/40 bg-red-500/10 text-red-300 font-mono text-xs sm:text-sm flex items-center justify-between gap-3 animate-shake">
+              <div className="p-4 sm:p-5 rounded-2xl bg-black/90 text-white font-mono text-xs sm:text-sm flex items-center justify-between gap-3 animate-shake shadow-xl">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-red-400 uppercase tracking-wider">{t('PERINGATAN DATA //', 'DATA ALERT //')}</span>
+                  <span className="font-bold text-[#FA6D0B] uppercase tracking-wider">{t('PERINGATAN DATA //', 'DATA ALERT //')}</span>
                   <span>{errorMessage}</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setErrorMessage('')}
-                  className="text-red-400 hover:text-white uppercase font-bold text-xs px-3 py-1 rounded border border-red-500/30 shrink-0 cursor-pointer"
+                  className="text-white hover:text-white uppercase font-bold text-xs px-3 py-1 rounded bg-white/10 hover:bg-white/20 shrink-0 cursor-pointer shadow-sm transition-colors"
                 >
                   {t('TUTUP', 'CLOSE')}
                 </button>
@@ -1501,10 +1593,10 @@ export default function RegistrationPage() {
                   {/* Tier 1: Medal Only */}
                   <div
                     onClick={() => setPackageType('MEDAL_ONLY')}
-                    className={`p-6 sm:p-8 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] ${
+                    className={`p-6 sm:p-8 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.7)] backdrop-blur-xl ${
                       packageType === 'MEDAL_ONLY'
-                        ? 'border-2 border-[#FA6D0B] bg-black/50 shadow-[0_0_45px_rgba(250,109,11,0.22)]'
-                        : 'border-white/10 bg-black/25 hover:border-white/30 hover:bg-black/35'
+                        ? 'bg-black/80 ring-2 ring-[#FA6D0B] shadow-[0_0_45px_rgba(250,109,11,0.25)]'
+                        : 'bg-black/40 hover:bg-black/60'
                     }`}
                   >
                     <div className="space-y-4">
@@ -1566,10 +1658,10 @@ export default function RegistrationPage() {
                   {/* Tier 2: Medal & Jersey */}
                   <div
                     onClick={() => setPackageType('MEDAL_JERSEY')}
-                    className={`p-6 sm:p-8 rounded-2xl border transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 shadow-[0_15px_50px_rgba(0,0,0,0.5)] ${
+                    className={`p-6 sm:p-8 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-6 shadow-[0_20px_60px_rgba(0,0,0,0.7)] backdrop-blur-xl ${
                       packageType === 'MEDAL_JERSEY'
-                        ? 'border-2 border-[#FA6D0B] bg-black/50 shadow-[0_0_45px_rgba(250,109,11,0.22)]'
-                        : 'border-white/10 bg-black/25 hover:border-white/30 hover:bg-black/35'
+                        ? 'bg-black/80 ring-2 ring-[#FA6D0B] shadow-[0_0_45px_rgba(250,109,11,0.25)]'
+                        : 'bg-black/40 hover:bg-black/60'
                     }`}
                   >
                     <div className="space-y-4">
@@ -1633,7 +1725,7 @@ export default function RegistrationPage() {
               {/* ========================================================================= */}
               {/* 3.2 LOGISTIK RACE PACK & KODE PROMO (2-COLUMN TELEMETRY STRIP) */}
               {/* ========================================================================= */}
-              <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-xl overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
                 <div className="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-white/10 p-6 sm:p-8 gap-6 lg:gap-0">
                   
                   {/* Column 1: Logistik & Pengambilan Race Pack */}
@@ -1660,10 +1752,10 @@ export default function RegistrationPage() {
                         <button
                           type="button"
                           onClick={() => setRpcMethod('PICKUP')}
-                          className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                          className={`p-4 sm:p-5 rounded-xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between shadow-lg ${
                             rpcMethod === 'PICKUP'
-                              ? 'border-2 border-[#FA6D0B] bg-black/60 shadow-[0_0_25px_rgba(250,109,11,0.25)]'
-                              : 'border-white/10 bg-black/30 hover:border-white/30 hover:bg-black/50'
+                              ? 'bg-black/80 ring-2 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.25)]'
+                              : 'bg-black/40 hover:bg-black/60'
                           }`}
                         >
                           <div>
@@ -1688,10 +1780,10 @@ export default function RegistrationPage() {
                         <button
                           type="button"
                           onClick={() => setRpcMethod('HANDLING')}
-                          className={`p-4 sm:p-5 rounded-xl border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between ${
+                          className={`p-4 sm:p-5 rounded-xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between shadow-lg ${
                             rpcMethod === 'HANDLING'
-                              ? 'border-2 border-[#FA6D0B] bg-black/60 shadow-[0_0_25px_rgba(250,109,11,0.25)]'
-                              : 'border-white/10 bg-black/30 hover:border-white/30 hover:bg-black/50'
+                              ? 'bg-black/80 ring-2 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.25)]'
+                              : 'bg-black/40 hover:bg-black/60'
                           }`}
                         >
                           <div>
@@ -1754,7 +1846,7 @@ export default function RegistrationPage() {
                         </div>
 
                         {promoFeedback.message && (
-                          <div className={`text-xs sm:text-sm font-mono font-bold leading-relaxed ${promoFeedback.status === 'success' ? 'text-[#FA6D0B]' : 'text-red-400'}`}>
+                          <div className={`text-xs sm:text-sm font-mono font-bold leading-relaxed ${promoFeedback.status === 'success' ? 'text-[#FA6D0B]' : 'text-white'}`}>
                             {promoFeedback.message}
                           </div>
                         )}
@@ -1764,7 +1856,7 @@ export default function RegistrationPage() {
                         </div>
                       </div>
                     ) : (
-                      <div className="p-5 rounded-xl border-l-4 border-l-[#FA6D0B] border-y border-r border-white/10 bg-black/40 space-y-2">
+                      <div className="p-5 rounded-xl border-l-4 border-l-[#FA6D0B] bg-black/60 backdrop-blur-xl space-y-2 shadow-lg">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
                             {t('KODE PROMO AKTIF // TERVERIFIKASI', 'ACTIVE PROMO CODE // VERIFIED')}
@@ -1772,7 +1864,7 @@ export default function RegistrationPage() {
                           <button
                             type="button"
                             onClick={handleRemovePromo}
-                            className="text-xs font-mono text-red-400 hover:text-white uppercase font-bold cursor-pointer transition-colors"
+                            className="text-xs font-mono text-slate-400 hover:text-[#FA6D0B] uppercase font-bold cursor-pointer transition-colors"
                           >
                             {t('HAPUS KODE', 'REMOVE CODE')}
                           </button>
@@ -1794,7 +1886,7 @@ export default function RegistrationPage() {
               {/* 3.3 INSENTIF KUPON MAKAN (JIKA MEMENUHI KRITERIA ATLET) */}
               {/* ========================================================================= */}
               {isEligibleForMealCoupon() && (
-                <div className="p-6 sm:p-7 rounded-2xl border-l-4 border-l-[#FA6D0B] border-y border-r border-white/10 bg-black/40 backdrop-blur-md flex flex-col sm:flex-row sm:items-center justify-between gap-5 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+                <div className="p-6 sm:p-7 rounded-2xl border-l-4 border-l-[#FA6D0B] bg-black/60 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-5 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2.5">
                       <span className="font-mono font-bold text-xs sm:text-sm text-[#FA6D0B] uppercase tracking-wider">
@@ -1806,7 +1898,7 @@ export default function RegistrationPage() {
                       {t('Kategori berhak mendapatkan insentif kupon makan resmi (Peserta Wanita / Usia ≤17 Tahun / Tim Pair Mix). Potongan Rp 50.000 otomatis terpotong pada total tagihan.', 'Eligible for official meal coupon incentive (Women riders / Age ≤17 / Pair Mix teams). IDR 50,000 deduction is automatically applied to invoice total.')}
                     </p>
                   </div>
-                  <div className="font-display italic text-3xl sm:text-4xl lg:text-5xl font-black text-[#FA6D0B] shrink-0 self-start sm:self-auto px-4 py-2 rounded-xl bg-black/60 border border-[#FA6D0B]/40">
+                  <div className="font-display italic text-3xl sm:text-4xl lg:text-5xl font-black text-[#FA6D0B] shrink-0 self-start sm:self-auto px-4 py-2 rounded-xl bg-black/80 shadow-inner">
                     -RP 50.000
                   </div>
                 </div>
@@ -1816,7 +1908,7 @@ export default function RegistrationPage() {
               {/* 3.4 TAB SWITCHER UNTUK KATEGORI PAIR (TIM TANDEM) */}
               {/* ========================================================================= */}
               {selectedCategory.is_pair && (
-                <div className="grid grid-cols-2 gap-3 p-1.5 rounded-2xl bg-black/60 border border-white/10">
+                <div className="grid grid-cols-2 gap-3 p-1.5 rounded-2xl bg-black/70 shadow-inner">
                   <button
                     type="button"
                     onClick={() => setPairActiveTab('rider1')}
@@ -1846,7 +1938,7 @@ export default function RegistrationPage() {
               {/* 3.5 IDENTITAS ATLET (RIDER 1 / PESERTA TUNGGAL) */}
               {/* ========================================================================= */}
               {(!selectedCategory.is_pair || pairActiveTab === 'rider1') ? (
-                <div className="rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
+                <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
                   <div className="border-b border-white/10 pb-4">
                     <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
                       {t('IDENTITAS ATLET //', 'ATHLETE IDENTITY //')} {selectedCategory.is_pair ? t('RIDER 1 (KAPTEN TIM)', 'RIDER 1 (TEAM CAPTAIN)') : t('PESERTA RESMI', 'OFFICIAL RIDER')}
@@ -1926,10 +2018,10 @@ export default function RegistrationPage() {
                           <button
                             type="button"
                             onClick={() => setRider1({ ...rider1, gender: 'male' })}
-                            className={`py-3.5 sm:py-4 rounded-xl border text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer ${
+                            className={`py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer shadow-md ${
                               rider1.gender === 'male'
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-                                : 'border-white/20 bg-black/60 text-slate-300 hover:text-white'
+                                ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                                : 'bg-black/60 text-slate-300 hover:text-white hover:bg-black/80'
                             }`}
                           >
                             {t('LAKI-LAKI', 'MALE')}
@@ -1937,10 +2029,10 @@ export default function RegistrationPage() {
                           <button
                             type="button"
                             onClick={() => setRider1({ ...rider1, gender: 'female' })}
-                            className={`py-3.5 sm:py-4 rounded-xl border text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer ${
+                            className={`py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer shadow-md ${
                               rider1.gender === 'female'
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-                                : 'border-white/20 bg-black/60 text-slate-300 hover:text-white'
+                                ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                                : 'bg-black/60 text-slate-300 hover:text-white hover:bg-black/80'
                             }`}
                           >
                             {t('PEREMPUAN', 'FEMALE')}
@@ -2080,10 +2172,10 @@ export default function RegistrationPage() {
                             type="button"
                             key={sz}
                             onClick={() => setRider1({ ...rider1, jersey_size: sz })}
-                            className={`py-3.5 sm:py-4 rounded-xl border text-xs sm:text-sm font-mono font-black transition-all cursor-pointer ${
+                            className={`py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black transition-all cursor-pointer shadow-md ${
                               rider1.jersey_size === sz
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-                                : 'border-white/20 bg-black/60 text-slate-300 hover:border-white/40 hover:text-white'
+                                ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                                : 'bg-black/60 text-slate-300 hover:bg-black/80 hover:text-white'
                             }`}
                           >
                             {sz}
@@ -2117,7 +2209,7 @@ export default function RegistrationPage() {
                 /* ========================================================================= */
                 /* 3.6 IDENTITAS ATLET (RIDER 2 · PARTNER TIM TANDEM) */
                 /* ========================================================================= */
-                <div className="rounded-2xl bg-black/40 backdrop-blur-md border border-white/10 p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
+                <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
                   <div className="border-b border-white/10 pb-4">
                     <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
                       {t('IDENTITAS ATLET // RIDER 2 (PARTNER TIM TANDEM)', 'ATHLETE IDENTITY // RIDER 2 (TANDEM TEAM PARTNER)')}
@@ -2197,10 +2289,10 @@ export default function RegistrationPage() {
                           <button
                             type="button"
                             onClick={() => setRider2({ ...rider2, gender: 'male' })}
-                            className={`py-3.5 sm:py-4 rounded-xl border text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer ${
+                            className={`py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer shadow-md ${
                               rider2.gender === 'male'
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-                                : 'border-white/20 bg-black/60 text-slate-300 hover:text-white'
+                                ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                                : 'bg-black/60 text-slate-300 hover:text-white hover:bg-black/80'
                             }`}
                           >
                             {t('LAKI-LAKI', 'MALE')}
@@ -2208,10 +2300,10 @@ export default function RegistrationPage() {
                           <button
                             type="button"
                             onClick={() => setRider2({ ...rider2, gender: 'female' })}
-                            className={`py-3.5 sm:py-4 rounded-xl border text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer ${
+                            className={`py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase transition-all cursor-pointer shadow-md ${
                               rider2.gender === 'female'
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-                                : 'border-white/20 bg-black/60 text-slate-300 hover:text-white'
+                                ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                                : 'bg-black/60 text-slate-300 hover:text-white hover:bg-black/80'
                             }`}
                           >
                             {t('PEREMPUAN', 'FEMALE')}
@@ -2351,10 +2443,10 @@ export default function RegistrationPage() {
                             type="button"
                             key={sz}
                             onClick={() => setRider2({ ...rider2, jersey_size: sz })}
-                            className={`py-3.5 sm:py-4 rounded-xl border text-xs sm:text-sm font-mono font-black transition-all cursor-pointer ${
+                            className={`py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black transition-all cursor-pointer shadow-md ${
                               rider2.jersey_size === sz
-                                ? 'border-[#FA6D0B] bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-                                : 'border-white/20 bg-black/60 text-slate-300 hover:border-white/40 hover:text-white'
+                                ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                                : 'bg-black/60 text-slate-300 hover:bg-black/80 hover:text-white'
                             }`}
                           >
                             {sz}
@@ -2389,14 +2481,14 @@ export default function RegistrationPage() {
               {/* ========================================================================= */}
               {/* 3.7 SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (SAFETY WAIVER) */}
               {/* ========================================================================= */}
-              <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-5">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.7)] space-y-5">
                 <div className="border-b border-white/10 pb-3.5">
                   <span className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider block">
                     {t('SURAT PERNYATAAN & PELEPASAN TANGGUNG JAWAB (WAIVER)', 'SAFETY STATEMENT & LIABILITY WAIVER')}
                   </span>
                 </div>
 
-                <div className="p-5 sm:p-6 rounded-xl border border-white/10 bg-black/60 text-xs sm:text-sm font-mono text-slate-200 leading-relaxed space-y-3">
+                <div className="p-5 sm:p-6 rounded-xl bg-black/60 text-xs sm:text-sm font-mono text-slate-200 leading-relaxed space-y-3 shadow-sm">
                   <p>
                     {t(
                       '1. Saya menyadari bahwa Gravel Grindurance 2026 adalah ekspedisi bersepeda mandiri (unsupported) di jalan raya umum dan pedesaan yang tidak steril dari lalu lintas.',
@@ -2417,7 +2509,7 @@ export default function RegistrationPage() {
                   </p>
                 </div>
 
-                <label className="p-4 sm:p-5 rounded-xl border border-white/20 hover:border-[#FA6D0B] bg-black/60 transition-all flex items-start gap-4 cursor-pointer select-none">
+                <label className="p-4 sm:p-5 rounded-xl bg-black/60 transition-all flex items-start gap-4 cursor-pointer select-none shadow-sm">
                   <input
                     type="checkbox"
                     checked={waiverAgreed}
@@ -2436,7 +2528,7 @@ export default function RegistrationPage() {
               {/* ========================================================================= */}
               {/* 3.8 SUBMIT ACTION BAR (TARIF FINAL & CTA BUTTON) */}
               {/* ========================================================================= */}
-              <div className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col lg:flex-row items-center justify-between gap-6">
+              <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col lg:flex-row items-center justify-between gap-6">
                 <div>
                   <span className="text-xs sm:text-sm font-mono text-slate-300 uppercase tracking-widest block font-bold">
                     {t('TOTAL BIAYA REGISTRASI // TARIF FINAL', 'TOTAL REGISTRATION FEE // FINAL RATE')}
@@ -2506,175 +2598,13 @@ export default function RegistrationPage() {
         {/* STEP 4: INVOICE RESMI, BOOKING ID & PEMBAYARAN */}
         {/* ========================================================================= */}
         {currentStep === 'invoice' && createdOrder && (
-          <div className="w-full max-w-7xl mx-auto space-y-8 animate-slide-up-fade">
-            {/* Header Konfirmasi */}
-            <div className="p-7 sm:p-9 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md text-center space-y-4 relative overflow-hidden shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
-              <div className="font-mono text-xs sm:text-sm font-bold uppercase tracking-widest">
-                <span className="text-slate-400">{t('STATUS ·', 'STATUS ·')} </span>
-                <span className={createdOrder.payment_status === 'PAID' ? 'text-white font-black' : 'text-[#FA6D0B] font-black'}>
-                  {createdOrder.payment_status === 'PAID' ? t('LUNAS · TERDAFTAR RESMI', 'PAID · OFFICIALLY REGISTERED') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
-                </span>
-              </div>
-
-              <h1 className="font-display italic text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white drop-shadow-sm">
-                {t('INVOICE RESERVASI RESMI', 'OFFICIAL RESERVATION INVOICE')}
-              </h1>
-
-              <div className="font-mono text-base sm:text-lg text-slate-200">
-                {t('BOOKING ID:', 'BOOKING ID:')} <span className="text-[#FA6D0B] font-bold tracking-widest">{createdOrder.order_id}</span>
-              </div>
-            </div>
-
-            {/* Rincian Tagihan Finansial */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-5 font-mono">
-              <div className="text-sm sm:text-base font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3 flex justify-between">
-                <span>{t('RINCIAN TRANSAKSI //', 'TRANSACTION BREAKDOWN //')}</span>
-                <span className="text-[#FA6D0B]">{selectedCategory.name}</span>
-              </div>
-
-              <div className="space-y-3.5 text-sm sm:text-base">
-                <div className="flex justify-between text-slate-200">
-                  <span>{t('TIKET KATEGORI:', 'CATEGORY TICKET:')}</span>
-                  <span className="font-bold text-white">{formatRupiah(createdOrder.gross_amount - (rpcMethod === 'HANDLING' ? 20000 : 0))}</span>
-                </div>
-
-                {rpcMethod === 'HANDLING' && (
-                  <div className="flex justify-between text-slate-200">
-                    <span>{t('LAYANAN HANDLING & PACKAGING RPC:', 'RPC HANDLING & PACKAGING SERVICE:')}</span>
-                    <span className="font-bold text-white">Rp 20.000</span>
-                  </div>
-                )}
-
-                {createdOrder.discount_meal_coupon > 0 && (
-                  <div className="flex justify-between text-[#FA6D0B] font-bold">
-                    <span>{t('INSENTIF KUPON MAKAN GX-ID:', 'GX-ID MEAL COUPON INCENTIVE:')}</span>
-                    <span>- {formatRupiah(createdOrder.discount_meal_coupon)}</span>
-                  </div>
-                )}
-
-                {(createdOrder.discount_promo || promoDiscount) > 0 && (
-                  <div className="flex justify-between text-[#FA6D0B] font-bold">
-                    <span>{t('DISKON KODE PROMO KOMUNITAS:', 'COMMUNITY PROMO CODE DISCOUNT:')}</span>
-                    <span>- {formatRupiah(createdOrder.discount_promo || promoDiscount)}</span>
-                  </div>
-                )}
-
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/15 pt-5 text-white gap-3">
-                  <div>
-                    <span className="text-xs sm:text-sm font-mono text-slate-300 uppercase tracking-widest block font-bold">{t('TOTAL TRANSFER WAJIB:', 'TOTAL AMOUNT DUE:')}</span>
-                    <span className="text-xs sm:text-sm text-slate-400 font-sans">{t('Transfer sesuai nominal persis untuk verifikasi otomatis.', 'Transfer the exact amount for automated system verification.')}</span>
-                  </div>
-                  <div className="text-left sm:text-right">
-                    <span className="font-display italic text-4xl sm:text-5xl font-black text-[#FA6D0B] block">
-                      {formatRupiah(createdOrder.net_amount)}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => copyToClipboard(createdOrder.net_amount.toString(), 'nominal')}
-                      className="text-xs sm:text-sm font-mono text-slate-300 hover:text-white uppercase font-bold tracking-wider mt-1.5 transition-colors cursor-pointer"
-                    >
-                      {copiedField === 'nominal' ? t('NOMINAL DISALIN', 'AMOUNT COPIED') : t('SALIN NOMINAL', 'COPY AMOUNT')}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Rekening Resmi Panitia */}
-            <div className="p-6 sm:p-8 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 font-mono">
-              <div className="text-sm sm:text-base font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3">
-                {t('REKENING RESMI PANITIA GX-ID //', 'OFFICIAL GX-ID ORGANIZER BANK ACCOUNTS //')}
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-5 sm:p-6 rounded-xl border border-white/10 bg-black/60 space-y-2.5">
-                  <span className="text-xs font-mono text-slate-300 uppercase tracking-widest block font-bold">BCA (BANK CENTRAL ASIA)</span>
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-widest font-mono">8831 2948 20</div>
-                  <div className="text-xs sm:text-sm text-slate-300">A.N. GX-ID INDONESIA · GRINDURANCE</div>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard('8831294820', 'bca')}
-                    className="text-xs sm:text-sm text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block transition-colors cursor-pointer"
-                  >
-                    {copiedField === 'bca' ? t('REKENING DISALIN', 'ACCOUNT COPIED') : t('SALIN NO. REK BCA', 'COPY BCA ACCOUNT')}
-                  </button>
-                </div>
-
-                <div className="p-5 sm:p-6 rounded-xl border border-white/10 bg-black/60 space-y-2.5">
-                  <span className="text-xs font-mono text-slate-300 uppercase tracking-widest block font-bold">BANK MANDIRI</span>
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-widest font-mono">133 00 2819 4021</div>
-                  <div className="text-xs sm:text-sm text-slate-300">A.N. PANITIA GRINDURANCE 2026</div>
-                  <button
-                    type="button"
-                    onClick={() => copyToClipboard('1330028194021', 'mandiri')}
-                    className="text-xs sm:text-sm text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block transition-colors cursor-pointer"
-                  >
-                    {copiedField === 'mandiri' ? t('REKENING DISALIN', 'ACCOUNT COPIED') : t('SALIN NO. REK MANDIRI', 'COPY MANDIRI ACCOUNT')}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Digital BIB Preview */}
-            <div className="space-y-4">
-              <div className="border-b border-white/10 pb-3 flex items-center justify-between">
-                <span className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
-                  {t('KARTU BIB DIGITAL SEMENTARA //', 'PREVIEW DIGITAL RACE BIB //')}
-                </span>
-                <span className="text-xs font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">
-                  {t('SIMULASI RACE BIB', 'RACE BIB SIMULATION')}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {createdParticipants.map((p) => (
-                  <BibCard
-                    key={p.id}
-                    bibNumber={p.bib_number || 'PENDING'}
-                    fullName={p.full_name}
-                    categoryName={selectedCategory?.name || 'GRINDURANCE'}
-                    distanceKm={selectedCategory?.distance_km || 120}
-                    riderRole={p.rider_role}
-                    bloodType={p.blood_type}
-                    medicalNotes={p.medical_notes}
-                    communityChapter={p.community_chapter}
-                    registrationCode={p.registration_code}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="p-6 sm:p-7 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row items-center justify-between gap-4">
-              {createdOrder.payment_status !== 'PAID' && (
-                <button
-                  type="button"
-                  disabled={simulatingPayment}
-                  onClick={handleSimulatePayment}
-                  className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] text-slate-200 hover:text-white hover:border-[#FA6D0B] hover:bg-[#FA6D0B]/10 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap"
-                >
-                  {simulatingPayment ? t('MEMPROSES SIMULASI...', 'PROCESSING SIMULATION...') : t('SIMULASI PEMBAYARAN BERHASIL (SANDBOX)', 'SIMULATE PAYMENT SUCCESS (SANDBOX)')}
-                </button>
-              )}
-
-              <div className="flex items-center gap-3.5 w-full sm:w-auto justify-end shrink-0">
-                <Link
-                  href="/peserta"
-                  className="px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:border-white/40 transition-all flex items-center gap-1.5"
-                >
-                  <span>{t('LIHAT START LIST', 'VIEW START LIST')}</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </Link>
-
-                <Link
-                  href="/"
-                  className="px-8 py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.35)] hover:bg-[#DE5A00] transition-all"
-                >
-                  {t('BERANDA', 'HOMEPAGE')}
-                </Link>
-              </div>
-            </div>
-          </div>
+          <InvoiceCockpit
+            order={createdOrder}
+            category={selectedCategory}
+            participants={createdParticipants}
+            onSimulateSuccess={handleSimulatePayment}
+            isSimulating={simulatingPayment}
+          />
         )}
 
       </div>

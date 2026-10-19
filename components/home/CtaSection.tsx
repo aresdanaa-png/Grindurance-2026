@@ -77,7 +77,7 @@ export default function CtaSection() {
         </p>
 
         {/* Unified Aerodynamic Cockpit Telemetry Strip (Single Monolith Panel with Low Opacity) */}
-        <div className="max-w-4xl mx-auto rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.4)] relative group">
+        <div className="max-w-4xl mx-auto rounded-2xl bg-black/60 backdrop-blur-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)] relative group">
           {/* Subtle Top Kinetic Orange Edge */}
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#FA6D0B] to-transparent opacity-80" />
           

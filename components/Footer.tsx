@@ -87,9 +87,9 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 uppercase tracking-wide font-mono text-[11px]">
               <li>
-                <Link href="/kategori" className="hover:text-[#FA6D0B] transition-colors flex items-center justify-between">
-                  <span>{t('5 Kategori & GPX', '5 Categories & GPX')}</span>
-                  <span className="text-[10px] text-[#FA6D0B]">60–200K</span>
+                <Link href="/#kategori" className="hover:text-[#FA6D0B] transition-colors flex items-center justify-between">
+                  <span>{t('6 Kategori & GPX', '6 Categories & GPX')}</span>
+                  <span className="text-[10px] text-[#FA6D0B]">60K–VIRTUAL</span>
                 </Link>
               </li>
               <li>
@@ -203,7 +203,7 @@ export default function Footer() {
             </h4>
             
             {/* Emergency Hospital Partner */}
-            <div className="rounded-xl border border-white/10 bg-black/40 p-3 space-y-1">
+            <div className="rounded-xl bg-black/60 p-3 space-y-1 shadow-inner">
               <span className="block text-[9px] uppercase text-[#FA6D0B] font-mono font-bold tracking-wider">
                 EMERGENCY MEDICAL PARTNER:
               </span>

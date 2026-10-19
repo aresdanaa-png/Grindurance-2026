@@ -44,7 +44,7 @@ export default function CheckpointPage() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           
           {/* Form & Controls (7 Cols) */}
-          <div className="md:col-span-7 bg-black/40 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-6 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+          <div className="md:col-span-7 bg-black/60 rounded-2xl p-6 sm:p-7 space-y-6 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <span className="font-mono text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider block">
                 01 // {t('PENCATATAN WAKTU CHECKPOINT', 'CHECKPOINT DWELL TIME RECORDING')}
@@ -59,10 +59,10 @@ export default function CheckpointPage() {
               <button
                 type="button"
                 onClick={() => setSelectedCp('CP#4')}
-                className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+                className={`p-4 rounded-xl text-left transition-all cursor-pointer shadow-lg ${
                   selectedCp === 'CP#4'
-                    ? 'bg-black/80 border-[#FA6D0B] shadow-[0_0_20px_rgba(250,109,11,0.25)]'
-                    : 'bg-black/30 border-white/10 hover:border-white/30'
+                    ? 'bg-black/90 ring-2 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.25)]'
+                    : 'bg-black/40 hover:bg-black/60'
                 }`}
               >
                 <span className="text-[10px] text-slate-400 block tracking-wider uppercase font-bold">KM 82.5 · LOOP TENGGARA</span>
@@ -73,10 +73,10 @@ export default function CheckpointPage() {
               <button
                 type="button"
                 onClick={() => setSelectedCp('CP#6')}
-                className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+                className={`p-4 rounded-xl text-left transition-all cursor-pointer shadow-lg ${
                   selectedCp === 'CP#6'
-                    ? 'bg-black/80 border-[#FA6D0B] shadow-[0_0_20px_rgba(250,109,11,0.25)]'
-                    : 'bg-black/30 border-white/10 hover:border-white/30'
+                    ? 'bg-black/90 ring-2 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.25)]'
+                    : 'bg-black/40 hover:bg-black/60'
                 }`}
               >
                 <span className="text-[10px] text-slate-400 block tracking-wider uppercase font-bold">KM 45.0 · SODONG SPRINGS</span>
@@ -110,7 +110,7 @@ export default function CheckpointPage() {
             </div>
 
             {/* Actual Rest Slider */}
-            <div className="space-y-3.5 p-5 rounded-xl bg-black/60 border border-white/10 font-mono">
+            <div className="space-y-3.5 p-5 rounded-xl bg-black/60 font-mono shadow-sm">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                   {t('DURASI ISTIRAHAT AKTUAL DI PITSTOP:', 'ACTUAL DWELL TIME AT PITSTOP:')}
@@ -138,7 +138,7 @@ export default function CheckpointPage() {
             </div>
 
             {/* Rule Summary */}
-            <div className="text-xs text-slate-300 space-y-1.5 font-mono bg-black/60 p-4 rounded-xl border border-white/10">
+            <div className="text-xs text-slate-300 space-y-1.5 font-mono bg-black/60 p-4 rounded-xl shadow-sm">
               <div className="text-[#FA6D0B] font-bold uppercase tracking-wider mb-1">// {t('KETENTUAN ATURAN PENALTI 300%:', '300% PENALTY FORMULA:')}</div>
               <p>• {t('Waktu istirahat wajib = 30 menit penuh di area steril pitstop.', 'Mandatory dwell rest time = 30 full minutes at sterile pitstop area.')}</p>
               <p>• {t('Berangkat sebelum 30 menit = Pelanggaran regulasi balap!', 'Departing before 30 mins = Official rule violation!')}</p>
@@ -148,18 +148,14 @@ export default function CheckpointPage() {
 
           {/* Result Card & Penalty Analysis (5 Cols) */}
           <div className="md:col-span-5 space-y-4 font-mono">
-            <div className={`p-6 sm:p-7 rounded-2xl border ${
-              isViolated
-                ? 'bg-black/60 border-red-500/50 shadow-[0_0_35px_rgba(239,68,68,0.2)]'
-                : 'bg-black/60 border-white/20 shadow-[0_0_35px_rgba(255,255,255,0.08)]'
-            } space-y-5 backdrop-blur-md`}>
+            <div className="p-6 sm:p-7 rounded-2xl bg-black/80 shadow-[0_20px_60px_rgba(0,0,0,0.8)] space-y-5 backdrop-blur-xl">
               
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
                   {t('STATUS KALKULASI', 'CALCULATION STATUS')}
                 </span>
                 <span className={`text-xs font-black uppercase tracking-wider ${
-                  isViolated ? 'text-red-400' : 'text-white'
+                  isViolated ? 'text-[#FA6D0B]' : 'text-white'
                 }`}>
                   {isViolated ? t('// PENALTI 300% AKTIF', '// 300% PENALTY ACTIVE') : t('// MEMENUHI SYARAT', '// MANDATORY DWELL PASSED')}
                 </span>
@@ -177,7 +173,7 @@ export default function CheckpointPage() {
                 </div>
                 <div className="flex justify-between items-center text-slate-300 pb-2 border-b border-white/10">
                   <span>{t('Defisit Waktu:', 'Deficit Time:')}</span>
-                  <span className={isViolated ? 'text-red-400 font-bold' : 'text-slate-400'}>
+                  <span className={isViolated ? 'text-[#FA6D0B] font-bold' : 'text-slate-400'}>
                     {violationMinutes} {t('Menit', 'Minutes')}
                   </span>
                 </div>
@@ -191,7 +187,7 @@ export default function CheckpointPage() {
                     {t('Total Penalti:', 'Total Penalty Added:')}
                   </span>
                   <span className={`text-3xl font-black font-display italic ${
-                    isViolated ? 'text-red-400' : 'text-white'
+                    isViolated ? 'text-[#FA6D0B]' : 'text-white'
                   }`}>
                     +{penaltyMinutes} {t('Menit', 'Mins')}
                   </span>
@@ -199,11 +195,11 @@ export default function CheckpointPage() {
               </div>
 
               {/* Status Explanation */}
-              <div className="p-4 rounded-xl bg-black/60 text-xs text-slate-300 leading-relaxed font-sans border border-white/10">
+              <div className="p-4 rounded-xl bg-black/60 text-xs text-slate-300 leading-relaxed font-sans shadow-sm">
                 {isViolated ? (
                   <p>
-                    {t('Atlet', 'Rider')} <strong>BIB #{bibNumber}</strong> {t('berangkat', 'departed')} <strong className="text-red-400">{violationMinutes} {t('menit lebih awal', 'minutes early')}</strong>. 
-                    {t('Sistem otomatis menambahkan penalti', 'System automatically appends')} <strong className="text-red-400">+{penaltyMinutes} {t('menit', 'minutes')}</strong> {t('ke catatan waktu resmi pada papan klasemen finish.', 'to official finish leaderboard time.')}
+                    {t('Atlet', 'Rider')} <strong>BIB #{bibNumber}</strong> {t('berangkat', 'departed')} <strong className="text-white">{violationMinutes} {t('menit lebih awal', 'minutes early')}</strong>. 
+                    {t('Sistem otomatis menambahkan penalti', 'System automatically appends')} <strong className="text-[#FA6D0B]">+{penaltyMinutes} {t('menit', 'minutes')}</strong> {t('ke catatan waktu resmi pada papan klasemen finish.', 'to official finish leaderboard time.')}
                   </p>
                 ) : (
                   <p>

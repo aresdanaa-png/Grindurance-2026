@@ -148,7 +148,7 @@ export default function ElevationProfile({
 
   if (category.id === 'VIRTUAL' || points.length === 0) {
     return (
-      <div className="w-full rounded-xl bg-black/45 backdrop-blur-md border border-white/10 p-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+      <div className="w-full rounded-xl bg-black/60 backdrop-blur-xl p-4 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
         <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
           <span className="text-[10px] font-mono font-bold tracking-widest text-[#FA6D0B] uppercase">
             {t('PROFIL ELEVASI · MANDIRI', 'ELEVATION PROFILE · SELF-PLANNED')}
@@ -173,7 +173,7 @@ export default function ElevationProfile({
   }
 
   return (
-    <div className="w-full rounded-2xl bg-black/45 backdrop-blur-md border border-white/10 p-4 sm:p-5 shadow-[0_15px_50px_rgba(0,0,0,0.5)] flex flex-col justify-between select-none">
+    <div className="w-full rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col justify-between select-none">
       
       {/* Header Info Bar */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5 mb-3">
@@ -302,7 +302,7 @@ export default function ElevationProfile({
             const sx = getX(stationKm);
             const isFinish = station.type === 'FINISH';
             const isKom = station.type === 'KOM';
-            const pinColor = isKom ? '#EAB308' : isFinish ? accentColor : '#94A3B8';
+            const pinColor = isKom ? '#FA6D0B' : isFinish ? accentColor : '#94A3B8';
 
             return (
               <g key={sIdx} className="pointer-events-none">

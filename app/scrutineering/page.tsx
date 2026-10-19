@@ -158,7 +158,7 @@ export default function ScrutineeringPage() {
           </div>
 
           <div className="flex items-center gap-3 font-mono">
-            <div className="bg-black/60 border border-white/15 px-5 py-3 rounded-xl text-right">
+            <div className="bg-black/60 backdrop-blur-xl px-5 py-3 rounded-xl text-right shadow-md">
               <span className="text-[10px] text-slate-400 block uppercase font-bold tracking-wider">{t('STATUS CLEARANCE', 'CLEARANCE STATUS')}</span>
               <span className="text-xl sm:text-2xl font-black text-white italic">
                 {clearedCount} {t('LOLOS', 'CLEARED')} <span className="text-xs text-slate-400 not-italic">/ {candidates.length}</span>
@@ -166,7 +166,7 @@ export default function ScrutineeringPage() {
             </div>
             <Link
               href="/peserta"
-              className="px-5 py-3 rounded-xl bg-black/60 hover:bg-black text-xs font-bold text-slate-200 hover:text-white border border-white/20 transition-all uppercase tracking-wider"
+              className="px-5 py-3 rounded-xl bg-black/60 hover:bg-black text-xs font-bold text-slate-200 hover:text-white transition-all uppercase tracking-wider shadow-md"
             >
               {t('ROSTER ATLET //', 'ATHLETE ROSTER //')}
             </Link>
@@ -178,7 +178,7 @@ export default function ScrutineeringPage() {
           
           {/* Left Column: Candidate List & Search (5 Cols) */}
           <div className="lg:col-span-5 space-y-4 font-mono">
-            <div className="bg-black/40 border border-white/10 rounded-2xl p-5 sm:p-6 space-y-4 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+            <div className="bg-black/60 rounded-2xl p-5 sm:p-6 space-y-4 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
                   {t('ANTEAN ATLET SCRUTINEERING', 'SCRUTINEERING QUEUE')}
@@ -211,10 +211,10 @@ export default function ScrutineeringPage() {
                       key={c.bib}
                       type="button"
                       onClick={() => handleSelectRider(c)}
-                      className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                      className={`w-full text-left p-4 rounded-xl transition-all flex items-center justify-between cursor-pointer shadow-sm ${
                         selectedRider?.bib === c.bib
-                          ? 'bg-black/80 border-[#FA6D0B] shadow-[0_0_20px_rgba(250,109,11,0.25)]'
-                          : 'bg-black/30 border-white/10 hover:bg-black/50 hover:border-white/25'
+                          ? 'bg-black/90 ring-2 ring-[#FA6D0B] shadow-[0_0_20px_rgba(250,109,11,0.25)]'
+                          : 'bg-black/40 hover:bg-black/60'
                       }`}
                     >
                       <div className="space-y-1">
@@ -238,7 +238,7 @@ export default function ScrutineeringPage() {
                             [LOLOS]
                           </span>
                         ) : c.clearance_status === 'DNS' ? (
-                          <span className="text-red-400">
+                          <span className="text-slate-400">
                             [DITOLAK]
                           </span>
                         ) : (
@@ -256,7 +256,7 @@ export default function ScrutineeringPage() {
           {/* Right Column: Detailed Marshall Inspection Workbench (7 Cols) */}
           <div className="lg:col-span-7 space-y-6">
             {selectedRider ? (
-              <div className="bg-black/40 border border-white/10 rounded-2xl p-6 sm:p-7 space-y-6 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] font-mono">
+              <div className="bg-black/60 rounded-2xl p-6 sm:p-7 space-y-6 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] font-mono">
                 
                 {/* Rider Header Card */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 gap-3">
@@ -286,7 +286,7 @@ export default function ScrutineeringPage() {
                 </div>
 
                 {/* Section 1: Prologue 30 km Verification */}
-                <div className="p-4 sm:p-5 rounded-xl border border-white/10 bg-black/60 space-y-3">
+                <div className="p-4 sm:p-5 rounded-xl bg-black/60 backdrop-blur-xl space-y-3 shadow-md">
                   <div className="flex items-center justify-between border-b border-white/10 pb-2">
                     <span className="text-xs font-bold uppercase tracking-wider text-[#FA6D0B]">
                       1. {t('VERIFIKASI PROLOG 30 KM (03:00–05:00 WIB)', '1. 30 KM PROLOGUE VERIFICATION (03:00–05:00 WIB)')}
@@ -321,11 +321,11 @@ export default function ScrutineeringPage() {
 
                         <div className="pt-2 sm:pt-4">
                           {parseFloat(prologKmInput) >= 30.0 ? (
-                            <div className="p-3 rounded-xl border border-white/20 bg-white/5 text-white text-xs font-bold uppercase">
+                            <div className="p-3 rounded-xl bg-white/10 text-white text-xs font-bold uppercase shadow-inner">
                               // {t('SYARAT TERPENUHI (≥ 30 KM) · PROLOG VALID', 'REQUIREMENT MET (≥ 30 KM) · PROLOGUE VALID')}
                             </div>
                           ) : (
-                            <div className="p-3 rounded-xl border border-red-500/40 bg-red-500/10 text-red-400 text-xs font-bold uppercase">
+                            <div className="p-3 rounded-xl bg-black/80 text-[#FA6D0B] text-xs font-bold uppercase shadow-inner">
                               // {t('KURANG DARI 30.0 KM! DENY START', 'LESS THAN 30.0 KM! DENY START')}
                             </div>
                           )}
@@ -348,7 +348,7 @@ export default function ScrutineeringPage() {
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-sans">
-                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 hover:bg-black/80 transition-colors cursor-pointer shadow-sm">
                       <input
                         type="checkbox"
                         checked={chkHelmet}
@@ -358,7 +358,7 @@ export default function ScrutineeringPage() {
                       <span className="text-slate-200">{t('Helm Bersertifikasi CE/CPSC', 'CE/CPSC Certified Helmet')}</span>
                     </label>
 
-                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 hover:bg-black/80 transition-colors cursor-pointer shadow-sm">
                       <input
                         type="checkbox"
                         checked={chkFrontLight}
@@ -368,7 +368,7 @@ export default function ScrutineeringPage() {
                       <span className="text-slate-200">{t('Lampu Depan Ganda (Min 400lm + Backup)', 'Dual Front Lights (Min 400lm + Backup)')}</span>
                     </label>
 
-                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 hover:bg-black/80 transition-colors cursor-pointer shadow-sm">
                       <input
                         type="checkbox"
                         checked={chkRearLight}
@@ -378,7 +378,7 @@ export default function ScrutineeringPage() {
                       <span className="text-slate-200">{t('Lampu Belakang Merah Steady', 'Dual Rear Lights (Steady Red)')}</span>
                     </label>
 
-                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 hover:bg-black/80 transition-colors cursor-pointer shadow-sm">
                       <input
                         type="checkbox"
                         checked={chkReflective}
@@ -388,7 +388,7 @@ export default function ScrutineeringPage() {
                       <span className="text-slate-200">{t('Rompi Reflektif / Sash', 'Reflective Vest / Sash')}</span>
                     </label>
 
-                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 hover:bg-black/80 transition-colors cursor-pointer shadow-sm">
                       <input
                         type="checkbox"
                         checked={chkTools}
@@ -398,7 +398,7 @@ export default function ScrutineeringPage() {
                       <span className="text-slate-200">{t('Tubeless Plug Kit / Ban Dalam & Wet Lube', 'Tubeless Plug Kit / Inner Tube & Wet Lube')}</span>
                     </label>
 
-                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 hover:bg-black/80 transition-colors cursor-pointer shadow-sm">
                       <input
                         type="checkbox"
                         checked={chkEmergencyContact}
@@ -408,7 +408,7 @@ export default function ScrutineeringPage() {
                       <span className="text-slate-200">{t('Kontak Darurat SPGDT Hermina Tersimpan', 'SPGDT Hermina Emergency Contact Saved')}</span>
                     </label>
 
-                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 border border-white/10 hover:border-white/25 cursor-pointer sm:col-span-2">
+                    <label className="flex items-center gap-3 p-3 rounded-xl bg-black/60 hover:bg-black/80 transition-colors cursor-pointer sm:col-span-2 shadow-sm">
                       <input
                         type="checkbox"
                         checked={chkTyreWidth}
@@ -457,7 +457,7 @@ export default function ScrutineeringPage() {
 
               </div>
             ) : (
-              <div className="bg-black/40 border border-white/10 rounded-2xl p-12 text-center text-slate-400 font-mono">
+              <div className="bg-black/60 rounded-2xl p-12 text-center text-slate-400 font-mono shadow-[0_20px_60px_rgba(0,0,0,0.7)] backdrop-blur-xl">
                 {t('Pilih atlet dari daftar antrean sebelah kiri untuk memulai pemeriksaan.', 'Select a rider from the queue on the left to start inspection.')}
               </div>
             )}

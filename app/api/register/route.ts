@@ -35,11 +35,15 @@ export async function POST(req: Request) {
       );
     }
 
-    // 1. Ambil data kategori dari Supabase
+    // 1. Ambil data kategori dari Supabase (normalisasi jika '120' diteruskan)
+    const effectiveCategoryId = category_id === '120'
+      ? (rider_2 ? '120_PAIR' : '120_SINGLE')
+      : category_id;
+
     const { data: category, error: catError } = await supabase
       .from('categories')
       .select('*')
-      .eq('id', category_id)
+      .eq('id', effectiveCategoryId)
       .single();
 
     if (catError || !category) {
@@ -123,7 +127,7 @@ export async function POST(req: Request) {
       .from('orders')
       .insert({
         order_id,
-        category_id,
+        category_id: effectiveCategoryId,
         package_type,
         gross_amount,
         discount_meal_coupon,

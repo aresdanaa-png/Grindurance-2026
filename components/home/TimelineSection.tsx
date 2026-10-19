@@ -143,7 +143,7 @@ export default function TimelineSection() {
             <div className="space-y-6">
               
               {/* Context Summary Bar */}
-              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
                 <div className="flex items-center gap-3">
                   <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
                   <div>
@@ -174,7 +174,7 @@ export default function TimelineSection() {
                 {/* ITEM 1: PROLOG 30 KM */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-black group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-[#FA6D0B]/40 transition-colors">
+                  <div className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -219,7 +219,7 @@ export default function TimelineSection() {
                 {/* ITEM 2: VENUE OPEN & SCRUTINEERING */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/40 bg-black group-hover:border-white group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-white/25 transition-colors">
+                  <div className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -246,15 +246,15 @@ export default function TimelineSection() {
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-[11px] font-mono text-slate-300">
-                      <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                      <div className="p-3 rounded-xl bg-black/60 flex items-center gap-2.5 shadow-sm">
                         <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
                         <span>{t('2 Lampu Depan (400+ lm) & Lampu Belakang', '2 Front Headlamps (400+ lm) & Rear Light')}</span>
                       </div>
-                      <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                      <div className="p-3 rounded-xl bg-black/60 flex items-center gap-2.5 shadow-sm">
                         <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
                         <span>{t('Rompi Reflektif EN ISO 20471 & Helm CE', 'EN ISO 20471 Reflective Vest & CE Helmet')}</span>
                       </div>
-                      <div className="p-3 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                      <div className="p-3 rounded-xl bg-black/60 flex items-center gap-2.5 shadow-sm">
                         <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
                         <span>{t('Plat Nomor Sepeda & Botol Hidrasi Penuh', 'Bike Number Plate & Filled Hydration Bottles')}</span>
                       </div>
@@ -265,7 +265,7 @@ export default function TimelineSection() {
                 {/* ITEM 3: WAVE 1 DISPATCH */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-[#FA6D0B] group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border-2 border-[#FA6D0B]/50 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                  <div className="p-6 rounded-2xl bg-gradient-to-br from-[#FA6D0B]/15 via-black/60 to-black/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(250,109,11,0.2)] space-y-4">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -292,7 +292,7 @@ export default function TimelineSection() {
                     </p>
 
                     <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
-                      <span>COT 200 KM: <strong className="text-white">{t('19 JAM (00:30 WIB H+1)', '19 HOURS (00:30 WIB D+1)')}</strong></span>
+                      <span>COT 200 KM: <strong className="text-white">{t('17 JAM (22:30 WIB)', '17 HOURS (22:30 WIB)')}</strong></span>
                       <span className="text-[#FA6D0B] select-none">//</span>
                       <span>COT 150 KM: <strong className="text-white">{t('15 JAM (20:30 WIB)', '15 HOURS (20:30 WIB)')}</strong></span>
                       <span className="text-[#FA6D0B] select-none">//</span>
@@ -304,7 +304,7 @@ export default function TimelineSection() {
                 {/* ITEM 4: WAVE 2 DISPATCH */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-[#FA6D0B] group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-[#FA6D0B]/40 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                  <div className="p-6 rounded-2xl bg-gradient-to-br from-[#FA6D0B]/10 via-black/60 to-black/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(250,109,11,0.15)] space-y-4">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -343,7 +343,7 @@ export default function TimelineSection() {
                 {/* ITEM 5: WAVE 3 DISPATCH */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/60 bg-white group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-white/20 transition-colors">
+                  <div className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -382,7 +382,7 @@ export default function TimelineSection() {
                 {/* ITEM 6: PITSTOP 30-MIN REST */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-black group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-[#FA6D0B]/40 transition-colors">
+                  <div className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -425,7 +425,7 @@ export default function TimelineSection() {
                 {/* ITEM 7: FINISHER ARRIVAL & RECOVERY */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/40 bg-black group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-white/20 transition-colors">
+                  <div className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -456,7 +456,7 @@ export default function TimelineSection() {
                 {/* ITEM 8: PODIUM CEREMONY */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-[#FA6D0B] bg-[#FA6D0B] group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-[#FA6D0B]/40 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                  <div className="p-6 rounded-2xl bg-gradient-to-br from-[#FA6D0B]/10 via-black/60 to-black/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(250,109,11,0.15)] space-y-4">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -487,7 +487,7 @@ export default function TimelineSection() {
                 {/* ITEM 9: OFFICIAL COT CLOSING */}
                 <div className="relative group">
                   <div className="absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 border-white/60 bg-white group-hover:scale-125 transition-transform" />
-                  <div className="p-6 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                  <div className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4">
                     
                     <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
                       <div className="flex flex-wrap items-baseline gap-3">
@@ -503,13 +503,13 @@ export default function TimelineSection() {
                     </div>
 
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
-                      OFFICIAL COT // 21:00 WIB (STAGE) &amp; 00:30 WIB (ULTRA 200 KM)
+                      OFFICIAL COT // 21:00 WIB (STAGE) &amp; 22:30 WIB (ULTRA 200 KM)
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                       {t(
-                        'Pukul 21:00 WIB merupakan batas akhir kategori 60–150 KM serta penutupan panggung perayaan utama. Pos finis dan tim ambulans malam RS Hermina Cibubur tetap bersiaga mengawal peserta Ultra 200 KM hingga batas Cut-Off Time resmi pukul 00:30 WIB dini hari (19 jam perlombaan).',
-                        '21:00 WIB marks the final deadline for 60–150 KM categories and main stage closing. The finish line and RS Hermina Cibubur mobile paramedic teams remain deployed to escort Ultra 200 KM riders until official Cut-Off Time at 00:30 WIB (19 race hours).'
+                        'Pukul 21:00 WIB merupakan batas akhir kategori 60–150 KM serta penutupan panggung perayaan utama. Pos finis dan tim ambulans malam RS Hermina Cibubur tetap bersiaga mengawal peserta Ultra 200 KM hingga batas Cut-Off Time resmi pukul 22:30 WIB malam (17 jam perlombaan). Peserta wajib menyelesaikan punggungan rawan saat masih terang (Daylight Ridge Completion).',
+                        '21:00 WIB marks the final deadline for 60–150 KM categories and main stage closing. The finish line and RS Hermina Cibubur mobile paramedic teams remain deployed to escort Ultra 200 KM riders until official Cut-Off Time at 22:30 WIB (17 race hours). Riders must clear hazardous ridge sectors during daylight (Daylight Ridge Completion).'
                       )}
                     </p>
                   </div>
@@ -525,7 +525,7 @@ export default function TimelineSection() {
             <div className="space-y-6">
               
               {/* Context Summary Bar */}
-              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
                 <div className="flex items-center gap-3">
                   <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
                   <div>
@@ -551,7 +551,7 @@ export default function TimelineSection() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* Pra-Event Card 1 */}
-                <div className="p-8 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-[#FA6D0B]/40 transition-colors">
+                <div className="p-8 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                   <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
                     <span className="font-mono text-sm font-black text-white">
                       10:00 — 17:00 WIB
@@ -597,7 +597,7 @@ export default function TimelineSection() {
                 </div>
 
                 {/* Pra-Event Card 2 */}
-                <div className="p-8 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-white/20 transition-colors">
+                <div className="p-8 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                   <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
                     <span className="font-mono text-sm font-black text-white">
                       11:00 — 12:30 WIB
@@ -630,7 +630,7 @@ export default function TimelineSection() {
                 </div>
 
                 {/* Pra-Event Card 3 */}
-                <div className="p-8 rounded-2xl border-2 border-[#FA6D0B]/50 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4">
+                <div className="p-8 rounded-2xl bg-gradient-to-br from-[#FA6D0B]/15 via-black/60 to-black/80 backdrop-blur-xl shadow-[0_20px_50px_rgba(250,109,11,0.2)] space-y-4">
                   <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
                     <span className="font-mono text-sm font-black text-white">
                       14:00 — 15:30 WIB
@@ -665,7 +665,7 @@ export default function TimelineSection() {
                 </div>
 
                 {/* Pra-Event Card 4 */}
-                <div className="p-8 rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-4 hover:border-white/20 transition-colors">
+                <div className="p-8 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] space-y-4 transition-colors">
                   <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
                     <span className="font-mono text-sm font-black text-white">
                       15:30 — 17:30 WIB
@@ -707,7 +707,7 @@ export default function TimelineSection() {
             <div className="space-y-6">
               
               {/* Context Summary Bar */}
-              <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
                 <div>
                   <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
                     {t('MATRIKS PERBANDINGAN OPERASIONAL 5 KATEGORI', '5-CATEGORY OPERATIONAL MATRIX')}
@@ -725,7 +725,7 @@ export default function TimelineSection() {
               </div>
 
               {/* Responsive Table Container */}
-              <div className="overflow-x-auto rounded-2xl border border-white/10 bg-black/25 backdrop-blur-md shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
+              <div className="overflow-x-auto rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
                 <table className="w-full text-left border-collapse text-[11px] lg:text-xs">
                   <thead>
                     <tr className="border-b border-white/10 bg-white/[0.03] font-mono text-[10px] lg:text-[11px] uppercase text-slate-400 tracking-wider whitespace-nowrap">
@@ -755,7 +755,7 @@ export default function TimelineSection() {
                         {t('Wajib 30 KM (03:00–05:00)', 'Mandatory 30 KM (03:00–05:00)')}
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-white font-bold whitespace-nowrap">
-                        {t('19 Jam (00:30 WIB H+1)', '19 Hours (00:30 WIB D+1)')}
+                        {t('17 Jam (22:30 WIB)', '17 Hours (22:30 WIB)')}
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-300 whitespace-nowrap">
                         {t('Wajib 30 Min (CP#4)', 'Mandatory 30 Min (CP#4)')}
@@ -924,7 +924,7 @@ export default function TimelineSection() {
 
               {/* Bottom Rule Highlight */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-                <div className="p-4 rounded-xl border border-white/10 bg-black/40 space-y-1">
+                <div className="p-4 rounded-xl bg-black/60 space-y-1 shadow-sm">
                   <span className="text-[#FA6D0B] font-bold block uppercase">
                     {t('// DISIPLIN JADWAL FLAG OFF', '// FLAG OFF SCHEDULE DISCIPLINE')}
                   </span>
@@ -935,7 +935,7 @@ export default function TimelineSection() {
                     )}
                   </p>
                 </div>
-                <div className="p-4 rounded-xl border border-white/10 bg-black/40 space-y-1">
+                <div className="p-4 rounded-xl bg-black/60 space-y-1 shadow-sm">
                   <span className="text-[#FA6D0B] font-bold block uppercase">
                     {t('// LIVE TRACKING AKTIF (120, 150, 200 KM)', '// LIVE TRACKING ACTIVE (120, 150, 200 KM)')}
                   </span>

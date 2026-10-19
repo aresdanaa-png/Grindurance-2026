@@ -17,7 +17,7 @@ export default function GlobalError({
     <html lang="id">
       <body className="bg-[#0D0E11] text-white font-sans antialiased m-0 p-0">
         <div className="min-h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden">
-          <div className="max-w-md w-full text-center space-y-6 p-8 rounded-2xl border border-white/10 bg-black/50 backdrop-blur-md">
+          <div className="max-w-md w-full text-center space-y-6 p-8 rounded-2xl bg-black/70 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
             <span className="font-mono text-xs uppercase tracking-wider text-[#FA6D0B] block">
               // CRITICAL TELEMETRY ERROR
             </span>
