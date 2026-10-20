@@ -312,17 +312,17 @@ function PembayaranContent() {
                 </div>
 
                 {/* Action CTA to BIB page */}
-                <div className="pt-4 flex flex-col sm:flex-row gap-4 items-center">
+                <div className="pt-4 flex flex-col sm:flex-row gap-3.5 items-stretch sm:items-center">
                   <Link
                     href={`/cek-bib?query=${activeParticipants[0]?.bib_number || activeParticipants[0]?.registration_code || ''}`}
-                    className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#FA6D0B] text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(250,109,11,0.4)]"
+                    className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#FA6D0B] text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(250,109,11,0.4)] text-center active:scale-95"
                   >
                     <span>{t('LIHAT & UNDUH KARTU NOMOR DADA (BIB)', 'VIEW & DOWNLOAD BIB E-TICKET')}</span>
                     <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                   </Link>
                   <Link
                     href="/peserta"
-                    className="w-full sm:w-auto px-6 py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all text-center"
+                    className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all text-center active:scale-95"
                   >
                     {t('LIHAT ROSTER PESERTA RESMI', 'VIEW OFFICIAL START LIST')}
                   </Link>

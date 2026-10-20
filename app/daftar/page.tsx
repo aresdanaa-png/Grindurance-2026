@@ -1367,31 +1367,31 @@ export default function RegistrationPage() {
             )}
 
             {/* BOTTOM STICKY ACTION BANNER: TOMBOL DAFTAR DI PALING BAWAH */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-black/80 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div className="p-5 sm:p-6 lg:p-7 rounded-2xl bg-black/80 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6">
               <div>
-                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block font-bold">
                   {t('SIAP UNTUK TANTANGAN INI?', 'READY FOR THIS CHALLENGE?')}
                 </span>
-                <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white italic mt-0.5">
+                <h3 className="font-display text-2xl sm:text-3xl font-black uppercase text-white italic mt-1 leading-tight tracking-tight">
                   {t('AMBIL BAGIAN DI', 'PARTICIPATE IN')} {selectedCategory.name}
                 </h3>
-                <div className="font-mono text-xs text-slate-300 mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1">
+                <div className="font-mono text-xs text-slate-300 mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
                   <span>{t('Biaya Tiket:', 'Entry Fee:')} <strong className="text-[#FA6D0B] font-bold">{formatRupiah(selectedCategory.price_medal_only)}</strong></span>
-                  <span>·</span>
+                  <span className="text-white/20">·</span>
                   <span>{t('Sisa Kuota:', 'Remaining Quota:')} <strong className="text-white font-bold">{selectedCategory.quota - selectedCategory.current_enrolled} {t('Slot', 'Slots')}</strong></span>
-                  <span>·</span>
-                  <span className="text-slate-400">{t('TERBUKA · KUOTA TERBATAS', 'OPEN · LIMITED SLOTS')}</span>
+                  <span className="text-white/20">·</span>
+                  <span className="text-slate-400 font-bold">{t('TERBUKA // KUOTA TERBATAS', 'OPEN // LIMITED SLOTS')}</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto shrink-0">
                 <button
                   type="button"
                   onClick={() => {
                     setCurrentStep('select');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className="px-6 py-3.5 sm:py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/40 transition-all cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3.5 sm:py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/40 hover:bg-white/[0.08] transition-all cursor-pointer text-center active:scale-95 whitespace-nowrap"
                 >
                   {t('← KEMBALI', '← BACK')}
                 </button>
@@ -1399,11 +1399,11 @@ export default function RegistrationPage() {
                 <button
                   type="button"
                   onClick={handleProceedToForm}
-                  className="relative overflow-hidden px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
+                  className="relative overflow-hidden w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
                 >
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none" />
-                  <span className="relative z-10">{t('DAFTAR KATEGORI INI SEKARANG', 'REGISTER THIS CATEGORY NOW')}</span>
-                  <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <span className="relative z-10">{t('DAFTAR SEKARANG', 'REGISTER NOW')}</span>
+                  <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out shrink-0" />
                 </button>
               </div>
             </div>
@@ -2525,14 +2525,14 @@ export default function RegistrationPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3.5 w-full lg:w-auto shrink-0 justify-end">
+                <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3.5 w-full lg:w-auto shrink-0 justify-end">
                   <button
                     type="button"
                     onClick={() => {
                       setCurrentStep('detail');
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }}
-                    className="px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:border-[#FA6D0B] hover:bg-[#FA6D0B]/10 transition-all cursor-pointer whitespace-nowrap"
+                    className="w-full sm:w-auto text-center px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:border-[#FA6D0B] hover:bg-[#FA6D0B]/10 transition-all cursor-pointer whitespace-nowrap active:scale-95"
                   >
                     {t('← DETAIL', '← DETAILS')}
                   </button>
@@ -2540,7 +2540,7 @@ export default function RegistrationPage() {
                   <button
                     type="submit"
                     disabled={submitting || !waiverAgreed}
-                    className="relative overflow-hidden flex-1 lg:flex-none px-8 sm:px-12 py-4 sm:py-5 rounded-full text-xs sm:text-base font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
+                    className="relative overflow-hidden w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-5 rounded-full text-xs sm:text-base font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
                   >
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none" />
                     {submitting ? (
@@ -2548,7 +2548,7 @@ export default function RegistrationPage() {
                     ) : (
                       <>
                         <span className="relative z-10">{t('KUNCI NOMOR DADA & TERBITKAN INVOICE', 'LOCK BIB NUMBER & ISSUE INVOICE')}</span>
-                        <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+                        <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out shrink-0" />
                       </>
                     )}
                   </button>

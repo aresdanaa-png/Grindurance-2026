@@ -405,12 +405,12 @@ export default function InvoiceCockpit({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
             <a
               href={whatsappDirectUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#FA6D0B] text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,109,11,0.35)] cursor-pointer"
+              className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#FA6D0B] text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(250,109,11,0.35)] cursor-pointer text-center active:scale-95"
             >
               <span>{t('BUKA DI WHATSAPP SEKARANG', 'OPEN IN WHATSAPP NOW')}</span>
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -421,7 +421,7 @@ export default function InvoiceCockpit({
               onClick={() => {
                 copyToClipboard(whatsappMessageText, 'wa_message');
               }}
-              className="w-full sm:w-auto px-6 py-4 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center"
+              className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center active:scale-95"
             >
               {copiedField === 'wa_message'
                 ? t('TEKS PESAN TERSALIN //', 'MESSAGE TEXT COPIED //')
@@ -535,10 +535,10 @@ export default function InvoiceCockpit({
           </div>
         )}
 
-        <div className="flex items-center gap-3.5 w-full sm:w-auto justify-end shrink-0">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto justify-end shrink-0">
           <Link
             href="/peserta"
-            className="px-7 py-4 rounded-full bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:bg-white/10 transition-all flex items-center gap-1.5"
+            className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center gap-1.5 text-center active:scale-95"
           >
             <span>{t('LIHAT START LIST', 'VIEW START LIST')}</span>
             <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -546,7 +546,7 @@ export default function InvoiceCockpit({
 
           <Link
             href="/cek-bib"
-            className="px-8 py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_25px_rgba(250,109,11,0.4)] hover:bg-[#DE5A00] transition-all flex items-center gap-1.5"
+            className="w-full sm:w-auto px-8 py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_25px_rgba(250,109,11,0.4)] hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-1.5 text-center active:scale-95"
           >
             <span>{t('CEK BIB DIGITAL', 'CHECK DIGITAL BIB')}</span>
             <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />

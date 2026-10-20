@@ -739,7 +739,7 @@ export default function PeraturanPage() {
                 href="https://wa.me/6281519656133"
                 target="_blank"
                 rel="noreferrer"
-                className="px-8 py-4 rounded-full font-mono font-black text-xs uppercase tracking-wider bg-[#FA6D0B] hover:bg-[#DE5A00] text-black transition-all cursor-pointer whitespace-nowrap shadow-[0_0_25px_rgba(250,109,11,0.5)] hover:-translate-y-0.5 active:scale-95"
+                className="w-full md:w-auto px-8 py-4 rounded-full font-mono font-black text-xs uppercase tracking-wider bg-[#FA6D0B] hover:bg-[#DE5A00] text-black transition-all cursor-pointer whitespace-nowrap shadow-[0_0_25px_rgba(250,109,11,0.5)] hover:-translate-y-0.5 active:scale-95 text-center flex items-center justify-center shrink-0"
               >
                 {t('HUBUNGI MEDIS SPGDT', 'CALL SPGDT EMERGENCY')}
               </a>
@@ -750,17 +750,17 @@ export default function PeraturanPage() {
 
         {/* ── FINAL REGISTRATION CTA ── */}
         <ScrollReveal>
-          <div className="text-center pt-8 pb-4 space-y-4">
+          <div className="text-center pt-8 pb-4 space-y-4 max-w-xl mx-auto px-2">
             <p className="font-mono text-xs text-slate-400 uppercase tracking-widest">
               {t('SIAP MENGHADAPI TANTANGAN BEAUTIFUL SUFFERING?', 'READY TO EMBRACE BEAUTIFUL SUFFERING?')}
             </p>
-            <div>
+            <div className="flex justify-center">
               <Link
                 href="/daftar"
-                className="inline-flex items-center gap-2 px-10 py-4.5 rounded-full font-sans font-black uppercase tracking-wider text-xs sm:text-sm bg-[#FA6D0B] text-black shadow-[0_0_40px_rgba(250,109,11,0.6)] hover:bg-[#DE5A00] transition-all hover:-translate-y-0.5 active:scale-95 group cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-10 py-4 sm:py-4.5 rounded-full font-sans font-black uppercase tracking-wider text-xs sm:text-sm bg-[#FA6D0B] text-black shadow-[0_0_40px_rgba(250,109,11,0.6)] hover:bg-[#DE5A00] transition-all hover:-translate-y-0.5 active:scale-95 group cursor-pointer text-center whitespace-nowrap"
               >
-                <span>{t('PAHAM REGULASI? AMBIL NOMOR START SEKARANG', 'UNDERSTOOD THE RULES? CLAIM YOUR BIB NOW')}</span>
-                <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <span>{t('DAFTAR SEKARANG — AMBIL NOMOR START', 'REGISTER NOW — CLAIM YOUR BIB')}</span>
+                <ArrowUpRight className="w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform shrink-0" />
               </Link>
             </div>
           </div>
