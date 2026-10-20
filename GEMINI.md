@@ -8,7 +8,7 @@
 ---
 
 ## 📌 ATURAN DATA RESMI (CANONICAL NUMBERS)
-- **70 Km Fun Ride**: 70 km, rekreasi pemula.
+- **70 Km Fun Gravel Ride**: **69,9 km** (~70 km), elevasi **+650–778 m**, titik tertinggi **290 m MDPL**, rekreasi pemula. 2 tanjakan utama (2,66 km @ 5% & 2,62 km @ 7%), unpaved 8,16 km, path 2,61 km, off-grid 2,24 km. Start/Finis ABBEY Coffee & Eatery LRT Harjamukti.
 - **100 Km Fondo**: **101 km**, elevasi **+1.070 m**, titik tertinggi **310 m MDPL**, 3 tanjakan utama.
 - **120 Km Race**: **120 km**, elevasi **+1.760 m**, titik tertinggi **680 m MDPL**, 7 tanjakan (tanjakan ke-4: 4.07 km @ 7%), unpaved 16.5 km, off-grid 3.77 km. Podium Top 3 (Single & Pair Mix).
 - **150 Km Grand Fondo**: **150 km** (**120 km rute utama + 30 km prolog mandiri** yang dirancang peserta). Elevasi rute utama +1.760 m, max 680 m MDPL.

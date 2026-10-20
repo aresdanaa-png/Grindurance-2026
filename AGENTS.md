@@ -27,7 +27,7 @@
 
 | Kategori | ID Kode | Jarak Nyata | Komposisi Rute | Elevasi Gain | Titik Tertinggi | Format & Regulasi Kunci |
 |---|---|---|---|---|---|---|
-| **70 Km Fun Gravel** | `60` / `70` | 70 km | 70 km rute panitia | Sesuai rute | Sesuai rute | Rekreasi pemula tanpa tekanan berlebih. |
+| **70 Km Fun Gravel** | `60` / `70` | **69,9 km** | Unpaved 8,16 km, path 2,61 km, off-grid 2,24 km, aspal & beton | **+650–778 m** | **290 m MDPL** | Rekreasi pemula tanpa tekanan berlebih. 2 tanjakan utama (2,66 km @ 5% vertikal 146 m & 2,62 km @ 7% vertikal 172 m), tebing karst, kebun bambu, sawah terasering. |
 | **100 Km Fondo** | `100` | **101 km** | 101 km rute panitia | **+1.070 m** | **310 m MDPL** | *Endurance ride*, 3 tanjakan utama (2.88 km @ 5%, 2.89 km @ 6%, 3.16 km @ 4.5%), segmen path 3.02 km & off-grid 5.11 km. |
 | **120 Km Race** | `120` | **120 km** | 120 km rute panitia | **+1.760 m** | **680 m MDPL** | **Official Race Kompetitif**: 7 tanjakan (tanjakan ke-4: 4.07 km @ 7%, 271 m ascent), unpaved 16.5 km, off-grid 3.77 km, podium Top 3. Mendukung Single & Pair Mix. |
 | **150 Km Grand Fondo** | `150` | **150 km** | **120 km rute utama + 30 km prolog mandiri** | +1.760 m (rute utama) | **680 m MDPL** | **Wajib Prolog 30 km**: Peserta merancang & menuntaskan 30 km mandiri sebelum start LRT Harjamukti. |

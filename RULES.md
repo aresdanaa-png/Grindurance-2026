@@ -9,7 +9,7 @@
 ## 1. Core Visual DNA & Philosophy
 
 * **Genre**: *Dark Gritty Athleticism* (terinspirasi dari *Canyon, Nike Trail, Rapha Custom, Pas Normal Studios, Strava Dark*).
-* **Karakter**: Garang, presisi, berkarakter ekspedisi musim hujan (*un-supported rain season expedition*), industrial, dan berorientasi telemetri balap sepeda.
+* **Karakter**: Garang, presisi, berkarakter tantangan musim hujan (*un-supported rain season challenge*), industrial, dan berorientasi telemetri balap sepeda.
 * **Bukan SaaS / Dashboard**: Website ini adalah **poster editorial atletik premium**, **BUKAN** dashboard admin software, aplikasi SaaS, atau blog korporat yang penuh hiasan ikon generik.
 * **Konsistensi Antar-Halaman**: Setiap halaman harus terasa seperti bab dari buku panduan ekspedisi yang sama—menggunakan palet warna, tipografi, ritme border, dan mikro-interaksi yang seragam.
 

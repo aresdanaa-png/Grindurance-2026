@@ -40,11 +40,24 @@ export async function POST(req: Request) {
       ? (rider_2 ? '120_PAIR' : '120_SINGLE')
       : category_id;
 
-    const { data: category, error: catError } = await supabase
+    let { data: category, error: catError } = await supabase
       .from('categories')
       .select('*')
       .eq('id', effectiveCategoryId)
       .single();
+
+    if ((catError || !category) && (effectiveCategoryId === '70' || effectiveCategoryId === '60')) {
+      const fallbackId = effectiveCategoryId === '70' ? '60' : '70';
+      const fallbackRes = await supabase
+        .from('categories')
+        .select('*')
+        .eq('id', fallbackId)
+        .single();
+      if (!fallbackRes.error && fallbackRes.data) {
+        category = fallbackRes.data;
+        catError = null;
+      }
+    }
 
     if (catError || !category) {
       return NextResponse.json(

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import { isGpxDownloadLocked } from '@/lib/data/categories';
 
@@ -14,6 +14,27 @@ interface RouteMapProps {
   accentColor?: string;
 }
 
+interface ParsedPoint {
+  lat: number;
+  lon: number;
+  ele: number;
+  x: number;
+  y: number;
+  distKm: number;
+}
+
+interface RouteVectorData {
+  points: ParsedPoint[];
+  pathD: string;
+  startPoint: ParsedPoint;
+  finishPoint: ParsedPoint;
+  summitPoint: ParsedPoint;
+  minAlt: number;
+  maxAlt: number;
+  totalGain: number;
+  viewBox: { width: number; height: number };
+}
+
 export default function RouteMap({
   gpxFile,
   categoryKm,
@@ -21,23 +42,19 @@ export default function RouteMap({
   gpxTotalKm,
   prologKm = 0,
   gpxFileName,
-  accentColor = '#FA6D0B'
+  accentColor = '#FA6D0B',
 }: RouteMapProps) {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<unknown>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const currentTileLayersRef = useRef<any[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [mapKey, setMapKey] = useState(0);
-  const [layerType, setLayerType] = useState<'dark' | 'satellite'>('satellite');
   const [isLocked, setIsLocked] = useState(true);
   const [showLockModal, setShowLockModal] = useState(false);
-  const [routeTelemetry, setRouteTelemetry] = useState<{
-    points: number;
-    minAlt: number;
-    maxAlt: number;
-    gain: number;
-  } | null>(null);
+  const [routeData, setRouteData] = useState<RouteVectorData | null>(null);
+
+  // Zoom and Pan interaction state
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   const { t } = useLanguage();
 
@@ -46,132 +63,42 @@ export default function RouteMap({
     setIsLocked(isGpxDownloadLocked());
   }, []);
 
-  // Apply tile layers dynamically without re-parsing GPX
-  const applyTileLayers = useCallback(async (type: 'dark' | 'satellite') => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const map = mapInstanceRef.current as any;
-    if (!map) return;
-
-    try {
-      const L = (await import('leaflet')).default;
-
-      // Remove existing tile layers
-      currentTileLayersRef.current.forEach((layer) => {
-        try {
-          map.removeLayer(layer);
-        } catch {
-          // ignore
-        }
-      });
-      currentTileLayersRef.current = [];
-
-      if (type === 'dark') {
-        const base = L.tileLayer(
-          'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-          {
-            maxNativeZoom: 16,
-            maxZoom: 19,
-            attribution: '&copy; Esri',
-          }
-        ).addTo(map);
-
-        const ref = L.tileLayer(
-          'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}',
-          {
-            maxNativeZoom: 16,
-            maxZoom: 19,
-            opacity: 0.85,
-          }
-        ).addTo(map);
-
-        base.bringToBack();
-        currentTileLayersRef.current = [base, ref];
-      } else {
-        const sat = L.tileLayer(
-          'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-          {
-            maxZoom: 19,
-            attribution: '&copy; Esri',
-          }
-        ).addTo(map);
-
-        const ref = L.tileLayer(
-          'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
-          {
-            maxZoom: 19,
-            opacity: 0.9,
-          }
-        ).addTo(map);
-
-        sat.bringToBack();
-        currentTileLayersRef.current = [sat, ref];
-      }
-    } catch (e) {
-      console.error('Failed to switch tile layer:', e);
-    }
-  }, []);
-
-  // Update tiles when layerType toggles
+  // Reset zoom & pan when category / GPX changes
   useEffect(() => {
-    if (mapInstanceRef.current && status === 'success') {
-      applyTileLayers(layerType);
-    }
-  }, [layerType, status, applyTileLayers]);
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, [gpxFile, categoryId]);
 
-  // Main map initialization
+  // Parse GPX trackpoints and calculate projected SVG coordinates
   useEffect(() => {
-    if (!gpxFile || !mapRef.current) return;
+    if (!gpxFile) {
+      setRouteData(null);
+      setStatus('idle');
+      return;
+    }
 
+    let isCancelled = false;
     setStatus('loading');
 
-    const initMap = async () => {
+    const fetchAndParseGpx = async () => {
       try {
-        const L = (await import('leaflet')).default;
-
-        // Fix leaflet marker asset paths
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        delete (L.Icon.Default.prototype as any)._getIconUrl;
-        L.Icon.Default.mergeOptions({
-          iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-          iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-        });
-
-        if (mapInstanceRef.current) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (mapInstanceRef.current as any).remove();
-          mapInstanceRef.current = null;
-        }
-
-        if (!mapRef.current) return;
-
-        const map = L.map(mapRef.current, {
-          zoomControl: true,
-          scrollWheelZoom: false,
-          attributionControl: false,
-        });
-
-        L.control.attribution({ position: 'bottomright', prefix: '' })
-          .addAttribution('&copy; <a href="https://www.esri.com" target="_blank" rel="noreferrer">Esri</a>')
-          .addTo(map);
-
-        mapInstanceRef.current = map;
-
-        // Apply chosen tile layers (Default: Satellite)
-        await applyTileLayers(layerType);
-
-        // Fetch GPX for live rendering
         const res = await fetch(gpxFile);
-        if (!res.ok) throw new Error('GPX file not found');
+        if (isCancelled) return;
+        if (!res.ok) throw new Error('GPX file could not be loaded');
         const gpxText = await res.text();
+        if (isCancelled) return;
 
         const parser = new DOMParser();
-        const gpxDoc = parser.parseFromString(gpxText, 'text/xml');
-        const trkpts = gpxDoc.querySelectorAll('trkpt');
+        const xml = parser.parseFromString(gpxText, 'text/xml');
+        const trkpts = xml.querySelectorAll('trkpt');
 
         if (trkpts.length === 0) throw new Error('No track points found in GPX');
 
-        const latLngs: [number, number][] = [];
+        const rawPoints: { lat: number; lon: number; ele: number }[] = [];
+        let minLat = Infinity;
+        let maxLat = -Infinity;
+        let minLon = Infinity;
+        let maxLon = -Infinity;
         let minAlt = Infinity;
         let maxAlt = -Infinity;
         let totalGain = 0;
@@ -181,113 +108,183 @@ export default function RouteMap({
           const lat = parseFloat(pt.getAttribute('lat') || '0');
           const lon = parseFloat(pt.getAttribute('lon') || '0');
           const eleText = pt.querySelector('ele')?.textContent;
+          const ele = eleText ? parseFloat(eleText) : 0;
 
           if (lat && lon) {
-            latLngs.push([lat, lon]);
-            if (eleText) {
-              const alt = parseFloat(eleText);
-              if (!isNaN(alt)) {
-                if (alt < minAlt) minAlt = alt;
-                if (alt > maxAlt) maxAlt = alt;
-                if (prevAlt !== null && alt > prevAlt) {
-                  totalGain += (alt - prevAlt);
-                }
-                prevAlt = alt;
+            rawPoints.push({ lat, lon, ele });
+            if (lat < minLat) minLat = lat;
+            if (lat > maxLat) maxLat = lat;
+            if (lon < minLon) minLon = lon;
+            if (lon > maxLon) maxLon = lon;
+
+            if (!isNaN(ele)) {
+              if (ele < minAlt) minAlt = ele;
+              if (ele > maxAlt) maxAlt = ele;
+              if (prevAlt !== null && ele > prevAlt) {
+                totalGain += ele - prevAlt;
               }
+              prevAlt = ele;
             }
           }
         });
 
-        if (latLngs.length === 0) throw new Error('No valid coordinates');
+        if (rawPoints.length === 0) throw new Error('No valid coordinate points');
+        if (isCancelled) return;
 
-        if (minAlt !== Infinity && maxAlt !== -Infinity) {
-          setRouteTelemetry({
-            points: latLngs.length,
+        // Virtual SVG ViewBox specifications (Generous margins prevent clipping on any screen)
+        const WIDTH = 840;
+        const HEIGHT = 540;
+        const PADDING_X = 90;
+        const PADDING_Y = 75;
+
+        // Geographic Mercator aspect ratio correction based on mean latitude
+        const midLatRad = ((minLat + maxLat) / 2) * (Math.PI / 180);
+        const cosMidLat = Math.cos(midLatRad);
+
+        const latSpan = maxLat - minLat || 0.0001;
+        const lonSpan = (maxLon - minLon) * cosMidLat || 0.0001;
+
+        const usableW = WIDTH - PADDING_X * 2;
+        const usableH = HEIGHT - PADDING_Y * 2;
+
+        // Scale factor preserving real-world geographical proportions
+        const scale = Math.min(usableW / lonSpan, usableH / latSpan);
+
+        const renderedW = lonSpan * scale;
+        const renderedH = latSpan * scale;
+
+        // Center vector route within the canvas
+        const offsetX = PADDING_X + (usableW - renderedW) / 2;
+        const offsetY = PADDING_Y + (usableH - renderedH) / 2;
+
+        let accumulatedDist = 0;
+        let summitIndex = 0;
+        let summitEle = -Infinity;
+
+        // Haversine distance helper
+        const toRad = (deg: number) => (deg * Math.PI) / 180;
+        const haversine = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+          const R = 6371;
+          const dLat = toRad(lat2 - lat1);
+          const dLon = toRad(lon2 - lon1);
+          const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          return R * c;
+        };
+
+        const projectedPoints: ParsedPoint[] = rawPoints.map((pt, i) => {
+          const x = offsetX + (pt.lon - minLon) * cosMidLat * scale;
+          // SVG Y axis is inverted (north is top, latitude goes down)
+          const y = offsetY + (maxLat - pt.lat) * scale;
+
+          if (i > 0) {
+            accumulatedDist += haversine(rawPoints[i - 1].lat, rawPoints[i - 1].lon, pt.lat, pt.lon);
+          }
+
+          if (pt.ele > summitEle) {
+            summitEle = pt.ele;
+            summitIndex = i;
+          }
+
+          return {
+            lat: pt.lat,
+            lon: pt.lon,
+            ele: Math.round(pt.ele),
+            x: Math.round(x * 10) / 10,
+            y: Math.round(y * 10) / 10,
+            distKm: Math.round(accumulatedDist * 10) / 10,
+          };
+        });
+
+        // Generate SVG Path Definition (M x y L x y ...)
+        const pathD = projectedPoints.reduce((acc, pt, idx) => {
+          return `${acc} ${idx === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`;
+        }, '');
+
+        if (!isCancelled) {
+          setRouteData({
+            points: projectedPoints,
+            pathD,
+            startPoint: projectedPoints[0],
+            finishPoint: projectedPoints[projectedPoints.length - 1],
+            summitPoint: projectedPoints[summitIndex],
             minAlt: Math.round(minAlt),
             maxAlt: Math.round(maxAlt),
-            gain: Math.round(totalGain),
+            totalGain: Math.round(totalGain),
+            viewBox: { width: WIDTH, height: HEIGHT },
           });
+          setStatus('success');
         }
-
-        // Glow underlay
-        L.polyline(latLngs, {
-          color: accentColor,
-          weight: 10,
-          opacity: 0.22,
-          lineJoin: 'round',
-          lineCap: 'round',
-        }).addTo(map);
-
-        // Main route line
-        const routeLine = L.polyline(latLngs, {
-          color: accentColor,
-          weight: 3.5,
-          opacity: 0.98,
-          lineJoin: 'round',
-          lineCap: 'round',
-        }).addTo(map);
-
-        routeLine.bindTooltip(`GRINDURANCE ${categoryKm} // RUTE AKTIF`, {
-          sticky: true,
-          direction: 'top',
-        });
-
-        // Start marker (white dot with animated radar halo)
-        const startIcon = L.divIcon({
-          html: `<div style="position:relative;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">
-            <div class="animate-radar-halo" style="position:absolute;inset:0;border-radius:50%;background:rgba(255,255,255,0.4);"></div>
-            <div style="position:relative;width:12px;height:12px;background:#FFFFFF;border:2.5px solid #0D0E11;border-radius:50%;box-shadow:0 0 10px rgba(255,255,255,0.95);"></div>
-          </div>`,
-          className: '',
-          iconAnchor: [12, 12],
-        });
-
-        // Finish marker (orange dot with animated radar halo)
-        const finishIcon = L.divIcon({
-          html: `<div style="position:relative;width:24px;height:24px;display:flex;align-items:center;justify-content:center;">
-            <div class="animate-radar-halo" style="position:absolute;inset:0;border-radius:50%;background:rgba(250,109,11,0.4);animation-delay:0.7s;"></div>
-            <div style="position:relative;width:12px;height:12px;background:${accentColor};border:2.5px solid #fff;border-radius:50%;box-shadow:0 0 10px rgba(250,109,11,0.95);"></div>
-          </div>`,
-          className: '',
-          iconAnchor: [12, 12],
-        });
-
-        L.marker(latLngs[0], { icon: startIcon })
-          .bindTooltip('START // KM 0 · ABEEY COFFEE', { permanent: false, direction: 'top' })
-          .addTo(map);
-
-        L.marker(latLngs[latLngs.length - 1], { icon: finishIcon })
-          .bindTooltip('FINISH // ABEEY COFFEE', { permanent: false, direction: 'top' })
-          .addTo(map);
-
-        map.fitBounds(routeLine.getBounds(), { padding: [30, 30] });
-
-        setStatus('success');
       } catch (err) {
-        console.error('Map init error:', err);
-        setStatus('error');
+        if (!isCancelled) {
+          console.error('Vector HUD route parse error:', err);
+          setStatus('error');
+        }
       }
     };
 
-    initMap();
+    fetchAndParseGpx();
 
     return () => {
-      if (mapInstanceRef.current) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (mapInstanceRef.current as any).remove();
-        mapInstanceRef.current = null;
-      }
+      isCancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gpxFile, mapKey]);
+  }, [gpxFile]);
 
+  // Zoom handlers
+  const handleZoomIn = useCallback(() => {
+    setZoom((z) => Math.min(3.2, Math.round((z + 0.3) * 10) / 10));
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    setZoom((z) => Math.max(0.85, Math.round((z - 0.3) * 10) / 10));
+  }, []);
+
+  const handleResetView = useCallback(() => {
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, []);
+
+  // Mouse drag pan interaction
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0) return; // Left click only
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    setPan({
+      x: e.clientX - dragStart.x,
+      y: e.clientY - dragStart.y,
+    });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Wheel zoom
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.15 : 0.15;
+    setZoom((z) => Math.max(0.85, Math.min(3.2, Math.round((z + delta) * 100) / 100)));
+  };
+
+  // Calculate dynamic transform string
+  const transformStyle = useMemo(() => {
+    return `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`;
+  }, [pan, zoom]);
+
+  // Virtual route display fallback
   if (!gpxFile) {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-slate-500 bg-black/20 p-6 text-center">
-        <span className="font-mono text-xs uppercase tracking-widest text-slate-400 font-bold">
+      <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-slate-500 bg-[#0B0C0E] p-6 text-center select-none">
+        <span className="font-mono text-xs uppercase tracking-widest text-[#FA6D0B] font-bold">
           {t('RUTE VIRTUAL LOKAL // 19 CHAPTER', 'LOCAL VIRTUAL ROUTE // 19 CHAPTERS')}
         </span>
-        <p className="text-[11px] font-mono uppercase tracking-wider text-slate-600 max-w-xs">
+        <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 max-w-xs">
           {t('Rute ditentukan mandiri oleh masing-masing regional chapter', 'Route is determined independently by each regional chapter')}
         </p>
       </div>
@@ -295,166 +292,307 @@ export default function RouteMap({
   }
 
   return (
-    <div className="relative w-full h-full flex flex-col">
-      {/* Top info bar: Pure Typography & Controls (Zero Icons, Strictly Adhering to RULES.md) */}
-      <div className="flex items-center justify-between gap-3 px-4 py-2.5 bg-black/70 border-b border-white/10 backdrop-blur-md flex-shrink-0">
-        <div className="flex items-center gap-2 min-w-0">
-          <span className="text-[11px] font-mono font-bold text-white uppercase tracking-widest truncate">
-            {t('ETAPE ·', 'STAGE ·')} {gpxTotalKm}
-            {prologKm > 0 && (
-              <span className="text-[#FA6D0B] ml-2 font-black">+{prologKm}KM {t('PROLOG', 'PROLOGUE')}</span>
-            )}
+    <div
+      ref={containerRef}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onWheel={handleWheel}
+      className={`relative w-full h-full min-h-0 flex flex-col bg-[#0B0C0E] overflow-hidden select-none ${
+        isDragging ? 'cursor-grabbing' : 'cursor-grab'
+      }`}
+    >
+      {/* 1. Tactical Telemetry Grid Background (Strictly GX-ID Dark UI DNA) */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-20 z-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(250, 109, 11, 0.11) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(250, 109, 11, 0.11) 1px, transparent 1px)
+          `,
+          backgroundSize: '36px 36px',
+        }}
+      />
+
+      {/* Ambient Radial Backlight in Center */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.08)_0%,transparent_75%)] z-0" />
+
+      {/* 2. Top-Left Floating Controls: Zoom + Reset + GPX Lock Action (Pure Typography, No SaaS Clutter) */}
+      <div className="absolute top-3 left-3 z-30 flex items-center gap-2 pointer-events-auto">
+        <div className="flex items-center bg-black/85 backdrop-blur-md border border-white/10 rounded-lg p-0.5 font-mono text-[9px] shadow-lg">
+          <button
+            type="button"
+            onClick={handleZoomIn}
+            className="px-2 py-0.5 text-slate-300 hover:text-white hover:bg-white/10 rounded transition-all font-bold cursor-pointer"
+            title={t('Perbesar peta', 'Zoom in')}
+          >
+            +
+          </button>
+          <span className="text-white/20 select-none">|</span>
+          <button
+            type="button"
+            onClick={handleZoomOut}
+            className="px-2 py-0.5 text-slate-300 hover:text-white hover:bg-white/10 rounded transition-all font-bold cursor-pointer"
+            title={t('Perkecil peta', 'Zoom out')}
+          >
+            −
+          </button>
+          <span className="text-white/20 select-none">|</span>
+          <button
+            type="button"
+            onClick={handleResetView}
+            className="px-2 py-0.5 text-[#FA6D0B] hover:text-white hover:bg-[#FA6D0B]/20 rounded transition-all font-black cursor-pointer"
+            title={t('Reset posisi peta', 'Reset view')}
+          >
+            RESET
+          </button>
+        </div>
+
+        {isLocked ? (
+          <button
+            type="button"
+            onClick={() => setShowLockModal(true)}
+            className="px-2.5 py-1 rounded-lg text-[9px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-black/85 hover:bg-white/10 border border-white/10 hover:border-[#FA6D0B] backdrop-blur-md transition-all cursor-pointer shadow-lg active:scale-95 whitespace-nowrap"
+            title={t('File GPX dikunci hingga H-2 (11 Des 2026, 00:00 WIB)', 'GPX file locked until D-2 (11 Dec 2026, 00:00 WIB)')}
+          >
+            {t('TERKUNCI // H-2 (11 DES)', 'LOCKED // D-2 (11 DEC)')}
+          </button>
+        ) : (
+          <a
+            href={`/api/gpx/download?category=${categoryId}`}
+            download={gpxFileName}
+            className="px-3 py-1 rounded-lg text-[9px] font-mono font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all shadow-[0_0_12px_rgba(250,109,11,0.45)] whitespace-nowrap"
+          >
+            DOWNLOAD GPX
+          </a>
+        )}
+      </div>
+
+      {/* 3. Top-Right Orientation HUD (Compass Rose & Sector) */}
+      <div className="absolute top-3 right-3 z-30 pointer-events-none bg-black/85 backdrop-blur-md border border-white/10 rounded-lg px-2.5 py-1 font-mono text-[9px] text-slate-400 shadow-lg">
+        <div className="flex items-center gap-1.5">
+          <span className="text-[#FA6D0B] font-black">[N]</span>
+          <span className="text-white font-bold tracking-widest">GRID 000°</span>
+          <span className="text-white/20">·</span>
+          <span className="text-slate-400">JONGGOL CORRIDOR</span>
+        </div>
+      </div>
+
+      {/* 4. Loading Status Indicator */}
+      {(status === 'loading' || status === 'idle') && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 bg-[#090A0D]/90 backdrop-blur-sm">
+          <div className="w-5 h-5 border-2 border-[#FA6D0B] border-t-transparent rounded-full animate-spin" />
+          <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
+            {t('MEMUAT RUTE VECTOR GPX...', 'LOADING GPX VECTOR ROUTE...')}
           </span>
-        </div>
-
-        <div className="flex items-center gap-2 flex-shrink-0">
-          {/* Layer switcher: Gelap vs Satelit */}
-          <div className="flex items-center bg-black/80 border border-white/15 rounded-full p-0.5">
-            <button
-              onClick={() => setLayerType('dark')}
-              className={`px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase tracking-wider transition-all duration-150 ${
-                layerType === 'dark'
-                  ? 'bg-white/20 text-white'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              {t('GELAP', 'DARK')}
-            </button>
-            <button
-              onClick={() => setLayerType('satellite')}
-              className={`px-2.5 py-0.5 rounded-full text-[9px] font-mono font-black uppercase tracking-wider transition-all duration-150 ${
-                layerType === 'satellite'
-                  ? 'bg-[#FA6D0B] text-black font-extrabold'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              {t('SATELIT', 'SATELLITE')}
-            </button>
-          </div>
-
-          {status === 'success' && (
-            <button
-              onClick={() => {
-                if (mapInstanceRef.current) {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (mapInstanceRef.current as any).remove();
-                  mapInstanceRef.current = null;
-                }
-                setStatus('idle');
-                setMapKey((k) => k + 1);
-              }}
-              className="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold text-slate-400 hover:text-white hover:bg-white/10 uppercase tracking-wider transition-all"
-              title={t('Reset view peta', 'Reset map view')}
-            >
-              RESET
-            </button>
-          )}
-
-          {isLocked ? (
-            <button
-              type="button"
-              onClick={() => setShowLockModal(true)}
-              className="px-3 py-1.5 rounded-full text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 hover:border-[#FA6D0B] transition-all cursor-pointer active:scale-95"
-              title={t('File GPX dikunci hingga H-2 (11 Des 2026, 00:00 WIB)', 'GPX file locked until D-2 (11 Dec 2026, 00:00 WIB)')}
-            >
-              {t('TERKUNCI // H-2 (11 DES)', 'LOCKED // D-2 (11 DEC)')}
-            </button>
-          ) : (
-            <a
-              href={`/api/gpx/download?category=${categoryId}`}
-              download={gpxFileName}
-              className="px-3.5 py-1.5 rounded-full text-[10px] font-mono font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all duration-200 hover:shadow-[0_0_14px_rgba(250,109,11,0.55)] active:scale-95"
-            >
-              DOWNLOAD GPX
-            </a>
-          )}
-        </div>
-      </div>
-
-      {/* Map area */}
-      <div className="relative flex-1 min-h-0">
-        {(status === 'loading' || status === 'idle') && (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-[#090A0D]/95">
-            <div className="w-5 h-5 border-2 border-[#FA6D0B] border-t-transparent rounded-full animate-spin" />
-            <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">
-              {t('MEMUAT RUTE GPX...', 'LOADING GPX ROUTE...')}
-            </span>
-          </div>
-        )}
-
-        {status === 'error' && (
-          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-[#090A0D]/95 px-4 text-center">
-            <span className="text-xs font-mono font-black text-[#FA6D0B] uppercase tracking-wider">
-              {t('STATUS // GAGAL MEMUAT PETA', 'STATUS // FAILED TO LOAD MAP')}
-            </span>
-            <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
-              {t('PERIKSA KONEKSI INTERNET ANDA', 'PLEASE CHECK YOUR INTERNET CONNECTION')}
-            </span>
-            {isLocked ? (
-              <button
-                type="button"
-                onClick={() => setShowLockModal(true)}
-                className="px-4 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 hover:border-[#FA6D0B] transition-all mt-2 cursor-pointer"
-              >
-                {t('FILE DIKUNCI H-2', 'FILE LOCKED D-2')}
-              </button>
-            ) : (
-              <a
-                href={`/api/gpx/download?category=${categoryId}`}
-                download={gpxFileName}
-                className="px-4 py-1.5 rounded-full text-[10px] font-mono font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all mt-2"
-              >
-                DOWNLOAD GPX
-              </a>
-            )}
-          </div>
-        )}
-
-        {/* Live Map Telemetry HUD (Bottom-left overlay) */}
-        {status === 'success' && (
-          <div className="absolute bottom-3 left-3 z-[400] pointer-events-auto bg-black/85 backdrop-blur-md border border-white/15 rounded-lg px-3 py-2 shadow-lg select-none">
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono font-bold text-white uppercase tracking-wider">
-                GPX LIVE · {categoryKm}
-              </span>
-            </div>
-            <div className="text-[9px] font-mono text-slate-400 uppercase tracking-wider mt-0.5 flex items-center gap-2">
-              {routeTelemetry && (
-                <>
-                  <span>{routeTelemetry.points.toLocaleString()} PTS</span>
-                  <span>·</span>
-                  <span>ALT {routeTelemetry.minAlt}M - {routeTelemetry.maxAlt}M</span>
-                  <span>·</span>
-                </>
-              )}
-              <button
-                type="button"
-                onClick={() => setShowLockModal(true)}
-                className="text-[#FA6D0B] hover:underline cursor-pointer font-bold"
-              >
-                {isLocked ? t('FILE: TERKUNCI H-2', 'FILE: LOCKED D-2') : t('FILE: TERSEDIA', 'FILE: READY')}
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div key={mapKey} ref={mapRef} className="w-full h-full" />
-      </div>
-
-      {/* Prolog notice footer */}
-      {prologKm > 0 && (
-        <div className="px-3.5 py-2 bg-[#FA6D0B]/10 border-t border-[#FA6D0B]/25 flex-shrink-0">
-          <p className="text-[9px] sm:text-[10px] font-mono text-[#FA6D0B] leading-relaxed uppercase tracking-wide">
-            <strong>{t('PERINGATAN PROLOG:', 'PROLOGUE NOTICE:')}</strong>{' '}
-            {t(
-              `Rute resmi ${gpxTotalKm} dari Start ABEEY. Peserta wajib menambah prolog mandiri ${prologKm} km dari kediaman (03:00–05:00 WIB).`,
-              `Official route ${gpxTotalKm} starting from ABEEY. Riders must add independent prologue ${prologKm} km from residence (03:00–05:00 WIB).`
-            )}
-          </p>
         </div>
       )}
 
-      {/* Modal Protokol Rilis GPX (Strictly Pure Typography & No Decorative Icons) */}
+      {/* 5. Error Status Indicator */}
+      {status === 'error' && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 bg-[#090A0D]/95 px-4 text-center">
+          <span className="text-xs font-mono font-black text-[#FA6D0B] uppercase tracking-wider">
+            {t('STATUS // GAGAL MEMUAT PETA VECTOR', 'STATUS // FAILED TO LOAD VECTOR MAP')}
+          </span>
+          <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
+            {t('PERIKSA KONEKSI INTERNET ATAU BERKAS GPX', 'PLEASE CHECK CONNECTION OR GPX FILE')}
+          </span>
+        </div>
+      )}
+
+      {/* 6. Pure SVG Vector Route Radar Canvas (100% Contained, Never Cropped) */}
+      {routeData && status === 'success' && (
+        <div
+          className="w-full h-full flex items-center justify-center transition-transform duration-75 ease-out"
+          style={{ transform: transformStyle, transformOrigin: 'center center' }}
+        >
+          <svg
+            viewBox={`0 0 ${routeData.viewBox.width} ${routeData.viewBox.height}`}
+            className="w-full h-full max-w-full max-h-full"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <defs>
+              {/* Neon Glow Filter */}
+              <filter id="vectorGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur1" />
+                <feGaussianBlur stdDeviation="12" result="blur2" />
+                <feMerge>
+                  <feMergeNode in="blur2" />
+                  <feMergeNode in="blur1" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* A. Ambient Outer Halo (Neon Orange Atmosphere) */}
+            <path
+              d={routeData.pathD}
+              fill="none"
+              stroke={accentColor}
+              strokeWidth="10"
+              strokeOpacity="0.22"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              filter="url(#vectorGlow)"
+            />
+
+            {/* B. Core High-Vis Vector Route Line */}
+            <path
+              d={routeData.pathD}
+              fill="none"
+              stroke={accentColor}
+              strokeWidth="3.2"
+              strokeOpacity="0.95"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            {/* C. Razor Sharp Center Track Line */}
+            <path
+              d={routeData.pathD}
+              fill="none"
+              stroke="#FFFFFF"
+              strokeWidth="1.1"
+              strokeOpacity="0.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            {/* D. Summit Elevation Apex Marker */}
+            <g
+              transform={`translate(${routeData.summitPoint.x}, ${routeData.summitPoint.y})`}
+              className="select-none pointer-events-none"
+            >
+              <circle r="4" fill="#FA6D0B" stroke="#0D0E11" strokeWidth="1.5" />
+              <rect
+                x="-38"
+                y="-24"
+                width="76"
+                height="15"
+                rx="3"
+                fill="rgba(13, 14, 17, 0.92)"
+                stroke="rgba(250, 109, 11, 0.45)"
+                strokeWidth="1"
+              />
+              <text
+                x="0"
+                y="-13"
+                fill="#FA6D0B"
+                fontSize="8"
+                fontFamily="monospace"
+                fontWeight="bold"
+                textAnchor="middle"
+                letterSpacing="0.05em"
+              >
+                ▲ {routeData.maxAlt}M MDPL
+              </text>
+            </g>
+
+            {/* E. Start Beacon (KM 0 · Pure White Radar Node) */}
+            <g
+              transform={`translate(${routeData.startPoint.x}, ${routeData.startPoint.y})`}
+              className="select-none pointer-events-none"
+            >
+              <circle
+                r="13"
+                fill="none"
+                stroke="#FFFFFF"
+                strokeWidth="1.5"
+                strokeOpacity="0.4"
+                className="animate-ping"
+                style={{ animationDuration: '2.5s' }}
+              />
+              <circle r="5" fill="#FFFFFF" stroke="#0D0E11" strokeWidth="2" />
+              <rect
+                x="-34"
+                y="10"
+                width="68"
+                height="15"
+                rx="3"
+                fill="rgba(13, 14, 17, 0.95)"
+                stroke="rgba(255, 255, 255, 0.35)"
+                strokeWidth="1"
+              />
+              <text
+                x="0"
+                y="21"
+                fill="#FFFFFF"
+                fontSize="7.5"
+                fontFamily="monospace"
+                fontWeight="bold"
+                textAnchor="middle"
+                letterSpacing="0.05em"
+              >
+                START // KM 0
+              </text>
+            </g>
+
+            {/* F. Finish Beacon (LRT Harjamukti · Electric Orange Radar Node) */}
+            <g
+              transform={`translate(${routeData.finishPoint.x}, ${routeData.finishPoint.y})`}
+              className="select-none pointer-events-none"
+            >
+              <circle
+                r="13"
+                fill="none"
+                stroke={accentColor}
+                strokeWidth="1.5"
+                strokeOpacity="0.45"
+                className="animate-ping"
+                style={{ animationDuration: '2.5s', animationDelay: '0.8s' }}
+              />
+              <circle r="5" fill={accentColor} stroke="#FFFFFF" strokeWidth="2" />
+              <rect
+                x="-36"
+                y="-25"
+                width="72"
+                height="15"
+                rx="3"
+                fill="rgba(13, 14, 17, 0.95)"
+                stroke="rgba(250, 109, 11, 0.55)"
+                strokeWidth="1"
+              />
+              <text
+                x="0"
+                y="-14"
+                fill={accentColor}
+                fontSize="7.5"
+                fontFamily="monospace"
+                fontWeight="bold"
+                textAnchor="middle"
+                letterSpacing="0.05em"
+              >
+                FINISH // ABBEY
+              </text>
+            </g>
+          </svg>
+        </div>
+      )}
+
+      {/* 7. Bottom-Left Live Telemetry HUD Chip (Strictly RULES.md Section 7.4) */}
+      {routeData && status === 'success' && (
+        <div className="absolute bottom-3 left-3 z-30 pointer-events-auto bg-black/85 backdrop-blur-md border border-white/10 rounded-lg px-2.5 py-1.5 font-mono text-[9px] text-slate-300 shadow-xl flex flex-wrap items-center gap-1.5 select-none">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shadow-[0_0_8px_#FA6D0B]" />
+          <span className="font-bold text-white tracking-wider uppercase">
+            GPX LIVE // {categoryKm} ({gpxTotalKm})
+          </span>
+          <span className="text-white/20">·</span>
+          <span>{routeData.points.length.toLocaleString()} PTS</span>
+          <span className="text-white/20">·</span>
+          <span>ALT {routeData.minAlt}M — {routeData.maxAlt}M</span>
+          <span className="text-white/20">·</span>
+          <span className="text-[#FA6D0B] font-bold">GAIN +{routeData.totalGain}M</span>
+          {prologKm > 0 && (
+            <>
+              <span className="text-white/20">·</span>
+              <span className="text-[#FA6D0B] font-bold">+{prologKm}KM PROLOG</span>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* 8. Modal Protokol Rilis GPX (Strictly Pure Typography & No Decorative Icons) */}
       {showLockModal && (
         <div
           role="dialog"
@@ -463,7 +601,7 @@ export default function RouteMap({
           onClick={() => setShowLockModal(false)}
         >
           <div
-            className="relative w-full max-w-lg bg-[#0D0E11] rounded-2xl p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-left animate-pop-in-spring"
+            className="relative w-full max-w-lg bg-[#0D0E11] rounded-2xl p-6 sm:p-7 shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-left"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Ambient top glow */}
@@ -484,7 +622,9 @@ export default function RouteMap({
               <div className="flex justify-between items-center text-slate-400">
                 <span>{t('STATUS FILE:', 'FILE STATUS:')}</span>
                 <span className="text-[#FA6D0B] font-bold">
-                  {isLocked ? t('TERKUNCI (SAFETY CLEARANCE)', 'LOCKED (SAFETY CLEARANCE)') : t('TERSEDIA UNTUK DIUNDUH', 'READY FOR DOWNLOAD')}
+                  {isLocked
+                    ? t('TERKUNCI (SAFETY CLEARANCE)', 'LOCKED (SAFETY CLEARANCE)')
+                    : t('TERSEDIA UNTUK DIUNDUH', 'READY FOR DOWNLOAD')}
                 </span>
               </div>
               <div className="flex justify-between items-center text-slate-400">
@@ -497,7 +637,9 @@ export default function RouteMap({
               </div>
               <div className="flex justify-between items-center text-slate-400">
                 <span>{t('KATEGORI:', 'CATEGORY:')}</span>
-                <span className="text-slate-300 font-bold">{categoryKm} ({gpxTotalKm})</span>
+                <span className="text-slate-300 font-bold">
+                  {categoryKm} ({gpxTotalKm})
+                </span>
               </div>
             </div>
 
@@ -517,8 +659,8 @@ export default function RouteMap({
               </p>
               <div className="p-3 rounded-lg bg-[#FA6D0B]/10 border border-[#FA6D0B]/20 text-[11px] font-mono text-[#FA6D0B]">
                 {t(
-                  '// CATATAN: Peta live satelit di layar tetap aktif dan dapat dijelajahi untuk mempelajari profil lintasan.',
-                  '// NOTE: Live satellite map remains fully interactive for reconnaissance and contour inspection.'
+                  '// CATATAN: Peta live vector HUD di layar tetap aktif 100% dan dapat dijelajahi untuk mempelajari profil lintasan.',
+                  '// NOTE: Live vector HUD map remains fully interactive for reconnaissance and contour inspection.'
                 )}
               </div>
             </div>
@@ -529,7 +671,7 @@ export default function RouteMap({
               onClick={() => setShowLockModal(false)}
               className="w-full py-3.5 rounded-full bg-[#FA6D0B] hover:bg-[#DE5A00] text-black font-mono font-black uppercase tracking-wider text-xs transition-all active:scale-95 shadow-[0_0_20px_rgba(250,109,11,0.35)] cursor-pointer"
             >
-              {t('MENGERTI // KEMBALI KE PETA LIVE', 'UNDERSTOOD // RETURN TO LIVE MAP')}
+              {t('MENGERTI // KEMBALI KE PETA VECTOR', 'UNDERSTOOD // RETURN TO VECTOR MAP')}
             </button>
           </div>
         </div>

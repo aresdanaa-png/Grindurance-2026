@@ -14,6 +14,7 @@ export default function CategoryCockpit() {
   const { language, t } = useLanguage();
   const [selectedId, setSelectedId] = useState<string>('120');
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const [mobileTab, setMobileTab] = useState<'radar' | 'specs' | 'checkpoints'>('radar');
 
   const handleCategorySelect = (id: string) => {
     if (id === selectedId) return;
@@ -31,11 +32,11 @@ export default function CategoryCockpit() {
     <>
       {/* 2. HYBRID COCKPIT TELEMETRY & ATHLETIC MONOLITHS (NIKE TRAIL X GARMIN HUD) */}
       {/* ========================================================================= */}
-      <section id="kategori" className="relative pt-3 sm:pt-4 pb-0">
+      <section id="kategori" className="relative pt-3 sm:pt-4 pb-16 lg:pb-0">
         
         {/* Cinematic Action Cyclist Motion Background (pesepeda.webp) - MIDDLE IMAGE: Solo Aero Cyclist */}
         <div 
-          className="absolute -top-96 sm:-top-[420px] -bottom-72 inset-x-0 z-0 pointer-events-none overflow-hidden"
+          className="absolute top-0 sm:-top-[420px] -bottom-72 inset-x-0 z-0 pointer-events-none overflow-hidden"
           style={{
             maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, black 8%, black 85%, transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, black 8%, black 85%, transparent 100%)'
@@ -53,7 +54,7 @@ export default function CategoryCockpit() {
 
         {/* Seamless Horizontal Motion Blur Transition Seam between Hero and Categories */}
         <div 
-          className="absolute -top-36 inset-x-0 h-48 z-[2] pointer-events-none opacity-70 overflow-hidden"
+          className="absolute top-0 sm:-top-36 inset-x-0 h-48 z-[2] pointer-events-none opacity-70 overflow-hidden"
           style={{
             maskImage: 'linear-gradient(to bottom, transparent 0%, black 50%, transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 50%, transparent 100%)'
@@ -64,10 +65,10 @@ export default function CategoryCockpit() {
 
         {/* Section Header */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4 sm:mb-5">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-3 sm:pb-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/[0.06] pb-3 sm:pb-4">
             <div className="space-y-3">
               <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
-                60 — 200 KM EXPEDITION
+                70 — 200 KM CHALLENGE
               </span>
               <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] group">
                 {/* Subtle ambient backlight glow in brand orange */}
@@ -145,8 +146,10 @@ export default function CategoryCockpit() {
 
         {/* Athletic Telemetry Monolith Matrix (Seamless Unified Chassis inside max-w-7xl, Tight & Compact) */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2.5 sm:mb-3">
-          <div className="rounded-xl sm:rounded-2xl bg-white/[0.08] backdrop-blur-md shadow-[0_25px_60px_rgba(0,0,0,0.7)] overflow-hidden">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-px">
+          
+          {/* DESKTOP MATRIX (md:block) — 100% UNTOUCHED ORIGINAL DESIGN */}
+          <div className="hidden md:block rounded-xl sm:rounded-2xl bg-white/[0.08] backdrop-blur-md shadow-[0_25px_60px_rgba(0,0,0,0.7)] overflow-hidden">
+            <div className="grid grid-cols-3 gap-px">
               {categories.map((c, idx) => {
                 const isActive = c.id === selectedId;
                 const isRace = c.isRace || c.id === '120';
@@ -263,11 +266,82 @@ export default function CategoryCockpit() {
                       <div className={`text-[9px] sm:text-[10px] truncate font-mono leading-tight ${
                         isRace
                           ? isActive 
-                            ? 'text-white/90 font-medium' 
-                            : 'text-slate-300 group-hover:text-white'
                           : 'text-slate-400'
                       }`}>
                         {c.cot !== 'Fleksibel' ? `COT // ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'HOURS')) : c.cot.toUpperCase()} · ${c.wave}` : t('19 CHAPTER // SE-INDONESIA', '19 CHAPTERS // NATIONWIDE')}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* MOBILE ATHLETIC CATEGORY SELECTOR (md:hidden) — COMPACT SWIPE RAIL */}
+          <div className="md:hidden space-y-2">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-2.5 pb-2 no-scrollbar w-full">
+              {categories.map((c, idx) => {
+                const isActive = c.id === selectedId;
+                const isRace = c.isRace || c.id === '120';
+                const etapeNumber = `0${idx + 1}`;
+
+                return (
+                  <button
+                    key={c.id}
+                    type="button"
+                    onClick={() => handleCategorySelect(c.id)}
+                    className={`group relative text-left w-[215px] shrink-0 snap-center rounded-2xl p-3.5 transition-all duration-300 flex flex-col justify-between overflow-hidden focus:outline-none cursor-pointer ${
+                      isActive
+                        ? 'bg-gradient-to-b from-[#FA6D0B]/25 via-[#FA6D0B]/[0.08] to-[#0B0C0E] shadow-[0_15px_35px_rgba(250,109,11,0.25)]'
+                        : 'bg-[#0B0C0E]/95 shadow-[0_10px_25px_rgba(0,0,0,0.6)] text-slate-400'
+                    }`}
+                  >
+                    {/* Top Laser Line on Active */}
+                    {isActive && (
+                      <div className="absolute top-0 inset-x-0 h-[2.5px] bg-[#FA6D0B] shadow-[0_0_12px_#FA6D0B] rounded-t-2xl" />
+                    )}
+
+                    {/* Top Header */}
+                    <div className="flex items-center justify-between gap-1.5 mb-1">
+                      <span className={`font-mono text-[9px] font-bold uppercase tracking-wider ${
+                        isActive ? 'text-[#FA6D0B]' : 'text-slate-400'
+                      }`}>
+                        ETAPE // {etapeNumber}
+                      </span>
+                      {isRace ? (
+                        <span className="font-mono text-[8px] font-black uppercase tracking-wider text-black bg-[#FA6D0B] px-1 py-0.2 rounded-sm">
+                          PODIUM
+                        </span>
+                      ) : (
+                        <span className="font-mono text-[8px] text-slate-400 uppercase tracking-wider">
+                          {c.quota.split(' ')[0]} {t('KUOTA', 'QUOTA')}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Distance & Elevation */}
+                    <div className="flex items-baseline justify-between gap-1 my-0.5">
+                      <span className={`font-display text-2xl font-black italic uppercase leading-none ${
+                        isActive ? 'text-white' : 'text-slate-200'
+                      }`}>
+                        {c.km === 'BEBAS' ? 'VIRTUAL' : c.km}
+                      </span>
+                      <span className={`font-mono text-[11px] font-bold leading-none ${
+                        isActive ? 'text-[#FA6D0B]' : 'text-slate-400'
+                      }`}>
+                        {c.elevation === 'Rute Lokal' ? 'GPS LOG' : c.elevation}
+                      </span>
+                    </div>
+
+                    {/* Subtitle & COT */}
+                    <div className="border-t border-white/10 pt-1 mt-1 space-y-0.5">
+                      <div className={`font-mono text-[10px] font-bold uppercase tracking-wide truncate ${
+                        isActive ? 'text-[#FA6D0B]' : 'text-slate-300'
+                      }`}>
+                        {isRace ? 'OFFICIAL RACE' : c.subtitle}
+                      </div>
+                      <div className="font-mono text-[8px] text-slate-400 truncate">
+                        {c.cot !== 'Fleksibel' ? `COT // ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'HRS')) : c.cot.toUpperCase()} · ${c.wave}` : t('19 CHAPTER SE-INDONESIA', '19 CHAPTERS NATIONWIDE')}
                       </div>
                     </div>
                   </button>
@@ -280,6 +354,43 @@ export default function CategoryCockpit() {
         {/* THE CENTERPIECE: OPEN ATHLETIC SHOWCASE */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-0">
           
+          {/* MOBILE SEGMENTED COCKPIT TABS (lg:hidden) — CLEAN BORDERLESS CAPSULE */}
+          <div className="lg:hidden flex items-center bg-black/80 backdrop-blur-xl p-1.5 rounded-full shadow-[0_15px_35px_rgba(0,0,0,0.6)] mb-3 font-mono text-xs gap-1">
+            <button
+              type="button"
+              onClick={() => setMobileTab('radar')}
+              className={`flex-1 py-2.5 rounded-full font-bold uppercase tracking-wider transition-all cursor-pointer text-center text-[11px] ${
+                mobileTab === 'radar'
+                  ? 'bg-[#FA6D0B] text-black shadow-[0_0_15px_rgba(250,109,11,0.5)]'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              {t('RUTE & KONTUR', 'ROUTE & RADAR')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileTab('specs')}
+              className={`flex-1 py-2.5 rounded-full font-bold uppercase tracking-wider transition-all cursor-pointer text-center text-[11px] ${
+                mobileTab === 'specs'
+                  ? 'bg-[#FA6D0B] text-black shadow-[0_0_15px_rgba(250,109,11,0.5)]'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              {t('SPESIFIKASI', 'SPECS & FEE')}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileTab('checkpoints')}
+              className={`flex-1 py-2.5 rounded-full font-bold uppercase tracking-wider transition-all cursor-pointer text-center text-[11px] ${
+                mobileTab === 'checkpoints'
+                  ? 'bg-[#FA6D0B] text-black shadow-[0_0_15px_rgba(250,109,11,0.5)]'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              {t('CHECKPOINT', 'CHECKPOINTS')}
+            </button>
+          </div>
+
           {/* Smooth Cross-Fade Transition Container */}
           <div className={`transition-all duration-300 transform ${
             isTransitioning ? 'opacity-25 scale-[0.99] translate-y-1 blur-[1px]' : 'opacity-100 scale-100 translate-y-0 blur-0'
@@ -288,10 +399,10 @@ export default function CategoryCockpit() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch pt-1 pb-1">
             
               {/* KOLOM KIRI (5 COLS): ROUTE MAP & ELEVATION PROFILE */}
-              <div className="lg:col-span-5 select-none flex flex-col gap-4">
+              <div className={`lg:col-span-5 select-none flex-col gap-4 ${mobileTab === 'radar' ? 'flex' : 'hidden lg:flex'}`}>
                 
                 {/* KOTAK MAP GPX LIVE */}
-                <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[5/4] rounded-xl overflow-hidden bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col">
+                <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[5/4] rounded-2xl overflow-hidden bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col">
                   
                   {/* HEADER: Title + Telemetry */}
                   <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-4 sm:px-5 py-3 shrink-0 bg-black/40">
@@ -299,7 +410,7 @@ export default function CategoryCockpit() {
                       {currentCategory.id === 'VIRTUAL' ? t('RUTE VIRTUAL', 'VIRTUAL ROUTE') : `${currentCategory.km} ${t('RUTE', 'ROUTE')}`}
                     </h4>
                     <span className="text-[10px] font-mono font-bold tracking-widest text-[#FA6D0B] uppercase">
-                      GPX LIVE // SATELLITE
+                      GPX LIVE // VECTOR HUD
                     </span>
                   </div>
 
@@ -327,11 +438,11 @@ export default function CategoryCockpit() {
               </div>
 
               {/* KOLOM KANAN (7 COLS): TATA LETAK DATA & TELEMETRI DENGAN FROSTED CARD ELEGAN */}
-              <div className="lg:col-span-7 rounded-xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.6)] space-y-4">
+              <div className={`lg:col-span-7 rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-6 flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.6)] space-y-4 ${mobileTab === 'specs' ? 'flex' : 'hidden lg:flex'}`}>
                 
                 {/* 1. Header Etape */}
                 <div>
-                  <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black uppercase text-white italic tracking-tight leading-none drop-shadow-sm flex items-baseline gap-x-2.5 whitespace-nowrap">
+                  <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black uppercase text-white italic tracking-tight leading-tight drop-shadow-sm flex flex-wrap items-baseline gap-x-2.5">
                     <span>{language === 'ENG' && currentCategory.titleEng ? currentCategory.titleEng : currentCategory.title}</span>
                     {currentCategory.titleNote && (
                       <span className="text-xs sm:text-sm lg:text-base font-mono font-bold text-slate-400 not-italic uppercase tracking-wider inline-block">
@@ -604,7 +715,7 @@ export default function CategoryCockpit() {
             </div>
 
             {/* ROW 2: TECHNICAL DETAILS, CHECKPOINTS & PROTOCOLS (TIGHTENED & HARMONIZED) */}
-            <div className="mt-3 pt-3 border-t border-white/10 space-y-3.5">
+            <div className={`mt-3 pt-3 border-t border-white/10 space-y-3.5 ${mobileTab === 'checkpoints' ? 'block' : 'hidden lg:block'}`}>
               
               {/* Checkpoint & Pitstop Grid (Full Width, Compact & Icon-free) */}
               <div className="space-y-2">
@@ -674,6 +785,32 @@ export default function CategoryCockpit() {
 
           </div>
 
+        </div>
+
+        {/* Sticky Mobile Booking Bottom Bar (lg:hidden) */}
+        <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#0D0E11]/95 backdrop-blur-xl border-t border-white/15 px-4 py-2.5 shadow-[0_-10px_35px_rgba(0,0,0,0.85)]">
+          <div className="max-w-md mx-auto flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#FA6D0B] font-bold uppercase tracking-wider truncate">
+                <span>{currentCategory.km}</span>
+                <span className="text-white/25">·</span>
+                <span className="text-slate-300 truncate">{currentCategory.title}</span>
+              </div>
+              <div className="text-xs sm:text-sm font-display italic font-black text-white">
+                {currentCategory.regular.medal}
+                <span className="text-[10px] font-sans font-normal text-slate-400 not-italic ml-1">
+                  {currentCategory.isRace ? '/ Single' : ''}
+                </span>
+              </div>
+            </div>
+            <Link
+              href={`/daftar?category=${currentCategory.id}`}
+              className="px-5 py-2.5 rounded-full text-xs font-mono font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all flex items-center gap-1.5 shadow-[0_0_16px_rgba(250,109,11,0.5)] shrink-0 active:scale-95 cursor-pointer"
+            >
+              <span>{t('DAFTAR', 'REGISTER')}</span>
+              <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            </Link>
+          </div>
         </div>
 
       </section>

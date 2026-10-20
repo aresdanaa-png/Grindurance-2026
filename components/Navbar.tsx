@@ -131,14 +131,14 @@ export default function Navbar() {
 
           {/* ── Mobile: Lang Switcher & Hamburger ── */}
           <div className="flex md:hidden items-center gap-2.5">
-            {/* Mobile Language Toggle */}
-            <div className="flex items-center text-[11px] font-mono font-bold tracking-wider rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 backdrop-blur-sm select-none">
+            {/* Mobile Language Toggle (Clean Borderless Pill) */}
+            <div className="flex items-center text-[11px] font-mono font-bold tracking-wider rounded-full bg-black/60 backdrop-blur-md px-3 py-1 select-none shadow-[0_4px_15px_rgba(0,0,0,0.4)]">
               <button
                 id="btn-lang-id-mobile"
                 type="button"
                 onClick={() => setLanguage('ID')}
                 className={`transition-colors uppercase cursor-pointer ${
-                  language === 'ID' ? 'text-[#FA6D0B] font-black' : 'text-slate-400'
+                  language === 'ID' ? 'text-[#FA6D0B] font-black' : 'text-slate-400 hover:text-white'
                 }`}
                 aria-label="Bahasa Indonesia"
               >
@@ -150,7 +150,7 @@ export default function Navbar() {
                 type="button"
                 onClick={() => setLanguage('ENG')}
                 className={`transition-colors uppercase cursor-pointer ${
-                  language === 'ENG' ? 'text-[#FA6D0B] font-black' : 'text-slate-400'
+                  language === 'ENG' ? 'text-[#FA6D0B] font-black' : 'text-slate-400 hover:text-white'
                 }`}
                 aria-label="English Language"
               >
@@ -160,12 +160,12 @@ export default function Navbar() {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="relative p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
+              className="relative p-2.5 rounded-full text-slate-300 hover:text-white bg-black/50 hover:bg-black/70 backdrop-blur-md transition-all duration-200 cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.3)]"
               aria-label="Toggle Menu"
             >
-              <div className="relative w-6 h-6">
-                <Menu className={`w-6 h-6 absolute transition-all duration-300 ${mobileMenuOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'}`} />
-                <X className={`w-6 h-6 absolute transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'}`} />
+              <div className="relative w-5 h-5">
+                <Menu className={`w-5 h-5 absolute transition-all duration-300 ${mobileMenuOpen ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'}`} />
+                <X className={`w-5 h-5 absolute transition-all duration-300 ${mobileMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'}`} />
               </div>
             </button>
           </div>

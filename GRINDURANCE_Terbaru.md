@@ -44,11 +44,11 @@ GRINDURANCE 2026 memiliki lima kategori menurut ketiga dokumen.
                             dipromosikan utama              perlu
                                                             diperhatikan
   ---------------- --------------------- ------------------ ----------------
-  70 Km Fun Gravel                 70 km Pengalaman gravel  Detail rute dan
-  Ride                                   untuk peserta yang regulasi tidak
-                                         ingin mencoba      dijabarkan dalam
-                                         tanpa tekanan      ketiga PDF
-                                         berlebih           
+  70 Km Fun Gravel      69,9 km (70 km) Pengalaman gravel  Rute 69,9 km;
+  Ride                                   pengenalan untuk   elevasi +650–778 m;
+                                         menikmati          max 290 m MDPL;
+                                         tantangan tanpa    2 tanjakan utama;
+                                         tekanan berlebih   unpaved 8,16 km
 
   100 Km Fondo      Sekitar 100 km; rute Endurance ride,    Dokumen menyebut
                       dijelaskan sebagai bukan kategori     tidak ada
@@ -84,6 +84,23 @@ GRINDURANCE 2026 memiliki lima kategori menurut ketiga dokumen.
   --------------------------------------------------------------------------
 
 ## 3. Informasi Rute per Kategori
+
+### 3.0 --- 70 Km Fun Gravel Ride
+
+-   **Jarak rute yang disebut:** 69,9 km (dibulatkan 70 km).
+-   **Total elevation gain:** Sekitar 650–778 m.
+-   **Titik tertinggi:** elevasi 290 m MDPL.
+-   **Segmen permukaan/medan:**
+    -   Aspal dan beton.
+    -   Jalan tanah dan kerikil (*unpaved*): 8,16 km.
+    -   Jalur setapak (*path*): 2,61 km.
+    -   Jalur *off-grid*: 2,24 km.
+-   **Dua tanjakan utama yang dijelaskan:**
+    1.  Tanjakan pertama: 2,66 km dengan gradien 5% (kenaikan vertikal 146 m).
+    2.  Tanjakan kedua: 2,62 km dengan gradien 7% (kenaikan vertikal 172 m, lebih curam).
+-   **Lanskap:** tebing kapur (*karst*), kebun bambu, sawah terasering Jonggol, disusul turunan panjang sebelum kembali ke perkotaan.
+-   **Start/finish:** ABBEY Coffee & Eatery, Stasiun LRT Harjamukti.
+-   **Karakter kategori:** pengenalan *gravel adventure*, ramah sepeda lipat (seli 20"), hybrid, dan pemula tanpa tekanan berlebih.
 
 ### 3.1 --- 100 Km Fondo
 

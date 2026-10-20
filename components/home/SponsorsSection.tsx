@@ -68,7 +68,7 @@ export default function SponsorsSection() {
       >
         <img
           src="/backgrounds/bg-sponsors.webp"
-          alt="Grindurance Expedition Ferry Crossing"
+          alt="Grindurance Challenge Ferry Crossing"
           className="w-full h-full object-cover object-[center_35%] opacity-40 filter contrast-[1.12] saturate-[1.1] brightness-[0.7] blur-[0.4px]"
         />
         {/* Deep dark gradient overlays to guarantee 100% sponsor logo visibility */}
@@ -148,7 +148,7 @@ export default function SponsorsSection() {
 
         {/* Subtle Partnership Liaison Line */}
         <div className="pt-5 border-t border-white/5 flex flex-col sm:flex-row items-center justify-center gap-3 text-center text-xs font-mono text-slate-500">
-          <span>{t('Tertarik berkolaborasi dengan ekspedisi kami?', 'Interested in partnering with our expedition?')}</span>
+          <span>{t('Tertarik berkolaborasi dengan tantangan kami?', 'Interested in partnering with our challenge?')}</span>
           <a
             href="https://wa.me/6281290001000?text=Halo%20Sekretariat%20GX-ID,%20kami%20ingin%20berdiskusi%20kemitraan%20resmi%20Grindurance%202026"
             target="_blank"

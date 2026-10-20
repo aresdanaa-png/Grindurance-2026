@@ -214,8 +214,8 @@ export default function PeraturanPage() {
               </h2>
               <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-sans max-w-4xl">
                 {t(
-                  'Gravel Grindurance menganut tradisi balap ekspedisi ketahanan murni tanpa bantuan luar (unsupported). Setiap peserta bertanggung jawab penuh atas navigasi rute, hidrasi, nutrisi, perbaikan mekanik sepeda, dan keselamatan dirinya sendiri sejak dilepas di Start Gate hingga menyentuh garis Finis.',
-                  'Gravel Grindurance adheres to pure unsupported endurance expedition traditions. Every rider carries total autonomy over course navigation, hydration, nutrition, mechanical repairs, and self-preservation from Start Gate dispatch until crossing the Finish Line.'
+                  'Gravel Grindurance menganut tradisi balap tantangan ketahanan murni tanpa bantuan luar (unsupported). Setiap peserta bertanggung jawab penuh atas navigasi rute, hidrasi, nutrisi, perbaikan mekanik sepeda, dan keselamatan dirinya sendiri sejak dilepas di Start Gate hingga menyentuh garis Finis.',
+                  'Gravel Grindurance adheres to pure unsupported endurance challenge traditions. Every rider carries total autonomy over course navigation, hydration, nutrition, mechanical repairs, and self-preservation from Start Gate dispatch until crossing the Finish Line.'
                 )}
               </p>
             </div>

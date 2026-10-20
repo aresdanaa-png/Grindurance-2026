@@ -246,8 +246,8 @@ const SEED_ROSTER: RosterEntry[] = [
     full_name: 'Kresna Wardhana',
     rider_role: 'SINGLE',
     category_id: '60',
-    category_name: '60 Fun Ride',
-    distance_km: 60,
+    category_name: '70 Fun Gravel Ride',
+    distance_km: 70,
     wave_start_time: '07:00 WIB',
     gender: 'male',
     community_chapter: 'GX-ID Chapter Cileungsi & Sentul',
@@ -376,6 +376,7 @@ export async function GET(req: Request) {
     if (category && category !== 'ALL') {
       filtered = filtered.filter((r) => {
         if (category === '100') return r.category_id === '100' || r.category_id === '80';
+        if (category === '70' || category === '60') return r.category_id === '70' || r.category_id === '60';
         return r.category_id === category;
       });
     }

@@ -61,8 +61,8 @@ const RACE_120_PAIR_CONFIG: Category = {
 const OFFICIAL_CATEGORIES: Category[] = [
   {
     id: '60',
-    name: '60 Fun Ride',
-    distance_km: 60,
+    name: '70 Fun Gravel Ride',
+    distance_km: 70,
     category_type: 'fun',
     is_pair: false,
     price_medal_only: 250000,
@@ -177,14 +177,15 @@ export interface CategoryVisual {
 
 function getCategoryVisual(catId: string, t: (id: string, eng: string) => string): CategoryVisual {
   switch (catId) {
+    case '70':
     case '60':
       return {
         image: '/categories/cat_60_funride.jpg?v=landscape_2026',
-        headline: '60 FUN RIDE',
-        subtitle: t('REKREASI & PEMULA · SUKAMAKMUR', 'RECREATIONAL & BEGINNER · SUKAMAKMUR'),
-        elevation: '+450 M GAIN',
-        badge: t('FUN RIDE · REKREASI', 'FUN RIDE · RECREATION'),
-        terrain: t('65% ASPAL · 35% MAKADAM HALUS', '65% ASPHALT · 35% SMOOTH MACADAM'),
+        headline: '70 FUN GRAVEL',
+        subtitle: t('REKREASI & PEMULA · 69,9 KM · JONGGOL', 'RECREATIONAL & BEGINNER · 69.9 KM · JONGGOL'),
+        elevation: '+778 M GAIN',
+        badge: t('FUN GRAVEL · REKREASI', 'FUN GRAVEL · RECREATION'),
+        terrain: t('UNPAVED 8.16 KM · PATH 2.61 KM · OFF-GRID 2.24 KM', '8.16 KM UNPAVED · 2.61 KM PATH · 2.24 KM OFF-GRID'),
         callToAction: t('GAS PETUALANGAN PERDANA!', 'START FIRST ADVENTURE!'),
       };
     case '100':
@@ -247,7 +248,7 @@ function getCategoryVisual(catId: string, t: (id: string, eng: string) => string
         headline: '200 ULTRA',
         subtitle: t('170 KM UTAMA + 30 KM PROLOG MANDIRI · COT 17 JAM', '170 KM MAIN + 30 KM PROLOGUE · 17-HOUR COT'),
         elevation: '+2,530 M GAIN',
-        badge: t('ULTRA EXPEDITION · PROLOG 30K', 'ULTRA EXPEDITION · 30K PROLOGUE'),
+        badge: t('ULTRA CHALLENGE · PROLOG 30K', 'ULTRA CHALLENGE · 30K PROLOGUE'),
         terrain: t('8 TANJAKAN (MAX 1.110 M MDPL) · DAYLIGHT RIDGE & NIGHT NAV', '8 CLIMBS (MAX 1,110 M MDPL) · DAYLIGHT RIDGE & NIGHT NAV'),
         callToAction: t('JADI LEGENDA 200 KM!', 'BECOME A 200K LEGEND!'),
         prologueNote: t(
@@ -273,9 +274,9 @@ function getCategoryVisual(catId: string, t: (id: string, eng: string) => string
       return {
         image: '/categories/cat_60_funride.jpg',
         headline: catId,
-        subtitle: t('EKSPEDISI RESMI · GRINDURANCE 2026', 'OFFICIAL EXPEDITION · GRINDURANCE 2026'),
+        subtitle: t('TANTANGAN RESMI · GRINDURANCE 2026', 'OFFICIAL CHALLENGE · GRINDURANCE 2026'),
         elevation: '+1,760 M GAIN',
-        badge: t('OFFICIAL EXPEDITION', 'OFFICIAL EXPEDITION'),
+        badge: t('OFFICIAL CHALLENGE', 'OFFICIAL CHALLENGE'),
         terrain: t('GRAVEL & ASPAL', 'GRAVEL & ASPHALT'),
         callToAction: t('PILIH KATEGORI INI', 'SELECT THIS CATEGORY'),
       };
@@ -450,7 +451,7 @@ export default function RegistrationPage() {
           setSelectedCategory(RACE_120_SINGLE_CONFIG);
           setCurrentStep('detail');
         } else {
-          const found = OFFICIAL_CATEGORIES.find(c => c.id.toLowerCase() === p);
+          const found = OFFICIAL_CATEGORIES.find(c => c.id.toLowerCase() === p || (p === '70' && c.id === '60') || (p === '60' && c.id === '70'));
           if (found) {
             setSelectedCategory(found);
             setCurrentStep('detail');
@@ -771,8 +772,8 @@ export default function RegistrationPage() {
               </div>
             </div>
 
-            {/* Grid 6 Kategori Bergaya Editorial Gravel Monolith */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {/* Grid 6 Kategori Bergaya Editorial Gravel Monolith (3 Baris, Tiap Baris 2 Kategori) */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:gap-8">
               {categories.map((cat, idx) => {
                 const visual = getCategoryVisual(cat.id, t);
                 const quotaPercent = Math.min(100, Math.round((cat.current_enrolled / cat.quota) * 100));
@@ -785,10 +786,10 @@ export default function RegistrationPage() {
                       animationDelay: `${idx * 90}ms`,
                       animationFillMode: 'forwards',
                     }}
-                    className="opacity-0 animate-slide-up-fade relative h-[500px] sm:h-[520px] rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-pointer flex flex-col justify-between select-none shadow-[0_15px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_40px_rgba(250,109,11,0.35)]"
+                    className="opacity-0 animate-slide-up-fade relative aspect-square sm:aspect-square md:aspect-square lg:aspect-auto lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-pointer flex flex-col justify-between select-none shadow-[0_15px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_40px_rgba(250,109,11,0.35)]"
                   >
                     {/* Top Visual & Telemetry Section */}
-                    <div className="relative flex-1 p-6 sm:p-7 flex flex-col justify-between overflow-hidden">
+                    <div className="relative flex-1 p-2 sm:p-4 md:p-6 lg:p-7 flex flex-col justify-between overflow-hidden">
                       {/* Background Hero Photography */}
                       <Image
                         src={visual.image}
@@ -807,68 +808,68 @@ export default function RegistrationPage() {
                       </div>
 
                       {/* ── TOP HUD TELEMETRY (PURE TYPOGRAPHY) ── */}
-                      <div className="relative z-20 flex items-start justify-between gap-3 font-mono text-xs border-b border-white/10 pb-3">
-                        <div>
-                          <span className="font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                      <div className="relative z-20 flex items-start justify-between gap-1 sm:gap-2 md:gap-3 font-mono text-xs border-b border-white/10 pb-1 sm:pb-2.5">
+                        <div className="min-w-0 flex-1">
+                          <span className="font-bold text-[#FA6D0B] uppercase tracking-wider block text-[7.5px] sm:text-[10px] md:text-xs truncate">
                             {cat.id === '120' || cat.id === '120_SINGLE' || cat.id === '120_PAIR'
-                              ? t('OFFICIAL RACE · 120 KM (SINGLE & PAIR)', 'OFFICIAL RACE · 120 KM (SOLO & PAIR)')
+                              ? t('OFFICIAL RACE · 120 KM', 'OFFICIAL RACE · 120 KM')
                               : cat.id === '200' 
-                              ? t('ULTRA EXPEDITION · 200 KM', 'ULTRA EXPEDITION · 200 KM') 
+                              ? t('ULTRA · 200 KM', 'ULTRA · 200 KM') 
                               : cat.id === '150' 
                               ? t('GRAND FONDO · 150 KM', 'GRAND FONDO · 150 KM') 
                               : cat.id === '100' 
                               ? t('FONDO · 100 KM', 'FONDO · 100 KM') 
                               : cat.id === 'VIRTUAL' 
-                              ? t('VIRTUAL STRAVA · 19 CHAPTERS', 'VIRTUAL STRAVA · 19 CHAPTERS') 
-                              : t('FUN RIDE · 60 KM', 'FUN RIDE · 60 KM')}
+                              ? t('VIRTUAL · 19 CHAPTERS', 'VIRTUAL · 19 CHAPTERS') 
+                              : t('FUN GRAVEL · 70 KM', 'FUN GRAVEL · 70 KM')}
                           </span>
-                          <span className="text-[11px] text-slate-400 tracking-wider uppercase block mt-0.5">
-                            {visual.elevation} · {cat.cot_hours ? `COT ${cat.cot_hours}H` : t('RUTE MANDIRI', 'SELF-ROUTED')}
+                          <span className="text-[6.5px] sm:text-[9px] md:text-[11px] text-slate-400 tracking-wider uppercase block truncate">
+                            {visual.elevation} · {cat.cot_hours ? `COT ${cat.cot_hours}H` : t('MANDIRI', 'SELF')}
                           </span>
                         </div>
 
                         <div className="text-right shrink-0">
-                          <span className="text-[10px] text-slate-400 uppercase tracking-widest block">{t('START', 'START')}</span>
-                          <span className="text-xs font-bold text-white tracking-wider block">
+                          <span className="text-[6px] sm:text-[8px] md:text-[10px] text-slate-400 uppercase tracking-widest block">{t('START', 'START')}</span>
+                          <span className="text-[7.5px] sm:text-[10px] md:text-xs font-bold text-white tracking-wider block whitespace-nowrap">
                             {cat.wave_start_time === 'Fleksibel' ? t('FLEKSIBEL', 'FLEXIBLE') : `${cat.wave_start_time || '05:30'} WIB`}
                           </span>
                         </div>
                       </div>
 
                       {/* ── CENTER HEROIC TYPOGRAPHY ── */}
-                      <div className="relative z-20 my-auto space-y-2 py-4">
-                        <h2 className="font-display italic text-4xl sm:text-5xl font-black uppercase tracking-tight text-white drop-shadow-md leading-none group-hover:text-[#FA6D0B] transition-colors duration-300">
+                      <div className="relative z-20 my-auto space-y-0.5 sm:space-y-1.5 py-0.5 sm:py-2">
+                        <h2 className="font-display italic text-sm sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tight text-white drop-shadow-md leading-none group-hover:text-[#FA6D0B] transition-colors duration-300">
                           {visual.headline}
                         </h2>
 
-                        <p className="font-mono text-xs text-slate-300 uppercase tracking-wider">
+                        <p className="font-mono text-[6.5px] sm:text-[9px] md:text-xs text-slate-300 uppercase tracking-wider line-clamp-1">
                           {visual.subtitle}
                         </p>
                       </div>
 
                       {/* ── BOTTOM INDUSTRIAL LEDGER (PRICE & QUOTA) ── */}
-                      <div className="relative z-20 space-y-2 border-t border-white/10 pt-3 font-mono">
+                      <div className="relative z-20 space-y-0.5 sm:space-y-1.5 border-t border-white/10 pt-1 sm:pt-2 font-mono">
                         <div className="flex items-baseline justify-between text-xs">
-                          <span className="text-[11px] text-slate-400 uppercase tracking-widest">
-                            {t('BIAYA MULAI DARI', 'STARTING FROM')}
+                          <span className="text-[6.5px] sm:text-[9px] md:text-[11px] text-slate-400 uppercase tracking-widest truncate">
+                            {t('MULAI', 'START')}
                           </span>
-                          <span className="font-display italic text-xl sm:text-2xl font-black text-white">{formatRupiah(cat.price_medal_only)}</span>
+                          <span className="font-display italic text-xs sm:text-lg md:text-xl lg:text-2xl font-black text-white leading-none">{formatRupiah(cat.price_medal_only)}</span>
                         </div>
 
-                        <div className="flex items-center justify-between text-[11px] text-slate-400 border-t border-white/5 pt-1.5">
-                          <span>{t('KUOTA:', 'QUOTA:')} <strong className="text-white">{cat.quota - cat.current_enrolled} {t('SLOT', 'SLOTS')}</strong></span>
-                          <span className="text-[#FA6D0B] font-bold">{quotaPercent}% {t('TERISI', 'FILLED')}</span>
+                        <div className="flex items-center justify-between text-[6.5px] sm:text-[9px] md:text-[11px] text-slate-400 border-t border-white/5 pt-0.5 sm:pt-1">
+                          <span className="truncate">{t('SISA:', 'LEFT:')} <strong className="text-white">{cat.quota - cat.current_enrolled}</strong></span>
+                          <span className="text-[#FA6D0B] font-bold shrink-0">{quotaPercent}%</span>
                         </div>
                       </div>
                     </div>
 
                     {/* ── FULL-WIDTH FLUSH FOOTER BUTTON BAR (KATA PENYEMANGAT SPESIFIK TIAP KATEGORI) ── */}
-                    <div className="relative z-20 w-full py-4 sm:py-4.5 bg-[#17191E] group-hover:bg-[#FA6D0B] text-center transition-all duration-300 flex items-center justify-center gap-2 overflow-hidden shadow-inner">
+                    <div className="relative z-20 w-full py-1.5 sm:py-3 md:py-4 bg-[#17191E] group-hover:bg-[#FA6D0B] text-center transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 overflow-hidden shadow-inner px-1 sm:px-2 shrink-0">
                       <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none" />
-                      <span className="relative z-10 font-mono font-black text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] text-[#E5E7EB] group-hover:text-black uppercase transition-colors duration-300">
+                      <span className="relative z-10 font-mono font-black text-[7.5px] sm:text-xs md:text-sm tracking-wider sm:tracking-[0.15em] text-[#E5E7EB] group-hover:text-black uppercase transition-colors duration-300 truncate">
                         {visual.callToAction}
                       </span>
-                      <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] text-slate-400 group-hover:text-black group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                      <ArrowUpRight className="relative z-10 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[2.5] text-slate-400 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 shrink-0" />
                     </div>
 
                   </div>
@@ -1233,14 +1234,14 @@ export default function RegistrationPage() {
                   <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 px-4 sm:px-6 py-3 shrink-0 bg-black/60 backdrop-blur-md">
                     <div className="flex items-center gap-3">
                       <h2 className="font-display text-base sm:text-xl font-black uppercase text-white italic tracking-wider leading-none">
-                        {detailCategoryData.km} {t('PETA RUTE SATELLITE RESMI · GPX LIVE', 'OFFICIAL SATELLITE ROUTE MAP · GPX LIVE')}
+                        {detailCategoryData.km} {t('PETA RUTE VECTOR HUD RESMI · GPX LIVE', 'OFFICIAL VECTOR HUD ROUTE MAP · GPX LIVE')}
                       </h2>
                     </div>
 
                     <div className="flex items-center gap-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest">
                       <span>{t('KORIDOR JONGGOL–SUKAMAKMUR', 'JONGGOL–SUKAMAKMUR CORRIDOR')}</span>
                       <span>·</span>
-                      <span className="text-[#FA6D0B] font-bold">{t('DUAL LAYER', 'DUAL LAYER')}</span>
+                      <span className="text-[#FA6D0B] font-bold">{t('LINE RADAR', 'LINE RADAR')}</span>
                     </div>
                   </div>
 
@@ -2478,8 +2479,8 @@ export default function RegistrationPage() {
                 <div className="p-5 sm:p-6 rounded-xl bg-black/60 text-xs sm:text-sm font-mono text-slate-200 leading-relaxed space-y-3 shadow-sm">
                   <p>
                     {t(
-                      '1. Saya menyadari bahwa Gravel Grindurance 2026 adalah ekspedisi bersepeda mandiri (unsupported) di jalan raya umum dan pedesaan yang tidak steril dari lalu lintas.',
-                      '1. I understand that Gravel Grindurance 2026 is an unsupported cycling expedition on public and rural roads that are not closed to general traffic.'
+                      '1. Saya menyadari bahwa Gravel Grindurance 2026 adalah tantangan bersepeda mandiri (unsupported) di jalan raya umum dan pedesaan yang tidak steril dari lalu lintas.',
+                      '1. I understand that Gravel Grindurance 2026 is an unsupported cycling challenge on public and rural roads that are not closed to general traffic.'
                     )}
                   </p>
                   <p>
@@ -2490,8 +2491,8 @@ export default function RegistrationPage() {
                   </p>
                   <p>
                     {t(
-                      '3. Saya bertanggung jawab penuh atas kebugaran fisik, kelayakan teknis sepeda gravel, serta keselamatan pribadi selama rangkaian ekspedisi berlangsung hingga garis finis.',
-                      '3. I take full personal responsibility for my physical fitness, bicycle mechanical readiness, and personal safety throughout the expedition until the finish line.'
+                      '3. Saya bertanggung jawab penuh atas kebugaran fisik, kelayakan teknis sepeda gravel, serta keselamatan pribadi selama rangkaian tantangan berlangsung hingga garis finis.',
+                      '3. I take full personal responsibility for my physical fitness, bicycle mechanical readiness, and personal safety throughout the challenge until the finish line.'
                     )}
                   </p>
                 </div>

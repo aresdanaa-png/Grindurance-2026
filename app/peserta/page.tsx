@@ -55,7 +55,7 @@ export default function PesertaPage() {
     { id: '120_SINGLE', label: '120 (RACE) SINGLE' },
     { id: '120_PAIR', label: '120 (RACE) PAIR MIX' },
     { id: '100', label: '100 FONDO' },
-    { id: '60', label: '60 FUN RIDE' },
+    { id: '60', label: '70 FUN GRAVEL' },
     { id: 'VIRTUAL', label: 'VIRTUAL RIDE' },
   ];
 

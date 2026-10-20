@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 export default function TimelineSection() {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [activeScheduleTab, setActiveScheduleTab] = useState<'raceday' | 'praevent' | 'matrix'>('raceday');
   const { t } = useLanguage();
 
@@ -49,7 +50,7 @@ export default function TimelineSection() {
         {/* Vignette Overlay for High-Contrast Information Legibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C0E]/40 via-transparent to-[#0B0C0E]/70 pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-7 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5 sm:space-y-6 relative z-10">
           
           {/* Section Header */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4 sm:pb-5">
@@ -69,8 +70,8 @@ export default function TimelineSection() {
               </div>
               <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
                 {t(
-                  'Manajemen waktu presisi untuk menjamin keselamatan dan kelancaran 5 kategori balap. Mulai dari sesi Race Pack Collection (RPC), verifikasi Scrutineering fajar, pelepasan gelombang start teratur, hingga panggung podium perayaan di ABEEY Coffee & Eatery.',
-                  'Precise time management ensuring the safety and seamless operation of 5 race categories. From the Race Pack Collection (RPC) session, dawn Scrutineering verification, staggered wave dispatch, to the celebration podium stage at ABEEY Coffee & Eatery.'
+                  'Manajemen waktu presisi untuk menjamin keselamatan dan kelancaran 5 kategori balap. Mulai dari sesi Race Pack Collection (RPC), verifikasi Scrutineering fajar, pelepasan gelombang start teratur, hingga panggung podium perayaan di ABBEY Coffee & Eatery.',
+                  'Precise time management ensuring the safety and seamless operation of 5 race categories. From the Race Pack Collection (RPC) session, dawn Scrutineering verification, staggered wave dispatch, to the celebration podium stage at ABBEY Coffee & Eatery.'
                 )}
               </p>
             </div>
@@ -87,89 +88,145 @@ export default function TimelineSection() {
             </div>
           </div>
 
-          {/* Interactive Tab Switcher: Using Brand Pill Shape rounded-full (1 Baris Saja - DNA UI) */}
-          <div className="flex items-center gap-2 sm:gap-2.5 border-b border-white/10 pb-3 sm:pb-3.5 overflow-x-auto no-scrollbar flex-nowrap w-full">
-            <button
-              onClick={() => setActiveScheduleTab('raceday')}
-              className={`px-3.5 sm:px-4 lg:px-5 py-2.5 rounded-full text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
-                activeScheduleTab === 'raceday'
-                  ? 'bg-[#FA6D0B] text-black shadow-lg shadow-[#FA6D0B]/20 font-black'
-                  : 'bg-black/20 backdrop-blur-md text-slate-300 hover:text-white border border-white/10 hover:border-white/20 hover:bg-black/30'
-              }`}
-            >
-              <span>{t('RACE DAY (HARI-H) // 13 DES 2026', 'RACE DAY // DEC 13, 2026')}</span>
-              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                activeScheduleTab === 'raceday' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-300'
-              }`}>
-                03:00–21:00 WIB
+          {/* EDITORIAL DROPDOWN TRIGGER BAR (PURE ATHLETIC TYPOGRAPHY, ZERO SAAS BADGES) */}
+          <div className="border-y border-white/10 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
+              <span className="font-black text-[#FA6D0B] uppercase tracking-wider">
+                AGENDA RESMI //
               </span>
-            </button>
+              <span className="text-white font-bold">
+                6 &amp; 13 DESEMBER 2026
+              </span>
+              <span className="text-white/20 select-none hidden sm:inline">·</span>
+              <span className="text-slate-300">
+                ABBEY COFFEE &amp; LRT HARJAMUKTI
+              </span>
+              <span className="text-white/20 select-none hidden sm:inline">·</span>
+              <span className="text-slate-400">
+                5 KATEGORI BALAP
+              </span>
+            </div>
 
             <button
-              onClick={() => setActiveScheduleTab('praevent')}
-              className={`px-3.5 sm:px-4 lg:px-5 py-2.5 rounded-full text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
-                activeScheduleTab === 'praevent'
-                  ? 'bg-[#FA6D0B] text-black shadow-lg shadow-[#FA6D0B]/20 font-black'
-                  : 'bg-black/20 backdrop-blur-md text-slate-300 hover:text-white border border-white/10 hover:border-white/20 hover:bg-black/30'
-              }`}
+              type="button"
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B] hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer select-none self-start sm:self-auto group py-1"
             >
-              <span>{t('RPC DAY & PRA-EVENT // 6 DES 2026', 'RPC DAY & PRE-EVENT // DEC 6, 2026')}</span>
-              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                activeScheduleTab === 'praevent' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-300'
-              }`}>
-                RPC, CLINIC &amp; TM
-              </span>
-            </button>
-
-            <button
-              onClick={() => setActiveScheduleTab('matrix')}
-              className={`px-3.5 sm:px-4 lg:px-5 py-2.5 rounded-full text-[11px] sm:text-xs font-mono font-bold uppercase tracking-wider transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
-                activeScheduleTab === 'matrix'
-                  ? 'bg-[#FA6D0B] text-black shadow-lg shadow-[#FA6D0B]/20 font-black'
-                  : 'bg-black/20 backdrop-blur-md text-slate-300 hover:text-white border border-white/10 hover:border-white/20 hover:bg-black/30'
-              }`}
-            >
-              <span>{t('MATRIKS GELOMBANG (5 KATEGORI)', 'WAVE DISPATCH MATRIX (5 CATEGORIES)')}</span>
-              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                activeScheduleTab === 'matrix' ? 'bg-black/20 text-black font-black' : 'bg-white/10 text-slate-300'
-              }`}>
-                WAVE &amp; COT
-              </span>
+              <span>{isExpanded ? t('TUTUP RUNDOWN JADWAL', 'COLLAPSE RUNDOWN') : t('BUKA RUNDOWN JADWAL LENGKAP', 'EXPAND FULL RUNDOWN')}</span>
+              <ArrowUpRight className={`w-4 h-4 stroke-[2.5] text-[#FA6D0B] transition-transform duration-300 ${isExpanded ? 'rotate-90 text-white' : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`} />
             </button>
           </div>
 
-          {/* TAB 1: RACE DAY ITINERARY */}
-          {activeScheduleTab === 'raceday' && (
-            <div className="space-y-6">
-              
-              {/* Context Summary Bar */}
-              <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
-                <div className="flex items-center gap-3">
-                  <span className="w-2 h-2 rounded-full bg-[#FA6D0B] shrink-0" />
-                  <div>
-                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                      {t(
-                        'VENUE UTAMA: ABEEY COFFEE & EATERY, HARJAMUKTI — MINGGU, 13 DESEMBER 2026',
-                        'MAIN VENUE: ABEEY COFFEE & EATERY, HARJAMUKTI — SUNDAY, DECEMBER 13, 2026'
-                      )}
-                    </span>
-                    <span className="text-[11px] text-slate-400">
-                      {t(
-                        'Titik Kumpul Start & Finish Terintegrasi Stasiun LRT Harjamukti Cibubur',
-                        'Integrated Start & Finish Assembly Point with Harjamukti Cibubur LRT Station'
-                      )}
-                    </span>
-                  </div>
+          {/* COMPACT COLLAPSED DISPATCH CARD (HIGH-IMPACT TELEMETRY, ZERO PAGE CLUTTER) */}
+          {!isExpanded && (
+            <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex flex-col md:flex-row md:items-center justify-between gap-5 animate-fade-in">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 font-mono text-xs font-black uppercase text-[#FA6D0B] tracking-wider">
+                  <span>// PELEPASAN 3 GELOMBANG UTAMA</span>
+                  <span className="text-white/20 select-none">·</span>
+                  <span className="text-slate-400 font-bold">START: 05:30 WIB</span>
                 </div>
-                <div className="flex items-center gap-3 text-xs font-mono text-slate-400 shrink-0">
-                  <span>FLAG OFF: <strong className="text-[#FA6D0B]">05:30 WIB</strong></span>
-                  <span className="text-[#FA6D0B]">//</span>
-                  <span>FINAL COT: <strong className="text-white">00:30 WIB (H+1)</strong></span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+                  <div className="border-l border-[#FA6D0B] pl-3 py-0.5">
+                    <span className="text-white font-bold block">05:30 WIB // WAVE 1</span>
+                    <span className="text-slate-400 text-[11px]">200 Ultra &amp; 150 Grand Fondo</span>
+                  </div>
+                  <div className="border-l border-[#FA6D0B] pl-3 py-0.5">
+                    <span className="text-white font-bold block">06:00 WIB // WAVE 2</span>
+                    <span className="text-slate-400 text-[11px]">120 Race (Single &amp; Pair Mix)</span>
+                  </div>
+                  <div className="border-l border-white/20 pl-3 py-0.5">
+                    <span className="text-white font-bold block">07:00 WIB // WAVE 3</span>
+                    <span className="text-slate-400 text-[11px]">100 Fondo &amp; 70 Fun Gravel</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Vertical Timeline Container */}
-              <div className="relative border-l border-white/15 ml-4 sm:ml-6 pl-6 sm:pl-8 space-y-8">
+              <button
+                type="button"
+                onClick={() => setIsExpanded(true)}
+                className="shrink-0 px-6 py-3 rounded-full bg-[#FA6D0B] text-black font-bold uppercase tracking-wider text-xs hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(250,109,11,0.4)] active:scale-95 group"
+              >
+                <span>{t('BUKA RUNDOWN LENGKAP & MATRIKS', 'EXPAND FULL RUNDOWN & MATRIX')}</span>
+                <ArrowUpRight className="w-4 h-4 stroke-[2.5] text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </button>
+            </div>
+          )}
+
+          {/* COLLAPSIBLE ACCORDION BODY (EXPANDS WHEN isExpanded IS TRUE) */}
+          {isExpanded && (
+            <div className="space-y-6 pt-2 animate-fade-in">
+              {/* Clean Editorial Underline Tabs (NO PILL BADGES, PURE MONOSPACE) */}
+              <div className="flex items-center gap-6 sm:gap-8 border-b border-white/10 pb-3 overflow-x-auto no-scrollbar">
+                <button
+                  type="button"
+                  onClick={() => setActiveScheduleTab('raceday')}
+                  className={`font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors pb-1 border-b-2 whitespace-nowrap cursor-pointer ${
+                    activeScheduleTab === 'raceday'
+                      ? 'text-[#FA6D0B] border-[#FA6D0B] font-black'
+                      : 'text-slate-400 hover:text-white border-transparent'
+                  }`}
+                >
+                  <span>{t('RACE DAY (13 DES 2026)', 'RACE DAY (DEC 13, 2026)')}</span>
+                  <span className="text-slate-500 font-normal ml-2">// 03:00–21:00 WIB</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveScheduleTab('praevent')}
+                  className={`font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors pb-1 border-b-2 whitespace-nowrap cursor-pointer ${
+                    activeScheduleTab === 'praevent'
+                      ? 'text-[#FA6D0B] border-[#FA6D0B] font-black'
+                      : 'text-slate-400 hover:text-white border-transparent'
+                  }`}
+                >
+                  <span>{t('RPC & PRA-EVENT (6 DES 2026)', 'RPC & PRE-EVENT (DEC 6, 2026)')}</span>
+                  <span className="text-slate-500 font-normal ml-2">// RPC, CLINIC &amp; TM</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveScheduleTab('matrix')}
+                  className={`font-mono text-xs sm:text-sm font-bold uppercase tracking-wider transition-colors pb-1 border-b-2 whitespace-nowrap cursor-pointer ${
+                    activeScheduleTab === 'matrix'
+                      ? 'text-[#FA6D0B] border-[#FA6D0B] font-black'
+                      : 'text-slate-400 hover:text-white border-transparent'
+                  }`}
+                >
+                  <span>{t('MATRIKS GELOMBANG', 'WAVE MATRIX')}</span>
+                  <span className="text-slate-500 font-normal ml-2">// 5 KATEGORI</span>
+                </button>
+              </div>
+
+              {/* TAB 1: RACE DAY ITINERARY */}
+              {activeScheduleTab === 'raceday' && (
+                <div className="space-y-6">
+                  
+                  {/* Context Summary Bar */}
+                  <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
+                    <div>
+                      <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
+                        {t(
+                          'VENUE UTAMA: ABBEY COFFEE & EATERY, HARJAMUKTI — MINGGU, 13 DESEMBER 2026',
+                          'MAIN VENUE: ABBEY COFFEE & EATERY, HARJAMUKTI — SUNDAY, DECEMBER 13, 2026'
+                        )}
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        {t(
+                          'Titik Kumpul Start & Finish Terintegrasi Stasiun LRT Harjamukti Cibubur',
+                          'Integrated Start & Finish Assembly Point with Harjamukti Cibubur LRT Station'
+                        )}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs font-mono text-slate-400 shrink-0">
+                      <span>FLAG OFF: <strong className="text-[#FA6D0B]">05:30 WIB</strong></span>
+                      <span className="text-[#FA6D0B]">//</span>
+                      <span>FINAL COT: <strong className="text-white">00:30 WIB (H+1)</strong></span>
+                    </div>
+                  </div>
+
+                  {/* Vertical Timeline Container */}
+                  <div className="relative border-l border-white/15 ml-4 sm:ml-6 pl-6 sm:pl-8 space-y-8">
 
                 {/* ITEM 1: PROLOG 30 KM */}
                 <div className="relative group">
@@ -273,7 +330,7 @@ export default function TimelineSection() {
                           05:30 WIB
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
                           WAVE 1 DISPATCH
                         </span>
                       </div>
@@ -296,7 +353,7 @@ export default function TimelineSection() {
                       <span className="text-[#FA6D0B] select-none">//</span>
                       <span>COT 150 KM: <strong className="text-white">{t('15 JAM (20:30 WIB)', '15 HOURS (20:30 WIB)')}</strong></span>
                       <span className="text-[#FA6D0B] select-none">//</span>
-                      <span>MODE: <strong className="text-[#FA6D0B]">{t('EKSPEDISI MANDIRI PENUH', 'FULL SELF-EXPEDITION')}</strong></span>
+                      <span>MODE: <strong className="text-[#FA6D0B]">{t('TANTANGAN MANDIRI PENUH', 'FULL SELF-CHALLENGE')}</strong></span>
                     </div>
                   </div>
                 </div>
@@ -312,7 +369,7 @@ export default function TimelineSection() {
                           06:00 WIB
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
                           WAVE 2 DISPATCH
                         </span>
                       </div>
@@ -351,7 +408,7 @@ export default function TimelineSection() {
                           07:00 WIB
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/20 text-white font-bold">
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-slate-300">
                           WAVE 3 DISPATCH
                         </span>
                       </div>
@@ -359,7 +416,7 @@ export default function TimelineSection() {
                     </div>
 
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
-                      FLAG OFF WAVE 3: 100 FONDO &amp; 60 FUN RIDE
+                      FLAG OFF WAVE 3: 100 FONDO &amp; 70 FUN GRAVEL
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -372,7 +429,7 @@ export default function TimelineSection() {
                     <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
                       <span>COT 100 KM: <strong className="text-white">{t('9.5 JAM (16:30 WIB)', '9.5 HOURS (16:30 WIB)')}</strong></span>
                       <span className="text-[#FA6D0B] select-none">//</span>
-                      <span>COT 60 KM: <strong className="text-white">{t('7 JAM (14:00 WIB)', '7 HOURS (14:00 WIB)')}</strong></span>
+                      <span>COT 70 KM: <strong className="text-white">{t('7 JAM (14:00 WIB)', '7 HOURS (14:00 WIB)')}</strong></span>
                       <span className="text-[#FA6D0B] select-none">//</span>
                       <span>ATMOSFER: <strong className="text-white">{t('FESTIVAL & PARADE KOMUNITAS', 'FESTIVAL & COMMUNITY PARADE')}</strong></span>
                     </div>
@@ -390,8 +447,8 @@ export default function TimelineSection() {
                           10:00 — 16:00 WIB
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-[#FA6D0B] text-[#FA6D0B] font-bold">
-                          {t('PENALTI 300%', '300% PENALTY')}
+                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#FA6D0B]">
+                          // {t('PENALTI 300%', '300% PENALTY')}
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-slate-400 uppercase">CP#4 / CP#6 JONGGOL</span>
@@ -403,8 +460,8 @@ export default function TimelineSection() {
 
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                       {t(
-                        'Seluruh peserta wajib mengambil jeda istirahat minimal 30 menit tanpa bergerak yang terverifikasi sensor smart geofencing dan scan barcode: di CP#4 untuk kategori 120, 150, dan 200 km, serta di CP#6 untuk kategori 60 Fun Ride dan 100 Fondo.',
-                        'All riders must observe a mandatory stationary rest break of at least 30 minutes verified by smart geofencing and barcode scan: at CP#4 for 120, 150, and 200 km, and at CP#6 for 60 Fun Ride and 100 Fondo.'
+                        'Seluruh peserta wajib mengambil jeda istirahat minimal 30 menit tanpa bergerak yang terverifikasi sensor smart geofencing dan scan barcode: di CP#4 untuk kategori 120, 150, dan 200 km, serta di CP#6 untuk kategori 70 Fun Gravel dan 100 Fondo.',
+                        'All riders must observe a mandatory stationary rest break of at least 30 minutes verified by smart geofencing and barcode scan: at CP#4 for 120, 150, and 200 km, and at CP#6 for 70 Fun Gravel and 100 Fondo.'
                       )}
                     </p>
 
@@ -433,8 +490,8 @@ export default function TimelineSection() {
                           11:00 — 21:00 WIB
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/20 text-white font-bold">
-                          {t('SEMUA FINISHER SAH', 'ALL OFFICIAL FINISHERS')}
+                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">
+                          // {t('SEMUA FINISHER SAH', 'ALL OFFICIAL FINISHERS')}
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-slate-400 uppercase">FINISHER GATE ABEEY</span>
@@ -464,8 +521,8 @@ export default function TimelineSection() {
                           17:00 — 18:00 WIB
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
-                          STAGE CEREMONY
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                          // STAGE CEREMONY
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-[#FA6D0B] font-bold uppercase">{t('PANGGUNG UTAMA', 'MAIN STAGE')}</span>
@@ -495,8 +552,8 @@ export default function TimelineSection() {
                           21:00 — 00:30 WIB (H+1)
                         </span>
                         <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                        <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border border-white/30 text-white font-bold">
-                          {t('BATAS AKHIR MUTLAK', 'ABSOLUTE CUT-OFF')}
+                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
+                          // {t('BATAS AKHIR MUTLAK', 'ABSOLUTE CUT-OFF')}
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-slate-400 uppercase">FINAL FINISH GATE</span>
@@ -508,8 +565,8 @@ export default function TimelineSection() {
 
                     <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                       {t(
-                        'Pukul 21:00 WIB merupakan batas akhir kategori 60–150 KM serta penutupan panggung perayaan utama. Pos finis dan tim ambulans malam RS Hermina Cibubur tetap bersiaga mengawal peserta Ultra 200 KM hingga batas Cut-Off Time resmi pukul 22:30 WIB malam (17 jam perlombaan). Peserta wajib menyelesaikan punggungan rawan saat masih terang (Daylight Ridge Completion).',
-                        '21:00 WIB marks the final deadline for 60–150 KM categories and main stage closing. The finish line and RS Hermina Cibubur mobile paramedic teams remain deployed to escort Ultra 200 KM riders until official Cut-Off Time at 22:30 WIB (17 race hours). Riders must clear hazardous ridge sectors during daylight (Daylight Ridge Completion).'
+                        'Pukul 21:00 WIB merupakan batas akhir kategori 70–150 KM serta penutupan panggung perayaan utama. Pos finis dan tim ambulans malam RS Hermina Cibubur tetap bersiaga mengawal peserta Ultra 200 KM hingga batas Cut-Off Time resmi pukul 22:30 WIB malam (17 jam perlombaan). Peserta wajib menyelesaikan punggungan rawan saat masih terang (Daylight Ridge Completion).',
+                        '21:00 WIB marks the final deadline for 70–150 KM categories and main stage closing. The finish line and RS Hermina Cibubur mobile paramedic teams remain deployed to escort Ultra 200 KM riders until official Cut-Off Time at 22:30 WIB (17 race hours). Riders must clear hazardous ridge sectors during daylight (Daylight Ridge Completion).'
                       )}
                     </p>
                   </div>
@@ -635,8 +692,8 @@ export default function TimelineSection() {
                     <span className="font-mono text-sm font-black text-white">
                       14:00 — 15:30 WIB
                     </span>
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#FA6D0B] text-black font-black">
-                      {t('BRIEFING WAJIB', 'MANDATORY BRIEFING')}
+                    <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                      // {t('BRIEFING WAJIB', 'MANDATORY BRIEFING')}
                     </span>
                   </div>
 
@@ -747,8 +804,8 @@ export default function TimelineSection() {
                         <span className="text-[10px] lg:text-[11px] text-[#FA6D0B]">Ultra Gravel Grind</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30 font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
-                          WAVE 1 (05:30 WIB)
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                          WAVE 1 // 05:30 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-[#FA6D0B] font-bold whitespace-nowrap">
@@ -764,8 +821,8 @@ export default function TimelineSection() {
                         {t('2 Depan (400+ lm) + Rompi EN ISO', '2 Front (400+ lm) + EN ISO Vest')}
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-slate-300 text-[10px] inline-block whitespace-nowrap">
-                          {t('Ekspedisi Mandiri Ultra', 'Ultra Self-Expedition')}
+                        <span className="font-mono text-xs uppercase tracking-wider text-slate-300">
+                          {t('Tantangan Mandiri Ultra', 'Ultra Self-Challenge')}
                         </span>
                       </td>
                     </tr>
@@ -777,8 +834,8 @@ export default function TimelineSection() {
                         <span className="text-[10px] lg:text-[11px] text-[#FA6D0B]">Grand Fondo Endurance</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] border border-[#FA6D0B]/30 font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
-                          WAVE 1 (05:30 WIB)
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                          WAVE 1 // 05:30 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-[#FA6D0B] font-bold whitespace-nowrap">
@@ -794,7 +851,7 @@ export default function TimelineSection() {
                         {t('2 Depan (400+ lm) + Rompi EN ISO', '2 Front (400+ lm) + EN ISO Vest')}
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-slate-300 text-[10px] inline-block whitespace-nowrap">
+                        <span className="font-mono text-xs uppercase tracking-wider text-slate-300">
                           Grand Fondo
                         </span>
                       </td>
@@ -807,8 +864,8 @@ export default function TimelineSection() {
                         <span className="text-[10px] lg:text-[11px] text-[#FA6D0B]">Single &amp; Pair Mix</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#FA6D0B] text-black font-black inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
-                          WAVE 2 (06:00 WIB)
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-white">
+                          WAVE 2 // 06:00 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-500 whitespace-nowrap">
@@ -824,8 +881,8 @@ export default function TimelineSection() {
                         {t('Min 1 Depan + Belakang Aktif', 'Min 1 Front + Active Rear')}
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#FA6D0B]/20 text-[#FA6D0B] border border-[#FA6D0B]/40 text-[10px] font-bold inline-block whitespace-nowrap">
-                          {t('KOMPETITIF (PODIUM TOP 3)', 'COMPETITIVE (TOP 3 PODIUM)')}
+                        <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                          // {t('KOMPETITIF (PODIUM TOP 3)', 'COMPETITIVE (TOP 3 PODIUM)')}
                         </span>
                       </td>
                     </tr>
@@ -837,8 +894,8 @@ export default function TimelineSection() {
                         <span className="text-[10px] lg:text-[11px] text-slate-400">Fondo Exploration</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-white font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
-                          WAVE 3 (07:00 WIB)
+                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+                          WAVE 3 // 07:00 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-500 whitespace-nowrap">
@@ -854,21 +911,21 @@ export default function TimelineSection() {
                         {t('Rekomendasi Senja/Siang', 'Recommended Dusk/Daylight')}
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/10 text-slate-300 text-[10px] inline-block whitespace-nowrap">
+                        <span className="font-mono text-xs uppercase tracking-wider text-slate-400">
                           {t('Fondo / Rekreasi', 'Fondo / Recreational')}
                         </span>
                       </td>
                     </tr>
 
-                    {/* Row 60 KM */}
+                    {/* Row 70 KM */}
                     <tr className="hover:bg-white/[0.02] transition-colors">
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">60 FUN RIDE</strong>
-                        <span className="text-[10px] lg:text-[11px] text-slate-400">{t('Fun Ride Ramah Seli', 'Folding-Bike Friendly')}</span>
+                        <strong className="text-white text-xs lg:text-sm font-display font-black uppercase tracking-tight block">70 FUN GRAVEL</strong>
+                        <span className="text-[10px] lg:text-[11px] text-slate-400">{t('Fun Gravel Ramah Seli & Pemula', 'Folding-Bike & Beginner Friendly')}</span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/20 text-white font-bold inline-block whitespace-nowrap text-[10px] lg:text-[11px]">
-                          WAVE 3 (07:00 WIB)
+                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+                          WAVE 3 // 07:00 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-500 whitespace-nowrap">
@@ -884,7 +941,7 @@ export default function TimelineSection() {
                         {t('Standar Reflektor/Lampu', 'Standard Reflectors/Lights')}
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-white/10 text-slate-300 text-[10px] inline-block whitespace-nowrap">
+                        <span className="font-mono text-xs uppercase tracking-wider text-slate-400">
                           {t('Parade Festival', 'Festival Parade')}
                         </span>
                       </td>
@@ -912,8 +969,8 @@ export default function TimelineSection() {
                         {t('Standar Jalan Raya Lokal', 'Local Road Standards')}
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
-                        <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border border-[#FA6D0B]/40 text-[#FA6D0B] text-[10px] font-bold inline-block whitespace-nowrap">
-                          {t('Validasi Strava Webhook', 'Strava Webhook Validation')}
+                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#FA6D0B]">
+                          // {t('Validasi Strava Webhook', 'Strava Webhook Validation')}
                         </span>
                       </td>
                     </tr>
@@ -946,6 +1003,25 @@ export default function TimelineSection() {
                     )}
                   </p>
                 </div>
+              </div>
+
+            </div>
+          )}
+
+              {/* Bottom Collapse Button (Pure Editorial Athletics, Zero Triangles) */}
+              <div className="pt-6 border-t border-white/10 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsExpanded(false);
+                    const el = document.getElementById('jadwal');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B] hover:text-white transition-colors flex items-center gap-2 cursor-pointer select-none py-2 px-4 group"
+                >
+                  <span>[ // {t('TUTUP RUNDOWN JADWAL', 'COLLAPSE FULL RUNDOWN')} ]</span>
+                  <ArrowUpRight className="w-4 h-4 stroke-[2.5] -rotate-90 group-hover:-translate-y-0.5 transition-transform" />
+                </button>
               </div>
 
             </div>

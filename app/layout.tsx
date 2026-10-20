@@ -64,13 +64,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className="scroll-smooth">
+    <html lang="id" className="scroll-smooth overflow-x-hidden max-w-full">
       <body
-        className={`${neueHaas.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] subpixel-antialiased selection:bg-[#FA6D0B] selection:text-black`}
+        className={`${neueHaas.variable} font-sans min-h-screen flex flex-col bg-[#0D0E11] text-[#F3F4F6] subpixel-antialiased selection:bg-[#FA6D0B] selection:text-black overflow-x-hidden max-w-full`}
       >
         <LanguageProvider>
           <Navbar />
-          <main className="flex-1 flex flex-col">
+          <main className="flex-1 flex flex-col w-full max-w-full overflow-x-hidden">
             {children}
           </main>
           <Footer />

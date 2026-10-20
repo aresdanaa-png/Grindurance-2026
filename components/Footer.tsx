@@ -28,7 +28,7 @@ export default function Footer() {
 
       {/* 2. Custom Event Logo Graphic Watermark (Enlarged Full-Bleed Beyond Screen) */}
       <div 
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[135vw] min-w-[1200px] max-w-none pointer-events-none select-none overflow-hidden opacity-[0.035] z-0 flex justify-center translate-y-8 sm:translate-y-12"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1050px] pointer-events-none select-none overflow-hidden opacity-[0.035] z-0 flex justify-center translate-y-8 sm:translate-y-12 px-4"
         aria-hidden="true"
       >
         <img
@@ -59,8 +59,8 @@ export default function Footer() {
             
             <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
               {t(
-                'Ekspedisi balap sepeda ultra-endurance dan gravel mandiri (unsupported) tahunan oleh GX-ID (Gravel & Ultra Cycling Indonesia). Melintasi koridor Jonggol–Sukamakmur–Sentul di musim hujan.',
-                'Annual unsupported ultra-endurance gravel cycling expedition organized by GX-ID (Gravel & Ultra Cycling Indonesia). Traversing Jonggol–Sukamakmur–Sentul loops in the rainy season.'
+                'Tantangan balap sepeda ultra-endurance dan gravel mandiri (unsupported) tahunan oleh GX-ID (Gravel & Ultra Cycling Indonesia). Melintasi koridor Jonggol–Sukamakmur–Sentul di musim hujan.',
+                'Annual unsupported ultra-endurance gravel cycling challenge organized by GX-ID (Gravel & Ultra Cycling Indonesia). Traversing Jonggol–Sukamakmur–Sentul loops in the rainy season.'
               )}
             </p>
 
