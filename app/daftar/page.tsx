@@ -776,7 +776,6 @@ export default function RegistrationPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:gap-8">
               {categories.map((cat, idx) => {
                 const visual = getCategoryVisual(cat.id, t);
-                const quotaPercent = Math.min(100, Math.round((cat.current_enrolled / cat.quota) * 100));
 
                 return (
                   <div
@@ -786,90 +785,69 @@ export default function RegistrationPage() {
                       animationDelay: `${idx * 90}ms`,
                       animationFillMode: 'forwards',
                     }}
-                    className="opacity-0 animate-slide-up-fade relative aspect-square sm:aspect-square md:aspect-square lg:aspect-auto lg:h-[500px] rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group cursor-pointer flex flex-col justify-between select-none shadow-[0_15px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_40px_rgba(250,109,11,0.35)]"
+                    className="opacity-0 animate-slide-up-fade relative aspect-square sm:aspect-square md:aspect-square lg:aspect-auto lg:h-[460px] rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1.5 group cursor-pointer flex flex-col justify-between select-none shadow-[0_15px_40px_rgba(0,0,0,0.6)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.85),0_0_35px_rgba(250,109,11,0.3)] p-3 sm:p-5"
                   >
-                    {/* Top Visual & Telemetry Section */}
-                    <div className="relative flex-1 p-2 sm:p-4 md:p-6 lg:p-7 flex flex-col justify-between overflow-hidden">
-                      {/* Background Hero Photography */}
-                      <Image
-                        src={visual.image}
-                        alt={cat.name}
-                        fill
-                        className="object-cover object-center filter brightness-[0.85] group-hover:brightness-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                        priority
-                      />
+                    {/* Background Hero Photography */}
+                    <Image
+                      src={visual.image}
+                      alt={cat.name}
+                      fill
+                      className="object-cover object-center filter brightness-[0.8] group-hover:brightness-95 group-hover:scale-105 transition-all duration-700 ease-out"
+                      priority
+                    />
 
-                      {/* Dark Vignette & Atmospheric Film Shroud */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-[#0A0B0E]/60 to-[#0A0B0E]/30 z-10 pointer-events-none group-hover:via-[#0A0B0E]/50 transition-colors duration-500" />
+                    {/* Dark Vignette Overlay for Crisp Readability */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-[#0A0B0E]/40 to-[#0A0B0E]/50 z-10 pointer-events-none group-hover:via-[#0A0B0E]/30 transition-colors duration-500" />
 
-                      {/* Shimmer Light Sweep on Hover */}
-                      <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden z-20">
-                        <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/[0.08] to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[350%] transition-transform duration-1000 ease-out" />
-                      </div>
-
-                      {/* ── TOP HUD TELEMETRY (PURE TYPOGRAPHY) ── */}
-                      <div className="relative z-20 flex items-start justify-between gap-1 sm:gap-2 md:gap-3 font-mono text-xs border-b border-white/10 pb-1 sm:pb-2.5">
-                        <div className="min-w-0 flex-1">
-                          <span className="font-bold text-[#FA6D0B] uppercase tracking-wider block text-[7.5px] sm:text-[10px] md:text-xs truncate">
-                            {cat.id === '120' || cat.id === '120_SINGLE' || cat.id === '120_PAIR'
-                              ? t('OFFICIAL RACE · 120 KM', 'OFFICIAL RACE · 120 KM')
-                              : cat.id === '200' 
-                              ? t('ULTRA · 200 KM', 'ULTRA · 200 KM') 
-                              : cat.id === '150' 
-                              ? t('GRAND FONDO · 150 KM', 'GRAND FONDO · 150 KM') 
-                              : cat.id === '100' 
-                              ? t('FONDO · 100 KM', 'FONDO · 100 KM') 
-                              : cat.id === 'VIRTUAL' 
-                              ? t('VIRTUAL · 19 CHAPTERS', 'VIRTUAL · 19 CHAPTERS') 
-                              : t('FUN GRAVEL · 70 KM', 'FUN GRAVEL · 70 KM')}
-                          </span>
-                          <span className="text-[6.5px] sm:text-[9px] md:text-[11px] text-slate-400 tracking-wider uppercase block truncate">
-                            {visual.elevation} · {cat.cot_hours ? `COT ${cat.cot_hours}H` : t('MANDIRI', 'SELF')}
-                          </span>
-                        </div>
-
-                        <div className="text-right shrink-0">
-                          <span className="text-[6px] sm:text-[8px] md:text-[10px] text-slate-400 uppercase tracking-widest block">{t('START', 'START')}</span>
-                          <span className="text-[7.5px] sm:text-[10px] md:text-xs font-bold text-white tracking-wider block whitespace-nowrap">
-                            {cat.wave_start_time === 'Fleksibel' ? t('FLEKSIBEL', 'FLEXIBLE') : `${cat.wave_start_time || '05:30'} WIB`}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* ── CENTER HEROIC TYPOGRAPHY ── */}
-                      <div className="relative z-20 my-auto space-y-0.5 sm:space-y-1.5 py-0.5 sm:py-2">
-                        <h2 className="font-display italic text-sm sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tight text-white drop-shadow-md leading-none group-hover:text-[#FA6D0B] transition-colors duration-300">
-                          {visual.headline}
-                        </h2>
-
-                        <p className="font-mono text-[6.5px] sm:text-[9px] md:text-xs text-slate-300 uppercase tracking-wider line-clamp-1">
-                          {visual.subtitle}
-                        </p>
-                      </div>
-
-                      {/* ── BOTTOM INDUSTRIAL LEDGER (PRICE & QUOTA) ── */}
-                      <div className="relative z-20 space-y-0.5 sm:space-y-1.5 border-t border-white/10 pt-1 sm:pt-2 font-mono">
-                        <div className="flex items-baseline justify-between text-xs">
-                          <span className="text-[6.5px] sm:text-[9px] md:text-[11px] text-slate-400 uppercase tracking-widest truncate">
-                            {t('MULAI', 'START')}
-                          </span>
-                          <span className="font-display italic text-xs sm:text-lg md:text-xl lg:text-2xl font-black text-white leading-none">{formatRupiah(cat.price_medal_only)}</span>
-                        </div>
-
-                        <div className="flex items-center justify-between text-[6.5px] sm:text-[9px] md:text-[11px] text-slate-400 border-t border-white/5 pt-0.5 sm:pt-1">
-                          <span className="truncate">{t('SISA:', 'LEFT:')} <strong className="text-white">{cat.quota - cat.current_enrolled}</strong></span>
-                          <span className="text-[#FA6D0B] font-bold shrink-0">{quotaPercent}%</span>
-                        </div>
-                      </div>
+                    {/* Shimmer Sweep on Hover */}
+                    <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden z-20">
+                      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/[0.08] to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[350%] transition-transform duration-1000 ease-out" />
                     </div>
 
-                    {/* ── FULL-WIDTH FLUSH FOOTER BUTTON BAR (KATA PENYEMANGAT SPESIFIK TIAP KATEGORI) ── */}
-                    <div className="relative z-20 w-full py-1.5 sm:py-3 md:py-4 bg-[#17191E] group-hover:bg-[#FA6D0B] text-center transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 overflow-hidden shadow-inner px-1 sm:px-2 shrink-0">
-                      <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 pointer-events-none" />
-                      <span className="relative z-10 font-mono font-black text-[7.5px] sm:text-xs md:text-sm tracking-wider sm:tracking-[0.15em] text-[#E5E7EB] group-hover:text-black uppercase transition-colors duration-300 truncate">
-                        {visual.callToAction}
+                    {/* 1. TOP HUD: Category Tag & Telemetry (Clean Minimalist Line) */}
+                    <div className="relative z-20 flex items-center justify-between gap-2 font-mono">
+                      <span className="font-bold text-[#FA6D0B] uppercase tracking-wider text-[9px] sm:text-xs">
+                        {cat.id === '120' || cat.id === '120_SINGLE' || cat.id === '120_PAIR'
+                          ? '120 KM RACE'
+                          : cat.id === '200' 
+                          ? '200 KM ULTRA' 
+                          : cat.id === '150' 
+                          ? '150 KM GRAND FONDO' 
+                          : cat.id === '100' 
+                          ? '100 KM FONDO' 
+                          : cat.id === 'VIRTUAL' 
+                          ? 'VIRTUAL RIDE' 
+                          : '70 KM FUN GRAVEL'}
                       </span>
-                      <ArrowUpRight className="relative z-10 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 stroke-[2.5] text-slate-400 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 shrink-0" />
+                      <span className="text-[8px] sm:text-[10px] text-slate-300 font-medium tracking-wide">
+                        {visual.elevation}
+                      </span>
+                    </div>
+
+                    {/* 2. CENTER: Bold Stage Headline */}
+                    <div className="relative z-20 my-auto py-2">
+                      <h2 className="font-display italic text-base sm:text-2xl md:text-3xl font-black uppercase tracking-tight text-white drop-shadow-md leading-tight group-hover:text-[#FA6D0B] transition-colors duration-300">
+                        {visual.headline}
+                      </h2>
+                      <p className="font-mono text-[8px] sm:text-xs text-slate-300 uppercase tracking-wider mt-0.5 line-clamp-1">
+                        {visual.subtitle.split('·')[0]}
+                      </p>
+                    </div>
+
+                    {/* 3. BOTTOM: Price & Action Arrow (Single Clean Flush Line) */}
+                    <div className="relative z-20 flex items-end justify-between font-mono pt-1">
+                      <div>
+                        <span className="text-[7.5px] sm:text-[9.5px] text-slate-400 uppercase tracking-widest block leading-none mb-0.5">
+                          {t('MULAI DARI', 'STARTING FROM')}
+                        </span>
+                        <span className="font-display italic text-sm sm:text-xl font-black text-white leading-none">
+                          {formatRupiah(cat.price_medal_only)}
+                        </span>
+                      </div>
+
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#FA6D0B] text-black flex items-center justify-center shadow-[0_0_15px_rgba(250,109,11,0.4)] group-hover:scale-110 group-hover:bg-[#DE5A00] transition-all shrink-0">
+                        <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+                      </div>
                     </div>
 
                   </div>
