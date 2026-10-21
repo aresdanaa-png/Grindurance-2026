@@ -202,7 +202,7 @@ function PembayaranContent() {
 
                 {errorMessage && (
                   <div className="p-4 rounded-xl bg-black/80 text-[#FA6D0B] font-mono text-xs leading-relaxed">
-                    <span className="font-bold">// PERINGATAN:</span> {errorMessage}
+                    <span className="font-bold">PERINGATAN:</span> {errorMessage}
                   </div>
                 )}
               </form>
@@ -210,7 +210,7 @@ function PembayaranContent() {
               {/* Fast Telemetry Test Badges */}
               <div className="pt-4 border-t border-white/5 space-y-2">
                 <span className="font-mono text-[11px] text-slate-400 block tracking-wider uppercase">
-                  // CONTOH DATA UJI COBA (KLIK UNTUK MENGISI):
+                  CONTOH DATA UJI COBA (KLIK UNTUK MENGISI):
                 </span>
                 <div className="flex flex-wrap gap-2 text-xs font-mono">
                   {['081234567890', 'GX26-PAY-1201', 'GX-2026-PAY-8829'].map((sample) => (
@@ -264,7 +264,7 @@ function PembayaranContent() {
               <div className="rounded-2xl bg-[#121418]/95 backdrop-blur-2xl p-6 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.85)] space-y-6">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
                   <span className="font-mono text-xs font-bold text-[#FA6D0B] tracking-widest uppercase">
-                    // STATUS RESMI · PEMBAYARAN TELAH TERVERIFIKASI
+                    STATUS RESMI · PEMBAYARAN TELAH TERVERIFIKASI
                   </span>
                   <span className="font-mono text-[11px] text-white uppercase tracking-wider px-3 py-1 rounded-full bg-white/10">
                     SLOT RESMI AKTIF
@@ -273,7 +273,7 @@ function PembayaranContent() {
 
                 <div className="space-y-3">
                   <h2 className="font-display italic text-3xl sm:text-5xl font-black text-white uppercase tracking-tight">
-                    {t('TAGIHAN TELAH LUNAS // NOMOR DADA DITERBITKAN', 'INVOICE SETTLED // BIB ISSUED')}
+                    {t('TAGIHAN TELAH LUNAS · NOMOR DADA DITERBITKAN', 'INVOICE SETTLED · BIB ISSUED')}
                   </h2>
                   <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
                     {t(
@@ -339,8 +339,8 @@ function PembayaranContent() {
                 distance_km: 120,
                 category_type: 'race',
                 is_pair: false,
-                price_medal_only: 400000,
-                price_medal_jersey: 450000,
+                price_medal_only: 300000,
+                price_medal_jersey: 350000,
                 quota: 150,
                 current_enrolled: 72,
                 cot_hours: 11,
@@ -367,7 +367,7 @@ export default function PembayaranPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-[#0D0E11] text-white flex items-center justify-center font-mono text-xs">
-        <span className="text-[#FA6D0B] animate-pulse">// MEMUAT COCKPIT PEMBAYARAN...</span>
+        <span className="text-[#FA6D0B] animate-pulse">MEMUAT COCKPIT PEMBAYARAN...</span>
       </div>
     }>
       <PembayaranContent />

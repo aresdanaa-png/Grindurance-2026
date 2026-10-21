@@ -43,7 +43,7 @@ export default function BibCard({
           width: 250,
           margin: 1,
           color: {
-            dark: '#0A0F1D',
+            dark: '#0D0E11',
             light: '#FFFFFF',
           },
         });

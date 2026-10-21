@@ -26,7 +26,7 @@ export default function Error({
 
       <div className="relative z-10 max-w-lg w-full text-center space-y-6 p-8 rounded-2xl bg-black/70 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.8)]">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FA6D0B]/30 bg-[#FA6D0B]/10 text-[#FA6D0B] font-mono text-xs uppercase tracking-wider">
-          <span>// SYSTEM TELEMETRY ERROR</span>
+          <span>SYSTEM TELEMETRY ERROR</span>
         </div>
 
         <h1 className="font-display italic text-4xl sm:text-5xl font-black uppercase tracking-tight text-white">
@@ -46,7 +46,7 @@ export default function Error({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <button
             onClick={() => reset()}
-            className="w-full sm:w-auto px-6 py-3 bg-[#FA6D0B] hover:bg-[#ff7b1c] text-black font-display font-black uppercase text-sm tracking-wider rounded-xl transition-all shadow-[0_4px_20px_rgba(250,109,11,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full sm:w-auto px-6 py-3 bg-[#FA6D0B] hover:bg-[#DE5A00] text-black font-display font-black uppercase text-sm tracking-wider rounded-xl transition-all shadow-[0_4px_20px_rgba(250,109,11,0.3)] hover:scale-[1.02] active:scale-[0.98]"
           >
             MUAT ULANG SISTEM
           </button>

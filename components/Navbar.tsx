@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 const navLinks = [
   { href: '/', labelId: 'Beranda', labelEng: 'Overview' },
   { href: '/#kategori', labelId: 'Rute & Kategori', labelEng: 'Courses & Route' },
+  { href: '/#daftar-harga', labelId: 'Daftar Biaya', labelEng: 'Price List' },
   { href: '/#jadwal', labelId: 'Jadwal', labelEng: 'Timeline' },
   { href: '/peraturan', labelId: 'Regulasi', labelEng: 'Rules' },
   { href: '/peserta', labelId: 'Daftar Peserta', labelEng: 'Start List' },
@@ -19,6 +21,15 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const pathname = usePathname();
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    if (pathname === '/daftar') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.dispatchEvent(new CustomEvent('reset-daftar-flow'));
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,7 +95,7 @@ export default function Navbar() {
           </nav>
 
           {/* ── Right: Language Switcher (ID | ENG) & CTA Button ── */}
-          <div className="hidden md:flex items-center gap-3 lg:gap-3.5">
+          <div className="hidden md:flex items-center gap-3 lg:gap-3.5 shrink-0">
             {/* Pure Typographic Language Switcher */}
             <div className="flex items-center text-xs font-mono font-bold tracking-wider rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 backdrop-blur-sm select-none shadow-inner">
               <button
@@ -119,13 +130,18 @@ export default function Navbar() {
             {/* CTA Join Now */}
             <Link
               href="/daftar"
-              className="group relative px-5 lg:px-6 py-2.5 rounded-full text-[12px] lg:text-[13px] font-bold uppercase tracking-wider text-white border border-[#FA6D0B]/60 hover:border-[#FA6D0B] transition-all duration-300 hover:shadow-[0_0_20px_rgba(250,109,11,0.3)] overflow-hidden flex items-center gap-2"
+              onClick={handleCtaClick}
+              className={`group relative px-5 lg:px-6 py-2.5 rounded-full text-[12px] lg:text-[13px] font-bold uppercase tracking-wider transition-all duration-300 overflow-hidden flex items-center gap-2 shrink-0 cursor-pointer ${
+                pathname === '/daftar'
+                  ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)] border border-[#FA6D0B]'
+                  : 'text-white border border-[#FA6D0B]/60 hover:border-[#FA6D0B] hover:shadow-[0_0_20px_rgba(250,109,11,0.3)]'
+              }`}
             >
-              <span className="absolute inset-0 bg-[#FA6D0B] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
-              <span className="relative z-10 group-hover:text-black transition-colors duration-300 font-bold">
+              <span className="absolute inset-0 bg-[#FA6D0B] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full pointer-events-none" />
+              <span className={`relative z-10 font-bold transition-colors duration-300 ${pathname === '/daftar' ? 'text-black' : 'group-hover:text-black'}`}>
                 {t('DAFTAR', 'JOIN NOW')}
               </span>
-              <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+              <ArrowUpRight className={`relative z-10 w-4 h-4 stroke-[2.5] transition-all duration-300 ${pathname === '/daftar' ? 'text-black' : 'group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`} />
             </Link>
           </div>
 
@@ -195,8 +211,11 @@ export default function Navbar() {
           <div className="pt-4 px-2">
             <Link
               href="/daftar"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-full text-[14px] font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_30px_rgba(250,109,11,0.35)] hover:bg-[#DE5A00] transition-all duration-300 active:scale-[0.98]"
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                handleCtaClick(e);
+              }}
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-full text-[14px] font-bold uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_30px_rgba(250,109,11,0.35)] hover:bg-[#DE5A00] transition-all duration-300 active:scale-[0.98] cursor-pointer"
             >
               {t('DAFTAR SEKARANG', 'JOIN NOW')}
               <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />

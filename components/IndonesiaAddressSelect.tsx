@@ -215,7 +215,7 @@ export default function IndonesiaAddressSelect({
     <div className="space-y-5 pt-4 border-t border-white/10 font-sans">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
         <label className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
-          {t('ALAMAT DOMISILI // PENGIRIMAN RACE PACK', 'DOMICILE ADDRESS // RACE PACK SHIPPING')} {required && <span className="text-[#FA6D0B] font-bold text-base">*</span>}
+          {t('ALAMAT DOMISILI · PENGIRIMAN RACE PACK', 'DOMICILE ADDRESS · RACE PACK SHIPPING')} {required && <span className="text-[#FA6D0B] font-bold text-base">*</span>}
         </label>
         <span className="text-xs font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">{t('DATABASE WILAYAH RESMI RI', 'OFFICIAL RI REGIONAL DATABASE')}</span>
       </div>

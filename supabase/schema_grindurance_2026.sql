@@ -89,12 +89,12 @@ INSERT INTO categories (
     id, name, distance_km, category_type, is_pair, price_medal_only, price_medal_jersey,
     quota, cot_hours, wave_start_time, prologue_required_km, mandatory_pitstop_cp, tracking_required
 ) VALUES
-('60', '70 Fun Gravel Ride', 70, 'fun', false, 250000, 300000, 150, 7.0, '07:00:00', 0, 6, false),
-('100', '100 Fondo', 100, 'fondo', false, 300000, 350000, 150, 9.5, '07:00:00', 0, 6, false),
-('120_SINGLE', '120 (Race) Single', 120, 'race', false, 400000, 450000, 100, 11.0, '06:00:00', 0, 4, true),
-('120_PAIR', '120 (Race) Pair Mix 2 Pax', 120, 'race', true, 700000, 750000, 30, 11.0, '06:00:00', 0, 4, true),
-('150', '150 Grand Fondo', 150, 'cross', false, 400000, 450000, 75, 15.0, '05:30:00', 30, 4, true),
-('200', '200 Ultra', 200, 'ultra', false, 400000, 450000, 50, 17.0, '05:30:00', 30, 4, true),
+('60', '70 Fun Gravel Ride', 70, 'fun', false, 150000, 250000, 150, 7.0, '07:00:00', 0, 6, false),
+('100', '100 Fondo', 100, 'fondo', false, 200000, 250000, 150, 9.5, '07:00:00', 0, 6, false),
+('120_SINGLE', '120 (Race) Single', 120, 'race', false, 300000, 350000, 100, 11.0, '06:00:00', 0, 4, true),
+('120_PAIR', '120 (Race) Pair Mix 2 Pax', 120, 'race', true, 550000, 650000, 30, 11.0, '06:00:00', 0, 4, true),
+('150', '150 Grand Fondo', 150, 'cross', false, 350000, 400000, 75, 15.0, '05:30:00', 30, 4, true),
+('200', '200 Ultra', 200, 'ultra', false, 350000, 400000, 50, 17.0, '05:30:00', 30, 4, true),
 ('VIRTUAL', 'Virtual Ride Nasional', 0, 'virtual', false, 200000, 250000, 1000, NULL, NULL, 0, NULL, true)
 ON CONFLICT (id) DO UPDATE SET
     name = EXCLUDED.name,

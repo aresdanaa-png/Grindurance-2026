@@ -50,7 +50,7 @@ export default function RouteMap({
   const [showLockModal, setShowLockModal] = useState(false);
   const [routeData, setRouteData] = useState<RouteVectorData | null>(null);
 
-  // Zoom and Pan interaction state
+  // Zoom and Pan interaction state (Mobile defaults to a wider, distant overview)
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -63,9 +63,10 @@ export default function RouteMap({
     setIsLocked(isGpxDownloadLocked());
   }, []);
 
-  // Reset zoom & pan when category / GPX changes
+  // Initialize and reset zoom & pan (Mobile defaults to 0.75 for a spacious, distant aerial view)
   useEffect(() => {
-    setZoom(1);
+    const isMobileScreen = typeof window !== 'undefined' && window.innerWidth < 768;
+    setZoom(isMobileScreen ? 0.75 : 1);
     setPan({ x: 0, y: 0 });
   }, [gpxFile, categoryId]);
 
@@ -131,11 +132,11 @@ export default function RouteMap({
         if (rawPoints.length === 0) throw new Error('No valid coordinate points');
         if (isCancelled) return;
 
-        // Virtual SVG ViewBox specifications (Generous margins prevent clipping on any screen)
-        const WIDTH = 840;
-        const HEIGHT = 540;
-        const PADDING_X = 90;
-        const PADDING_Y = 75;
+        // Virtual SVG ViewBox specifications (Spacious margins give an expansive aerial bird's-eye overview)
+        const WIDTH = 960;
+        const HEIGHT = 620;
+        const PADDING_X = 180;
+        const PADDING_Y = 135;
 
         // Geographic Mercator aspect ratio correction based on mean latitude
         const midLatRad = ((minLat + maxLat) / 2) * (Math.PI / 180);
@@ -232,17 +233,18 @@ export default function RouteMap({
     };
   }, [gpxFile]);
 
-  // Zoom handlers
+  // Zoom handlers (Supports deep zoom-out down to 0.35 for expansive bird's-eye route view)
   const handleZoomIn = useCallback(() => {
-    setZoom((z) => Math.min(3.2, Math.round((z + 0.3) * 10) / 10));
+    setZoom((z) => Math.min(3.5, Math.round((z + 0.2) * 100) / 100));
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setZoom((z) => Math.max(0.85, Math.round((z - 0.3) * 10) / 10));
+    setZoom((z) => Math.max(0.35, Math.round((z - 0.2) * 100) / 100));
   }, []);
 
   const handleResetView = useCallback(() => {
-    setZoom(1);
+    const isMobileScreen = typeof window !== 'undefined' && window.innerWidth < 768;
+    setZoom(isMobileScreen ? 0.75 : 1);
     setPan({ x: 0, y: 0 });
   }, []);
 
@@ -265,11 +267,34 @@ export default function RouteMap({
     setIsDragging(false);
   };
 
+  // Mobile touch drag pan interaction
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      setDragStart({
+        x: e.touches[0].clientX - pan.x,
+        y: e.touches[0].clientY - pan.y,
+      });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    setPan({
+      x: e.touches[0].clientX - dragStart.x,
+      y: e.touches[0].clientY - dragStart.y,
+    });
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
   // Wheel zoom
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.15 : 0.15;
-    setZoom((z) => Math.max(0.85, Math.min(3.2, Math.round((z + delta) * 100) / 100)));
+    setZoom((z) => Math.max(0.35, Math.min(3.5, Math.round((z + delta) * 100) / 100)));
   };
 
   // Calculate dynamic transform string
@@ -282,7 +307,7 @@ export default function RouteMap({
     return (
       <div className="w-full h-full flex flex-col items-center justify-center gap-2 text-slate-500 bg-[#0B0C0E] p-6 text-center select-none">
         <span className="font-mono text-xs uppercase tracking-widest text-[#FA6D0B] font-bold">
-          {t('RUTE VIRTUAL LOKAL // 19 CHAPTER', 'LOCAL VIRTUAL ROUTE // 19 CHAPTERS')}
+          {t('RUTE VIRTUAL LOKAL · 19 CHAPTER', 'LOCAL VIRTUAL ROUTE · 19 CHAPTERS')}
         </span>
         <p className="text-[11px] font-mono uppercase tracking-wider text-slate-400 max-w-xs">
           {t('Rute ditentukan mandiri oleh masing-masing regional chapter', 'Route is determined independently by each regional chapter')}
@@ -298,8 +323,12 @@ export default function RouteMap({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       onWheel={handleWheel}
-      className={`relative w-full h-full min-h-0 flex flex-col bg-[#0B0C0E] overflow-hidden select-none ${
+      className={`relative w-full h-full min-h-0 flex flex-col bg-[#0B0C0E] overflow-hidden select-none touch-none ${
         isDragging ? 'cursor-grabbing' : 'cursor-grab'
       }`}
     >
@@ -319,7 +348,7 @@ export default function RouteMap({
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.08)_0%,transparent_75%)] z-0" />
 
       {/* 2. Top-Left Floating Controls: Zoom + Reset + GPX Lock Action (Pure Typography, No SaaS Clutter) */}
-      <div className="absolute top-3 left-3 z-30 flex items-center gap-2 pointer-events-auto">
+      <div className="absolute top-3 left-3 z-30 flex items-center gap-2 pointer-events-auto touch-auto">
         <div className="flex items-center bg-black/85 backdrop-blur-md border border-white/10 rounded-lg p-0.5 font-mono text-[9px] shadow-lg">
           <button
             type="button"
@@ -356,7 +385,7 @@ export default function RouteMap({
             className="px-2.5 py-1 rounded-lg text-[9px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-black/85 hover:bg-white/10 border border-white/10 hover:border-[#FA6D0B] backdrop-blur-md transition-all cursor-pointer shadow-lg active:scale-95 whitespace-nowrap"
             title={t('File GPX dikunci hingga H-2 (11 Des 2026, 00:00 WIB)', 'GPX file locked until D-2 (11 Dec 2026, 00:00 WIB)')}
           >
-            {t('TERKUNCI // H-2 (11 DES)', 'LOCKED // D-2 (11 DEC)')}
+            {t('TERKUNCI · H-2 (11 DES)', 'LOCKED · D-2 (11 DEC)')}
           </button>
         ) : (
           <a
@@ -393,7 +422,7 @@ export default function RouteMap({
       {status === 'error' && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 bg-[#090A0D]/95 px-4 text-center">
           <span className="text-xs font-mono font-black text-[#FA6D0B] uppercase tracking-wider">
-            {t('STATUS // GAGAL MEMUAT PETA VECTOR', 'STATUS // FAILED TO LOAD VECTOR MAP')}
+            {t('STATUS · GAGAL MEMUAT PETA VECTOR', 'STATUS · FAILED TO LOAD VECTOR MAP')}
           </span>
           <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
             {t('PERIKSA KONEKSI INTERNET ATAU BERKAS GPX', 'PLEASE CHECK CONNECTION OR GPX FILE')}
@@ -524,7 +553,7 @@ export default function RouteMap({
                 textAnchor="middle"
                 letterSpacing="0.05em"
               >
-                START // KM 0
+                START · KM 0
               </text>
             </g>
 
@@ -563,7 +592,7 @@ export default function RouteMap({
                 textAnchor="middle"
                 letterSpacing="0.05em"
               >
-                FINISH // ABBEY
+                FINISH · ABBEY
               </text>
             </g>
           </svg>
@@ -575,7 +604,7 @@ export default function RouteMap({
         <div className="absolute bottom-3 left-3 z-30 pointer-events-auto bg-black/85 backdrop-blur-md border border-white/10 rounded-lg px-2.5 py-1.5 font-mono text-[9px] text-slate-300 shadow-xl flex flex-wrap items-center gap-1.5 select-none">
           <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] shadow-[0_0_8px_#FA6D0B]" />
           <span className="font-bold text-white tracking-wider uppercase">
-            GPX LIVE // {categoryKm} ({gpxTotalKm})
+            GPX LIVE · {categoryKm} ({gpxTotalKm})
           </span>
           <span className="text-white/20">·</span>
           <span>{routeData.points.length.toLocaleString()} PTS</span>
@@ -610,7 +639,7 @@ export default function RouteMap({
             {/* Header */}
             <div className="border-b border-white/10 pb-4">
               <span className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block mb-1">
-                {t('PROTOKOL NAVIGASI // GRINDURANCE 2026', 'NAVIGATION PROTOCOL // GRINDURANCE 2026')}
+                {t('PROTOKOL NAVIGASI · GRINDURANCE 2026', 'NAVIGATION PROTOCOL · GRINDURANCE 2026')}
               </span>
               <h3 className="font-display italic text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
                 {t('FILE GPX DIKUNCI HINGGA H-2', 'GPX FILE LOCKED UNTIL D-2')}
@@ -659,8 +688,8 @@ export default function RouteMap({
               </p>
               <div className="p-3 rounded-lg bg-[#FA6D0B]/10 border border-[#FA6D0B]/20 text-[11px] font-mono text-[#FA6D0B]">
                 {t(
-                  '// CATATAN: Peta live vector HUD di layar tetap aktif 100% dan dapat dijelajahi untuk mempelajari profil lintasan.',
-                  '// NOTE: Live vector HUD map remains fully interactive for reconnaissance and contour inspection.'
+                  'CATATAN: Peta live vector HUD di layar tetap aktif 100% dan dapat dijelajahi untuk mempelajari profil lintasan.',
+                  'NOTE: Live vector HUD map remains fully interactive for reconnaissance and contour inspection.'
                 )}
               </div>
             </div>
@@ -671,7 +700,7 @@ export default function RouteMap({
               onClick={() => setShowLockModal(false)}
               className="w-full py-3.5 rounded-full bg-[#FA6D0B] hover:bg-[#DE5A00] text-black font-mono font-black uppercase tracking-wider text-xs transition-all active:scale-95 shadow-[0_0_20px_rgba(250,109,11,0.35)] cursor-pointer"
             >
-              {t('MENGERTI // KEMBALI KE PETA VECTOR', 'UNDERSTOOD // RETURN TO VECTOR MAP')}
+              {t('MENGERTI · KEMBALI KE PETA VECTOR', 'UNDERSTOOD · RETURN TO VECTOR MAP')}
             </button>
           </div>
         </div>

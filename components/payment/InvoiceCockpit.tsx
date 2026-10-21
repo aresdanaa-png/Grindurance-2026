@@ -104,7 +104,7 @@ export default function InvoiceCockpit({
       {showCategoryPresetSwitcher && presetCategories && onSelectCategoryPreset && (
         <div className="p-4 sm:p-5 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col lg:flex-row items-center justify-between gap-4 font-mono text-xs">
           <div className="flex items-center gap-3 w-full lg:w-auto">
-            <span className="text-[#FA6D0B] font-bold uppercase tracking-widest">// PREVIEW KATEGORI:</span>
+            <span className="text-[#FA6D0B] font-bold uppercase tracking-widest">PREVIEW KATEGORI:</span>
             <div className="flex flex-wrap gap-1.5 flex-1">
               {Object.entries(presetCategories).map(([key, item]) => (
                 <button
@@ -140,7 +140,7 @@ export default function InvoiceCockpit({
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[550px] h-[220px] bg-[#FA6D0B]/15 rounded-full blur-[100px] pointer-events-none group-hover:bg-[#FA6D0B]/20 transition-all duration-700" />
 
         <div className="flex flex-wrap items-center justify-center gap-3 font-mono text-xs uppercase tracking-widest relative z-10">
-          <span className="text-slate-400">STATUS //</span>
+          <span className="text-slate-400">STATUS:</span>
           <span className={`px-3 py-1 rounded-full font-black text-xs ${
             isPaid
               ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
@@ -155,7 +155,7 @@ export default function InvoiceCockpit({
         </div>
 
         <h1 className="font-display italic text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white relative z-10 leading-tight">
-          {t('INVOICE RESERVASI RESMI // RACE PASS', 'OFFICIAL RESERVATION INVOICE // RACE PASS')}
+          {t('INVOICE RESERVASI RESMI · RACE PASS', 'OFFICIAL RESERVATION INVOICE · RACE PASS')}
         </h1>
 
         <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-white/[0.07] font-mono text-xs sm:text-sm text-slate-200 relative z-10 shadow-inner">
@@ -174,7 +174,7 @@ export default function InvoiceCockpit({
       {/* Rincian Tagihan Finansial */}
       <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] space-y-5 font-mono relative overflow-hidden">
         <div className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider border-b border-white/10 pb-3 flex flex-wrap justify-between items-center gap-2">
-          <span>{t('RINCIAN TRANSAKSI RESMI //', 'OFFICIAL TRANSACTION BREAKDOWN //')}</span>
+          <span>{t('RINCIAN TRANSAKSI RESMI', 'OFFICIAL TRANSACTION BREAKDOWN')}</span>
           <span className="text-[#FA6D0B] font-display italic text-base sm:text-lg font-bold">{category.name}</span>
         </div>
 
@@ -187,7 +187,7 @@ export default function InvoiceCockpit({
           {participants.some((p) => p.has_meal_coupon) && (
             <div className="p-3.5 rounded-xl bg-black/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
               <div>
-                <span className="text-[#FA6D0B] font-bold block">// HAK BENEFIT: E-VOUCHER KUPON MAKAN RP 50.000</span>
+                <span className="text-[#FA6D0B] font-bold block">HAK BENEFIT: E-VOUCHER KUPON MAKAN RP 50.000</span>
                 <span className="text-slate-400 text-[11px]">
                   {t(
                     'Khusus peserta berumur <17 tahun & wanita · Otomatis aktif saat lunas (bukan potongan tagihan)',
@@ -226,7 +226,7 @@ export default function InvoiceCockpit({
                 onClick={() => copyToClipboard(order.net_amount.toString(), 'nominal')}
                 className="text-xs font-mono text-slate-300 hover:text-white uppercase font-bold tracking-wider mt-1.5 transition-colors cursor-pointer"
               >
-                {copiedField === 'nominal' ? t('NOMINAL DISALIN //', 'AMOUNT COPIED //') : t('SALIN NOMINAL //', 'COPY AMOUNT //')}
+                {copiedField === 'nominal' ? t('NOMINAL DISALIN', 'AMOUNT COPIED') : t('SALIN NOMINAL', 'COPY AMOUNT')}
               </button>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function InvoiceCockpit({
       <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] space-y-6 font-mono relative overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
           <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
-            {t('METODE PEMBAYARAN RESMI //', 'OFFICIAL PAYMENT METHOD //')}
+            {t('METODE PEMBAYARAN RESMI', 'OFFICIAL PAYMENT METHOD')}
           </span>
           
           {/* Method Switcher Tabs */}
@@ -251,7 +251,7 @@ export default function InvoiceCockpit({
                   : 'bg-white/[0.04] text-slate-400 hover:text-white hover:bg-white/10'
               }`}
             >
-              01 // QRIS DINAMIS
+              01 · QRIS DINAMIS
             </button>
             <button
               type="button"
@@ -262,7 +262,7 @@ export default function InvoiceCockpit({
                   : 'bg-white/[0.04] text-slate-400 hover:text-white hover:bg-white/10'
               }`}
             >
-              02 // TRANSFER BANK
+              02 · TRANSFER BANK
             </button>
           </div>
         </div>
@@ -298,7 +298,7 @@ export default function InvoiceCockpit({
             <div className="md:col-span-7 space-y-4">
               <div className="space-y-2">
                 <span className="text-xs text-[#FA6D0B] font-bold uppercase tracking-wider block">
-                  // PANDUAN SCAN QRIS INSTAN:
+                  PANDUAN SCAN QRIS INSTAN:
                 </span>
                 <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
                   {t(
@@ -337,7 +337,7 @@ export default function InvoiceCockpit({
                 onClick={() => copyToClipboard('8831294820', 'bca')}
                 className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block transition-colors cursor-pointer"
               >
-                {copiedField === 'bca' ? t('REKENING DISALIN //', 'ACCOUNT COPIED //') : t('SALIN NO. REK BCA //', 'COPY BCA ACCOUNT //')}
+                {copiedField === 'bca' ? t('REKENING DISALIN', 'ACCOUNT COPIED') : t('SALIN NO. REK BCA', 'COPY BCA ACCOUNT')}
               </button>
             </div>
 
@@ -353,7 +353,7 @@ export default function InvoiceCockpit({
                 onClick={() => copyToClipboard('1330028194021', 'mandiri')}
                 className="text-xs text-[#FA6D0B] hover:text-white uppercase font-bold tracking-wider pt-2 block transition-colors cursor-pointer"
               >
-                {copiedField === 'mandiri' ? t('REKENING DISALIN //', 'ACCOUNT COPIED //') : t('SALIN NO. REK MANDIRI //', 'COPY MANDIRI ACCOUNT //')}
+                {copiedField === 'mandiri' ? t('REKENING DISALIN', 'ACCOUNT COPIED') : t('SALIN NO. REK MANDIRI', 'COPY MANDIRI ACCOUNT')}
               </button>
             </div>
           </div>
@@ -366,7 +366,7 @@ export default function InvoiceCockpit({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-widest">
-                // WHATSAPP DIRECT DISPATCH · 1-KLIK SIMPAN CHAT
+                WHATSAPP DIRECT DISPATCH · 1-KLIK SIMPAN CHAT
               </span>
             </div>
             <span className="text-[11px] text-slate-400 uppercase tracking-wider">
@@ -424,8 +424,8 @@ export default function InvoiceCockpit({
               className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center active:scale-95"
             >
               {copiedField === 'wa_message'
-                ? t('TEKS PESAN TERSALIN //', 'MESSAGE TEXT COPIED //')
-                : t('SALIN TEKS PESAN //', 'COPY MESSAGE TEXT //')}
+                ? t('TEKS PESAN TERSALIN', 'MESSAGE TEXT COPIED')
+                : t('SALIN TEKS PESAN', 'COPY MESSAGE TEXT')}
             </button>
           </div>
         </div>
@@ -435,10 +435,10 @@ export default function InvoiceCockpit({
       <div className="space-y-4">
         <div className="border-b border-white/10 pb-3 flex flex-wrap items-center justify-between gap-2 font-mono">
           <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
-            {t('KARTU BIB DIGITAL ATLET TERDAFTAR //', 'OFFICIAL DIGITAL ATHLETE RACE BIB //')}
+            {t('KARTU BIB DIGITAL ATLET TERDAFTAR', 'OFFICIAL DIGITAL ATHLETE RACE BIB')}
           </span>
           <span className="text-xs text-[#FA6D0B] uppercase tracking-widest font-bold">
-            {isPaid ? t('LUNAS // READY RPC', 'PAID // READY FOR RPC') : t('RESERVASI TERKUNCI', 'RESERVATION LOCKED')}
+            {isPaid ? t('LUNAS · READY RPC', 'PAID · READY FOR RPC') : t('RESERVASI TERKUNCI', 'RESERVATION LOCKED')}
           </span>
         </div>
 
@@ -465,7 +465,7 @@ export default function InvoiceCockpit({
         <div className="rounded-2xl bg-[#121418]/90 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.7)] space-y-4 font-mono">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
             <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-widest">
-              // E-VOUCHER BENEFIT RESMI · TERBIT PASCA-BAYAR
+              E-VOUCHER BENEFIT RESMI · TERBIT PASCA-BAYAR
             </span>
             <span className="text-[11px] text-white px-3 py-1 rounded-full bg-[#FA6D0B]/20 font-bold uppercase">
               STATUS: VOUCHER AKTIF
@@ -521,7 +521,7 @@ export default function InvoiceCockpit({
         ) : (
           <div className="flex items-center gap-3">
             <span className="text-xs text-[#FA6D0B] font-bold uppercase tracking-wider">
-              ✓ {t('PEMBAYARAN TERVERIFIKASI SISTEM // TIKET VALID', 'PAYMENT CONFIRMED // VALID RACE PASS')}
+              ✓ {t('PEMBAYARAN TERVERIFIKASI SISTEM · TIKET VALID', 'PAYMENT CONFIRMED · VALID RACE PASS')}
             </span>
             {onResetStatus && (
               <button

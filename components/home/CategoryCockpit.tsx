@@ -1,10 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
-import { CATEGORIES, GPX_FILE_MAP, GPX_DISPLAY_INFO } from '@/lib/data/categories';
+import { 
+  CATEGORIES, 
+  GPX_FILE_MAP, 
+  GPX_DISPLAY_INFO,
+  getActivePricingPhase,
+  PricingPhase
+} from '@/lib/data/categories';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import ElevationProfile from '@/components/ElevationProfile';
 
@@ -15,6 +21,11 @@ export default function CategoryCockpit() {
   const [selectedId, setSelectedId] = useState<string>('120');
   const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
   const [mobileTab, setMobileTab] = useState<'radar' | 'specs' | 'checkpoints'>('radar');
+  const [activePhase, setActivePhase] = useState<PricingPhase>('EARLY_BIRD');
+
+  useEffect(() => {
+    setActivePhase(getActivePricingPhase());
+  }, []);
 
   const handleCategorySelect = (id: string) => {
     if (id === selectedId) return;
@@ -205,7 +216,7 @@ export default function CategoryCockpit() {
                       <span className={`font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-widest leading-none ${
                         isRace ? 'text-[#FA6D0B]' : (isActive ? 'text-[#FA6D0B]' : 'text-slate-400 group-hover:text-slate-300')
                       }`}>
-                        ETAPE // {etapeNumber}
+                        ETAPE {etapeNumber}
                       </span>
                       {isRace ? (
                         <span className="font-mono text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-black bg-[#FA6D0B] px-1.5 py-0.5 rounded-sm shadow-[0_0_10px_rgba(250,109,11,0.5)] leading-none">
@@ -213,7 +224,7 @@ export default function CategoryCockpit() {
                         </span>
                       ) : (
                         <span className="font-mono text-[9px] sm:text-[10px] text-slate-400 tracking-wider uppercase font-medium leading-none">
-                          {t('KUOTA //', 'QUOTA //')} {c.quota.split(' ')[0]}
+                          {t('KUOTA', 'QUOTA')} {c.quota.split(' ')[0]}
                         </span>
                       )}
                     </div>
@@ -261,14 +272,14 @@ export default function CategoryCockpit() {
                               : 'text-slate-300 group-hover:text-white'
                         }`}
                       >
-                        {isRace ? 'OFFICIAL RACE // SINGLE & PAIR' : c.subtitle}
+                        {isRace ? 'OFFICIAL RACE · SINGLE & PAIR' : c.subtitle}
                       </div>
                       <div className={`text-[9px] sm:text-[10px] truncate font-mono leading-tight ${
                         isRace
                           ? isActive 
                           : 'text-slate-400'
                       }`}>
-                        {c.cot !== 'Fleksibel' ? `COT // ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'HOURS')) : c.cot.toUpperCase()} · ${c.wave}` : t('19 CHAPTER // SE-INDONESIA', '19 CHAPTERS // NATIONWIDE')}
+                        {c.cot !== 'Fleksibel' ? `COT · ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'HOURS')) : c.cot.toUpperCase()} · ${c.wave}` : t('19 CHAPTER · SE-INDONESIA', '19 CHAPTERS · NATIONWIDE')}
                       </div>
                     </div>
                   </button>
@@ -306,7 +317,7 @@ export default function CategoryCockpit() {
                       <span className={`font-mono text-[9px] font-bold uppercase tracking-wider ${
                         isActive ? 'text-[#FA6D0B]' : 'text-slate-400'
                       }`}>
-                        ETAPE // {etapeNumber}
+                        ETAPE {etapeNumber}
                       </span>
                       {isRace ? (
                         <span className="font-mono text-[8px] font-black uppercase tracking-wider text-black bg-[#FA6D0B] px-1 py-0.2 rounded-sm">
@@ -341,7 +352,7 @@ export default function CategoryCockpit() {
                         {isRace ? 'OFFICIAL RACE' : c.subtitle}
                       </div>
                       <div className="font-mono text-[8px] text-slate-400 truncate">
-                        {c.cot !== 'Fleksibel' ? `COT // ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'HRS')) : c.cot.toUpperCase()} · ${c.wave}` : t('19 CHAPTER SE-INDONESIA', '19 CHAPTERS NATIONWIDE')}
+                        {c.cot !== 'Fleksibel' ? `COT · ${language === 'ENG' ? (c.cotEng || c.cot.replace('Jam', 'HRS')) : c.cot.toUpperCase()} · ${c.wave}` : t('19 CHAPTER SE-INDONESIA', '19 CHAPTERS NATIONWIDE')}
                       </div>
                     </div>
                   </button>
@@ -402,7 +413,7 @@ export default function CategoryCockpit() {
               <div className={`lg:col-span-5 select-none flex-col gap-4 ${mobileTab === 'radar' ? 'flex' : 'hidden lg:flex'}`}>
                 
                 {/* KOTAK MAP GPX LIVE */}
-                <div className="relative w-full aspect-[4/3] sm:aspect-square lg:aspect-[5/4] rounded-2xl overflow-hidden bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col">
+                <div className="relative w-full h-[330px] sm:h-auto sm:aspect-square lg:aspect-[5/4] rounded-2xl overflow-hidden bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col">
                   
                   {/* HEADER: Title + Telemetry */}
                   <div className="relative z-10 flex items-center justify-between border-b border-white/10 px-4 sm:px-5 py-3 shrink-0 bg-black/40">
@@ -410,7 +421,7 @@ export default function CategoryCockpit() {
                       {currentCategory.id === 'VIRTUAL' ? t('RUTE VIRTUAL', 'VIRTUAL ROUTE') : `${currentCategory.km} ${t('RUTE', 'ROUTE')}`}
                     </h4>
                     <span className="text-[10px] font-mono font-bold tracking-widest text-[#FA6D0B] uppercase">
-                      GPX LIVE // VECTOR HUD
+                      GPX LIVE · VECTOR HUD
                     </span>
                   </div>
 
@@ -542,7 +553,7 @@ export default function CategoryCockpit() {
                 {/* 3. Narasi Deskripsi Jalur & Karakteristik Etape */}
                 <div className="space-y-1.5">
                   <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                    {t('KARAKTERISTIK ETAPE //', 'STAGE CHARACTERISTICS //')}
+                    {t('KARAKTERISTIK ETAPE', 'STAGE CHARACTERISTICS')}
                   </span>
                   <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                     {language === 'ENG' && currentCategory.descEng ? currentCategory.descEng : currentCategory.desc}
@@ -552,7 +563,7 @@ export default function CategoryCockpit() {
                 {/* 4. Surface Breakdown (Komposisi Permukaan Jalur) */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-[#FA6D0B] uppercase tracking-wider font-bold">{t('KOMPOSISI MEDAN //', 'SURFACE BREAKDOWN //')}</span>
+                    <span className="text-[#FA6D0B] uppercase tracking-wider font-bold">{t('KOMPOSISI MEDAN', 'SURFACE BREAKDOWN')}</span>
                     <span className="text-slate-300">
                       <span className="text-[#FA6D0B] font-bold">{currentCategory.surfaceBreakdown.asphalt}</span> {t('Aspal', 'Asphalt')} ·{' '}
                       <span className="text-white font-bold">{currentCategory.surfaceBreakdown.gravel}</span> {t('Makadam', 'Gravel')} ·{' '}
@@ -574,12 +585,31 @@ export default function CategoryCockpit() {
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 mb-3">
                     <div className="flex items-center gap-2">
                       <span className="text-[11px] font-sans font-black uppercase tracking-widest text-[#FA6D0B]">
-                        {t('BIAYA PENDAFTARAN //', 'REGISTRATION FEE //')}
+                        {t('BIAYA PENDAFTARAN', 'REGISTRATION FEE')}
                       </span>
+                      {activePhase === 'EARLY_BIRD' ? (
+                        <span className="text-[9px] font-mono font-bold uppercase text-black bg-[#FA6D0B] px-1.5 py-0.5 rounded-sm shadow-[0_0_10px_rgba(250,109,11,0.4)]">
+                          EARLY BIRD
+                        </span>
+                      ) : activePhase === 'REGULAR' ? (
+                        <span className="text-[9px] font-mono font-bold uppercase text-white bg-white/20 px-1.5 py-0.5 rounded-sm">
+                          REGULER
+                        </span>
+                      ) : (
+                        <span className="text-[9px] font-mono font-bold uppercase text-white bg-red-950/80 px-1.5 py-0.5 rounded-sm">
+                          DITUTUP
+                        </span>
+                      )}
                     </div>
                     <div className="flex items-center gap-1.5 text-[10px] font-sans font-bold text-slate-400 uppercase">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
-                      <span>{t('BATAS AKHIR PRODUKSI:', 'PRODUCTION DEADLINE:')} <strong className="text-white">{t('10 NOVEMBER 2026', 'NOVEMBER 10, 2026')}</strong></span>
+                      {activePhase === 'EARLY_BIRD' ? (
+                        <span>{t('EARLY BIRD BERAKHIR:', 'EARLY BIRD ENDS:')} <strong className="text-white">{t('15 NOVEMBER 2026 (23:59 WIB)', 'NOVEMBER 15, 2026 (23:59 WIB)')}</strong></span>
+                      ) : activePhase === 'REGULAR' ? (
+                        <span>{t('PENUTUPAN PENDAFTARAN:', 'REGISTRATION CLOSES:')} <strong className="text-white">{t('29 NOVEMBER 2026 (H-14)', 'NOVEMBER 29, 2026 (H-14)')}</strong></span>
+                      ) : (
+                        <span>{t('PENDAFTARAN RESMI DITUTUP:', 'REGISTRATION CLOSED:')} <strong className="text-white">{t('29 NOVEMBER 2026', 'NOVEMBER 29, 2026')}</strong></span>
+                      )}
                     </div>
                   </div>
 
@@ -603,8 +633,13 @@ export default function CategoryCockpit() {
                             <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-0.5">SINGLE RIDER</div>
                             <div className="flex items-baseline gap-2">
                               <span className="font-display italic font-black text-2xl text-white leading-none">
-                                {currentCategory.regular.medal}
+                                {activePhase === 'EARLY_BIRD' ? currentCategory.earlyBird.medal : currentCategory.regular.medal}
                               </span>
+                              {activePhase === 'EARLY_BIRD' && (
+                                <span className="line-through text-slate-500 font-mono text-xs">
+                                  {currentCategory.regular.medal}
+                                </span>
+                              )}
                             </div>
                           </div>
                           {currentCategory.regular.pairMedal && (
@@ -612,8 +647,13 @@ export default function CategoryCockpit() {
                               <div className="text-[9px] font-sans font-bold text-[#FA6D0B] uppercase tracking-wider mb-0.5">PAIR MIX (2 PAX)</div>
                               <div className="flex items-baseline gap-2">
                                 <span className="font-display italic font-black text-2xl text-[#FA6D0B] leading-none">
-                                  {currentCategory.regular.pairMedal}
+                                  {activePhase === 'EARLY_BIRD' ? currentCategory.earlyBird.pairMedal : currentCategory.regular.pairMedal}
                                 </span>
+                                {activePhase === 'EARLY_BIRD' && currentCategory.regular.pairMedal && (
+                                  <span className="line-through text-slate-500 font-mono text-xs">
+                                    {currentCategory.regular.pairMedal}
+                                  </span>
+                                )}
                                 <span className="text-[10px] font-sans text-slate-400">{t('/ Tim', '/ Team')}</span>
                               </div>
                             </div>
@@ -624,8 +664,13 @@ export default function CategoryCockpit() {
                           <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-1">{t('TARIF DASAR', 'BASE RATE')}</div>
                           <div className="flex items-baseline gap-2">
                             <span className="font-display italic font-black text-3xl text-white leading-none">
-                              {currentCategory.regular.medal}
+                              {activePhase === 'EARLY_BIRD' ? currentCategory.earlyBird.medal : currentCategory.regular.medal}
                             </span>
+                            {activePhase === 'EARLY_BIRD' && (
+                              <span className="line-through text-slate-500 font-mono text-xs">
+                                {currentCategory.regular.medal}
+                              </span>
+                            )}
                           </div>
                           <div className="text-[10px] font-sans text-slate-400 mt-1.5">{t('Termasuk seluruh fasilitas hari-H', 'Includes all race-day amenities')}</div>
                         </div>
@@ -641,8 +686,10 @@ export default function CategoryCockpit() {
                         <span className="text-[10px] font-sans font-black uppercase tracking-widest text-[#FA6D0B]">
                           {t('MEDAL + JERSEY RESMI', 'OFFICIAL MEDAL + JERSEY')}
                         </span>
-                        <span className="text-[9px] font-sans font-black uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black">
-                          +RP 50.000
+                        <span className="text-[9px] font-mono font-black uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black">
+                          {currentCategory.id === '60' || currentCategory.id === '70' 
+                            ? (activePhase === 'EARLY_BIRD' ? '+RP 100.000' : '+RP 50.000') 
+                            : '+RP 50.000'}
                         </span>
                       </div>
 
@@ -652,8 +699,13 @@ export default function CategoryCockpit() {
                             <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-0.5">SINGLE RIDER</div>
                             <div className="flex items-baseline gap-2">
                               <span className="font-display italic font-black text-2xl text-white leading-none">
-                                {currentCategory.regular.jersey}
+                                {activePhase === 'EARLY_BIRD' ? currentCategory.earlyBird.jersey : currentCategory.regular.jersey}
                               </span>
+                              {activePhase === 'EARLY_BIRD' && (
+                                <span className="line-through text-slate-500 font-mono text-xs">
+                                  {currentCategory.regular.jersey}
+                                </span>
+                              )}
                             </div>
                           </div>
                           {currentCategory.regular.pairJersey && (
@@ -661,8 +713,13 @@ export default function CategoryCockpit() {
                               <div className="text-[9px] font-sans font-bold text-[#FA6D0B] uppercase tracking-wider mb-0.5">PAIR MIX (2 PAX)</div>
                               <div className="flex items-baseline gap-2">
                                 <span className="font-display italic font-black text-2xl text-[#FA6D0B] leading-none">
-                                  {currentCategory.regular.pairJersey}
+                                  {activePhase === 'EARLY_BIRD' ? currentCategory.earlyBird.pairJersey : currentCategory.regular.pairJersey}
                                 </span>
+                                {activePhase === 'EARLY_BIRD' && currentCategory.regular.pairJersey && (
+                                  <span className="line-through text-slate-500 font-mono text-xs">
+                                    {currentCategory.regular.pairJersey}
+                                  </span>
+                                )}
                                 <span className="text-[10px] font-sans text-slate-400">{t('/ Tim (2 Jersey)', '/ Team (2 Jerseys)')}</span>
                               </div>
                             </div>
@@ -673,8 +730,13 @@ export default function CategoryCockpit() {
                           <div className="text-[9px] font-sans font-bold text-slate-400 uppercase tracking-wider mb-1">{t('PAKET LENGKAP', 'FULL PACKAGE')}</div>
                           <div className="flex items-baseline gap-2">
                             <span className="font-display italic font-black text-3xl text-white leading-none">
-                              {currentCategory.regular.jersey}
+                              {activePhase === 'EARLY_BIRD' ? currentCategory.earlyBird.jersey : currentCategory.regular.jersey}
                             </span>
+                            {activePhase === 'EARLY_BIRD' && (
+                              <span className="line-through text-slate-500 font-mono text-xs">
+                                {currentCategory.regular.jersey}
+                              </span>
+                            )}
                           </div>
                           <div className="text-[10px] font-sans text-[#FA6D0B] font-bold mt-1.5">{t('Termasuk Aero Jersey Pollride (Nilai Rp 350.000)', 'Includes Pollride Aero Jersey (IDR 350K Value)')}</div>
                         </div>
@@ -684,17 +746,20 @@ export default function CategoryCockpit() {
                     {/* CTA + VOUCHER */}
                     <div className="flex flex-col justify-between gap-3 sm:pl-5 pt-3 sm:pt-0 border-t sm:border-t-0 border-white/10 sm:w-[190px] shrink-0">
                       <div>
-                        <div className="text-[10px] font-sans font-black uppercase tracking-widest text-[#FA6D0B] mb-1">{t('MEAL COUPON RP 50.000', 'IDR 50,000 MEAL COUPON')}</div>
+                        <div className="text-[10px] font-sans font-black uppercase tracking-widest text-[#FA6D0B] mb-1">{t('MEAL VOUCHER ABEEY', 'ABEEY MEAL VOUCHER')}</div>
                         <p className="text-[10px] font-sans text-slate-300 leading-relaxed">
-                          {t('Otomatis untuk ', 'Automatic for ')}<strong className="text-white font-bold">{t('Wanita · Usia ≤17 Th · Tim Pair Mix', 'Women · Age ≤17 Yrs · Pair Mix Teams')}</strong> {t('(1 kupon/tim).', '(1 coupon/team).')}<br />
-                          <span className="text-slate-400 text-[9px]">{t('*Tidak berlaku untuk Pair Men&Men.', '*Not valid for Pair Men&Men.')}</span>
+                          {['120', '150', '200'].includes(currentCategory.id) ? (
+                            <span className="text-white font-bold">{t('✓ Termasuk untuk seluruh peserta kategori ini & semua peserta perempuan.', '✓ Included for all riders in this category & all female riders.')}</span>
+                          ) : (
+                            <span>{t('Termasuk otomatis untuk ', 'Included automatically for ')}<strong className="text-white font-bold">{t('Semua Peserta Perempuan', 'All Female Riders')}</strong> {t('& Remaja ≤17 Th.', '& Youth ≤17 Yrs.')}</span>
+                          )}
                         </p>
                       </div>
                       <Link
                         href={`/daftar?category=${currentCategory.id}`}
                         className="group w-full px-4 py-3 rounded-full text-[11px] font-sans font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all duration-300 hover:shadow-[0_0_24px_rgba(250,109,11,0.5)] flex items-center justify-center gap-1.5 transform hover:-translate-y-0.5 active:scale-95 whitespace-nowrap text-center"
                       >
-                        {t('DAFTAR SEKARANG', 'REGISTER NOW')}
+                        {activePhase === 'CLOSED' ? t('PENDAFTARAN DITUTUP', 'REGISTRATION CLOSED') : t('DAFTAR SEKARANG', 'REGISTER NOW')}
                         <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 shrink-0" />
                       </Link>
                     </div>
@@ -707,6 +772,20 @@ export default function CategoryCockpit() {
                       <strong className="text-white font-semibold">{t('Peserta Asing (WNA / Expat):', 'International Riders (Expat):')}</strong> {t('Single US$50 (Rp 890.000) · Pair US$80 (Rp 1.424.000) sudah termasuk opsi jersey resmi.', 'Single US$50 · Pair US$80 (includes official race jersey option).')}
                     </span>
                     <span className="text-slate-500 uppercase tracking-wider">{t('KONTRIBUSI GLOBAL', 'GLOBAL TIER')}</span>
+                  </div>
+
+                  {/* Jump Link to Full Price List */}
+                  <div className="mt-2.5 pt-2 border-t border-white/[0.06] flex items-center justify-between">
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {t('Ingin melihat seluruh perbandingan tarif?', 'Want to compare all categories?')}
+                    </span>
+                    <Link
+                      href="/#daftar-harga"
+                      className="text-[10px] font-mono font-bold text-[#FA6D0B] hover:text-white uppercase tracking-wider flex items-center gap-1 transition-colors"
+                    >
+                      <span>{t('Lihat Tabel Biaya Lengkap', 'View Full Price Table')}</span>
+                      <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
+                    </Link>
                   </div>
                 </div>
 
@@ -721,7 +800,7 @@ export default function CategoryCockpit() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-300 uppercase tracking-wider font-bold">
-                    {t('CHECKPOINT & PITSTOP ETAPE //', 'STAGE CHECKPOINTS & PITSTOPS //')} {currentCategory.km}
+                    {t('CHECKPOINT & PITSTOP ETAPE ·', 'STAGE CHECKPOINTS & PITSTOPS ·')} {currentCategory.km}
                   </span>
                   <span className="text-[10px] text-[#FA6D0B] font-bold uppercase tracking-wider">
                     {currentCategory.id === '150' || currentCategory.id === '200' ? t('WAJIB PITSTOP 30 MENIT', 'MANDATORY 30-MIN PITSTOP') : 'SMART GEOFENCING'}
@@ -766,7 +845,7 @@ export default function CategoryCockpit() {
               {/* Safety & Protocol Box (Pure Typography, Icon-free) */}
               <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] space-y-1.5 text-xs">
                 <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                  {t('REGULASI TEKNIS & PROTOKOL //', 'TECHNICAL REGULATIONS & PROTOCOLS //')}
+                  {t('REGULASI TEKNIS & PROTOKOL', 'TECHNICAL REGULATIONS & PROTOCOLS')}
                 </span>
                 <div className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                   {currentCategory.isRace ? (
@@ -797,7 +876,7 @@ export default function CategoryCockpit() {
                 <span className="text-slate-300 truncate">{currentCategory.title}</span>
               </div>
               <div className="text-xs sm:text-sm font-display italic font-black text-white">
-                {currentCategory.regular.medal}
+                {activePhase === 'EARLY_BIRD' ? currentCategory.earlyBird.medal : currentCategory.regular.medal}
                 <span className="text-[10px] font-sans font-normal text-slate-400 not-italic ml-1">
                   {currentCategory.isRace ? '/ Single' : ''}
                 </span>

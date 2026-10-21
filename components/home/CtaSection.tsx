@@ -49,7 +49,7 @@ export default function CtaSection() {
         {/* Telemetry Status Line (Monospace Industrial) */}
         <div className="space-y-2">
           <span className="text-[11px] sm:text-xs font-mono font-black text-[#FA6D0B] uppercase tracking-[0.3em] block">
-            {t('FINAL CALL // KUOTA TERBATAS RESMI GX-ID', 'FINAL CALL // OFFICIAL LIMITED GX-ID SLOTS')}
+            {t('FINAL CALL · KUOTA TERBATAS RESMI GX-ID', 'FINAL CALL · OFFICIAL LIMITED GX-ID SLOTS')}
           </span>
 
           {/* Event Graphic Title with Radial Backlight */}
@@ -65,7 +65,7 @@ export default function CtaSection() {
 
         {/* Display Headline */}
         <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white italic drop-shadow-lg leading-tight">
-          {t('BERANI TAKLUKKAN MEDAN JONGGOL?', 'DARE TO CONQUER JONGGOL CORRIDORS?')}
+          READY FOR BEAUTIFUL SUFFERING?
         </h2>
 
         {/* Narrative Description */}
@@ -87,7 +87,7 @@ export default function CtaSection() {
                 {t('KATEGORI RUTE', 'ROUTE CATEGORIES')}
               </span>
               <span className="font-display font-black text-xs sm:text-[13px] text-white uppercase italic tracking-wide block">
-                5 PILIHAN <span className="text-[#FA6D0B]">·</span> 60K–200K
+                5 PILIHAN <span className="text-[#FA6D0B]">·</span> 70K–200K
               </span>
             </div>
 
@@ -105,7 +105,7 @@ export default function CtaSection() {
                 {t('LOKASI HOST', 'HOST VENUE')}
               </span>
               <span className="font-display font-black text-xs sm:text-[13px] text-white uppercase italic tracking-wide block">
-                ABEEY LRT HARJAMUKTI
+                ABBEY LRT HARJAMUKTI
               </span>
             </div>
 

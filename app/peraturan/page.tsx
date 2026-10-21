@@ -45,11 +45,11 @@ export default function PeraturanPage() {
         <div className="max-w-7xl mx-auto pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
             <span className="font-bold text-[#FA6D0B] uppercase tracking-widest px-3 py-1 bg-[#FA6D0B]/15 rounded-full border border-[#FA6D0B]/30 backdrop-blur-md">
-              GX-ID TECHNICAL HANDBOOK // 2026 OFFICIAL CANONICAL SPEC
+              GX-ID TECHNICAL HANDBOOK · 2026 OFFICIAL SPEC
             </span>
             <span className="text-white/30 select-none hidden sm:inline">·</span>
             <span className="text-slate-400">
-              STATUS: <strong className="text-white">ENFORCED // ZERO TOLERANCE</strong>
+              STATUS: <strong className="text-white">ENFORCED · ZERO TOLERANCE</strong>
             </span>
             <span className="text-white/30 select-none hidden sm:inline">·</span>
             <span className="text-slate-400">
@@ -105,37 +105,37 @@ export default function PeraturanPage() {
               href="#unsupported"
               className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/10 text-slate-300 whitespace-nowrap transition-all uppercase tracking-wider font-bold"
             >
-              01 // {t('KEMANDIRIAN', 'SELF-SUPPORT')}
+              01 · {t('KEMANDIRIAN', 'SELF-SUPPORT')}
             </a>
             <a
               href="#penalti"
               className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/10 text-slate-300 whitespace-nowrap transition-all uppercase tracking-wider font-bold"
             >
-              02 // {t('MATRIKS PENALTI', 'PENALTY MATRIX')}
+              02 · {t('MATRIKS PENALTI', 'PENALTY MATRIX')}
             </a>
             <a
               href="#prolog"
               className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/10 text-slate-300 whitespace-nowrap transition-all uppercase tracking-wider font-bold"
             >
-              03 // {t('PROLOG 30 KM', '30K PROLOGUE')}
+              03 · {t('PROLOG 30 KM', '30K PROLOGUE')}
             </a>
             <a
               href="#ultra200"
               className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/10 text-slate-300 whitespace-nowrap transition-all uppercase tracking-wider font-bold"
             >
-              04 // {t('COT 17 JAM ULTRA', '17H ULTRA COT')}
+              04 · {t('COT 17 JAM ULTRA', '17H ULTRA COT')}
             </a>
             <a
               href="#scrutineering"
               className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/10 text-slate-300 whitespace-nowrap transition-all uppercase tracking-wider font-bold"
             >
-              05 // {t('SCRUTINEERING HUJAN', 'SCRUTINEERING')}
+              05 · {t('SCRUTINEERING HUJAN', 'SCRUTINEERING')}
             </a>
             <a
               href="#medis"
               className="px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/10 text-slate-300 whitespace-nowrap transition-all uppercase tracking-wider font-bold"
             >
-              06 // {t('MEDIS SPGDT 24H', 'SPGDT MEDICAL')}
+              06 · {t('MEDIS SPGDT 24H', 'SPGDT MEDICAL')}
             </a>
           </div>
         </div>
@@ -201,10 +201,10 @@ export default function PeraturanPage() {
 
             <div className="border-b border-white/10 pb-4 flex flex-wrap items-center justify-between gap-2 font-mono">
               <span className="text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
-                01 // {t('PRINSIP DASAR KEMANDIRIAN', 'CORE ETHOS: PURE SELF-SUPPORTED')}
+                01 · {t('PRINSIP DASAR KEMANDIRIAN', 'CORE ETHOS: PURE SELF-SUPPORTED')}
               </span>
               <span className="text-xs text-slate-400 uppercase tracking-widest font-mono">
-                REF // GX-ID-REG-01
+                REF: GX-ID-REG-01
               </span>
             </div>
 
@@ -229,7 +229,7 @@ export default function PeraturanPage() {
                 )}
               </p>
               <span className="font-mono text-[11px] text-[#FA6D0B] font-bold block mt-1 uppercase tracking-wider">
-                // DEWAN COMMISSAIRE GRINDURANCE 2026
+                DEWAN COMMISSAIRE GRINDURANCE 2026
               </span>
             </div>
 
@@ -239,7 +239,7 @@ export default function PeraturanPage() {
               <div className="bg-black/60 backdrop-blur-xl p-6 sm:p-7 rounded-2xl transition-all space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)] relative overflow-hidden group/box">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <span className="font-black text-white uppercase tracking-wider text-xs sm:text-sm">
-                    // {t('DILARANG KERAS', 'STRICTLY FORBIDDEN')}
+                    {t('DILARANG KERAS', 'STRICTLY FORBIDDEN')}
                   </span>
                   <span className="text-[10px] text-white font-bold px-2.5 py-0.5 rounded-full bg-white/10">
                     DSQ TRIGGER
@@ -265,7 +265,7 @@ export default function PeraturanPage() {
               <div className="bg-black/60 backdrop-blur-xl p-6 sm:p-7 rounded-2xl transition-all space-y-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)] relative overflow-hidden group/box">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <span className="font-black text-[#FA6D0B] uppercase tracking-wider text-xs sm:text-sm">
-                    // {t('DIPERBOLEHKAN', 'PERMITTED')}
+                    {t('DIPERBOLEHKAN', 'PERMITTED')}
                   </span>
                   <span className="text-[10px] text-[#FA6D0B] font-bold px-2.5 py-0.5 rounded-full bg-[#FA6D0B]/15">
                     PUBLIC ACCESS
@@ -300,10 +300,10 @@ export default function PeraturanPage() {
 
             <div className="border-b border-white/10 pb-4 flex flex-wrap items-center justify-between gap-2 font-mono">
               <span className="text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
-                02 // {t('SANKSI & DISKUALIFIKASI RESMI', 'OFFICIAL SANCTIONS & PENALTY MATRIX')}
+                02 · {t('SANKSI & DISKUALIFIKASI RESMI', 'OFFICIAL SANCTIONS & PENALTY MATRIX')}
               </span>
               <span className="text-xs text-slate-400 uppercase tracking-widest font-mono">
-                REF // GX-ID-PENALTY-02
+                REF: GX-ID-PENALTY-02
               </span>
             </div>
 
@@ -388,7 +388,7 @@ export default function PeraturanPage() {
                     </td>
                     <td className="py-4 px-4 sm:px-6 font-black text-black uppercase whitespace-nowrap">
                       <span className="px-3 py-1 rounded-full bg-[#FA6D0B] text-black inline-block shadow-[0_0_20px_rgba(250,109,11,0.4)]">
-                        DSQ // DISKUALIFIKASI
+                        DSQ · DISKUALIFIKASI
                       </span>
                     </td>
                     <td className="py-4 px-4 sm:px-6 text-slate-300 font-sans text-xs leading-relaxed">
@@ -401,7 +401,7 @@ export default function PeraturanPage() {
                     </td>
                     <td className="py-4 px-4 sm:px-6 font-black text-slate-400 uppercase whitespace-nowrap">
                       <span className="px-3 py-1 rounded-full bg-white/10 border border-white/20 inline-block">
-                        NC // REKREASI EKSHIBISI
+                        NC · REKREASI EKSHIBISI
                       </span>
                     </td>
                     <td className="py-4 px-4 sm:px-6 text-slate-300 font-sans text-xs leading-relaxed">
@@ -424,7 +424,7 @@ export default function PeraturanPage() {
 
             <div className="border-b border-white/10 pb-4 flex flex-wrap items-center justify-between gap-2 font-mono">
               <span className="text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
-                03 // {t('REGULASI PROLOG 30 KM MANDIRI', 'MANDATORY 30 KM SELF-PROLOGUE PROTOCOL')}
+                03 · {t('REGULASI PROLOG 30 KM MANDIRI', 'MANDATORY 30 KM SELF-PROLOGUE PROTOCOL')}
               </span>
               <span className="text-xs text-slate-400 uppercase tracking-widest font-mono">
                 KHUSUS 150 KM &amp; 200 KM
@@ -507,32 +507,32 @@ export default function PeraturanPage() {
             {/* Scrutineering Dawn Flow Steps */}
             <div className="border-t border-white/10 pt-6 space-y-4">
               <span className="font-mono text-xs text-[#FA6D0B] uppercase font-bold tracking-wider block">
-                // PROSEDUR VERIFIKASI PROLOG DI MEJA SCRUTINEERING SUBUH:
+                PROSEDUR VERIFIKASI PROLOG DI MEJA SCRUTINEERING SUBUH:
               </span>
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-3.5 font-mono text-xs">
                 <div className="p-5 rounded-2xl bg-black/50 backdrop-blur-xl space-y-2 hover:bg-[#FA6D0B]/5 transition-all shadow-md group">
-                  <span className="text-[#FA6D0B] font-bold block text-xs group-hover:scale-105 transition-transform">STEP 01 //</span>
+                  <span className="text-[#FA6D0B] font-bold block text-xs group-hover:scale-105 transition-transform">STEP 01</span>
                   <strong className="text-white block font-sans text-sm">Gowes Mandiri Subuh</strong>
                   <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
                     Selesaikan gowes outdoor min 30 km antara pukul 03:00 – 05:00 WIB menuju venue start.
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-black/50 backdrop-blur-xl space-y-2 hover:bg-[#FA6D0B]/5 transition-all shadow-md group">
-                  <span className="text-[#FA6D0B] font-bold block text-xs group-hover:scale-105 transition-transform">STEP 02 //</span>
+                  <span className="text-[#FA6D0B] font-bold block text-xs group-hover:scale-105 transition-transform">STEP 02</span>
                   <strong className="text-white block font-sans text-sm">Tunjukkan GPS Log</strong>
                   <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
                     Tunjukkan file track log (Garmin / Wahoo / Strava) ke dewan commissaire di meja scrutineering.
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-black/50 backdrop-blur-xl space-y-2 hover:bg-[#FA6D0B]/5 transition-all shadow-md group">
-                  <span className="text-[#FA6D0B] font-bold block text-xs group-hover:scale-105 transition-transform">STEP 03 //</span>
+                  <span className="text-[#FA6D0B] font-bold block text-xs group-hover:scale-105 transition-transform">STEP 03</span>
                   <strong className="text-white block font-sans text-sm">Stempel Cleared</strong>
                   <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
                     Peserta yang memenuhi jarak &ge; 30 km menerima stempel verifikasi pada nomor plat BIB sepeda.
                   </p>
                 </div>
                 <div className="p-5 rounded-2xl bg-black/50 backdrop-blur-xl space-y-2 hover:bg-black/70 transition-all shadow-md group">
-                  <span className="text-white font-bold block text-xs group-hover:scale-105 transition-transform">DISIPLIN //</span>
+                  <span className="text-white font-bold block text-xs group-hover:scale-105 transition-transform">DISIPLIN</span>
                   <strong className="text-white block font-sans text-sm">Deny Start</strong>
                   <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
                     Peserta yang gagal membuktikan 30 km dilarang masuk start pen atau diturunkan kategori.
@@ -553,7 +553,7 @@ export default function PeraturanPage() {
 
             <div className="border-b border-white/10 pb-4 flex flex-wrap items-center justify-between gap-2 font-mono">
               <span className="text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
-                04 // {t('REGULASI KHUSUS 200 KM ULTRA', 'SPECIAL REGULATIONS: 200 KM ULTRA')}
+                04 · {t('REGULASI KHUSUS 200 KM ULTRA', 'SPECIAL REGULATIONS: 200 KM ULTRA')}
               </span>
               <span className="text-xs text-black font-black bg-[#FA6D0B] px-3.5 py-1 rounded-full uppercase shadow-[0_0_15px_rgba(250,109,11,0.4)]">
                 COT RESMI: 17 JAM
@@ -577,7 +577,7 @@ export default function PeraturanPage() {
               <div className="p-7 rounded-2xl bg-gradient-to-br from-[#FA6D0B]/15 via-black/60 to-black/85 backdrop-blur-xl space-y-3 shadow-lg relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-[#FA6D0B]/10 rounded-full blur-2xl pointer-events-none group-hover:bg-[#FA6D0B]/20 transition-all" />
                 <span className="font-display italic text-2xl sm:text-3xl font-black text-[#FA6D0B] uppercase tracking-tight block">
-                  COT RESMI // 17 JAM DARI START
+                  COT RESMI · 17 JAM DARI START
                 </span>
                 <p className="font-sans text-slate-300 leading-relaxed text-xs sm:text-sm">
                   {t(
@@ -590,7 +590,7 @@ export default function PeraturanPage() {
               {/* Box Daylight Ridge Completion */}
               <div className="p-7 rounded-2xl bg-black/60 backdrop-blur-xl space-y-3 shadow-lg relative overflow-hidden group">
                 <span className="font-display italic text-2xl sm:text-3xl font-black text-white uppercase tracking-tight block">
-                  DAYLIGHT RIDGE // WAJIB SAAT TERANG
+                  DAYLIGHT RIDGE · WAJIB SAAT TERANG
                 </span>
                 <p className="font-sans text-slate-300 leading-relaxed text-xs sm:text-sm">
                   {t(
@@ -613,7 +613,7 @@ export default function PeraturanPage() {
 
             <div className="border-b border-white/10 pb-4 flex flex-wrap items-center justify-between gap-2 font-mono">
               <span className="text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
-                05 // {t('STANDAR TEKNIS & SCRUTINEERING SEPEDA', 'SCRUTINEERING & RAINY SEASON BIKE SPECS')}
+                05 · {t('STANDAR TEKNIS & SCRUTINEERING SEPEDA', 'SCRUTINEERING & RAINY SEASON BIKE SPECS')}
               </span>
               <span className="text-xs text-slate-400 uppercase tracking-widest font-mono">
                 MEJA SCRUTINEERING SUBUH
@@ -638,7 +638,7 @@ export default function PeraturanPage() {
               <div className="p-6 rounded-2xl bg-black/55 backdrop-blur-xl hover:bg-black/75 transition-all space-y-3 shadow-lg relative overflow-hidden group">
                 <div className="w-8 h-1 bg-[#FA6D0B] rounded-full group-hover:w-16 transition-all" />
                 <span className="font-black text-[#FA6D0B] uppercase tracking-wider block text-xs sm:text-sm">
-                  // SPESIFIKASI BAN
+                  SPESIFIKASI BAN
                 </span>
                 <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed">
                   {t(
@@ -652,7 +652,7 @@ export default function PeraturanPage() {
               <div className="p-6 rounded-2xl bg-black/55 backdrop-blur-xl hover:bg-black/75 transition-all space-y-3 shadow-lg relative overflow-hidden group">
                 <div className="w-8 h-1 bg-white/60 rounded-full group-hover:w-16 transition-all" />
                 <span className="font-black text-white uppercase tracking-wider block text-xs sm:text-sm">
-                  // AEROBAR DILARANG
+                  AEROBAR DILARANG
                 </span>
                 <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed">
                   {t(
@@ -666,7 +666,7 @@ export default function PeraturanPage() {
               <div className="p-6 rounded-2xl bg-black/55 backdrop-blur-xl hover:bg-black/75 transition-all space-y-3 shadow-lg relative overflow-hidden group">
                 <div className="w-8 h-1 bg-white/60 rounded-full group-hover:w-16 transition-all" />
                 <span className="font-black text-white uppercase tracking-wider block text-xs sm:text-sm">
-                  // PENCAHAYAAN GANDA
+                  PENCAHAYAAN GANDA
                 </span>
                 <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed">
                   {t(
@@ -680,7 +680,7 @@ export default function PeraturanPage() {
               <div className="p-6 rounded-2xl bg-black/55 backdrop-blur-xl hover:bg-black/75 transition-all space-y-3 shadow-lg relative overflow-hidden group">
                 <div className="w-8 h-1 bg-white/60 rounded-full group-hover:w-16 transition-all" />
                 <span className="font-black text-white uppercase tracking-wider block text-xs sm:text-sm">
-                  // RANTAI & TOOLKIT
+                  RANTAI & TOOLKIT
                 </span>
                 <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed">
                   {t(
@@ -703,7 +703,7 @@ export default function PeraturanPage() {
 
             <div className="border-b border-white/10 pb-4 flex flex-wrap items-center justify-between gap-2 font-mono">
               <span className="text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-wider">
-                06 // {t('DUKUNGAN MEDIS & SISTEM EVAKUASI', 'MEDICAL SUPPORT & ROUTE EVACUATION')}
+                06 · {t('DUKUNGAN MEDIS & SISTEM EVAKUASI', 'MEDICAL SUPPORT & ROUTE EVACUATION')}
               </span>
               <span className="text-xs text-white font-bold px-3 py-1 rounded-full bg-white/10 uppercase tracking-widest font-mono">
                 RS HERMINA SPGDT 24H

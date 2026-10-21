@@ -119,11 +119,11 @@ export default function PesertaPage() {
         <div className="max-w-7xl mx-auto pt-24 sm:pt-28 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 relative z-10 space-y-6">
           <div className="flex flex-wrap items-center gap-3 font-mono text-xs">
             <span className="font-bold text-[#FA6D0B] uppercase tracking-widest px-3 py-1 bg-[#FA6D0B]/15 rounded-full border border-[#FA6D0B]/30 backdrop-blur-md">
-              GX-ID OFFICIAL START LIST // RIDER ROSTER 2026
+              GX-ID OFFICIAL START LIST · RIDER ROSTER 2026
             </span>
             <span className="text-white/30 select-none hidden sm:inline">·</span>
             <span className="text-slate-400">
-              STATUS: <strong className="text-white">TERKONFIRMASI // 19 CHAPTER</strong>
+              STATUS: <strong className="text-white">TERKONFIRMASI · 19 CHAPTER</strong>
             </span>
             <span className="text-white/30 select-none hidden sm:inline">·</span>
             <span className="text-slate-400">
@@ -191,7 +191,7 @@ export default function PesertaPage() {
               <div className="p-5 rounded-2xl bg-black/60 backdrop-blur-xl shadow-lg space-y-1 relative overflow-hidden group transition-all">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-xl pointer-events-none" />
                 <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest block font-bold">
-                  {t('BASECAMP START // VENUE', 'START BASECAMP // VENUE')}
+                  {t('BASECAMP START · VENUE', 'START BASECAMP · VENUE')}
                 </span>
                 <span className="font-display italic text-2xl sm:text-3xl font-black text-white block tracking-tight mt-1">
                   ABEEY COFFEE
@@ -270,7 +270,7 @@ export default function PesertaPage() {
                 href="/scrutineering"
                 className="inline-flex items-center gap-1.5 px-5 py-3.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-white/[0.06] hover:bg-white/[0.12] text-slate-200 hover:text-white transition-all cursor-pointer shadow-md"
               >
-                <span>Scrutineering Desk //</span>
+                <span>Scrutineering Desk</span>
               </Link>
               <Link
                 href="/daftar"
@@ -315,7 +315,7 @@ export default function PesertaPage() {
             </div>
           ) : roster.length === 0 ? (
             <div className="py-24 text-center space-y-3 p-6 font-mono">
-              <span className="text-xs text-[#FA6D0B] font-bold uppercase tracking-wider block">// STATUS: NO RECORDS</span>
+              <span className="text-xs text-[#FA6D0B] font-bold uppercase tracking-wider block">STATUS: NO RECORDS</span>
               <p className="font-display italic text-2xl font-black text-white uppercase">{t('Tidak Ada Atlet Ditemukan', 'No Riders Found')}</p>
               <p className="text-xs sm:text-sm text-slate-400 font-sans max-w-sm mx-auto">
                 {t('Sesuaikan kata kunci pencarian Anda atau pilih kategori lain.', 'Adjust search keyword or select another category filter.')}
@@ -355,7 +355,7 @@ export default function PesertaPage() {
                         </div>
                         {rider.partner_name && (
                           <div className="flex items-center gap-1.5 mt-0.5 text-xs text-[#FA6D0B] font-mono font-bold">
-                            <span>// PAIR: {rider.partner_name}</span>
+                            <span>PAIR: {rider.partner_name}</span>
                           </div>
                         )}
                         <span className="text-[11px] text-slate-400 block mt-0.5">
@@ -413,7 +413,7 @@ export default function PesertaPage() {
                           onClick={() => setSelectedRiderForBib(rider)}
                           className="px-3.5 py-1.5 rounded-lg border border-white/20 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/15 text-slate-300 text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
                         >
-                          {t('PLAT //', 'PLATE //')}
+                          {t('LIHAT PLAT', 'VIEW PLATE')}
                         </button>
                       </td>
                     </tr>
@@ -439,7 +439,7 @@ export default function PesertaPage() {
 
               <div className="text-center space-y-1">
                 <span className="text-[10px] sm:text-xs font-mono text-[#FA6D0B] uppercase tracking-widest font-bold block">
-                  DIGITAL BIKE PLATE VOUCHER // OFFICIAL
+                  DIGITAL BIKE PLATE VOUCHER · OFFICIAL
                 </span>
                 <h3 className="font-display italic text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
                   BIB #{selectedRiderForBib.bib_number}

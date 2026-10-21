@@ -14,93 +14,41 @@ import {
   CATEGORIES, 
   CategoryData, 
   GPX_FILE_MAP, 
-  GPX_DISPLAY_INFO 
+  GPX_DISPLAY_INFO,
+  getActivePricingPhase,
+  getPricesForCategory,
+  EARLY_BIRD_PRICES,
+  REGULAR_PRICES,
+  REGISTRATION_GO_LIVE_DATE_ISO,
+  EARLY_BIRD_END_DATE_ISO,
+  REGULAR_START_DATE_ISO,
+  REGISTRATION_CLOSE_DATE_ISO,
+  EVENT_DATE_ISO,
+  PricingPhase
 } from '@/lib/data/categories';
 import ElevationProfile from '@/components/ElevationProfile';
 
 // Dynamically import RouteMap without SSR
 const RouteMap = dynamic(() => import('@/components/RouteMap'), { ssr: false });
 
-// 6 PILIHAN RESMI KATEGORI GRINDURANCE 2026 (120 KM RACE MERUPAKAN 1 KATEGORI DENGAN OPSI SINGLE/PAIR DI DALAMNYA)
-const RACE_120_SINGLE_CONFIG: Category = {
-  id: '120_SINGLE',
-  name: '120 (Race) Single',
-  distance_km: 120,
-  category_type: 'race',
-  is_pair: false,
-  price_medal_only: 400000,
-  price_medal_jersey: 450000,
-  quota: 100,
-  current_enrolled: 34,
-  cot_hours: 11,
-  wave_start_time: '06:00',
-  prologue_required_km: 0,
-  mandatory_pitstop_cp: 4,
-  tracking_required: true,
-  is_active: true,
-};
+// BUILDER KATEGORI DINAMIS DENGAN KESELARASAN HARGA EARLY BIRD & REGULER (MAKE NO MISTAKES)
+function buildCategoryConfigs(phase: PricingPhase) {
+  const p70 = getPricesForCategory('70', phase);
+  const p100 = getPricesForCategory('100', phase);
+  const p120s = getPricesForCategory('120_SINGLE', phase);
+  const p120p = getPricesForCategory('120_PAIR', phase);
+  const p150 = getPricesForCategory('150', phase);
+  const p200 = getPricesForCategory('200', phase);
+  const pVirt = getPricesForCategory('VIRTUAL', phase);
 
-const RACE_120_PAIR_CONFIG: Category = {
-  id: '120_PAIR',
-  name: '120 (Race) Pair Mix',
-  distance_km: 120,
-  category_type: 'race',
-  is_pair: true,
-  price_medal_only: 700000,
-  price_medal_jersey: 750000,
-  quota: 30,
-  current_enrolled: 12,
-  cot_hours: 11,
-  wave_start_time: '06:00',
-  prologue_required_km: 0,
-  mandatory_pitstop_cp: 4,
-  tracking_required: true,
-  is_active: true,
-};
-
-const OFFICIAL_CATEGORIES: Category[] = [
-  {
-    id: '60',
-    name: '70 Fun Gravel Ride',
-    distance_km: 70,
-    category_type: 'fun',
-    is_pair: false,
-    price_medal_only: 250000,
-    price_medal_jersey: 300000,
-    quota: 150,
-    current_enrolled: 42,
-    cot_hours: 7,
-    wave_start_time: '07:00',
-    prologue_required_km: 0,
-    mandatory_pitstop_cp: 6,
-    tracking_required: false,
-    is_active: true,
-  },
-  {
-    id: '100',
-    name: '100 Fondo',
-    distance_km: 100,
-    category_type: 'cross',
-    is_pair: false,
-    price_medal_only: 300000,
-    price_medal_jersey: 350000,
-    quota: 150,
-    current_enrolled: 56,
-    cot_hours: 9.5,
-    wave_start_time: '07:00',
-    prologue_required_km: 0,
-    mandatory_pitstop_cp: 6,
-    tracking_required: false,
-    is_active: true,
-  },
-  {
-    id: '120',
-    name: '120 Amazing Race',
+  const race120Single: Category = {
+    id: '120_SINGLE',
+    name: '120 (Race) Single',
     distance_km: 120,
     category_type: 'race',
     is_pair: false,
-    price_medal_only: 400000,
-    price_medal_jersey: 450000,
+    price_medal_only: p120s.medal,
+    price_medal_jersey: p120s.jersey,
     quota: 100,
     current_enrolled: 34,
     cot_hours: 11,
@@ -109,62 +57,141 @@ const OFFICIAL_CATEGORIES: Category[] = [
     mandatory_pitstop_cp: 4,
     tracking_required: true,
     is_active: true,
-  },
-  {
-    id: '150',
-    name: '150 Grand Fondo',
-    distance_km: 150,
+  };
+
+  const race120Pair: Category = {
+    id: '120_PAIR',
+    name: '120 (Race) Pair Mix',
+    distance_km: 120,
     category_type: 'race',
-    is_pair: false,
-    price_medal_only: 400000,
-    price_medal_jersey: 450000,
-    quota: 75,
-    current_enrolled: 29,
-    cot_hours: 15,
-    wave_start_time: '05:30',
-    prologue_required_km: 30, // Route 120/150 sama bedanya yg 150 Prolog 30 km
-    mandatory_pitstop_cp: 4,
-    tracking_required: true,
-    is_active: true,
-  },
-  {
-    id: '200',
-    name: '200 Ultra',
-    distance_km: 200,
-    category_type: 'ultra',
-    is_pair: false,
-    price_medal_only: 400000,
-    price_medal_jersey: 450000,
-    quota: 50,
-    current_enrolled: 21,
-    cot_hours: 19,
-    wave_start_time: '05:30',
-    prologue_required_km: 30, // Route 200 hanya disiapkan 170 km yg 30 km Prolog
-    mandatory_pitstop_cp: 4,
-    tracking_required: true,
-    is_active: true,
-  },
-  {
-    id: 'VIRTUAL',
-    name: 'Virtual Ride (19 Chapters)',
-    distance_km: 0,
-    category_type: 'virtual',
-    is_pair: false,
-    price_medal_only: 200000,
-    price_medal_jersey: 250000,
-    quota: 1000,
-    current_enrolled: 142,
-    cot_hours: null,
-    wave_start_time: 'Fleksibel',
+    is_pair: true,
+    price_medal_only: p120p.medal,
+    price_medal_jersey: p120p.jersey,
+    quota: 30,
+    current_enrolled: 12,
+    cot_hours: 11,
+    wave_start_time: '06:00',
     prologue_required_km: 0,
-    mandatory_pitstop_cp: null,
+    mandatory_pitstop_cp: 4,
     tracking_required: true,
     is_active: true,
-  },
-];
+  };
+
+  const officialCategories: Category[] = [
+    {
+      id: '60',
+      name: '70 Fun Gravel Ride',
+      distance_km: 70,
+      category_type: 'fun',
+      is_pair: false,
+      price_medal_only: p70.medal,
+      price_medal_jersey: p70.jersey,
+      quota: 150,
+      current_enrolled: 42,
+      cot_hours: 7,
+      wave_start_time: '07:00',
+      prologue_required_km: 0,
+      mandatory_pitstop_cp: 6,
+      tracking_required: false,
+      is_active: true,
+    },
+    {
+      id: '100',
+      name: '100 Fondo',
+      distance_km: 100,
+      category_type: 'cross',
+      is_pair: false,
+      price_medal_only: p100.medal,
+      price_medal_jersey: p100.jersey,
+      quota: 150,
+      current_enrolled: 56,
+      cot_hours: 9.5,
+      wave_start_time: '07:00',
+      prologue_required_km: 0,
+      mandatory_pitstop_cp: 6,
+      tracking_required: false,
+      is_active: true,
+    },
+    {
+      id: '120',
+      name: '120 Amazing Race',
+      distance_km: 120,
+      category_type: 'race',
+      is_pair: false,
+      price_medal_only: p120s.medal,
+      price_medal_jersey: p120s.jersey,
+      quota: 100,
+      current_enrolled: 34,
+      cot_hours: 11,
+      wave_start_time: '06:00',
+      prologue_required_km: 0,
+      mandatory_pitstop_cp: 4,
+      tracking_required: true,
+      is_active: true,
+    },
+    {
+      id: '150',
+      name: '150 Grand Fondo',
+      distance_km: 150,
+      category_type: 'race',
+      is_pair: false,
+      price_medal_only: p150.medal,
+      price_medal_jersey: p150.jersey,
+      quota: 75,
+      current_enrolled: 29,
+      cot_hours: 15,
+      wave_start_time: '05:30',
+      prologue_required_km: 30, // Route 120/150 sama bedanya yg 150 Prolog 30 km
+      mandatory_pitstop_cp: 4,
+      tracking_required: true,
+      is_active: true,
+    },
+    {
+      id: '200',
+      name: '200 Ultra',
+      distance_km: 200,
+      category_type: 'ultra',
+      is_pair: false,
+      price_medal_only: p200.medal,
+      price_medal_jersey: p200.jersey,
+      quota: 50,
+      current_enrolled: 21,
+      cot_hours: 17, // Supreme Truth: 17 Jam Resmi
+      wave_start_time: '05:30',
+      prologue_required_km: 30, // Route 200 disiapkan 170 km yg 30 km Prolog mandiri
+      mandatory_pitstop_cp: 4,
+      tracking_required: true,
+      is_active: true,
+    },
+    {
+      id: 'VIRTUAL',
+      name: 'Virtual Ride (19 Chapters)',
+      distance_km: 0,
+      category_type: 'virtual',
+      is_pair: false,
+      price_medal_only: pVirt.medal,
+      price_medal_jersey: pVirt.jersey,
+      quota: 1000,
+      current_enrolled: 142,
+      cot_hours: null,
+      wave_start_time: 'Fleksibel',
+      prologue_required_km: 0,
+      mandatory_pitstop_cp: null,
+      tracking_required: true,
+      is_active: true,
+    },
+  ];
+
+  return { race120Single, race120Pair, officialCategories };
+}
+
+const DEFAULT_CATEGORY_CONFIGS = buildCategoryConfigs('EARLY_BIRD');
+const RACE_120_SINGLE_CONFIG = DEFAULT_CATEGORY_CONFIGS.race120Single;
+const RACE_120_PAIR_CONFIG = DEFAULT_CATEGORY_CONFIGS.race120Pair;
+const OFFICIAL_CATEGORIES = DEFAULT_CATEGORY_CONFIGS.officialCategories;
 
 // Visual Poster & Kata Ajakan Spesifik per 6 Kategori Resmi
-export interface CategoryVisual {
+interface CategoryVisual {
   image: string;
   headline: string;
   subtitle: string;
@@ -303,8 +330,11 @@ export default function RegistrationPage() {
   // Step state: 'select' (Pilih Gambar) -> 'detail' (Peta Besar & Briefing) -> 'form' (Isi Form) -> 'invoice' (Tagihan)
   const [currentStep, setCurrentStep] = useState<'select' | 'detail' | 'form' | 'invoice'>('select');
   
+  const [activePhase, setActivePhase] = useState<PricingPhase>('EARLY_BIRD');
   const [categories, setCategories] = useState<Category[]>(OFFICIAL_CATEGORIES);
-  const [selectedCategory, setSelectedCategory] = useState<Category>(RACE_120_SINGLE_CONFIG); // Default 120 Single
+  const [race120SingleConfig, setRace120SingleConfig] = useState<Category>(RACE_120_SINGLE_CONFIG);
+  const [race120PairConfig, setRace120PairConfig] = useState<Category>(RACE_120_PAIR_CONFIG);
+  const [selectedCategory, setSelectedCategory] = useState<Category>(RACE_120_SINGLE_CONFIG);
   const [packageType, setPackageType] = useState<PackageType>('MEDAL_JERSEY');
   const [rpcMethod, setRpcMethod] = useState<'PICKUP' | 'HANDLING'>('PICKUP');
 
@@ -438,6 +468,13 @@ export default function RegistrationPage() {
 
   // Ambil data live dari Supabase (filter hanya kategori aktif dan cocokkan ke official list)
   useEffect(() => {
+    const phase = getActivePricingPhase();
+    setActivePhase(phase);
+    const configs = buildCategoryConfigs(phase);
+    setRace120SingleConfig(configs.race120Single);
+    setRace120PairConfig(configs.race120Pair);
+    setCategories(configs.officialCategories);
+
     // Baca parameter kategori dari URL jika diarahkan dari halaman kategori / homepage (cth: /daftar?category=120_PAIR)
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -445,18 +482,20 @@ export default function RegistrationPage() {
       if (catParam) {
         const p = catParam.toLowerCase();
         if (p === '120_pair') {
-          setSelectedCategory(RACE_120_PAIR_CONFIG);
+          setSelectedCategory(configs.race120Pair);
           setCurrentStep('detail');
         } else if (p === '120' || p === '120_single') {
-          setSelectedCategory(RACE_120_SINGLE_CONFIG);
+          setSelectedCategory(configs.race120Single);
           setCurrentStep('detail');
         } else {
-          const found = OFFICIAL_CATEGORIES.find(c => c.id.toLowerCase() === p || (p === '70' && c.id === '60') || (p === '60' && c.id === '70'));
+          const found = configs.officialCategories.find(c => c.id.toLowerCase() === p || (p === '70' && c.id === '60') || (p === '60' && c.id === '70'));
           if (found) {
             setSelectedCategory(found);
             setCurrentStep('detail');
           }
         }
+      } else {
+        setSelectedCategory(configs.race120Single);
       }
 
       const stepParam = params.get('step') || params.get('preview');
@@ -506,17 +545,18 @@ export default function RegistrationPage() {
 
     async function fetchCategories() {
       try {
-        const res = await fetch('/api/categories');
+        const phaseParam = typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('phase') || '') : '';
+        const res = await fetch(`/api/categories${phaseParam ? `?phase=${phaseParam}` : ''}`);
         const data = await res.json();
         if (data.categories && Array.isArray(data.categories) && data.categories.length > 0) {
-          const matched = OFFICIAL_CATEGORIES.map(off => {
+          const matched = configs.officialCategories.map(off => {
             const live = data.categories.find((c: Category) => c.id === off.id || (off.id === '120' && c.id === '120_SINGLE'));
             return live ? {
               ...off,
               current_enrolled: live.current_enrolled,
               quota: live.quota,
-              price_medal_only: live.price_medal_only || off.price_medal_only,
-              price_medal_jersey: live.price_medal_jersey || off.price_medal_jersey,
+              price_medal_only: live.price_medal_only ?? off.price_medal_only,
+              price_medal_jersey: live.price_medal_jersey ?? off.price_medal_jersey,
             } : off;
           });
           setCategories(matched);
@@ -526,6 +566,16 @@ export default function RegistrationPage() {
       }
     }
     fetchCategories();
+
+    const handleResetFlow = () => {
+      setCurrentStep('select');
+      setErrorMessage('');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('reset-daftar-flow', handleResetFlow);
+    return () => {
+      window.removeEventListener('reset-daftar-flow', handleResetFlow);
+    };
   }, []);
 
   const getAge = (birthDateString: string) => {
@@ -540,11 +590,16 @@ export default function RegistrationPage() {
 
   const isEligibleForMealCoupon = () => {
     if (!selectedCategory) return false;
-    const r1Eligible = rider1.gender === 'female' || (Boolean(rider1.birth_date) && getAge(rider1.birth_date) < 17);
+    // Regulasi Resmi: Kategori 120km, 150km, & 200km otomatis mendapatkan meal voucher ABEEY
+    if (['120', '120_SINGLE', '120_PAIR', '150', '200'].includes(selectedCategory.id)) {
+      return true;
+    }
+    // Kategori 70km & 100km: semua peserta wanita (dan remaja usia <= 17 th)
+    const r1Eligible = rider1.gender === 'female' || (Boolean(rider1.birth_date) && getAge(rider1.birth_date) <= 17);
     if (!selectedCategory.is_pair) {
       return r1Eligible;
     } else {
-      const r2Eligible = rider2.gender === 'female' || (Boolean(rider2.birth_date) && getAge(rider2.birth_date) < 17);
+      const r2Eligible = rider2.gender === 'female' || (Boolean(rider2.birth_date) && getAge(rider2.birth_date) <= 17);
       return r1Eligible || r2Eligible;
     }
   };
@@ -564,7 +619,7 @@ export default function RegistrationPage() {
   // Navigasi Step 1 -> Step 2
   const handleSelectToDetail = (cat: Category) => {
     if (cat.id === '120') {
-      setSelectedCategory(RACE_120_SINGLE_CONFIG);
+      setSelectedCategory(race120SingleConfig);
     } else {
       setSelectedCategory(cat);
     }
@@ -689,7 +744,7 @@ export default function RegistrationPage() {
   const detailVisual = getCategoryVisual(selectedCategory.id, t);
 
   return (
-    <div className="min-h-screen bg-[#0A0B0E] text-[#F3F4F6] font-sans selection:bg-[#FA6D0B] selection:text-black pt-20 sm:pt-24 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] font-sans selection:bg-[#FA6D0B] selection:text-black pt-20 sm:pt-24 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       
       {/* Dynamic Cinematic Video Background */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -709,11 +764,11 @@ export default function RegistrationPage() {
         <div 
           className="absolute inset-0"
           style={{
-            background: 'radial-gradient(ellipse at center, rgba(10,11,14,0.45) 0%, rgba(10,11,14,0.85) 60%, #0A0B0E 100%)'
+            background: 'radial-gradient(ellipse at center, rgba(13,14,17,0.45) 0%, rgba(13,14,17,0.85) 60%, #0D0E11 100%)'
           }}
         />
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0A0B0E] via-[#0A0B0E]/80 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0A0B0E] via-[#0A0B0E]/90 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0D0E11] via-[#0D0E11]/80 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0D0E11] via-[#0D0E11]/90 to-transparent" />
 
         {/* Ambient Brand Orange Glow */}
         <div 
@@ -772,6 +827,55 @@ export default function RegistrationPage() {
               </div>
             </div>
 
+            {/* OFFICIAL REGISTRATION TIMELINE & TIER STATUS BANNER (MAKE NO MISTAKES) */}
+            <div className={`rounded-2xl p-4 sm:p-5 border flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_10px_35px_rgba(0,0,0,0.6)] ${
+              activePhase === 'CLOSED'
+                ? 'bg-black/90 border-white/20'
+                : activePhase === 'REGULAR'
+                ? 'bg-[#0B0C0E]/90 border-white/15'
+                : 'bg-black/80 border-[#FA6D0B]/40'
+            }`}>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <span className={`px-3 py-1 rounded text-xs font-mono font-black uppercase tracking-wider self-start sm:self-auto ${
+                  activePhase === 'CLOSED'
+                    ? 'bg-white/20 text-white'
+                    : activePhase === 'REGULAR'
+                    ? 'bg-white/15 text-white'
+                    : 'bg-[#FA6D0B] text-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
+                }`}>
+                  {activePhase === 'CLOSED'
+                    ? t('PENDAFTARAN DITUTUP', 'REGISTRATION CLOSED')
+                    : activePhase === 'REGULAR'
+                    ? t('TARIF REGULER AKTIF', 'REGULAR TIER ACTIVE')
+                    : t('EARLY BIRD AKTIF', 'EARLY BIRD ACTIVE')}
+                </span>
+                <div>
+                  <div className="font-mono text-xs sm:text-sm text-white font-bold leading-tight">
+                    {activePhase === 'CLOSED' && t('Pendaftaran Resmi Ditutup pada 29 November 2026 pukul 23:59 WIB', 'Official Registration Closed on Nov 29, 2026 at 23:59 WIB')}
+                    {activePhase === 'REGULAR' && t('Periode Reguler · Penutupan Pendaftaran: Minggu, 29 November 2026 (23:59 WIB)', 'Regular Period · Closes Sunday, Nov 29, 2026 (23:59 WIB)')}
+                    {activePhase === 'EARLY_BIRD' && t('Tarif Early Bird Aktif Hingga: Minggu, 15 November 2026 (23:59 WIB)', 'Early Bird Active Until: Sunday, Nov 15, 2026 (23:59 WIB)')}
+                  </div>
+                  <div className="font-mono text-[11px] text-slate-400 mt-0.5">
+                    {activePhase === 'CLOSED' && t('H-14 sebelum Hari-H untuk finalisasi race pack & asuransi peserta.', 'H-14 pre-event for race pack finalization & athlete insurance.')}
+                    {activePhase === 'REGULAR' && t('Penutupan resmi tepat 2 minggu sebelum event (Minggu, 13 Desember 2026).', 'Officially closes 2 weeks prior to event date (Sunday, Dec 13, 2026).')}
+                    {activePhase === 'EARLY_BIRD' && t('Go-live 1 November · Hemat hingga Rp 150.000 dibanding tarif reguler.', 'Go-live Nov 1 · Save up to IDR 150,000 compared to regular tier.')}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] sm:text-xs text-slate-300 pt-2 md:pt-0 border-t md:border-t-0 border-white/10 shrink-0">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[#FA6D0B] font-bold">RACE DAY:</span>
+                  <span className="text-white font-bold">13 DESEMBER 2026</span>
+                </div>
+                <span className="text-white/20 select-none">·</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-slate-400">PENUTUPAN:</span>
+                  <span className="text-[#FA6D0B] font-bold">29 NOV 2026</span>
+                </div>
+              </div>
+            </div>
+
             {/* Grid 6 Kategori Bergaya Editorial Gravel Monolith (3 Baris, Tiap Baris 2 Kategori) */}
             <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:gap-8">
               {categories.map((cat, idx) => {
@@ -797,7 +901,7 @@ export default function RegistrationPage() {
                     />
 
                     {/* Dark Vignette Overlay for Crisp Readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B0E] via-[#0A0B0E]/40 to-[#0A0B0E]/50 z-10 pointer-events-none group-hover:via-[#0A0B0E]/30 transition-colors duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D0E11] via-[#0D0E11]/40 to-[#0D0E11]/50 z-10 pointer-events-none group-hover:via-[#0D0E11]/30 transition-colors duration-500" />
 
                     {/* Shimmer Sweep on Hover */}
                     <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden z-20">
@@ -837,12 +941,26 @@ export default function RegistrationPage() {
                     {/* 3. BOTTOM: Price & Action Arrow (Single Clean Flush Line) */}
                     <div className="relative z-20 flex items-end justify-between font-mono pt-1">
                       <div>
-                        <span className="text-[7.5px] sm:text-[9.5px] text-slate-400 uppercase tracking-widest block leading-none mb-0.5">
-                          {t('MULAI DARI', 'STARTING FROM')}
-                        </span>
-                        <span className="font-display italic text-sm sm:text-xl font-black text-white leading-none">
-                          {formatRupiah(cat.price_medal_only)}
-                        </span>
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span className="text-[7.5px] sm:text-[9.5px] text-slate-400 uppercase tracking-widest block leading-none">
+                            {t('MULAI DARI', 'STARTING FROM')}
+                          </span>
+                          {activePhase === 'EARLY_BIRD' && (
+                            <span className="text-[7px] sm:text-[8px] font-mono font-bold uppercase text-black bg-[#FA6D0B] px-1 py-0.2 rounded-sm leading-none">
+                              EARLY BIRD
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="font-display italic text-sm sm:text-xl font-black text-white leading-none">
+                            {formatRupiah(cat.price_medal_only)}
+                          </span>
+                          {activePhase === 'EARLY_BIRD' && (
+                            <span className="line-through text-slate-400 font-mono text-[9px] sm:text-[11px] leading-none">
+                              {formatRupiah(REGULAR_PRICES[cat.id]?.medal ?? cat.price_medal_only)}
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#FA6D0B] text-black flex items-center justify-center shadow-[0_0_15px_rgba(250,109,11,0.4)] group-hover:scale-110 group-hover:bg-[#DE5A00] transition-all shrink-0">
@@ -1083,7 +1201,7 @@ export default function RegistrationPage() {
                     <div className="p-4 sm:p-5 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div>
                         <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                          {t('PILIHAN FORMAT // 120 KM RACE', '120 KM RACE // FORMAT SELECTION')}
+                          {t('PILIHAN FORMAT · 120 KM RACE', '120 KM RACE · FORMAT SELECTION')}
                         </span>
                         <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
                           {t(
@@ -1095,25 +1213,25 @@ export default function RegistrationPage() {
                       <div className="inline-flex rounded-xl bg-black/80 p-1.5 shrink-0 shadow-inner">
                         <button
                           type="button"
-                          onClick={() => setSelectedCategory(RACE_120_SINGLE_CONFIG)}
+                          onClick={() => setSelectedCategory(race120SingleConfig)}
                           className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                             !selectedCategory.is_pair
                               ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
                               : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                           }`}
                         >
-                          {t('SENDIRI // 1 RIDER', 'SINGLE // 1 RIDER')}
+                          {t('SENDIRI · 1 RIDER', 'SINGLE · 1 RIDER')}
                         </button>
                         <button
                           type="button"
-                          onClick={() => setSelectedCategory(RACE_120_PAIR_CONFIG)}
+                          onClick={() => setSelectedCategory(race120PairConfig)}
                           className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                             selectedCategory.is_pair
                               ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
                               : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                           }`}
                         >
-                          {t('PAIR MIX // 2 PAX', 'PAIR MIX // 2 PAX')}
+                          {t('PAIR MIX · 2 PAX', 'PAIR MIX · 2 PAX')}
                         </button>
                       </div>
                     </div>
@@ -1377,10 +1495,17 @@ export default function RegistrationPage() {
                 </h3>
                 <div className="font-mono text-xs text-slate-300 mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
                   <span>{t('Biaya Tiket:', 'Entry Fee:')} <strong className="text-[#FA6D0B] font-bold">{formatRupiah(selectedCategory.price_medal_only)}</strong></span>
+                  {activePhase === 'EARLY_BIRD' && (
+                    <span className="text-[10px] font-mono font-bold uppercase text-black bg-[#FA6D0B] px-1.5 py-0.5 rounded-sm">
+                      EARLY BIRD TILL 15 NOV
+                    </span>
+                  )}
                   <span className="text-white/20">·</span>
                   <span>{t('Sisa Kuota:', 'Remaining Quota:')} <strong className="text-white font-bold">{selectedCategory.quota - selectedCategory.current_enrolled} {t('Slot', 'Slots')}</strong></span>
                   <span className="text-white/20">·</span>
-                  <span className="text-slate-400 font-bold">{t('TERBUKA // KUOTA TERBATAS', 'OPEN // LIMITED SLOTS')}</span>
+                  <span className="text-slate-400 font-bold">
+                    {activePhase === 'CLOSED' ? t('PENDAFTARAN DITUTUP (29 NOV)', 'REGISTRATION CLOSED (NOV 29)') : t('PENUTUPAN 29 NOV 2026', 'CLOSES NOV 29, 2026')}
+                  </span>
                 </div>
               </div>
 
@@ -1399,11 +1524,16 @@ export default function RegistrationPage() {
                 <button
                   type="button"
                   onClick={handleProceedToForm}
-                  className="relative overflow-hidden w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
+                  disabled={activePhase === 'CLOSED'}
+                  className="relative overflow-hidden w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 rounded-full text-xs sm:text-sm font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
                 >
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none" />
-                  <span className="relative z-10">{t('DAFTAR SEKARANG', 'REGISTER NOW')}</span>
-                  <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out shrink-0" />
+                  <span className="relative z-10">
+                    {activePhase === 'CLOSED' ? t('PENDAFTARAN RESMI DITUTUP', 'REGISTRATION CLOSED') : t('DAFTAR SEKARANG', 'REGISTER NOW')}
+                  </span>
+                  {activePhase !== 'CLOSED' && (
+                    <ArrowUpRight className="relative z-10 w-4 h-4 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out shrink-0" />
+                  )}
                 </button>
               </div>
             </div>
@@ -1428,11 +1558,11 @@ export default function RegistrationPage() {
                 }}
                 className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-[#FA6D0B] transition-colors cursor-pointer"
               >
-                {t('← KEMBALI // DETAIL KATEGORI', '← BACK // CATEGORY DETAILS')}
+                {t('← KEMBALI · DETAIL KATEGORI', '← BACK · CATEGORY DETAILS')}
               </button>
 
               <div className="text-xs sm:text-sm font-mono text-[#FA6D0B] uppercase tracking-widest font-bold">
-                {t('TAHAP 03 / 03 // FORMULIR REGISTRASI ATLET', 'STAGE 03 / 03 // ATHLETE REGISTRATION FORM')}
+                {t('TAHAP 03 / 03 · FORMULIR REGISTRASI ATLET', 'STAGE 03 / 03 · ATHLETE REGISTRATION FORM')}
               </div>
             </div>
 
@@ -1453,11 +1583,11 @@ export default function RegistrationPage() {
 
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm sm:text-base font-mono text-slate-300 pt-1">
                   <span>{t('Jarak:', 'Distance:')} <strong className="text-white font-black">{selectedCategory.id === 'VIRTUAL' ? t('Bebas (Rute Domisili)', 'Flexible (Local Course)') : `${selectedCategory.distance_km} KM`}</strong></span>
-                  <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <span className="text-white/30 font-bold select-none">·</span>
                   <span>{t('Format:', 'Format:')} <strong className="text-white font-black">{selectedCategory.is_pair ? t('Tandem Tim (2 Riders)', 'Pair Tandem (2 Riders)') : selectedCategory.id === '120_SINGLE' ? t('Individu / Sendiri (1 Rider)', 'Individual Solo (1 Rider)') : selectedCategory.id === 'VIRTUAL' ? t('Virtual Ride (19 Chapters)', 'Virtual Ride (19 Chapters)') : t('Solo Rider', 'Solo Rider')}</strong></span>
-                  <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <span className="text-white/30 font-bold select-none">·</span>
                   <span>{t('COT:', 'COT:')} <strong className="text-white font-black">{selectedCategory.cot_hours ? `${selectedCategory.cot_hours} ${t('Jam', 'Hours')}` : t('Fleksibel', 'Flexible')}</strong></span>
-                  <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <span className="text-white/30 font-bold select-none">·</span>
                   <span>{t('Flag-off:', 'Flag-off:')} <strong className="text-[#FA6D0B] font-black">{selectedCategory.wave_start_time || '05:30'} WIB</strong></span>
                 </div>
               </div>
@@ -1479,7 +1609,7 @@ export default function RegistrationPage() {
               <div className="p-4 sm:p-5 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                    {t('PILIHAN FORMAT // 120 KM RACE', '120 KM RACE // FORMAT SELECTION')}
+                    {t('PILIHAN FORMAT · 120 KM RACE', '120 KM RACE · FORMAT SELECTION')}
                   </span>
                   <p className="text-xs sm:text-sm text-slate-300 font-sans mt-0.5">
                     {t(
@@ -1491,25 +1621,25 @@ export default function RegistrationPage() {
                 <div className="inline-flex rounded-xl bg-black/80 p-1.5 shrink-0 shadow-inner">
                   <button
                     type="button"
-                    onClick={() => setSelectedCategory(RACE_120_SINGLE_CONFIG)}
+                    onClick={() => setSelectedCategory(race120SingleConfig)}
                     className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                       !selectedCategory.is_pair
                         ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
                         : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                     }`}
                   >
-                    {t('SENDIRI // 1 RIDER', 'SINGLE // 1 RIDER')}
+                    {t('SENDIRI · 1 RIDER', 'SINGLE · 1 RIDER')}
                   </button>
                   <button
                     type="button"
-                    onClick={() => setSelectedCategory(RACE_120_PAIR_CONFIG)}
+                    onClick={() => setSelectedCategory(race120PairConfig)}
                     className={`px-5 py-2.5 rounded-lg text-xs sm:text-sm font-mono uppercase tracking-wider transition-all cursor-pointer active:scale-95 ${
                       selectedCategory.is_pair
                         ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.55)] font-black'
                         : 'text-slate-400 hover:text-white font-bold hover:bg-white/[0.05]'
                     }`}
                   >
-                    {t('PAIR MIX // 2 PAX', 'PAIR MIX // 2 PAX')}
+                    {t('PAIR MIX · 2 PAX', 'PAIR MIX · 2 PAX')}
                   </button>
                 </div>
               </div>
@@ -1519,7 +1649,7 @@ export default function RegistrationPage() {
             {errorMessage && (
               <div className="p-4 sm:p-5 rounded-2xl bg-black/90 text-white font-mono text-xs sm:text-sm flex items-center justify-between gap-3 animate-shake shadow-xl">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-[#FA6D0B] uppercase tracking-wider">{t('PERINGATAN DATA //', 'DATA ALERT //')}</span>
+                  <span className="font-bold text-[#FA6D0B] uppercase tracking-wider">{t('PERINGATAN DATA:', 'DATA ALERT:')}</span>
                   <span>{errorMessage}</span>
                 </div>
                 <button
@@ -1542,7 +1672,7 @@ export default function RegistrationPage() {
                 <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-white/10 pb-3">
                   <div>
                     <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                      {t('PILIHAN PAKET ATLET // 2026 EDITION', 'ATHLETE PACKAGE OPTIONS // 2026 EDITION')}
+                      {t('PILIHAN PAKET ATLET · 2026 EDITION', 'ATHLETE PACKAGE OPTIONS · 2026 EDITION')}
                     </span>
                     <h3 className="font-display italic text-2xl sm:text-4xl font-black uppercase text-white tracking-tight mt-1">
                       {t('PILIH PAKET FINISHER RESMI', 'SELECT OFFICIAL FINISHER PACKAGE')}
@@ -1586,23 +1716,23 @@ export default function RegistrationPage() {
 
                       <div className="pt-4 border-t border-white/10 space-y-3 text-sm sm:text-base text-white font-sans font-medium">
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{selectedCategory.is_pair ? t('2x Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)', '2x Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)') : 'Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)'}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{t('Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in', 'Waterproof Bike Number Plate #1000+ & QR Check-in')}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{t('Asuransi Kecelakaan Resmi 1 Hari Event', 'Official 1-Day Event Accident Insurance')}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{t('Nutrisi NDR Energy Gel + Isotonic Drink', 'NDR Energy Gel Nutrition + Isotonic Drink')}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{t('Akses Finisher Lounge & Voucher Pemulihan ABEEY Coffee', 'Finisher Lounge Access & ABEEY Coffee Recovery Voucher')}</span>
                         </div>
                       </div>
@@ -1631,7 +1761,7 @@ export default function RegistrationPage() {
                           {selectedCategory.is_pair ? t('PAKET 2 RIDER · LENGKAP', '2 RIDERS PACKAGE · COMPLETE') : t('PAKET 1 RIDER · LENGKAP', '1 RIDER PACKAGE · COMPLETE')}
                         </span>
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
-                          {selectedCategory.is_pair ? t('+RP 50.000 (TOTAL TIM)', '+IDR 50K (TOTAL TEAM)') : t('+RP 50.000 / PAX', '+IDR 50K / PAX')}
+                          +{formatRupiah(selectedCategory.price_medal_jersey - selectedCategory.price_medal_only)} {selectedCategory.is_pair ? t('(TOTAL TIM)', '(TOTAL TEAM)') : '/ PAX'}
                         </span>
                       </div>
 
@@ -1651,23 +1781,23 @@ export default function RegistrationPage() {
 
                       <div className="pt-4 border-t border-white/10 space-y-3 text-sm sm:text-base text-white font-sans font-medium">
                         <div className="flex items-start gap-2.5 font-bold text-white">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{selectedCategory.is_pair ? t('2x Official Anniversary Aero Jersey by Pollride (Senilai Rp 700.000)', '2x Official Anniversary Aero Jersey by Pollride (IDR 700K Value)') : t('Official Anniversary Aero Jersey by Pollride (Senilai Rp 350.000)', 'Official Anniversary Aero Jersey by Pollride (IDR 350K Value)')}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{selectedCategory.is_pair ? t('2x Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)', '2x Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)') : 'Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)'}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{t('Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in', 'Waterproof Bike Number Plate #1000+ & QR Check-in')}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{t('Asuransi Kecelakaan Resmi 1 Hari Event', 'Official 1-Day Event Accident Insurance')}</span>
                         </div>
                         <div className="flex items-start gap-2.5">
-                          <span className="text-[#FA6D0B] font-mono font-bold text-sm shrink-0 select-none mt-0.5">//</span>
+                          <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
                           <span>{t('Nutrisi NDR Energy Gel + Isotonic + Voucher ABEEY Coffee', 'NDR Energy Gel Nutrition + Isotonic + ABEEY Coffee Voucher')}</span>
                         </div>
                       </div>
@@ -1694,7 +1824,7 @@ export default function RegistrationPage() {
                     <div className="space-y-2.5">
                       <div>
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                          {selectedCategory.id === 'VIRTUAL' ? t('METODE PENGIRIMAN // VIRTUAL RIDE', 'SHIPPING METHOD // VIRTUAL RIDE') : t('PENGAMBILAN RACE PACK (RPC) // LOGISTIK', 'RACE PACK COLLECTION (RPC) // LOGISTICS')}
+                          {selectedCategory.id === 'VIRTUAL' ? t('METODE PENGIRIMAN · VIRTUAL RIDE', 'SHIPPING METHOD · VIRTUAL RIDE') : t('PENGAMBILAN RACE PACK (RPC) · LOGISTIK', 'RACE PACK COLLECTION (RPC) · LOGISTICS')}
                         </span>
                       </div>
                       <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-none">
@@ -1773,7 +1903,7 @@ export default function RegistrationPage() {
                     <div className="space-y-2.5">
                       <div>
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                          {t('KODE PROMO // VOUCHER KOMUNITAS', 'PROMO CODE // COMMUNITY VOUCHER')}
+                          {t('KODE PROMO · VOUCHER KOMUNITAS', 'PROMO CODE · COMMUNITY VOUCHER')}
                         </span>
                       </div>
                       <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-none">
@@ -1820,7 +1950,7 @@ export default function RegistrationPage() {
                       <div className="p-5 rounded-xl border-l-4 border-l-[#FA6D0B] bg-black/60 backdrop-blur-xl space-y-2 shadow-lg">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
-                            {t('KODE PROMO AKTIF // TERVERIFIKASI', 'ACTIVE PROMO CODE // VERIFIED')}
+                            {t('KODE PROMO AKTIF · TERVERIFIKASI', 'ACTIVE PROMO CODE · VERIFIED')}
                           </span>
                           <button
                             type="button"
@@ -1851,7 +1981,7 @@ export default function RegistrationPage() {
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2.5">
                       <span className="font-mono font-bold text-xs sm:text-sm text-[#FA6D0B] uppercase tracking-wider">
-                        {t('HAK BENEFIT KHUSUS ATLET //', 'SPECIAL ATHLETE PRIVILEGE //')}
+                        {t('HAK BENEFIT KHUSUS ATLET ·', 'SPECIAL ATHLETE PRIVILEGE ·')}
                       </span>
                       <span className="text-white font-bold font-mono text-xs sm:text-sm uppercase">
                         {t('E-VOUCHER KUPON MAKAN RP 50.000', 'IDR 50,000 MEAL COUPON VOUCHER')}
@@ -1884,7 +2014,7 @@ export default function RegistrationPage() {
                         : 'text-slate-400 hover:text-white bg-transparent'
                     }`}
                   >
-                    {t('01 // RIDER 1 (KAPTEN TIM)', '01 // RIDER 1 (TEAM CAPTAIN)')}
+                    {t('01 · RIDER 1 (KAPTEN TIM)', '01 · RIDER 1 (TEAM CAPTAIN)')}
                   </button>
                   <button
                     type="button"
@@ -1895,7 +2025,7 @@ export default function RegistrationPage() {
                         : 'text-slate-400 hover:text-white bg-transparent'
                     }`}
                   >
-                    {t('02 // RIDER 2 (PARTNER TIM)', '02 // RIDER 2 (TEAM PARTNER)')}
+                    {t('02 · RIDER 2 (PARTNER TIM)', '02 · RIDER 2 (TEAM PARTNER)')}
                   </button>
                 </div>
               )}
@@ -1907,7 +2037,7 @@ export default function RegistrationPage() {
                 <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
                   <div className="border-b border-white/10 pb-4">
                     <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                      {t('IDENTITAS ATLET //', 'ATHLETE IDENTITY //')} {selectedCategory.is_pair ? t('RIDER 1 (KAPTEN TIM)', 'RIDER 1 (TEAM CAPTAIN)') : t('PESERTA RESMI', 'OFFICIAL RIDER')}
+                      {t('IDENTITAS ATLET ·', 'ATHLETE IDENTITY ·')} {selectedCategory.is_pair ? t('RIDER 1 (KAPTEN TIM)', 'RIDER 1 (TEAM CAPTAIN)') : t('PESERTA RESMI', 'OFFICIAL RIDER')}
                     </span>
                     <p className="text-xs sm:text-sm text-slate-300 font-sans mt-1">
                       {t('Lengkapi data identitas resmi sesuai KTP atau Paspor untuk verifikasi asuransi dan nomor start.', 'Complete official identity data as in ID or Passport for insurance and start number verification.')}
@@ -1917,7 +2047,7 @@ export default function RegistrationPage() {
                   {/* Bagian 1: Identitas Resmi */}
                   <div className="space-y-4">
                     <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block border-b border-white/10 pb-2">
-                      {t('1. DATA IDENTITAS RESMI // KTP ATAU PASPOR', '1. OFFICIAL IDENTITY DATA // ID OR PASSPORT')}
+                      {t('1. DATA IDENTITAS RESMI · KTP ATAU PASPOR', '1. OFFICIAL IDENTITY DATA · ID OR PASSPORT')}
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                       <div>
@@ -1973,7 +2103,7 @@ export default function RegistrationPage() {
                   {/* Bagian 2: Data Fisik & Kesiapan Medis */}
                   <div className="space-y-4 pt-5 border-t border-white/10">
                     <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block border-b border-white/10 pb-2">
-                      {t('2. DATA FISIK & KESIAPAN MEDIS // SAFETY PROTOCOL', '2. PHYSICAL DATA & MEDICAL READINESS // SAFETY PROTOCOL')}
+                      {t('2. DATA FISIK & KESIAPAN MEDIS · SAFETY PROTOCOL', '2. PHYSICAL DATA & MEDICAL READINESS · SAFETY PROTOCOL')}
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                       <div>
@@ -2054,7 +2184,7 @@ export default function RegistrationPage() {
                   {/* Bagian 3: Kontak & Komunikasi Resmi */}
                   <div className="space-y-4 pt-5 border-t border-white/10">
                     <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block border-b border-white/10 pb-2">
-                      {t('3. KONTAK RESMI & KOMUNIKASI // E-INVOICE & GPX UPDATE', '3. OFFICIAL CONTACT & COMMUNICATION // E-INVOICE & GPX UPDATE')}
+                      {t('3. KONTAK RESMI & KOMUNIKASI · E-INVOICE & GPX UPDATE', '3. OFFICIAL CONTACT & COMMUNICATION · E-INVOICE & GPX UPDATE')}
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
@@ -2128,7 +2258,7 @@ export default function RegistrationPage() {
                     <div className="space-y-3 pt-5 border-t border-white/10">
                       <div className="flex items-center justify-between">
                         <label className="block text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
-                          {t('5. UKURAN JERSEY FINISHER // POLLRIDE AERO FIT', '5. FINISHER JERSEY SIZE // POLLRIDE AERO FIT')} <span className="text-[#FA6D0B]">*</span>
+                          {t('5. UKURAN JERSEY FINISHER · POLLRIDE AERO FIT', '5. FINISHER JERSEY SIZE · POLLRIDE AERO FIT')} <span className="text-[#FA6D0B]">*</span>
                         </label>
                         <span className="text-xs font-mono text-[#FA6D0B] uppercase font-bold">POLLRIDE OFFICIAL</span>
                       </div>
@@ -2178,7 +2308,7 @@ export default function RegistrationPage() {
                 <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
                   <div className="border-b border-white/10 pb-4">
                     <span className="font-mono text-base sm:text-lg font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                      {t('IDENTITAS ATLET // RIDER 2 (PARTNER TIM TANDEM)', 'ATHLETE IDENTITY // RIDER 2 (TANDEM TEAM PARTNER)')}
+                      {t('IDENTITAS ATLET · RIDER 2 (PARTNER TIM TANDEM)', 'ATHLETE IDENTITY · RIDER 2 (TANDEM TEAM PARTNER)')}
                     </span>
                     <p className="text-xs sm:text-sm text-slate-300 font-sans mt-1">
                       {t('Lengkapi data resmi partner tim tandem sesuai KTP atau Paspor untuk polis asuransi dan nomor bib kedua.', 'Complete official partner data as in ID or Passport for insurance and second race bib.')}
@@ -2188,7 +2318,7 @@ export default function RegistrationPage() {
                   {/* Bagian 1: Identitas Resmi Partner */}
                   <div className="space-y-4">
                     <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block border-b border-white/10 pb-2">
-                      {t('1. DATA IDENTITAS RESMI PARTNER // KTP ATAU PASPOR', '1. OFFICIAL PARTNER IDENTITY DATA // ID OR PASSPORT')}
+                      {t('1. DATA IDENTITAS RESMI PARTNER · KTP ATAU PASPOR', '1. OFFICIAL PARTNER IDENTITY DATA · ID OR PASSPORT')}
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                       <div>
@@ -2244,7 +2374,7 @@ export default function RegistrationPage() {
                   {/* Bagian 2: Data Fisik & Medis Partner */}
                   <div className="space-y-4 pt-5 border-t border-white/10">
                     <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block border-b border-white/10 pb-2">
-                      {t('2. DATA FISIK & KESIAPAN MEDIS PARTNER // SAFETY PROTOCOL', '2. PARTNER PHYSICAL DATA & MEDICAL READINESS // SAFETY PROTOCOL')}
+                      {t('2. DATA FISIK & KESIAPAN MEDIS PARTNER · SAFETY PROTOCOL', '2. PARTNER PHYSICAL DATA & MEDICAL READINESS · SAFETY PROTOCOL')}
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                       <div>
@@ -2325,7 +2455,7 @@ export default function RegistrationPage() {
                   {/* Bagian 3: Kontak Partner */}
                   <div className="space-y-4 pt-5 border-t border-white/10">
                     <span className="text-xs sm:text-sm font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block border-b border-white/10 pb-2">
-                      {t('3. KONTAK RESMI PARTNER // E-INVOICE & GPX UPDATE', '3. OFFICIAL PARTNER CONTACT // E-INVOICE & GPX UPDATE')}
+                      {t('3. KONTAK RESMI PARTNER · E-INVOICE & GPX UPDATE', '3. OFFICIAL PARTNER CONTACT · E-INVOICE & GPX UPDATE')}
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <div>
@@ -2399,7 +2529,7 @@ export default function RegistrationPage() {
                     <div className="space-y-3 pt-5 border-t border-white/10">
                       <div className="flex items-center justify-between">
                         <label className="block text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
-                          {t('5. UKURAN JERSEY FINISHER PARTNER // POLLRIDE AERO FIT', '5. PARTNER FINISHER JERSEY SIZE // POLLRIDE AERO FIT')} <span className="text-[#FA6D0B]">*</span>
+                          {t('5. UKURAN JERSEY FINISHER PARTNER · POLLRIDE AERO FIT', '5. PARTNER FINISHER JERSEY SIZE · POLLRIDE AERO FIT')} <span className="text-[#FA6D0B]">*</span>
                         </label>
                         <span className="text-xs font-mono text-[#FA6D0B] uppercase font-bold">POLLRIDE OFFICIAL</span>
                       </div>
@@ -2497,7 +2627,7 @@ export default function RegistrationPage() {
               <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col lg:flex-row items-center justify-between gap-6">
                 <div>
                   <span className="text-xs sm:text-sm font-mono text-slate-300 uppercase tracking-widest block font-bold">
-                    {t('TOTAL BIAYA REGISTRASI // TARIF FINAL', 'TOTAL REGISTRATION FEE // FINAL RATE')}
+                    {t('TOTAL BIAYA REGISTRASI · TARIF FINAL', 'TOTAL REGISTRATION FEE · FINAL RATE')}
                   </span>
                   <div className="font-display italic text-4xl sm:text-5xl lg:text-6xl font-black text-[#FA6D0B] leading-none mt-2">
                     {formatRupiah(netPrice)}
@@ -2506,19 +2636,19 @@ export default function RegistrationPage() {
                     <span>{packageType === 'MEDAL_JERSEY' ? t('Paket Medal + Jersey', 'Medal + Jersey Package') : t('Paket Medal Saja', 'Medal Only Package')}</span>
                     {rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL' && (
                       <>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/30 font-bold select-none">·</span>
                         <span className="text-slate-200 font-semibold">+Rp 20.000 RPC</span>
                       </>
                     )}
                     {hasMealCouponPerk && (
                       <>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/30 font-bold select-none">·</span>
                         <span className="text-white font-semibold">{t('+Voucher Makan Rp 50.000', '+IDR 50k Meal Voucher')}</span>
                       </>
                     )}
                     {promoDiscount > 0 && appliedPromo && (
                       <>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/30 font-bold select-none">·</span>
                         <span className="text-[#FA6D0B] font-bold">-{formatRupiah(promoDiscount)} ({appliedPromo.code})</span>
                       </>
                     )}
@@ -2539,12 +2669,14 @@ export default function RegistrationPage() {
 
                   <button
                     type="submit"
-                    disabled={submitting || !waiverAgreed}
+                    disabled={submitting || !waiverAgreed || activePhase === 'CLOSED'}
                     className="relative overflow-hidden w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-5 rounded-full text-xs sm:text-base font-sans font-black uppercase tracking-wider bg-[#FA6D0B] text-black shadow-[0_0_35px_rgba(250,109,11,0.65)] hover:bg-[#DE5A00] disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 group cursor-pointer hover:-translate-y-0.5 active:scale-95 whitespace-nowrap"
                   >
                     <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none" />
                     {submitting ? (
                       <span className="relative z-10">{t('MEMPROSES PENDAFTARAN...', 'PROCESSING REGISTRATION...')}</span>
+                    ) : activePhase === 'CLOSED' ? (
+                      <span className="relative z-10">{t('PENDAFTARAN RESMI DITUTUP (29 NOV)', 'REGISTRATION CLOSED (NOV 29)')}</span>
                     ) : (
                       <>
                         <span className="relative z-10">{t('KUNCI NOMOR DADA & TERBITKAN INVOICE', 'LOCK BIB NUMBER & ISSUE INVOICE')}</span>

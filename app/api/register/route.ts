@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 import { RegistrationPayload } from '@/lib/types';
+import { getActivePricingPhase, getPricesForCategory } from '@/lib/data/categories';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,6 +21,17 @@ export async function POST(req: Request) {
   try {
     const body: RegistrationPayload = await req.json();
     const { category_id, package_type, rpc_method, promo_code, rider_1, rider_2, waiver_agreed } = body;
+
+    // 0. Verifikasi Penutupan Pendaftaran (H-14 sebelum event / 29 November 2026 23:59:59 WIB)
+    const activePhase = getActivePricingPhase();
+    if (activePhase === 'CLOSED') {
+      return NextResponse.json(
+        { 
+          error: 'Pendaftaran resmi Grindurance 2026 telah ditutup pada 29 November 2026 pukul 23:59 WIB (H-14 sebelum race day 13 Desember 2026). Registrasi tidak dapat diproses.' 
+        },
+        { status: 400 }
+      );
+    }
 
     if (!waiver_agreed) {
       return NextResponse.json(
@@ -84,27 +96,33 @@ export async function POST(req: Request) {
 
     // 2. Hitung Harga Bruto (Gross Amount) termasuk Opsi Handling Fee RPC Rp 20.000 jika dipilih
     const rpc_handling_fee = (rpc_method === 'HANDLING' && category_id !== 'VIRTUAL') ? 20000 : 0;
-    const base_amount = package_type === 'MEDAL_JERSEY'
-      ? Number(category.price_medal_jersey)
-      : Number(category.price_medal_only);
+    
+    // Canonical price calculation according to active phase (Early Bird vs Regular)
+    const prices = getPricesForCategory(effectiveCategoryId, activePhase);
+    const base_amount = package_type === 'MEDAL_JERSEY' ? prices.jersey : prices.medal;
     const gross_amount = base_amount + rpc_handling_fee;
 
-    // 3. Hitung Hak Entitlement Meal Coupon Rp 50.000 sesuai aturan resmi GX-ID
-    // Aturan Resmi: Peserta yang berumur di bawah 17 tahun (< 17 th) dan wanita
-    // BUKAN DISKON / BUKAN PENGURANGAN TOTALAN (berupa voucher pasca-bayar)
-    const discount_meal_coupon = 0; // Tidak memotong total tagihan
+    // 3. Hitung Hak Entitlement Meal Voucher Abeey sesuai aturan resmi terbaru:
+    // "Sudah termasuk meal voucher Abeey untuk 120km, 150km & 200km & semua peserta perempuan."
+    const discount_meal_coupon = 0; // Tidak memotong total tagihan (berupa e-voucher pasca-bayar)
     let rider_1_has_coupon = false;
     let rider_2_has_coupon = false;
 
-    const age1 = calculateAge(rider_1.birth_date);
-    if (rider_1.gender === 'female' || age1 < 17) {
+    if (['120', '120_SINGLE', '120_PAIR', '150', '200'].includes(effectiveCategoryId)) {
       rider_1_has_coupon = true;
-    }
-
-    if (category.is_pair && rider_2) {
-      const age2 = calculateAge(rider_2.birth_date);
-      if (rider_2.gender === 'female' || age2 < 17) {
+      if (category.is_pair && rider_2) {
         rider_2_has_coupon = true;
+      }
+    } else {
+      const age1 = calculateAge(rider_1.birth_date);
+      if (rider_1.gender === 'female' || age1 <= 17) {
+        rider_1_has_coupon = true;
+      }
+      if (category.is_pair && rider_2) {
+        const age2 = calculateAge(rider_2.birth_date);
+        if (rider_2.gender === 'female' || age2 <= 17) {
+          rider_2_has_coupon = true;
+        }
       }
     }
 

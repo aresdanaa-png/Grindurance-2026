@@ -37,7 +37,7 @@ export default function RacePackSection() {
           <div className="flex flex-col md:flex-row-reverse md:items-end justify-between gap-4 border-b border-white/10 pb-4 sm:pb-5">
             <div className="flex flex-col items-start md:items-end space-y-3">
               <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
-                PARTICIPANT PACKAGES // 2026 EDITION
+                PARTICIPANT PACKAGES · 2026 EDITION
               </span>
               <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[560px] group">
                 {/* Ambient Radial Backlight Glow in exact brand orange */}
@@ -52,22 +52,22 @@ export default function RacePackSection() {
 
             <div className="flex flex-col items-start space-y-3.5 max-w-md">
               {/* Pure Typographic Sub-Header */}
-              <div className="font-mono text-xs font-bold uppercase tracking-widest">
+              <div className="font-mono text-xs font-bold uppercase tracking-widest flex items-center gap-2">
                 <span className="text-white font-black">{t('2 OPSI PAKET', '2 PACKAGE OPTIONS')}</span>
-                <span className="text-[#FA6D0B] mx-2 font-bold select-none">//</span>
+                <span className="text-white/20 select-none">·</span>
                 <span className="text-slate-400">{t('TARIF TRANSPARAN', 'TRANSPARENT RATES')}</span>
               </div>
               <div className="border-l-2 md:border-l-0 md:border-r-2 border-[#FA6D0B] pl-4 md:pl-0 md:pr-4 py-0.5 md:text-right w-full">
                 <p className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                   {t(
-                    'Sistem pendaftaran dua opsi: pilih paket Medal Saja untuk esensi tantangan mandiri, atau upgrade ke paket Medal & Jersey resmi GX-ID buatan Pollride (+Rp 50.000). Seluruh paket mencakup perlengkapan hari-H.',
-                    'Two registration options: choose the Medal Only package for the pure self-supported challenge, or upgrade to the official Pollride GX-ID Medal & Jersey package (+IDR 50,000). All packages include race-day essentials.'
+                    'Sistem pendaftaran dua opsi: pilih paket Medal Saja untuk esensi tantangan mandiri, atau upgrade ke paket Medal & Jersey resmi GX-ID buatan Pollride (mulai +Rp 50.000). Seluruh paket mencakup perlengkapan hari-H.',
+                    'Two registration options: choose the Medal Only package for the pure self-supported challenge, or upgrade to the official Pollride GX-ID Medal & Jersey package (from +IDR 50,000). All packages include race-day essentials.'
                   )}
                 </p>
-                {/* Micro-telemetry Status: Batas Produksi */}
+                {/* Micro-telemetry Status: Batas Penutupan Pendaftaran */}
                 <div className="mt-2.5 flex items-center md:justify-end gap-2 text-[10px] font-mono uppercase tracking-wider text-slate-400">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse shrink-0" />
-                  <span>{t('JAMINAN HARI-H DITUTUP:', 'RACEDAY GUARANTEE CLOSES:')} <strong className="text-white font-bold">{t('10 NOVEMBER 2026', 'NOVEMBER 10, 2026')}</strong></span>
+                  <span>{t('PENUTUPAN PENDAFTARAN:', 'REGISTRATION CLOSES:')} <strong className="text-white font-bold">{t('29 NOVEMBER 2026 (H-14)', 'NOVEMBER 29, 2026 (H-14)')}</strong></span>
                 </div>
               </div>
             </div>
@@ -80,11 +80,11 @@ export default function RacePackSection() {
             <div className="p-5 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-xl flex flex-col justify-between space-y-6 transition-all duration-300 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2">
                     <span className="font-mono text-xs font-black text-white uppercase tracking-wider">
                       {t('OPSI 01', 'OPTION 01')}
                     </span>
-                    <span className="text-[#FA6D0B] font-bold text-xs tracking-wider select-none">//</span>
+                    <span className="text-white/30 font-normal select-none">·</span>
                     <span className="text-white text-xs font-sans font-bold uppercase tracking-wider">
                       {t('ESENSIAL', 'ESSENTIAL')}
                     </span>
@@ -106,32 +106,32 @@ export default function RacePackSection() {
                   </p>
                 </div>
 
-                <div className="pt-6 border-t border-white/10 space-y-3.5 text-xs sm:text-[13px] text-slate-300 font-sans">
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                <div className="pt-6 border-t border-white/10 space-y-3 text-xs sm:text-[13px] text-slate-300 font-sans">
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>{t('Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in', 'Waterproof Bike Number Plate #1000+ & QR Check-in')}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>{t('Asuransi Kecelakaan Resmi 1 Hari Event', 'Official 1-Day Event Accident Insurance')}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>{t('Nutrisi NDR Energy Gel + Isotonic Drink', 'NDR Energy Gel Nutrition + Isotonic Drink')}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>{t('Akses Finisher Lounge & Voucher Pemulihan ABEEY Coffee', 'Finisher Lounge Access & ABEEY Coffee Recovery Voucher')}</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
+                    <span>{t('Akses Finisher Lounge & Voucher Pemulihan ABBEY Coffee', 'Finisher Lounge Access & ABBEY Coffee Recovery Voucher')}</span>
                   </div>
                 </div>
               </div>
 
               <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-sans">
-                <span className="text-slate-400 font-medium uppercase tracking-wider">{t('MULAI DARI RP 200.000', 'STARTING FROM IDR 200,000')}</span>
+                <span className="text-slate-400 font-medium uppercase tracking-wider">{t('MULAI DARI RP 150.000', 'STARTING FROM IDR 150,000')}</span>
                 <span className="text-white font-bold uppercase tracking-wider">{t('TERMASUK FASILITAS HARI-H', 'INCLUDES RACEDAY ESSENTIALS')}</span>
               </div>
             </div>
@@ -140,17 +140,17 @@ export default function RacePackSection() {
             <div className="p-5 sm:p-8 rounded-2xl bg-gradient-to-b from-[#FA6D0B]/15 via-black/60 to-black/80 backdrop-blur-xl flex flex-col justify-between space-y-6 shadow-[0_20px_60px_rgba(250,109,11,0.22)] transition-all duration-300">
               <div className="space-y-4">
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2">
                     <span className="font-mono text-xs font-black text-[#FA6D0B] uppercase tracking-wider">
                       {t('OPSI 02', 'OPTION 02')}
                     </span>
-                    <span className="text-[#FA6D0B] font-bold text-xs tracking-wider select-none">//</span>
+                    <span className="text-white/30 font-normal select-none">·</span>
                     <span className="text-white text-xs font-sans font-bold uppercase tracking-wider">
                       {t('REKOMENDASI LENGKAP', 'COMPLETE RECOMMENDED')}
                     </span>
                   </div>
                   <span className="text-xs font-sans font-bold text-[#FA6D0B] uppercase tracking-wider">
-                    {t('HANYA +RP 50.000 / PAX', 'ONLY +IDR 50,000 / PAX')}
+                    {t('MULAI +RP 50.000 / PAX', 'FROM +IDR 50,000 / PAX')}
                   </span>
                 </div>
                 
@@ -166,26 +166,26 @@ export default function RacePackSection() {
                   </p>
                 </div>
 
-                <div className="pt-6 border-t border-white/10 space-y-3.5 text-xs sm:text-[13px] text-slate-300 font-sans">
-                  <div className="flex items-start gap-3 font-bold text-white">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                <div className="pt-6 border-t border-white/10 space-y-3 text-xs sm:text-[13px] text-slate-300 font-sans">
+                  <div className="flex items-start gap-2.5 font-bold text-white">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>{t('Official Anniversary Aero Jersey by Pollride (Senilai Rp 350.000)', 'Official Anniversary Aero Jersey by Pollride (IDR 350K Value)')}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>{t('Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in', 'Waterproof Bike Number Plate #1000+ & QR Check-in')}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
                     <span>{t('Asuransi Kecelakaan Resmi 1 Hari Event', 'Official 1-Day Event Accident Insurance')}</span>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <span className="text-[#FA6D0B] font-mono font-bold text-xs shrink-0 select-none mt-0.5">//</span>
-                    <span>{t('Nutrisi NDR Energy Gel + Isotonic + Voucher ABEEY Coffee', 'NDR Energy Gel Nutrition + Isotonic + ABEEY Coffee Voucher')}</span>
+                  <div className="flex items-start gap-2.5">
+                    <span className="text-[#FA6D0B] text-base leading-none shrink-0 select-none mt-0.5">·</span>
+                    <span>{t('Nutrisi NDR Energy Gel + Isotonic + Voucher ABBEY Coffee', 'NDR Energy Gel Nutrition + Isotonic + ABBEY Coffee Voucher')}</span>
                   </div>
                 </div>
               </div>
@@ -198,67 +198,83 @@ export default function RacePackSection() {
 
           </div>
 
-          {/* LOGISTIK RACE PACK (RPC) — 2-COLUMN ATHLETIC TELEMETRY STRIP */}
-          <div className="rounded-2xl bg-black/60 backdrop-blur-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
-            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 p-6 sm:p-7 gap-6 md:gap-0">
+          {/* LOGISTIK RACE PACK (RPC) — CLEAN, AIRY & SCANNABLE 2-COLUMN STRIP */}
+          <div className="rounded-2xl bg-black/70 backdrop-blur-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 p-6 sm:p-8 gap-6 md:gap-0">
               
               {/* Column 1: Ambil Mandiri saat RPC Day */}
-              <div className="flex flex-col justify-between md:pr-8 space-y-3">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] sm:text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                      {t('PENGAMBILAN MANDIRI // RPC DAY', 'SELF-PICKUP // RPC DAY')}
+              <div className="flex flex-col justify-between md:pr-8 space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
+                      {t('PENGAMBILAN MANDIRI', 'IN-PERSON PICKUP')}
                     </span>
-                    <span className="text-[10px] font-mono font-black uppercase px-2 py-0.5 rounded bg-white/10 text-white border border-white/15">
-                      {t('GRATIS / RP 0', 'FREE / IDR 0')}
+                    <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded bg-white/10 text-white shrink-0">
+                      {t('GRATIS', 'FREE')}
                     </span>
                   </div>
-                  <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight leading-none">
-                    {t('MINGGU, 6 DESEMBER 2026', 'SUNDAY, DECEMBER 6, 2026')}
+                  <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
+                    {t('MINGGU, 6 DESEMBER 2026', 'SUNDAY, DEC 6, 2026')}
                   </h4>
+                  <p className="text-xs text-slate-400 font-mono">
+                    ABBEY Coffee &amp; Eatery · 10:00–17:00 WIB
+                  </p>
                 </div>
-                <p className="text-xs text-slate-400 font-sans leading-relaxed">
-                  {t('Diambil langsung di ', 'Pick up directly at ')}<strong className="text-white">ABEEY Coffee &amp; Eatery Cibubur</strong>{t(' (10:00–17:00 WIB). Sudah termasuk menghadiri sesi Coaching Clinic & Technical Meeting resmi.', ' (10:00–17:00 WIB). Includes access to official Coaching Clinic & Technical Meeting sessions.')}
-                </p>
+                
+                <div className="pt-3 border-t border-white/5 space-y-2 text-xs text-slate-300 font-sans">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#FA6D0B] font-bold">·</span>
+                    <span>{t('Pengambilan langsung di venue start/finish', 'Direct collection at start/finish venue')}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#FA6D0B] font-bold">·</span>
+                    <span>{t('Akses resmi Coaching Clinic & Technical Meeting', 'Access to Coaching Clinic & Technical Meeting')}</span>
+                  </div>
+                </div>
               </div>
 
               {/* Column 2: Opsi Handling Fee */}
-              <div className="flex flex-col justify-between md:pl-8 space-y-3">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] sm:text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
-                      {t('OPSI HANDLING FEE // LOGISTIK KHUSUS', 'HANDLING FEE OPTION // SPECIAL LOGISTICS')}
+              <div className="flex flex-col justify-between md:pl-8 space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
+                      {t('PENGAMBILAN HARI-H', 'RACE-DAY PICKUP')}
                     </span>
-                    <span className="text-[10px] font-mono font-black uppercase px-2 py-0.5 rounded bg-[#FA6D0B] text-black">
-                      {t('OPSI TAMBAHAN', 'ADD-ON OPTION')}
+                    <span className="text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded bg-[#FA6D0B]/20 text-[#FA6D0B] shrink-0">
+                      {t('OPSI TAMBAHAN', 'ADD-ON')}
                     </span>
                   </div>
-                  <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-[#FA6D0B] tracking-tight leading-none">
-                    +RP 20.000 <span className="text-xs font-sans text-slate-400 font-bold uppercase tracking-wider">{t('/ PAX', '/ RIDER')}</span>
+                  <h4 className="font-display text-xl sm:text-2xl font-black uppercase text-[#FA6D0B] tracking-tight">
+                    +RP 20.000 <span className="text-xs font-sans text-slate-400 font-bold uppercase tracking-wider">{t('/ PESERTA', '/ RIDER')}</span>
                   </h4>
+                  <p className="text-xs text-slate-400 font-mono">
+                    {t('Minggu, 13 Desember 2026 (Subuh Hari-H)', 'Sunday, Dec 13, 2026 (Race Dawn)')}
+                  </p>
                 </div>
-                <p className="text-xs text-slate-400 font-sans leading-relaxed">
-                  {t('Bagi peserta yang ', 'For riders who are ')}<strong className="text-white">{t('berhalangan hadir saat RPC Day', 'unable to attend RPC Day')}</strong>{t('. Disiapkan via handling khusus panitia / pengambilan saat Hari-H dengan konfirmasi terlebih dahulu.', '. Handled via dedicated organizer desk / race-day collection with prior notice.')}
-                </p>
+                
+                <div className="pt-3 border-t border-white/5 space-y-2 text-xs text-slate-300 font-sans">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#FA6D0B] font-bold">·</span>
+                    <span>{t('Khusus peserta luar kota atau berhalangan hadir', 'For out-of-town riders or unable to attend')}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#FA6D0B] font-bold">·</span>
+                    <span>{t('Dilayani di meja khusus panitia saat registrasi ulang', 'Handled via dedicated organizer desk during check-in')}</span>
+                  </div>
+                </div>
               </div>
 
             </div>
           </div>
 
-          {/* EDITORIAL PRODUCT SHOWCASE (Lookbook Grid — Harmonized with UI DNA) */}
-          <div className="space-y-4 pt-4">
-            <div className="border-b border-white/10 pb-4 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#FA6D0B]">
-                  {t('RINCIAN ITEM RESMI', 'OFFICIAL ITEM DETAILS')}
-                </span>
-                <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
-                <span className="text-xs font-mono font-bold uppercase tracking-widest text-white">
-                  LOOKBOOK
-                </span>
-              </div>
-              <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-widest">
-                // 3 CORE ITEMS
+          {/* EDITORIAL PRODUCT SHOWCASE — CLEAN AIRY GRID */}
+          <div className="space-y-5 pt-4">
+            <div className="border-b border-white/10 pb-3 flex items-center justify-between">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-white">
+                {t('RINCIAN PERLENGKAPAN RESMI', 'OFFICIAL RACE PACK ITEMS')}
+              </span>
+              <span className="text-xs font-mono text-[#FA6D0B] font-bold uppercase tracking-wider">
+                3 ITEM
               </span>
             </div>
 
@@ -271,7 +287,7 @@ export default function RacePackSection() {
                     {/* Top Labels */}
                     <div className="flex items-center justify-between w-full">
                       <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
-                        // POLLRIDE AERO FIT
+                        POLLRIDE AERO FIT
                       </span>
                       <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
                         {t('EDISI 2026', '2026 EDITION')}
@@ -294,14 +310,14 @@ export default function RacePackSection() {
                     {/* Bottom Telemetry Strip */}
                     <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
                       <span>APPAREL LAB</span>
-                      <span className="text-white font-bold">{t('STAGE // PRODUKSI', 'STAGE // PRODUCTION')}</span>
+                      <span className="text-white font-bold">{t('STATUS: PRODUKSI', 'STATUS: PRODUCTION')}</span>
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider">
+                    <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider">
                       <span className="text-slate-400">01</span>
-                      <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
+                      <span className="text-white/30 font-normal select-none">·</span>
                       <span className="text-[#FA6D0B]">{t('APPAREL RESMI', 'OFFICIAL APPAREL')}</span>
                     </div>
                     <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
@@ -316,21 +332,21 @@ export default function RacePackSection() {
                   </div>
                 </div>
 
-                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2.5 text-[11px] font-mono">
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono">
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>Quick-Dry Mesh</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('3 Saku Belakang', '3 Rear Pockets')}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>Zipper YKK Lock</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('Garis Reflektif', 'Reflective Accents')}</span>
                   </div>
                 </div>
@@ -343,7 +359,7 @@ export default function RacePackSection() {
                     {/* Top Labels */}
                     <div className="flex items-center justify-between w-full">
                       <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
-                        // {t('SEMUA KATEGORI', 'ALL CATEGORIES')}
+                        {t('SEMUA KATEGORI', 'ALL CATEGORIES')}
                       </span>
                       <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
                         {t('EDISI 2026', '2026 EDITION')}
@@ -366,14 +382,14 @@ export default function RacePackSection() {
                     {/* Bottom Telemetry Strip */}
                     <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
                       <span>ZINC ALLOY METAL</span>
-                      <span className="text-white font-bold">{t('STAGE // CETAK', 'STAGE // MOLDING')}</span>
+                      <span className="text-white font-bold">{t('STATUS: CETAK', 'STATUS: MOLDING')}</span>
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider">
+                    <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider">
                       <span className="text-slate-400">02</span>
-                      <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
+                      <span className="text-white/30 font-normal select-none">·</span>
                       <span className="text-[#FA6D0B]">{t('MEDALI SAH', 'OFFICIAL MEDAL')}</span>
                     </div>
                     <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
@@ -388,21 +404,21 @@ export default function RacePackSection() {
                   </div>
                 </div>
 
-                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2.5 text-[11px] font-mono">
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono">
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('Paduan Solid Zinc', 'Solid Zinc Alloy')}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('Relief Timbul 3D', '3D Embossed Relief')}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('Lanyard Woven Tebal', 'Heavy Woven Lanyard')}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('Finisher Luring & Virtual', 'In-Person & Virtual Finishers')}</span>
                   </div>
                 </div>
@@ -415,7 +431,7 @@ export default function RacePackSection() {
                     {/* Top Labels */}
                     <div className="flex items-center justify-between w-full">
                       <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
-                        // {t('HARI-H READY', 'RACE-DAY READY')}
+                        {t('HARI-H READY', 'RACE-DAY READY')}
                       </span>
                       <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
                         {t('EDISI 2026', '2026 EDITION')}
@@ -438,14 +454,14 @@ export default function RacePackSection() {
                     {/* Bottom Telemetry Strip */}
                     <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
                       <span>{t('LOGISTIK ATLET', 'ATHLETE LOGISTICS')}</span>
-                      <span className="text-white font-bold">{t('STAGE // FINALISASI', 'STAGE // FINALIZATION')}</span>
+                      <span className="text-white font-bold">{t('STATUS: FINALISASI', 'STATUS: FINALIZATION')}</span>
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider">
+                    <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider">
                       <span className="text-slate-400">03</span>
-                      <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
+                      <span className="text-white/30 font-normal select-none">·</span>
                       <span className="text-[#FA6D0B]">{t('ESENSIAL ATLET', 'ATHLETE ESSENTIALS')}</span>
                     </div>
                     <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
@@ -460,22 +476,22 @@ export default function RacePackSection() {
                   </div>
                 </div>
 
-                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2.5 text-[11px] font-mono">
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono">
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('Plat BIB Waterproof', 'Waterproof BIB Plate')}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>NDR Energy Gel</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
                     <span>{t('Asuransi Resmi', 'Official Insurance')}</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-slate-300">
-                    <span className="text-[#FA6D0B] font-bold select-none">//</span>
-                    <span>{t('Voucher ABEEY Lounge', 'ABEEY Lounge Voucher')}</span>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
+                    <span>{t('Voucher ABBEY Lounge', 'ABBEY Lounge Voucher')}</span>
                   </div>
                 </div>
               </div>
@@ -487,9 +503,8 @@ export default function RacePackSection() {
           <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
             <div className="space-y-1 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start gap-2 text-[11px] font-sans font-bold uppercase tracking-widest text-[#FA6D0B]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
                 <span>{t('KUOTA TERBATAS', 'LIMITED SLOTS')}</span>
-                <span className="font-bold text-xs">//</span>
+                <span className="text-white/30 font-normal select-none">·</span>
                 <span>{t('AMANKAN BIB ANDA', 'SECURE YOUR BIB')}</span>
               </div>
               <h4 className="font-display text-2xl sm:text-3xl font-black uppercase text-white tracking-tight">

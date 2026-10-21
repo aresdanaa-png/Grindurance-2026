@@ -82,9 +82,229 @@ export const GPX_DISPLAY_INFO: Record<string, { fileName: string; gpxKm: string;
   'VIRTUAL':    { fileName: '',                                     gpxKm: '',                prologKm: 0  },
 };
 
-// PROTOKOL RILIS GPX: File dikunci hingga H-2 sebelum Race Day (11 Desember 2026, 00:00 WIB)
-export const EVENT_DATE_ISO = '2026-12-13T00:00:00+07:00';
+// =========================================================================
+// CANONICAL EVENT & REGISTRATION TIMELINE (MAKE NO MISTAKES)
+// =========================================================================
+// 1. Web Pendaftaran Go-Live: 1 November 2026, 00:00:00 WIB
+export const REGISTRATION_GO_LIVE_DATE_ISO = '2026-11-01T00:00:00+07:00';
+
+// 2. Early Bird aktif selama 2 minggu (14 hari penuh): Berakhir 15 November 2026, 23:59:59 WIB
+export const EARLY_BIRD_END_DATE_ISO = '2026-11-15T23:59:59+07:00';
+
+// 3. Tarif Reguler aktif mulai: 16 November 2026, 00:00:00 WIB
+export const REGULAR_START_DATE_ISO = '2026-11-16T00:00:00+07:00';
+
+// 4. Penutupan Pendaftaran: Tepat 2 minggu sebelum event (13 Des - 14 hari) = 29 November 2026, 23:59:59 WIB
+export const REGISTRATION_CLOSE_DATE_ISO = '2026-11-29T23:59:59+07:00';
+
+// 5. Race Pack Collection (RPC H-7): 6 Desember 2026
+export const RPC_DATE_ISO = '2026-12-06T00:00:00+07:00';
+
+// 6. Protokol Rilis GPX (H-2): 11 Desember 2026, 00:00:00 WIB
 export const GPX_UNLOCK_DATE_ISO = '2026-12-11T00:00:00+07:00';
+
+// 7. Hari-H Race Day: Minggu, 13 Desember 2026
+export const EVENT_DATE_ISO = '2026-12-13T00:00:00+07:00';
+
+export type PricingPhase = 'EARLY_BIRD' | 'REGULAR' | 'CLOSED';
+
+export function getActivePricingPhase(customDate?: Date | string | null): PricingPhase {
+  if (typeof window !== 'undefined' && !customDate) {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const phaseParam = params.get('phase') || params.get('tier');
+      if (phaseParam) {
+        const p = phaseParam.toUpperCase();
+        if (p === 'EARLY_BIRD' || p === 'EARLYBIRD' || p === 'EARLY') return 'EARLY_BIRD';
+        if (p === 'REGULAR' || p === 'REGULER') return 'REGULAR';
+        if (p === 'CLOSED' || p === 'TUTUP') return 'CLOSED';
+      }
+      const simDateParam = params.get('date');
+      if (simDateParam) {
+        customDate = new Date(simDateParam);
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  const now = customDate ? new Date(customDate) : new Date();
+  const ebEnd = new Date(EARLY_BIRD_END_DATE_ISO);
+  const regClose = new Date(REGISTRATION_CLOSE_DATE_ISO);
+
+  if (now > regClose) {
+    return 'CLOSED';
+  }
+  if (now > ebEnd) {
+    return 'REGULAR';
+  }
+  return 'EARLY_BIRD';
+}
+
+export const EARLY_BIRD_PRICES: Record<string, { medal: number; jersey: number; pairMedal?: number; pairJersey?: number }> = {
+  '60':         { medal: 150000, jersey: 250000 },
+  '70':         { medal: 150000, jersey: 250000 },
+  '80':         { medal: 200000, jersey: 250000 },
+  '100':        { medal: 200000, jersey: 250000 },
+  '120':        { medal: 300000, jersey: 350000 },
+  '120_SINGLE': { medal: 300000, jersey: 350000 },
+  '120_PAIR':   { medal: 550000, jersey: 650000, pairMedal: 550000, pairJersey: 650000 },
+  '150':        { medal: 350000, jersey: 400000 },
+  '200':        { medal: 350000, jersey: 400000 },
+  'VIRTUAL':    { medal: 175000, jersey: 225000 },
+};
+
+export const REGULAR_PRICES: Record<string, { medal: number; jersey: number; pairMedal?: number; pairJersey?: number }> = {
+  '60':         { medal: 250000, jersey: 300000 },
+  '70':         { medal: 250000, jersey: 300000 },
+  '80':         { medal: 300000, jersey: 350000 },
+  '100':        { medal: 300000, jersey: 350000 },
+  '120':        { medal: 400000, jersey: 450000 },
+  '120_SINGLE': { medal: 400000, jersey: 450000 },
+  '120_PAIR':   { medal: 700000, jersey: 750000, pairMedal: 700000, pairJersey: 750000 },
+  '150':        { medal: 400000, jersey: 450000 },
+  '200':        { medal: 400000, jersey: 450000 },
+  'VIRTUAL':    { medal: 200000, jersey: 250000 },
+};
+
+export function getPricesForCategory(categoryId: string, phase: PricingPhase = 'EARLY_BIRD'): { medal: number; jersey: number; pairMedal?: number; pairJersey?: number } {
+  const map = phase === 'REGULAR' ? REGULAR_PRICES : EARLY_BIRD_PRICES;
+  return map[categoryId] || { medal: 150000, jersey: 250000 };
+}
+
+export interface PriceTableRow {
+  id: string;
+  categoryCode: string;
+  categoryName: string;
+  categoryNameEng: string;
+  distanceDisplay: string;
+  formatBadge: string;
+  formatBadgeEng: string;
+  isRace?: boolean;
+  earlyBird: {
+    medal: string;
+    jersey: string;
+    medalRaw: number;
+    jerseyRaw: number;
+  };
+  regular: {
+    medal: string;
+    jersey: string;
+    medalRaw: number;
+    jerseyRaw: number;
+  };
+  abeeyMealVoucher: string;
+  abeeyMealVoucherEng: string;
+  registerUrl: string;
+}
+
+export const CANONICAL_PRICE_TABLE: PriceTableRow[] = [
+  {
+    id: '70',
+    categoryCode: '60',
+    categoryName: '70 Fun Gravel Ride',
+    categoryNameEng: '70 Fun Gravel Ride',
+    distanceDisplay: '69,9 KM',
+    formatBadge: 'Non-Race / Rekreasi',
+    formatBadgeEng: 'Non-Race / Recreational',
+    isRace: false,
+    earlyBird: { medal: 'Rp 150.000', jersey: 'Rp 250.000', medalRaw: 150000, jerseyRaw: 250000 },
+    regular: { medal: 'Rp 250.000', jersey: 'Rp 300.000', medalRaw: 250000, jerseyRaw: 300000 },
+    abeeyMealVoucher: 'Perempuan & ≤17 Th',
+    abeeyMealVoucherEng: 'Female & Youth ≤17',
+    registerUrl: '/daftar?category=60',
+  },
+  {
+    id: '100',
+    categoryCode: '100',
+    categoryName: '100 Fondo',
+    categoryNameEng: '100 Fondo',
+    distanceDisplay: '101 KM',
+    formatBadge: 'Non-Race / Fondo',
+    formatBadgeEng: 'Non-Race / Fondo',
+    isRace: false,
+    earlyBird: { medal: 'Rp 200.000', jersey: 'Rp 250.000', medalRaw: 200000, jerseyRaw: 250000 },
+    regular: { medal: 'Rp 300.000', jersey: 'Rp 350.000', medalRaw: 300000, jerseyRaw: 350000 },
+    abeeyMealVoucher: 'Perempuan & ≤17 Th',
+    abeeyMealVoucherEng: 'Female & Youth ≤17',
+    registerUrl: '/daftar?category=100',
+  },
+  {
+    id: '120_SINGLE',
+    categoryCode: '120',
+    categoryName: '120 Race (Single)',
+    categoryNameEng: '120 Race (Single)',
+    distanceDisplay: '120 KM',
+    formatBadge: 'Official Race · Top 3',
+    formatBadgeEng: 'Official Race · Top 3',
+    isRace: true,
+    earlyBird: { medal: 'Rp 300.000', jersey: 'Rp 350.000', medalRaw: 300000, jerseyRaw: 350000 },
+    regular: { medal: 'Rp 400.000', jersey: 'Rp 450.000', medalRaw: 400000, jerseyRaw: 450000 },
+    abeeyMealVoucher: 'Semua Peserta (Otomatis)',
+    abeeyMealVoucherEng: 'All Participants (Auto)',
+    registerUrl: '/daftar?category=120',
+  },
+  {
+    id: '120_PAIR',
+    categoryCode: '120',
+    categoryName: '120 Race Pair Mix (2 Pax)',
+    categoryNameEng: '120 Race Pair Mix (2 Riders)',
+    distanceDisplay: '120 KM',
+    formatBadge: 'Official Race · Tim 2 Orang',
+    formatBadgeEng: 'Official Race · 2-Rider Team',
+    isRace: true,
+    earlyBird: { medal: 'Rp 550.000', jersey: 'Rp 650.000', medalRaw: 550000, jerseyRaw: 650000 },
+    regular: { medal: 'Rp 700.000', jersey: 'Rp 750.000', medalRaw: 700000, jerseyRaw: 750000 },
+    abeeyMealVoucher: 'Semua Peserta (2 Kupon)',
+    abeeyMealVoucherEng: 'All Participants (2 Vouchers)',
+    registerUrl: '/daftar?category=120',
+  },
+  {
+    id: '150',
+    categoryCode: '150',
+    categoryName: '150 Grand Fondo',
+    categoryNameEng: '150 Grand Fondo',
+    distanceDisplay: '150 KM (120k + 30k)',
+    formatBadge: 'Non-Race · Wajib Prolog',
+    formatBadgeEng: 'Non-Race · Prologue Required',
+    isRace: false,
+    earlyBird: { medal: 'Rp 350.000', jersey: 'Rp 400.000', medalRaw: 350000, jerseyRaw: 400000 },
+    regular: { medal: 'Rp 400.000', jersey: 'Rp 450.000', medalRaw: 400000, jerseyRaw: 450000 },
+    abeeyMealVoucher: 'Semua Peserta (Otomatis)',
+    abeeyMealVoucherEng: 'All Participants (Auto)',
+    registerUrl: '/daftar?category=150',
+  },
+  {
+    id: '200',
+    categoryCode: '200',
+    categoryName: '200 Ultra Endurance',
+    categoryNameEng: '200 Ultra Endurance',
+    distanceDisplay: '200 KM (170k + 30k)',
+    formatBadge: 'Non-Race · COT 17 Jam',
+    formatBadgeEng: 'Non-Race · 17h COT',
+    isRace: false,
+    earlyBird: { medal: 'Rp 350.000', jersey: 'Rp 400.000', medalRaw: 350000, jerseyRaw: 400000 },
+    regular: { medal: 'Rp 400.000', jersey: 'Rp 450.000', medalRaw: 400000, jerseyRaw: 450000 },
+    abeeyMealVoucher: 'Semua Peserta (Otomatis)',
+    abeeyMealVoucherEng: 'All Participants (Auto)',
+    registerUrl: '/daftar?category=200',
+  },
+  {
+    id: 'VIRTUAL',
+    categoryCode: 'VIRTUAL',
+    categoryName: 'Virtual Ride (19 Chapter)',
+    categoryNameEng: 'Virtual Ride (19 Chapters)',
+    distanceDisplay: 'Rute Mandiri',
+    formatBadge: 'Mandiri · Strava Sync',
+    formatBadgeEng: 'Self-Supported · Strava Sync',
+    isRace: false,
+    earlyBird: { medal: 'Rp 175.000', jersey: 'Rp 225.000', medalRaw: 175000, jerseyRaw: 225000 },
+    regular: { medal: 'Rp 200.000', jersey: 'Rp 250.000', medalRaw: 200000, jerseyRaw: 250000 },
+    abeeyMealVoucher: 'Non-Venue (Dikirim DHS)',
+    abeeyMealVoucherEng: 'Non-Venue (DHS Shipped)',
+    registerUrl: '/daftar?category=VIRTUAL',
+  },
+];
 
 export function isGpxDownloadLocked(): boolean {
   if (typeof window !== 'undefined') {
@@ -121,9 +341,9 @@ export const CATEGORIES: CategoryData[] = [
     specialRules: 'Ramah Sepeda Lipat (Seli), Hybrid & Pemula · Tanpa Tekanan Berlebih · Pitstop Wajib 30 Min (CP#6)',
     specialRulesEng: 'Folding Bike Friendly, Hybrid & Beginners · No Excessive Pressure · Mandatory 30-Min Pitstop (CP#6)',
     photo: '/categories/cat_60_funride.jpg',
-    priceMedal: 'Rp 225.000',
-    priceJersey: 'Rp 275.000',
-    earlyBird: { medal: 'Rp 225.000', jersey: 'Rp 275.000' },
+    priceMedal: 'Rp 150.000',
+    priceJersey: 'Rp 250.000',
+    earlyBird: { medal: 'Rp 150.000', jersey: 'Rp 250.000' },
     regular: { medal: 'Rp 250.000', jersey: 'Rp 300.000' },
     desc: 'Gerbang menuju Beautiful Suffering di alam bebas. Rute 69,9 km dengan pemandangan tebing kapur (karst), kebun bambu, dan sawah terasering Jonggol. Menghadapi dua tanjakan utama (2,66 km @ 5% & 2,62 km @ 7%) sebelum turunan panjang kembali ke kota.',
     descEng: 'Gateway to Beautiful Suffering in the wild. A 69.9 km route featuring karst limestone cliffs, bamboo groves, and terraced rice paddies in Jonggol. Tackles two main climbs (2.66 km @ 5% & 2.62 km @ 7%) before a long descent back to town.',
@@ -163,9 +383,9 @@ export const CATEGORIES: CategoryData[] = [
     specialRules: 'Rute 101 km · 3 Tanjakan Utama · Ban Rekomendasi 38c+ · Pitstop Wajib 30 Min',
     specialRulesEng: '101 km Course · 3 Key Climbs · Recommended 38c+ Tires · Mandatory 30-Min Pitstop',
     photo: '/categories/cat_100_fondo.jpg',
-    priceMedal: 'Rp 275.000',
-    priceJersey: 'Rp 325.000',
-    earlyBird: { medal: 'Rp 275.000', jersey: 'Rp 325.000' },
+    priceMedal: 'Rp 200.000',
+    priceJersey: 'Rp 250.000',
+    earlyBird: { medal: 'Rp 200.000', jersey: 'Rp 250.000' },
     regular: { medal: 'Rp 300.000', jersey: 'Rp 350.000' },
     desc: 'Lintasan 101 km menembus persawahan Cileungsi dan makadam khas Pemandian Sodong. 3 tanjakan terukur dengan segmen jalan tanah (path 3,02 km & off-grid 5,11 km).',
     descEng: '101 km course cutting through Cileungsi paddy fields and Sodong Springs macadam. 3 climbs with dirt segments (3.02 km path & 5.11 km off-grid).',
@@ -192,7 +412,7 @@ export const CATEGORIES: CategoryData[] = [
     subtitle: 'RACE (SINGLE & PAIR)',
     title: '120 (Race)',
     titleEng: '120 (Race)',
-    titleNote: '// SINGLE & PAIR MIX',
+    titleNote: 'SINGLE & PAIR MIX',
     elevation: '+1.760 m',
     elevationMeters: 1760,
     cot: '11 Jam',
@@ -207,11 +427,11 @@ export const CATEGORIES: CategoryData[] = [
     specialRules: 'Mendukung Single & Tim Pair Mix 2 Pax · Handicap Waktu · Live Tracking GPS',
     specialRulesEng: 'Supports Single & Pair Mix 2-Rider Teams · Time Handicap · Mandatory GPS Live Tracking',
     photo: '/categories/cat_120_race.jpg',
-    priceMedal: 'Rp 400.000',
-    priceJersey: 'Rp 450.000',
-    pairPriceMedal: 'Rp 700.000',
-    pairPriceJersey: 'Rp 750.000',
-    earlyBird: { medal: 'Rp 350.000', jersey: 'Rp 400.000', pairMedal: 'Rp 600.000', pairJersey: 'Rp 650.000' },
+    priceMedal: 'Rp 300.000',
+    priceJersey: 'Rp 350.000',
+    pairPriceMedal: 'Rp 550.000',
+    pairPriceJersey: 'Rp 650.000',
+    earlyBird: { medal: 'Rp 300.000', jersey: 'Rp 350.000', pairMedal: 'Rp 550.000', pairJersey: 'Rp 650.000' },
     regular: { medal: 'Rp 400.000', jersey: 'Rp 450.000', pairMedal: 'Rp 700.000', pairJersey: 'Rp 750.000' },
     desc: 'Satu-satunya kategori balap kompetitif resmi dengan perebutan podium Top 3. 7 tanjakan terjal, 16.5 km jalur unpaved, dan 3.77 km off-grid menembus koridor Jonggol–Sukamakmur.',
     descEng: 'The only official competitive race category battling for Top 3 podium. 7 steep climbs, 16.5 km unpaved, and 3.77 km off-grid through Jonggol–Sukamakmur.',

@@ -94,6 +94,12 @@ const config: Config = {
           '70%': { opacity: '0.6' },
           '100%': { transform: 'translateY(1000%)', opacity: '0' },
         },
+        scrollPill: {
+          '0%': { transform: 'translateY(0)', opacity: '0' },
+          '25%': { opacity: '1' },
+          '75%': { transform: 'translateY(8px)', opacity: '1' },
+          '100%': { transform: 'translateY(12px)', opacity: '0' },
+        },
       },
       animation: {
         'marquee': 'marquee 35s linear infinite',
@@ -110,6 +116,7 @@ const config: Config = {
         'race-flow-reverse': 'raceSpeedFlowReverse 2.5s linear infinite',
         'race-glow': 'racePulseGlow 2.5s ease-in-out infinite',
         'laser-sweep': 'laserSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+        'scroll-pill': 'scrollPill 1.6s cubic-bezier(0.65, 0, 0.35, 1) infinite',
       },
     },
   },

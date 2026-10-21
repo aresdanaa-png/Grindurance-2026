@@ -10,7 +10,7 @@ export default function CommunitySocialSection() {
   const communityChannels = [
     {
       title: 'IG : gxid.official',
-      category: 'INSTAGRAM // OFFICIAL',
+      category: 'INSTAGRAM OFFICIAL',
       handle: '@gxid.official',
       description: t('Siaran Live & Galeri', 'Live Streams & Gallery'),
       bannerImage: '/perjalanan-siklis-di-jalur-oranye.webp',
@@ -21,7 +21,7 @@ export default function CommunitySocialSection() {
     },
     {
       title: 'FB GX-ID',
-      category: 'FACEBOOK // GROUP',
+      category: 'FACEBOOK GROUP',
       handle: 'GX-ID Group',
       description: t('41.000+ Komunitas', '41,000+ Cyclists'),
       bannerImage: '/pesepeda2.webp',
@@ -32,7 +32,7 @@ export default function CommunitySocialSection() {
     },
     {
       title: 'FB Marketplace GX-ID',
-      category: 'MARKETPLACE // FORUM',
+      category: 'MARKETPLACE FORUM',
       handle: 'GX-ID Market',
       description: t('Jual Beli Gear & Part', 'Gear & Parts Trading'),
       bannerImage: '/pesepeda.webp',
@@ -43,7 +43,7 @@ export default function CommunitySocialSection() {
     },
     {
       title: t('Pendaftaran Event', 'Event Registration'),
-      category: 'REGISTRATION // 2026',
+      category: 'REGISTRATION 2026',
       handle: 'Gravel Grindurance',
       description: t('5 Kategori Rute Balap', '5 Race Route Categories'),
       bannerImage: '/backgrounds/bg-categories.webp',
@@ -54,7 +54,7 @@ export default function CommunitySocialSection() {
     },
     {
       title: t('Portofolio', 'Portfolio'),
-      category: 'TRACK RECORD // 8 YEARS',
+      category: 'TRACK RECORD · 8 YEARS',
       handle: 'Linktree GX-ID',
       description: t('Dokumentasi & Arsip', 'Archive & Track Record'),
       bannerImage: '/hero.webp',
@@ -65,7 +65,7 @@ export default function CommunitySocialSection() {
     },
     {
       title: t('Region/Chapter GX-ID', 'Region/Chapter GX-ID'),
-      category: 'NETWORK // 19 CHAPTERS',
+      category: 'NETWORK · 19 CHAPTERS',
       handle: '19 Chapter Resmi',
       description: t('Jaringan Seluruh Indonesia', 'Nationwide Network'),
       bannerImage: '/backgrounds/bg-timeline.webp',
@@ -88,30 +88,26 @@ export default function CommunitySocialSection() {
     switch (type) {
       case 'instagram':
         return (
-          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
-            <svg viewBox="0 0 24 24" className="w-full h-full fill-white group-hover:fill-[#FA6D0B] transition-colors duration-300">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-            </svg>
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-2 select-none transition-all duration-300">
+            <span className="font-mono font-black text-xs tracking-wider text-white group-hover:text-[#FA6D0B] transition-colors duration-300">
+              IG
+            </span>
           </div>
         );
       case 'facebook':
         return (
-          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
-            <svg viewBox="0 0 24 24" className="w-full h-full fill-white group-hover:fill-[#FA6D0B] transition-colors duration-300">
-              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-            </svg>
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-2 select-none transition-all duration-300">
+            <span className="font-mono font-black text-xs tracking-wider text-white group-hover:text-[#FA6D0B] transition-colors duration-300">
+              FB
+            </span>
           </div>
         );
       case 'marketplace':
         return (
-          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
-            <svg viewBox="0 0 24 24" className="w-full h-full stroke-white group-hover:stroke-[#FA6D0B] transition-colors duration-300" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 9l2-5h14l2 5v11a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" />
-              <path d="M3 9h18" />
-              <path d="M9 21V9" />
-              <path d="M15 21V9" />
-              <path d="M3 9a3 3 0 006 0 3 3 0 006 0 3 3 0 006 0" />
-            </svg>
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-2 select-none transition-all duration-300">
+            <span className="font-mono font-black text-[11px] tracking-wider text-white group-hover:text-[#FA6D0B] transition-colors duration-300">
+              SHOP
+            </span>
           </div>
         );
       case 'registration':
@@ -126,10 +122,10 @@ export default function CommunitySocialSection() {
         );
       case 'portfolio':
         return (
-          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-3 sm:p-3.5 transition-all duration-300">
-            <svg viewBox="0 0 24 24" className="w-full h-full fill-white group-hover:fill-[#FA6D0B] transition-colors duration-300">
-              <path d="M10.8 13.2V8.4l-3 3-1.7-1.7 4.9-4.9h2v4.9l3-3 1.7 1.7-3 3v4.8h4.8l-3-3 1.7-1.7 4.9 4.9v2l-4.9 4.9-1.7-1.7 3-3h-4.8v4.8l3-3 1.7 1.7-4.9 4.9h-2l-4.9-4.9 1.7-1.7 3 3V18H6.5l3 3-1.7 1.7L2.9 17.8v-2l4.9-4.9 1.7 1.7-3 3h4.3z" />
-            </svg>
+          <div className="w-full h-full rounded-full bg-black/80 shadow-lg flex items-center justify-center p-2 select-none transition-all duration-300">
+            <span className="font-mono font-black text-[11px] tracking-wider text-white group-hover:text-[#FA6D0B] transition-colors duration-300">
+              WEB
+            </span>
           </div>
         );
       case 'chapter':
@@ -175,9 +171,9 @@ export default function CommunitySocialSection() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4 sm:pb-5">
           <div className="space-y-2.5">
-            {/* Pure mono industrial label — no badge, no dot, no icon */}
-            <span className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-[0.3em] block">
-              GX-ID ECOSYSTEM // 8 YEARS COMMITTED
+            {/* Pure mono industrial label */}
+            <span className="text-[10px] font-mono font-bold text-[#FA6D0B] uppercase tracking-[0.25em] block">
+              GX-ID ECOSYSTEM · 8 YEARS COMMITTED
             </span>
 
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white italic">
@@ -308,16 +304,16 @@ export default function CommunitySocialSection() {
           </div>
 
           {/* Action Bar */}
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-xs font-mono border-t border-white/5">
-            <div className="text-slate-400">
+          <div className="pt-3 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs font-mono border-t border-white/5">
+            <div className="text-slate-400 font-sans text-xs sm:text-sm">
               {t('Ingin bergabung dengan grup ride mingguan chapter terdekat?', 'Want to join weekly community training rides with your local chapter?')}
             </div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full md:w-auto shrink-0">
               <a
                 href="https://strava.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-full border border-white/15 bg-white/5 hover:border-[#FA6D0B] text-slate-300 hover:text-white transition-all text-[11px] font-bold uppercase tracking-wider"
+                className="px-5 py-2.5 rounded-full border border-white/15 bg-white/5 hover:border-[#FA6D0B] text-slate-300 hover:text-white transition-all text-xs font-mono font-bold uppercase tracking-wider text-center whitespace-nowrap"
               >
                 STRAVA CLUB GX-ID
               </a>
@@ -325,7 +321,7 @@ export default function CommunitySocialSection() {
                 href="https://wa.me/6281290001000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-full bg-[#FA6D0B] text-black hover:bg-white font-black transition-all text-[11px] uppercase tracking-wider flex items-center gap-1.5 hover:shadow-[0_0_24px_rgba(250,109,11,0.55)] active:scale-95"
+                className="px-5 py-2.5 rounded-full bg-[#FA6D0B] text-black hover:bg-white font-mono font-black transition-all text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:shadow-[0_0_24px_rgba(250,109,11,0.55)] active:scale-95 whitespace-nowrap"
               >
                 {t('HUBUNGI ADMIN CHAPTER', 'CONTACT CHAPTER ADMIN')}
                 <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />

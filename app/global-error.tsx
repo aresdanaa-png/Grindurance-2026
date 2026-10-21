@@ -29,7 +29,7 @@ export default function GlobalError({
             </p>
             <button
               onClick={() => reset()}
-              className="px-6 py-3 bg-[#FA6D0B] text-black font-black uppercase text-xs tracking-wider rounded-xl hover:bg-[#ff7b1c] transition-all"
+              className="px-6 py-3 bg-[#FA6D0B] text-black font-black uppercase text-xs tracking-wider rounded-xl hover:bg-[#DE5A00] transition-all cursor-pointer"
             >
               RESET APLIKASI
             </button>

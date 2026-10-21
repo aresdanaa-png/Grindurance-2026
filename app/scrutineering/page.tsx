@@ -147,7 +147,7 @@ export default function ScrutineeringPage() {
         <div className="border-b border-white/10 pb-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <span className="font-mono text-xs sm:text-sm font-bold text-[#FA6D0B] uppercase tracking-widest block mb-2">
-              RACE OPERATIONS // SCRUTINEERING DESK
+              RACE OPERATIONS · SCRUTINEERING DESK
             </span>
             <h1 className="font-display italic text-3xl sm:text-5xl font-black uppercase tracking-tight text-white">
               {t('MEJA INSPEKSI & PROLOG 30 KM', 'INSPECTION DESK & 30 KM PROLOGUE')}
@@ -168,7 +168,7 @@ export default function ScrutineeringPage() {
               href="/peserta"
               className="px-5 py-3 rounded-xl bg-black/60 hover:bg-black text-xs font-bold text-slate-200 hover:text-white transition-all uppercase tracking-wider shadow-md"
             >
-              {t('ROSTER ATLET //', 'ATHLETE ROSTER //')}
+              {t('ROSTER ATLET', 'ATHLETE ROSTER')}
             </Link>
           </div>
         </div>
@@ -322,11 +322,11 @@ export default function ScrutineeringPage() {
                         <div className="pt-2 sm:pt-4">
                           {parseFloat(prologKmInput) >= 30.0 ? (
                             <div className="p-3 rounded-xl bg-white/10 text-white text-xs font-bold uppercase shadow-inner">
-                              // {t('SYARAT TERPENUHI (≥ 30 KM) · PROLOG VALID', 'REQUIREMENT MET (≥ 30 KM) · PROLOGUE VALID')}
+                              {t('SYARAT TERPENUHI (≥ 30 KM) · PROLOG VALID', 'REQUIREMENT MET (≥ 30 KM) · PROLOGUE VALID')}
                             </div>
                           ) : (
                             <div className="p-3 rounded-xl bg-black/80 text-[#FA6D0B] text-xs font-bold uppercase shadow-inner">
-                              // {t('KURANG DARI 30.0 KM! DENY START', 'LESS THAN 30.0 KM! DENY START')}
+                              {t('KURANG DARI 30.0 KM! DENY START', 'LESS THAN 30.0 KM! DENY START')}
                             </div>
                           )}
                         </div>

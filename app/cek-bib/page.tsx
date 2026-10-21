@@ -44,7 +44,7 @@ export default function CekBibPage() {
       {/* Header */}
       <div className="border-b border-white/10 pb-8 text-center space-y-3">
         <span className="font-mono font-bold text-xs sm:text-sm text-[#FA6D0B] uppercase tracking-widest block">
-          GX-ID OFFICIAL SELF-SERVICE // 2026 EDITION
+          GX-ID OFFICIAL SELF-SERVICE · 2026 EDITION
         </span>
         <h1 className="font-display italic text-4xl sm:text-6xl font-black text-white uppercase tracking-tight">
           {t('CEK E-TICKET & NOMOR BIB', 'CHECK E-TICKET & BIB NUMBER')}
@@ -72,7 +72,7 @@ export default function CekBibPage() {
             disabled={searching || !query.trim()}
             className="absolute right-2 px-5 py-2.5 rounded-lg font-mono font-black text-xs uppercase tracking-wider bg-[#FA6D0B] text-black hover:bg-[#DE5A00] transition-all disabled:opacity-40 cursor-pointer shadow-[0_0_15px_rgba(250,109,11,0.3)]"
           >
-            {searching ? t('MENCARI...', 'SEARCHING...') : t('CARI // BIB', 'SEARCH // BIB')}
+            {searching ? t('MENCARI...', 'SEARCHING...') : t('CARI NOMOR BIB', 'SEARCH BIB')}
           </button>
         </div>
         <span className="text-[11px] font-mono text-slate-400 block text-center">
@@ -82,7 +82,7 @@ export default function CekBibPage() {
 
       {errorMsg && (
         <div className="p-4 rounded-xl bg-black/80 text-[#FA6D0B] text-xs sm:text-sm font-mono max-w-xl mx-auto text-center font-bold shadow-md">
-          // {errorMsg}
+          {errorMsg}
         </div>
       )}
 
@@ -92,7 +92,7 @@ export default function CekBibPage() {
           {results.length === 0 ? (
             <div className="text-center py-12 rounded-2xl bg-black/60 backdrop-blur-xl max-w-xl mx-auto space-y-3 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
               <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                STATUS // NOT FOUND
+                STATUS: NOT FOUND
               </span>
               <h4 className="font-display italic text-2xl font-black text-white uppercase tracking-tight">
                 {t('DATA PESERTA TIDAK DITEMUKAN', 'ATHLETE RECORD NOT FOUND')}
@@ -108,7 +108,7 @@ export default function CekBibPage() {
             <div className="space-y-12">
               <div className="text-center">
                 <span className="text-xs sm:text-sm font-mono text-[#FA6D0B] font-bold uppercase tracking-wider block">
-                  {t(`// DITEMUKAN ${results.length} DATA PESERTA RESMI`, `// FOUND ${results.length} OFFICIAL RIDER RECORD(S)`)}
+                  {t(`DITEMUKAN ${results.length} DATA PESERTA RESMI`, `FOUND ${results.length} OFFICIAL RIDER RECORD(S)`)}
                 </span>
               </div>
 
@@ -129,7 +129,7 @@ export default function CekBibPage() {
                   ) : (
                     <div className="max-w-md mx-auto rounded-2xl bg-gradient-to-br from-[#FA6D0B]/10 via-black/70 to-black/85 backdrop-blur-xl p-6 sm:p-7 text-center space-y-3 shadow-[0_20px_60px_rgba(250,109,11,0.2)] font-mono">
                       <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                        // {t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
+                        {t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
                       </span>
                       <h4 className="font-display italic text-2xl font-black text-white uppercase tracking-tight">{p.full_name}</h4>
                       <p className="text-xs text-slate-300">

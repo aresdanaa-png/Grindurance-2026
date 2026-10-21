@@ -13,7 +13,7 @@ export default function HeroSection() {
     'CIBUBUR — JONGGOL — SENTUL',
     'SELF-SUPPORTED · RAIN SEASON CHALLENGE',
     '70K · 100K · 120K · 150K · 200K · VIRTUAL',
-    t('INSENTIF MEAL COUPON RP 50.000', 'IDR 50,000 MEAL INCENTIVE'),
+    t('MEAL VOUCHER ABEEY: 120K, 150K, 200K & WANITA', 'ABEEY MEAL VOUCHER: 120K, 150K, 200K & FEMALE'),
     '19 REGIONAL CHAPTERS GX-ID',
   ];
 
@@ -90,7 +90,7 @@ export default function HeroSection() {
                   {mobileTickerItems.map((item, idx) => (
                     <span key={`ticker-1-${idx}`} className="flex items-center">
                       <span className={item.includes('INSENTIF') ? 'text-[#FA6D0B] font-bold' : ''}>{item}</span>
-                      <span className="mx-3.5 text-[#FA6D0B] font-bold select-none">//</span>
+                      <span className="mx-3 text-[#FA6D0B] font-bold select-none">·</span>
                     </span>
                   ))}
                 </div>
@@ -99,7 +99,7 @@ export default function HeroSection() {
                   {mobileTickerItems.map((item, idx) => (
                     <span key={`ticker-2-${idx}`} className="flex items-center">
                       <span className={item.includes('INSENTIF') ? 'text-[#FA6D0B] font-bold' : ''}>{item}</span>
-                      <span className="mx-3.5 text-[#FA6D0B] font-bold select-none">//</span>
+                      <span className="mx-3 text-[#FA6D0B] font-bold select-none">·</span>
                     </span>
                   ))}
                 </div>
@@ -118,7 +118,7 @@ export default function HeroSection() {
                     {t('13 DESEMBER 2026', '13 DECEMBER 2026')}
                   </span>
                   <span className="text-[8px] font-mono text-slate-400 uppercase tracking-wider block mt-0.5 leading-none">
-                    {t('MINGGU KE-2 // 05:30 WIB', 'WEEK 2 // 05:30 WIB')}
+                    {t('MINGGU KE-2 · 05:30 WIB', 'WEEK 2 · 05:30 WIB')}
                   </span>
                 </div>
 
@@ -160,6 +160,22 @@ export default function HeroSection() {
                 <ArrowUpRight className="relative z-10 w-3.5 h-3.5 stroke-[2.5] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 ease-out shrink-0" />
               </Link>
             </div>
+
+            {/* Mobile Minimalist Chevron Down Scroll Indicator (Single Compact Row) */}
+            <a
+              href="#kategori"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('kategori')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="pt-2 pb-0.5 flex items-center justify-center cursor-pointer group active:scale-95 transition-all select-none"
+              aria-label={t('Gulir ke bawah untuk rute dan kategori', 'Scroll down for route and categories')}
+            >
+              <div className="flex items-center gap-1.5 text-[9px] font-mono font-bold tracking-[0.2em] uppercase text-slate-400 group-hover:text-white transition-colors">
+                <span>{t('GULIR KE BAWAH', 'SCROLL TO EXPLORE')}</span>
+                <span className="text-[#FA6D0B] font-black tracking-normal inline-block animate-bounce text-[10px]">↓</span>
+              </div>
+            </a>
 
           </div>
 
@@ -222,21 +238,21 @@ export default function HeroSection() {
               {/* Set 1 */}
               <div className="flex items-center">
                 <span>{t('MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)', 'SUNDAY, 13 DECEMBER 2026 (WEEK 2)')}</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>START &amp; FINISH: ABBEY COFFEE &amp; LRT HARJAMUKTI CIBUBUR</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>{t('RUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP', 'ROUTE: CIBUBUR — JONGGOL — SUKAMAKMUR — SENTUL LOOP')}</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>FORMAT: SELF-SUPPORTED · RAIN SEASON CHALLENGE</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>{t('KATEGORI: 70 FUN GRAVEL · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA', 'CATEGORIES: 70 FUN GRAVEL · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA')}</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>{t('VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION', 'NATIONWIDE VIRTUAL RIDE: STRAVA GPS AUTO-VALIDATION')}</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
-                <span className="text-[#FA6D0B] font-bold">{t('INSENTIF MEAL COUPON RP 50.000: WANITA, USIA ≤ 17 TAHUN & TIM PAIR MIX', 'IDR 50,000 MEAL INCENTIVE: FEMALE, AGE ≤ 17 & PAIR MIX TEAMS')}</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
+                <span className="text-[#FA6D0B] font-bold">{t('MEAL VOUCHER ABEEY: 120KM, 150KM, 200KM & SEMUA PESERTA WANITA', 'ABEEY MEAL VOUCHER: 120KM, 150KM, 200KM & ALL FEMALE RIDERS')}</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>{t('80.000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID', '80,000+ RIDERS · 19 REGIONAL CHAPTERS GX-ID')}</span>
-                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">//</span>
+                <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
               </div>
             </div>
           </div>

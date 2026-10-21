@@ -56,7 +56,7 @@ export default function TimelineSection() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4 sm:pb-5">
             <div className="space-y-3">
               <span className="text-sm sm:text-base font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
-                {t('RUNDOWN RESMI // OPERASIONAL BALAPAN', 'OFFICIAL RUNDOWN // RACE OPERATIONS')}
+                {t('RUNDOWN RESMI · OPERASIONAL BALAPAN', 'OFFICIAL RUNDOWN · RACE OPERATIONS')}
               </span>
               <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] group">
                 {/* Subtle ambient backlight glow in brand orange */}
@@ -92,8 +92,9 @@ export default function TimelineSection() {
           <div className="border-y border-white/10 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs">
               <span className="font-black text-[#FA6D0B] uppercase tracking-wider">
-                AGENDA RESMI //
+                AGENDA RESMI
               </span>
+              <span className="text-white/20 select-none">·</span>
               <span className="text-white font-bold">
                 6 &amp; 13 DESEMBER 2026
               </span>
@@ -110,10 +111,12 @@ export default function TimelineSection() {
             <button
               type="button"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B] hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer select-none self-start sm:self-auto group py-1"
+              className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B] hover:text-white transition-colors flex items-center gap-2 cursor-pointer select-none self-start sm:self-auto group py-1"
             >
               <span>{isExpanded ? t('TUTUP RUNDOWN JADWAL', 'COLLAPSE RUNDOWN') : t('BUKA RUNDOWN JADWAL LENGKAP', 'EXPAND FULL RUNDOWN')}</span>
-              <ArrowUpRight className={`w-4 h-4 stroke-[2.5] text-[#FA6D0B] transition-transform duration-300 ${isExpanded ? 'rotate-90 text-white' : 'group-hover:translate-x-0.5 group-hover:-translate-y-0.5'}`} />
+              <span className="font-mono text-xs px-2 py-0.5 rounded bg-white/[0.06] group-hover:bg-[#FA6D0B] group-hover:text-black transition-all">
+                {isExpanded ? '[ − ]' : '[ + ]'}
+              </span>
             </button>
           </div>
 
@@ -122,21 +125,21 @@ export default function TimelineSection() {
             <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.7)] flex flex-col md:flex-row md:items-center justify-between gap-5 animate-fade-in">
               <div className="space-y-2">
                 <div className="flex items-center gap-2 font-mono text-xs font-black uppercase text-[#FA6D0B] tracking-wider">
-                  <span>// PELEPASAN 3 GELOMBANG UTAMA</span>
+                  <span>PELEPASAN 3 GELOMBANG UTAMA</span>
                   <span className="text-white/20 select-none">·</span>
                   <span className="text-slate-400 font-bold">START: 05:30 WIB</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
                   <div className="border-l border-[#FA6D0B] pl-3 py-0.5">
-                    <span className="text-white font-bold block">05:30 WIB // WAVE 1</span>
+                    <span className="text-white font-bold block">05:30 WIB · WAVE 1</span>
                     <span className="text-slate-400 text-[11px]">200 Ultra &amp; 150 Grand Fondo</span>
                   </div>
                   <div className="border-l border-[#FA6D0B] pl-3 py-0.5">
-                    <span className="text-white font-bold block">06:00 WIB // WAVE 2</span>
+                    <span className="text-white font-bold block">06:00 WIB · WAVE 2</span>
                     <span className="text-slate-400 text-[11px]">120 Race (Single &amp; Pair Mix)</span>
                   </div>
                   <div className="border-l border-white/20 pl-3 py-0.5">
-                    <span className="text-white font-bold block">07:00 WIB // WAVE 3</span>
+                    <span className="text-white font-bold block">07:00 WIB · WAVE 3</span>
                     <span className="text-slate-400 text-[11px]">100 Fondo &amp; 70 Fun Gravel</span>
                   </div>
                 </div>
@@ -168,7 +171,7 @@ export default function TimelineSection() {
                   }`}
                 >
                   <span>{t('RACE DAY (13 DES 2026)', 'RACE DAY (DEC 13, 2026)')}</span>
-                  <span className="text-slate-500 font-normal ml-2">// 03:00–21:00 WIB</span>
+                  <span className="text-slate-500 font-normal ml-2">· 03:00–21:00 WIB</span>
                 </button>
 
                 <button
@@ -181,7 +184,7 @@ export default function TimelineSection() {
                   }`}
                 >
                   <span>{t('RPC & PRA-EVENT (6 DES 2026)', 'RPC & PRE-EVENT (DEC 6, 2026)')}</span>
-                  <span className="text-slate-500 font-normal ml-2">// RPC, CLINIC &amp; TM</span>
+                  <span className="text-slate-500 font-normal ml-2">· RPC, CLINIC &amp; TM</span>
                 </button>
 
                 <button
@@ -194,7 +197,7 @@ export default function TimelineSection() {
                   }`}
                 >
                   <span>{t('MATRIKS GELOMBANG', 'WAVE MATRIX')}</span>
-                  <span className="text-slate-500 font-normal ml-2">// 5 KATEGORI</span>
+                  <span className="text-slate-500 font-normal ml-2">· 5 KATEGORI</span>
                 </button>
               </div>
 
@@ -220,7 +223,7 @@ export default function TimelineSection() {
                     </div>
                     <div className="flex items-center gap-3 text-xs font-mono text-slate-400 shrink-0">
                       <span>FLAG OFF: <strong className="text-[#FA6D0B]">05:30 WIB</strong></span>
-                      <span className="text-[#FA6D0B]">//</span>
+                      <span className="text-white/20 select-none">·</span>
                       <span>FINAL COT: <strong className="text-white">00:30 WIB (H+1)</strong></span>
                     </div>
                   </div>
@@ -238,7 +241,7 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           03:00 — 05:00 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#FA6D0B]">
                           {t('WAJIB KHUSUS 150 & 200 KM', 'MANDATORY FOR 150 & 200 KM')}
                         </span>
@@ -249,7 +252,7 @@ export default function TimelineSection() {
                     </div>
 
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
-                      {t('MANDIRI PROLOG 30 KM // REKAMAN GPS MANDIRI', 'SELF-START 30 KM PROLOGUE // GPS ACTIVITY LOG')}
+                      {t('MANDIRI PROLOG 30 KM · REKAMAN GPS MANDIRI', 'SELF-START 30 KM PROLOGUE · GPS ACTIVITY LOG')}
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -283,7 +286,7 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           04:30 — 05:15 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="text-xs font-mono font-bold uppercase tracking-widest text-slate-300">
                           {t('SEMUA PESERTA LURING', 'ALL IN-PERSON RIDERS')}
                         </span>
@@ -304,15 +307,15 @@ export default function TimelineSection() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-[11px] font-mono text-slate-300">
                       <div className="p-3 rounded-xl bg-black/60 flex items-center gap-2.5 shadow-sm">
-                        <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
+                        <span className="text-[#FA6D0B] font-bold text-sm leading-none shrink-0 select-none">·</span>
                         <span>{t('2 Lampu Depan (400+ lm) & Lampu Belakang', '2 Front Headlamps (400+ lm) & Rear Light')}</span>
                       </div>
                       <div className="p-3 rounded-xl bg-black/60 flex items-center gap-2.5 shadow-sm">
-                        <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
+                        <span className="text-[#FA6D0B] font-bold text-sm leading-none shrink-0 select-none">·</span>
                         <span>{t('Rompi Reflektif EN ISO 20471 & Helm CE', 'EN ISO 20471 Reflective Vest & CE Helmet')}</span>
                       </div>
                       <div className="p-3 rounded-xl bg-black/60 flex items-center gap-2.5 shadow-sm">
-                        <span className="text-[#FA6D0B] font-bold text-xs select-none">//</span>
+                        <span className="text-[#FA6D0B] font-bold text-sm leading-none shrink-0 select-none">·</span>
                         <span>{t('Plat Nomor Sepeda & Botol Hidrasi Penuh', 'Bike Number Plate & Filled Hydration Bottles')}</span>
                       </div>
                     </div>
@@ -329,7 +332,7 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           05:30 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
                           WAVE 1 DISPATCH
                         </span>
@@ -350,9 +353,9 @@ export default function TimelineSection() {
 
                     <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
                       <span>COT 200 KM: <strong className="text-white">{t('17 JAM (22:30 WIB)', '17 HOURS (22:30 WIB)')}</strong></span>
-                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span className="text-white/20 select-none">·</span>
                       <span>COT 150 KM: <strong className="text-white">{t('15 JAM (20:30 WIB)', '15 HOURS (20:30 WIB)')}</strong></span>
-                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span className="text-white/20 select-none">·</span>
                       <span>MODE: <strong className="text-[#FA6D0B]">{t('TANTANGAN MANDIRI PENUH', 'FULL SELF-CHALLENGE')}</strong></span>
                     </div>
                   </div>
@@ -368,7 +371,7 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           06:00 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
                           WAVE 2 DISPATCH
                         </span>
@@ -389,9 +392,9 @@ export default function TimelineSection() {
 
                     <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
                       <span>COT 120 KM: <strong className="text-white">{t('11 JAM (17:00 WIB)', '11 HOURS (17:00 WIB)')}</strong></span>
-                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span className="text-white/20 select-none">·</span>
                       <span>LIVE TRACKING: <strong className="text-white">{t('WAJIB AKTIF TERUS', 'ALWAYS ACTIVE')}</strong></span>
-                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span className="text-white/20 select-none">·</span>
                       <span>PITSTOP: <strong className="text-white">{t('WAJIB 30 MENIT (CP#4)', 'MANDATORY 30 MIN (CP#4)')}</strong></span>
                     </div>
                   </div>
@@ -407,7 +410,7 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           07:00 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-slate-300">
                           WAVE 3 DISPATCH
                         </span>
@@ -428,9 +431,9 @@ export default function TimelineSection() {
 
                     <div className="flex flex-wrap items-center gap-4 pt-1 text-xs font-mono text-slate-300">
                       <span>COT 100 KM: <strong className="text-white">{t('9.5 JAM (16:30 WIB)', '9.5 HOURS (16:30 WIB)')}</strong></span>
-                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span className="text-white/20 select-none">·</span>
                       <span>COT 70 KM: <strong className="text-white">{t('7 JAM (14:00 WIB)', '7 HOURS (14:00 WIB)')}</strong></span>
-                      <span className="text-[#FA6D0B] select-none">//</span>
+                      <span className="text-white/20 select-none">·</span>
                       <span>ATMOSFER: <strong className="text-white">{t('FESTIVAL & PARADE KOMUNITAS', 'FESTIVAL & COMMUNITY PARADE')}</strong></span>
                     </div>
                   </div>
@@ -446,16 +449,16 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           10:00 — 16:00 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#FA6D0B]">
-                          // {t('PENALTI 300%', '300% PENALTY')}
+                          {t('PENALTI 300%', '300% PENALTY')}
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-slate-400 uppercase">CP#4 / CP#6 JONGGOL</span>
                     </div>
 
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
-                      MANDATORY 30-MIN NEUTRALIZED PITSTOP // SMART GEOFENCING
+                      MANDATORY 30-MIN NEUTRALIZED PITSTOP · SMART GEOFENCING
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -489,9 +492,9 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           11:00 — 21:00 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">
-                          // {t('SEMUA FINISHER SAH', 'ALL OFFICIAL FINISHERS')}
+                          {t('SEMUA FINISHER SAH', 'ALL OFFICIAL FINISHERS')}
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-slate-400 uppercase">FINISHER GATE ABEEY</span>
@@ -520,9 +523,9 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           17:00 — 18:00 WIB
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
-                          // STAGE CEREMONY
+                          STAGE CEREMONY
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-[#FA6D0B] font-bold uppercase">{t('PANGGUNG UTAMA', 'MAIN STAGE')}</span>
@@ -551,16 +554,16 @@ export default function TimelineSection() {
                         <span className="font-mono text-sm sm:text-base font-black text-white tracking-wider">
                           21:00 — 00:30 WIB (H+1)
                         </span>
-                        <span className="text-[#FA6D0B] font-bold select-none">//</span>
+                        <span className="text-white/20 select-none">·</span>
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-400">
-                          // {t('BATAS AKHIR MUTLAK', 'ABSOLUTE CUT-OFF')}
+                          {t('BATAS AKHIR MUTLAK', 'ABSOLUTE CUT-OFF')}
                         </span>
                       </div>
                       <span className="text-[11px] font-mono text-slate-400 uppercase">FINAL FINISH GATE</span>
                     </div>
 
                     <h3 className="font-display text-xl sm:text-2xl font-black uppercase text-white tracking-tight">
-                      OFFICIAL COT // 21:00 WIB (STAGE) &amp; 22:30 WIB (ULTRA 200 KM)
+                      OFFICIAL COT · 21:00 WIB (STAGE) &amp; 22:30 WIB (ULTRA 200 KM)
                     </h3>
 
                     <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
@@ -588,8 +591,8 @@ export default function TimelineSection() {
                   <div>
                     <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
                       {t(
-                        'H-7 (6 HARI SEBELUM EVENT): MINGGU, 6 DESEMBER 2026 // ABEEY COFFEE CIBUBUR',
-                        'D-7 (6 DAYS BEFORE RACE): SUNDAY, DEC 6, 2026 // ABEEY COFFEE CIBUBUR'
+                        'H-7 (6 HARI SEBELUM EVENT): MINGGU, 6 DESEMBER 2026 · ABEEY COFFEE CIBUBUR',
+                        'D-7 (6 DAYS BEFORE RACE): SUNDAY, DEC 6, 2026 · ABEEY COFFEE CIBUBUR'
                       )}
                     </span>
                     <span className="text-[11px] text-slate-400">
@@ -693,7 +696,7 @@ export default function TimelineSection() {
                       14:00 — 15:30 WIB
                     </span>
                     <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
-                      // {t('BRIEFING WAJIB', 'MANDATORY BRIEFING')}
+                      {t('BRIEFING WAJIB', 'MANDATORY BRIEFING')}
                     </span>
                   </div>
 
@@ -805,7 +808,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
-                          WAVE 1 // 05:30 WIB
+                          WAVE 1 · 05:30 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-[#FA6D0B] font-bold whitespace-nowrap">
@@ -835,7 +838,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
-                          WAVE 1 // 05:30 WIB
+                          WAVE 1 · 05:30 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-[#FA6D0B] font-bold whitespace-nowrap">
@@ -865,7 +868,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-white">
-                          WAVE 2 // 06:00 WIB
+                          WAVE 2 · 06:00 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-500 whitespace-nowrap">
@@ -882,7 +885,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
                         <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
-                          // {t('KOMPETITIF (PODIUM TOP 3)', 'COMPETITIVE (TOP 3 PODIUM)')}
+                          {t('KOMPETITIF (PODIUM TOP 3)', 'COMPETITIVE (TOP 3 PODIUM)')}
                         </span>
                       </td>
                     </tr>
@@ -895,7 +898,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
-                          WAVE 3 // 07:00 WIB
+                          WAVE 3 · 07:00 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-500 whitespace-nowrap">
@@ -925,7 +928,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 whitespace-nowrap">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
-                          WAVE 3 // 07:00 WIB
+                          WAVE 3 · 07:00 WIB
                         </span>
                       </td>
                       <td className="py-3.5 px-2.5 sm:px-3 text-slate-500 whitespace-nowrap">
@@ -970,7 +973,7 @@ export default function TimelineSection() {
                       </td>
                       <td className="py-3.5 px-3 sm:px-4 whitespace-nowrap">
                         <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#FA6D0B]">
-                          // {t('Validasi Strava Webhook', 'Strava Webhook Validation')}
+                          {t('Validasi Strava Webhook', 'Strava Webhook Validation')}
                         </span>
                       </td>
                     </tr>
@@ -983,7 +986,7 @@ export default function TimelineSection() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
                 <div className="p-4 rounded-xl bg-black/60 space-y-1 shadow-sm">
                   <span className="text-[#FA6D0B] font-bold block uppercase">
-                    {t('// DISIPLIN JADWAL FLAG OFF', '// FLAG OFF SCHEDULE DISCIPLINE')}
+                    {t('DISIPLIN JADWAL FLAG OFF', 'FLAG OFF SCHEDULE DISCIPLINE')}
                   </span>
                   <p className="text-slate-400 text-[11px] leading-relaxed">
                     {t(
@@ -994,7 +997,7 @@ export default function TimelineSection() {
                 </div>
                 <div className="p-4 rounded-xl bg-black/60 space-y-1 shadow-sm">
                   <span className="text-[#FA6D0B] font-bold block uppercase">
-                    {t('// LIVE TRACKING AKTIF (120, 150, 200 KM)', '// LIVE TRACKING ACTIVE (120, 150, 200 KM)')}
+                    {t('LIVE TRACKING AKTIF (120, 150, 200 KM)', 'LIVE TRACKING ACTIVE (120, 150, 200 KM)')}
                   </span>
                   <p className="text-slate-400 text-[11px] leading-relaxed">
                     {t(
@@ -1019,7 +1022,7 @@ export default function TimelineSection() {
                   }}
                   className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B] hover:text-white transition-colors flex items-center gap-2 cursor-pointer select-none py-2 px-4 group"
                 >
-                  <span>[ // {t('TUTUP RUNDOWN JADWAL', 'COLLAPSE FULL RUNDOWN')} ]</span>
+                  <span>[ {t('TUTUP RUNDOWN JADWAL', 'COLLAPSE FULL RUNDOWN')} ]</span>
                   <ArrowUpRight className="w-4 h-4 stroke-[2.5] -rotate-90 group-hover:-translate-y-0.5 transition-transform" />
                 </button>
               </div>

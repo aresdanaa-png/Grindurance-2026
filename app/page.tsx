@@ -1,5 +1,6 @@
 import HeroSection from '@/components/home/HeroSection';
 import CategoryCockpit from '@/components/home/CategoryCockpit';
+import PriceListSection from '@/components/home/PriceListSection';
 import RacePackSection from '@/components/home/RacePackSection';
 import TimelineSection from '@/components/home/TimelineSection';
 import CommunitySocialSection from '@/components/home/CommunitySocialSection';
@@ -14,6 +15,10 @@ export default function HomePage() {
       
       <ScrollReveal>
         <CategoryCockpit />
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <PriceListSection />
       </ScrollReveal>
 
       <ScrollReveal>

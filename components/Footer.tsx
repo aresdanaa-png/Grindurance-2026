@@ -14,13 +14,13 @@ export default function Footer() {
       <div className="border-b border-white/10 bg-black/40 backdrop-blur-md py-3 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono tracking-widest uppercase">
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-3 gap-y-1 text-slate-300">
-            <span className="text-[#FA6D0B] font-bold">GX-ID ECOSYSTEM // 8 YEARS COMMITTED</span>
+            <span className="text-[#FA6D0B] font-bold">GX-ID ECOSYSTEM · 8 YEARS COMMITTED</span>
             <span className="text-white/20 select-none hidden sm:inline">·</span>
             <span>{t('STAGING ARENA: LRT HARJAMUKTI, CIBUBUR', 'STAGING ARENA: LRT HARJAMUKTI, CIBUBUR')}</span>
           </div>
           <div className="flex items-center gap-2 text-slate-400">
             <span>6°22&apos;46&quot;S 106°54&apos;03&quot;E</span>
-            <span className="text-[#FA6D0B] font-bold select-none">//</span>
+            <span className="text-white/20 select-none">·</span>
             <span>JONGGOL LOOP</span>
           </div>
         </div>
@@ -242,9 +242,9 @@ export default function Footer() {
           <p>© 2026 GX-ID (Gravel &amp; Ultra Cycling Indonesia). All rights reserved.</p>
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 uppercase tracking-wider">
             <span>{t('TERRAIN: MAKADAM · ASPAL RUSAK · TANAH', 'TERRAIN: MACADAM · ROUGH TARMAC · DIRT')}</span>
-            <span className="text-[#FA6D0B] select-none">//</span>
+            <span className="text-white/20 select-none">·</span>
             <span>TIMEZONE: WIB (UTC+7)</span>
-            <span className="text-[#FA6D0B] select-none">//</span>
+            <span className="text-white/20 select-none">·</span>
             <span className="text-[#FA6D0B] font-bold">RAIN SEASON EDITION</span>
           </div>
         </div>
