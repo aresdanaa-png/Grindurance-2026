@@ -62,38 +62,38 @@ export const PACK_TIERS: PackTierItem[] = [
     priceTag: { id: 'TARIF DASAR KATEGORI', en: 'BASE CATEGORY RATE' },
     title: { id: 'PAKET MEDAL ONLY', en: 'MEDAL ONLY PACKAGE' },
     description: {
-      id: 'Pilihan tepat bagi pesepeda yang fokus pada esensi jarak, tantangan mandiri, dan koleksi medali resmi finisher.',
-      en: 'The ideal choice for cyclists focusing on pure endurance distance, self-supported challenge, and official finisher medals.',
+      id: 'Pilihan tepat bagi pesepeda yang fokus pada esensi jarak, tantangan mandiri, dan koleksi medali resmi finisher (dikalungkan saat berhasil finish di bawah COT).',
+      en: 'The ideal choice for cyclists focusing on pure endurance distance, self-supported challenge, and official finisher medal (awarded upon finish under COT).',
     },
     inclusions: [
       {
         text: {
-          id: 'Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)',
-          en: 'Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)',
+          id: 'Heavy Finisher Metal Medal (Dikalungkan saat Finish di bawah COT)',
+          en: 'Heavy Finisher Metal Medal (Awarded upon Finish under COT)',
         },
       },
       {
         text: {
-          id: 'Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in',
-          en: 'Waterproof Bike Number Plate #1000+ & QR Check-in',
+          id: 'Race Pack: Nomor Plat Sepeda Tahan Air #1000+ & Kabel Ties',
+          en: 'Race Pack: Waterproof Bike BIB Plate #1000+ & Zip Ties',
         },
       },
       {
         text: {
-          id: 'Asuransi Kecelakaan Resmi 1 Hari Event',
-          en: 'Official 1-Day Event Accident Insurance',
+          id: 'Race Pack: Nutrisi Hidrasi NDR Drinkmix Carbs 80g',
+          en: 'Race Pack: NDR Drinkmix Carbs 80g Hydration Nutrition',
         },
       },
       {
         text: {
-          id: 'Nutrisi NDR Energy Gel + Isotonic Drink',
-          en: 'NDR Energy Gel Nutrition + Isotonic Drink',
+          id: 'Race Pack: Asuransi Kecelakaan Resmi 1 Hari Event',
+          en: 'Race Pack: Official 1-Day Event Accident Insurance',
         },
       },
       {
         text: {
-          id: 'Akses Finisher Lounge & Voucher Pemulihan ABBEY Coffee',
-          en: 'Finisher Lounge Access & ABBEY Coffee Recovery Voucher',
+          id: 'Race Pack: Voucher Pemulihan ABBEY Coffee & Stiker GX-ID',
+          en: 'Race Pack: ABBEY Coffee Recovery Voucher & GX-ID Stickers',
         },
       },
     ],
@@ -111,39 +111,39 @@ export const PACK_TIERS: PackTierItem[] = [
     priceTag: { id: 'MULAI +RP 50.000 / PAX', en: 'FROM +IDR 50,000 / PAX' },
     title: { id: 'PAKET MEDAL & JERSEY RESMI', en: 'OFFICIAL MEDAL & JERSEY PACKAGE' },
     description: {
-      id: 'Paket lengkap terfavorit. Mendapatkan seluruh fasilitas Paket Medal Only ditambah Official Anniversary Aero Jersey buatan Pollride.',
-      en: 'Top-favorite complete package. Includes all Medal Only perks plus the Official Anniversary Aero Jersey by Pollride.',
+      id: 'Paket lengkap terfavorit. Mendapatkan seluruh starter kit Race Pack dan Medali Finisher (< COT) ditambah Official Anniversary Aero Jersey buatan Pollride (Pre-Order).',
+      en: 'Top-favorite complete package. Includes all Race Pack starter items and Finisher Medal (< COT) plus Official Anniversary Aero Jersey by Pollride (Pre-Order).',
     },
     inclusions: [
       {
         text: {
-          id: 'Official Anniversary Aero Jersey by Pollride (Senilai Rp 350.000)',
-          en: 'Official Anniversary Aero Jersey by Pollride (IDR 350K Value)',
+          id: 'Official Anniversary Aero Jersey by Pollride (Pre-Order / Bundel Resmi)',
+          en: 'Official Anniversary Aero Jersey by Pollride (Pre-Order / Official Bundle)',
         },
         isBold: true,
       },
       {
         text: {
-          id: 'Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)',
-          en: 'Heavy Finisher Metal Medal (Zinc Alloy 3D Relief)',
+          id: 'Heavy Finisher Metal Medal (Dikalungkan saat Finish di bawah COT)',
+          en: 'Heavy Finisher Metal Medal (Awarded upon Finish under COT)',
         },
       },
       {
         text: {
-          id: 'Nomor Plat Sepeda Tahan Air #1000+ & QR Check-in',
-          en: 'Waterproof Bike Number Plate #1000+ & QR Check-in',
+          id: 'Race Pack: Nomor Plat Sepeda Tahan Air #1000+ & Kabel Ties',
+          en: 'Race Pack: Waterproof Bike BIB Plate #1000+ & Zip Ties',
         },
       },
       {
         text: {
-          id: 'Asuransi Kecelakaan Resmi 1 Hari Event',
-          en: 'Official 1-Day Event Accident Insurance',
+          id: 'Race Pack: Nutrisi Hidrasi NDR Drinkmix Carbs 80g',
+          en: 'Race Pack: NDR Drinkmix Carbs 80g Hydration Nutrition',
         },
       },
       {
         text: {
-          id: 'Nutrisi NDR Energy Gel + Isotonic + Voucher ABBEY Coffee',
-          en: 'NDR Energy Gel Nutrition + Isotonic + ABBEY Coffee Voucher',
+          id: 'Race Pack: Asuransi 1 Hari, Voucher ABBEY Coffee, & Stiker GX-ID',
+          en: 'Race Pack: 1-Day Insurance, ABBEY Coffee Voucher, & GX-ID Stickers',
         },
       },
     ],
@@ -155,137 +155,147 @@ export const PACK_TIERS: PackTierItem[] = [
   },
 ];
 
+export interface RpcRequirement {
+  id: string;
+  label: LocalizedText;
+  description: LocalizedText;
+}
+
 // 2. LOGISTIK PENGAMBILAN RACE PACK (RPC)
 export const RPC_LOGISTICS: RpcOption[] = [
   {
     id: 'pickup',
-    tag: { id: 'PENGAMBILAN MANDIRI', en: 'IN-PERSON PICKUP' },
-    badge: { id: 'GRATIS', en: 'FREE' },
+    tag: { id: 'PENGAMBILAN MANDIRI (H-7)', en: 'IN-PERSON PICKUP (H-7)' },
+    badge: { id: 'GRATIS (RP 0)', en: 'FREE (IDR 0)' },
     badgeHighlight: false,
     title: { id: 'MINGGU, 6 DESEMBER 2026', en: 'SUNDAY, DEC 6, 2026' },
-    subtitle: { id: 'ABBEY Coffee & Eatery · 10:00–17:00 WIB', en: 'ABBEY Coffee & Eatery · 10:00–17:00 WIB' },
+    subtitle: { id: 'ABBEY Coffee & Eatery · Stasiun LRT Harjamukti Cibubur · 10:00–17:00 WIB', en: 'ABBEY Coffee & Eatery · Harjamukti LRT Station Cibubur · 10:00–17:00 WIB' },
     items: [
-      { id: 'Pengambilan langsung di venue start/finish', en: 'Direct collection at start/finish venue' },
-      { id: 'Akses resmi Coaching Clinic & Technical Meeting', en: 'Access to Coaching Clinic & Technical Meeting' },
+      { id: 'Pengambilan Starter Kit (Plat BIB #1000+, Nutrisi NDR, Asuransi, Voucher ABBEY)', en: 'Starter Kit collection (BIB Plate #1000+, NDR Nutrition, Insurance, ABBEY Voucher)' },
+      { id: 'Akses Coaching Clinic Navigasi Gravel & Strategi Ban (11:00 WIB)', en: 'Access to Gravel Navigation & Tire Strategy Clinic (11:00 WIB)' },
+      { id: 'Pengarahan Teknis Rute Final & Regulasi Safety di Technical Meeting (14:00 WIB)', en: 'Final Route & Safety Briefing at Official Technical Meeting (14:00 WIB)' },
     ],
   },
   {
     id: 'handling',
-    tag: { id: 'PENGAMBILAN HARI-H', en: 'RACE-DAY PICKUP' },
-    badge: { id: 'OPSI TAMBAHAN', en: 'ADD-ON' },
+    tag: { id: 'LAYANAN MEJA HARI-H', en: 'RACE-DAY DESK SERVICE' },
+    badge: { id: '+RP 20.000 / PESERTA', en: '+IDR 20,000 / RIDER' },
     badgeHighlight: true,
-    title: { id: '+RP 20.000 / PESERTA', en: '+IDR 20,000 / RIDER' },
-    subtitle: { id: 'Minggu, 13 Desember 2026 (Subuh Hari-H)', en: 'Sunday, Dec 13, 2026 (Race Dawn)' },
+    title: { id: 'MINGGU, 13 DESEMBER 2026', en: 'SUNDAY, DEC 13, 2026' },
+    subtitle: { id: 'Meja Khusus Registrasi Ulang Subuh di Venue Start · 04:30–05:15 WIB', en: 'Dedicated Dawn Re-Registration Desk at Start Venue · 04:30–05:15 WIB' },
     items: [
-      { id: 'Khusus peserta luar kota atau berhalangan hadir', en: 'For out-of-town riders or unable to attend' },
-      { id: 'Dilayani di meja khusus panitia saat registrasi ulang', en: 'Handled via dedicated organizer desk during check-in' },
+      { id: 'Khusus peserta berdomisili luar kota atau berhalangan hadir saat RPC H-7', en: 'Specifically for out-of-town riders or unable to attend H-7 RPC Day' },
+      { id: 'Starter Kit disiapkan khusus di meja check-in fajar sebelum pelepasan start', en: 'Starter Kit staged at dawn check-in desk prior to wave dispatch' },
+      { id: 'Dipilih langsung saat registrasi online dengan handling fee resmi Rp 20.000', en: 'Selected during online registration with official IDR 20,000 handling fee' },
     ],
   },
 ];
 
-// 3. 4 PRODUK RESMI (JERSEY, MEDALI, NUTRISI NDR, HARI-H ESSENTIALS)
+export const RPC_REQUIREMENTS: RpcRequirement[] = [
+  {
+    id: 'req-doc',
+    label: { id: 'DOKUMEN WAJIB', en: 'REQUIRED DOCUMENTS' },
+    description: {
+      id: 'Tunjukkan E-Ticket QR Code konfirmasi pendaftaran & Kartu Identitas Fisik asli (KTP/SIM/Paspor).',
+      en: 'Present your registration QR E-ticket & physical government ID card (National ID/Driver License/Passport).',
+    },
+  },
+  {
+    id: 'req-proxy',
+    label: { id: 'PENGAMBILAN DIWAKILKAN', en: 'PROXY COLLECTION' },
+    description: {
+      id: 'Wajib membawa Surat Kuasa tertulis yang ditandatangani serta foto KTP peserta pendaftar.',
+      en: 'Must present a signed authorization letter and a photo of the registered participant’s ID card.',
+    },
+  },
+  {
+    id: 'req-rule',
+    label: { id: 'KETENTUAN STARTER KIT', en: 'STARTER KIT POLICY' },
+    description: {
+      id: 'Race Pack murni memuat BIB, NDR, asuransi, & voucher. Medali diserahkan saat finish < COT, jersey didapatkan via PO.',
+      en: 'Race Pack only includes BIB, NDR, insurance, & voucher. Medal awarded at finish < COT, jersey fulfilled via PO.',
+    },
+  },
+];
+
+// 3. 3 PRODUK RESMI (JERSEY PO, MEDALI FINISHER < COT, RACEPACK STARTER KIT)
 export const OFFICIAL_GEAR_ITEMS: OfficialGearItem[] = [
   {
     id: 'jersey',
     itemNumber: '01',
-    tagCategory: { id: 'APPAREL RESMI', en: 'OFFICIAL APPAREL' },
+    tagCategory: { id: 'APPAREL RESMI (PO / ADD-ON)', en: 'OFFICIAL APPAREL (PO / ADD-ON)' },
     title: { id: 'OFFICIAL ANNIVERSARY JERSEY', en: 'OFFICIAL ANNIVERSARY JERSEY' },
     description: {
-      id: 'Jersey balap resmi buatan Pollride Apparel dengan spesifikasi short sleeve aerodinamis tanpa saku belakang. Tersedia ukuran XS hingga 5XL.',
-      en: 'Official race jersey by Pollride Apparel with aerodynamic short sleeve cut without back pocket. Available in sizes XS to 5XL.',
+      id: 'Jersey balap resmi buatan Pollride Apparel dengan pola aerodinamis short sleeve tanpa saku belakang. Jersey didapatkan melalui sistem Pre-Order (PO) atau memilih Paket Medal & Jersey. Saat ini desain resmi masih dalam tahap finalisasi.',
+      en: 'Official race jersey by Pollride Apparel with aerodynamic short sleeve cut without back pocket. Available via Pre-Order (PO) or Medal & Jersey package. Currently in final official design phase.',
     },
     specs: [
-      { id: 'Pollride Aero Fit', en: 'Pollride Aero Fit' },
-      { id: 'Short Sleeve No Pocket', en: 'Short Sleeve No Pocket' },
+      { id: 'Pre-Order / Bundel Jersey', en: 'Pre-Order / Jersey Bundle' },
+      { id: 'Pollride Aero Fit (No Pocket)', en: 'Pollride Aero Fit (No Pocket)' },
       { id: 'Size XS s/d 5XL', en: 'Sizes XS to 5XL' },
-      { id: 'Quick-Dry Breathable', en: 'Quick-Dry Breathable' },
+      { id: 'Quick-Dry Breathable Fabric', en: 'Quick-Dry Breathable Fabric' },
     ],
-    imageSrc: '/size-chart.jpeg',
+    // Dikosongkan sesuai permintaan karena masih tahap desain
     visualPreview: {
       topLeftText: 'POLLRIDE APPAREL',
-      topRightText: { id: 'EDISI 2026', en: '2026 EDITION' },
+      topRightText: { id: 'TAHAP DESAIN', en: 'DESIGN STAGE' },
       numberBadge: '01',
-      centerTitle: 'POLLRIDE',
-      centerSubtitle: { id: 'OFFICIAL RACE JERSEY', en: 'OFFICIAL RACE JERSEY' },
-      bottomTagLeft: 'SIZE XS–5XL',
-      bottomTagRight: { id: 'STATUS: PRODUKSI', en: 'STATUS: PRODUCTION' },
+      centerTitle: 'COMING SOON',
+      centerSubtitle: { id: 'TAHAP FINALISASI DESAIN', en: 'DESIGN FINALIZATION' },
+      bottomTagLeft: 'PRE-ORDER (PO) · SIZE XS–5XL',
+      bottomTagRight: { id: 'STATUS: TAHAP DESAIN', en: 'STATUS: IN DESIGN' },
     },
   },
   {
     id: 'medal',
     itemNumber: '02',
-    tagCategory: { id: 'MEDALI SAH', en: 'OFFICIAL MEDAL' },
+    tagCategory: { id: 'MEDALI FINISHER SAH', en: 'OFFICIAL FINISHER MEDAL' },
     title: { id: 'HEAVY FINISHER METAL MEDAL', en: 'HEAVY FINISHER METAL MEDAL' },
     description: {
-      id: 'Medali berbobot tebal dari paduan zinc alloy antique bronze dengan ukiran timbul 3D topografi puncak pegunungan dan lanyard tenun edisi peringatan.',
-      en: 'Heavyweight solid zinc alloy medal in antique bronze with 3D embossed summit topography and official commemorative woven lanyard.',
+      id: 'Medali berbobot tebal dari paduan zinc alloy antique bronze dengan ukiran timbul 3D topografi puncak pegunungan, kontur elevasi, dan lanyard tenun. Medali hanya diserahkan di garis finish kepada peserta yang berhasil finish di bawah batas Cut-Off Time (COT).',
+      en: 'Heavyweight solid zinc alloy medal in antique bronze with 3D embossed mountain topography and woven lanyard. Exclusively awarded at the finish line to riders who finish under the Cut-Off Time (COT).',
     },
     specs: [
-      { id: 'Paduan Solid Zinc', en: 'Solid Zinc Alloy' },
-      { id: 'Relief Timbul 3D', en: '3D Embossed Relief' },
-      { id: 'Lanyard Woven Tebal', en: 'Heavy Woven Lanyard' },
+      { id: 'Khusus Finish < COT', en: 'Exclusively Finish < COT' },
+      { id: 'Paduan Solid Zinc 3D', en: 'Solid Zinc 3D Alloy' },
+      { id: 'Relief Topografi Gunung', en: 'Mountain Topography Relief' },
       { id: 'Finisher Luring & Virtual', en: 'In-Person & Virtual Finishers' },
     ],
+    imageSrc: '/racepacks/finisher-medal.webp',
     visualPreview: {
-      topLeftText: 'SEMUA KATEGORI',
-      topRightText: { id: 'EDISI 2026', en: '2026 EDITION' },
+      topLeftText: 'FINISHER REWARD',
+      topRightText: { id: 'SYARAT: < COT', en: 'REQ: < COT' },
       numberBadge: '02',
-      centerTitle: 'COMING SOON',
-      centerSubtitle: { id: 'MOLD 3D RELIEF', en: 'MOLD 3D RELIEF' },
+      centerTitle: 'MEDALI 3D',
+      centerSubtitle: { id: 'FINISHER UNDER COT', en: 'FINISHER UNDER COT' },
       bottomTagLeft: 'ZINC ALLOY METAL',
-      bottomTagRight: { id: 'STATUS: CETAK', en: 'STATUS: MOLDING' },
+      bottomTagRight: { id: 'DI GARIS FINISH', en: 'AT FINISH LINE' },
     },
   },
   {
-    id: 'ndr-drinkmix',
+    id: 'racepack',
     itemNumber: '03',
-    tagCategory: { id: 'NUTRISI ENDURANCE', en: 'ENDURANCE FUEL' },
-    title: { id: 'NDR DRINKMIX 80G HIGH CARB FUEL', en: 'NDR DRINKMIX 80G HIGH CARB FUEL' },
+    tagCategory: { id: 'RACE PACK STARTER KIT', en: 'RACE PACK STARTER KIT' },
+    title: { id: 'OFFICIAL RACE PACK STARTER KIT', en: 'OFFICIAL RACE PACK STARTER KIT' },
     description: {
-      id: 'Bahan bakar karbohidrat konsentrasi tinggi resmi panitia (80g carbs per sachet / 320 kkal) dengan maltodekstrin, fruktosa kristalin, dan elektrolit lengkap.',
-      en: 'Official ultra-endurance high carb fuel (80g carbs per serving / 320 kcal) with maltodextrin, crystalline fructose, and complete electrolytes.',
+      id: 'Paket starter kit yang diambil saat pengambilan Race Pack (RPC). Mencakup nutrisi hidrasi NDR Drinkmix Carbs 80g, plat nomor sepeda waterproof #1000+ dengan kabel ties, asuransi kecelakaan 1 hari event, voucher pemulihan ABBEY Coffee, dan stiker resmi GX-ID. Tidak memuat medali (diberikan saat finish < COT) maupun jersey (dipesan via PO).',
+      en: 'Official starter kit collected during Race Pack Collection (RPC). Includes NDR Drinkmix Carbs 80g nutrition, waterproof bike plate #1000+ with zip ties, 1-day accident insurance, ABBEY Coffee recovery voucher, and official GX-ID stickers. Excludes medal (awarded at finish < COT) and jersey (pre-ordered via PO).',
     },
     specs: [
-      { id: '80g Karbohidrat Murni', en: '80g Pure Carbs' },
-      { id: '320 kkal Energi Rute', en: '320 kcal Route Energy' },
-      { id: 'Elektrolit Na, K, Mg', en: 'Electrolytes Na, K, Mg' },
-      { id: 'Ramah Lambung Isotonic', en: 'Gut-Friendly Isotonic' },
+      { id: 'Nutrisi NDR Drinkmix 80g', en: 'NDR Drinkmix 80g Nutrition' },
+      { id: 'Plat BIB Sepeda Waterproof', en: 'Waterproof Bike BIB Plate' },
+      { id: 'Asuransi Kecelakaan 1 Hari', en: '1-Day Accident Insurance' },
+      { id: 'Voucher ABBEY Coffee & Stiker', en: 'ABBEY Coffee Voucher & Stickers' },
     ],
-    imageSrc: '/sponsors/ndr-drinkmix-depan.png',
-    imageBackSrc: '/sponsors/ndr-drinkmix-belakang.png',
+    imageSrc: '/racepacks/racepack-bundle.webp',
     visualPreview: {
-      topLeftText: 'NDR FUEL LAB',
-      topRightText: { id: 'OFFICIAL PARTNER', en: 'OFFICIAL PARTNER' },
+      topLeftText: 'PENGAMBILAN RPC',
+      topRightText: { id: 'STARTER PACK', en: 'STARTER PACK' },
       numberBadge: '03',
-      centerTitle: '80G CARBS',
-      centerSubtitle: { id: 'HIGH ENERGY DRINKMIX', en: 'HIGH ENERGY DRINKMIX' },
-      bottomTagLeft: '320 KCAL FUEL',
-      bottomTagRight: { id: 'STATUS: READY', en: 'STATUS: READY' },
-    },
-  },
-  {
-    id: 'essentials',
-    itemNumber: '04',
-    tagCategory: { id: 'ESENSIAL ATLET', en: 'ATHLETE ESSENTIALS' },
-    title: { id: 'PERLENGKAPAN & LAYANAN HARI-H', en: 'RACE-DAY GEAR & SERVICES' },
-    description: {
-      id: 'Plat nomor sepeda tahan air, asuransi kecelakaan resmi 1 hari event, serta voucher hidangan pemulihan di ABEEY Coffee & Eatery LRT Harjamukti.',
-      en: 'Waterproof bike number plate, official 1-day accident insurance, and recovery meal voucher at ABEEY Coffee & Eatery LRT Harjamukti.',
-    },
-    specs: [
-      { id: 'Plat BIB Waterproof', en: 'Waterproof BIB Plate' },
-      { id: 'Asuransi Resmi Event', en: 'Official Race Insurance' },
-      { id: 'Voucher ABBEY Lounge', en: 'ABBEY Lounge Voucher' },
-      { id: 'Kupon Makan Rp 50.000*', en: 'IDR 50K Meal Coupon*' },
-    ],
-    visualPreview: {
-      topLeftText: 'HARI-H READY',
-      topRightText: { id: 'EDISI 2026', en: '2026 EDITION' },
-      numberBadge: '04',
-      centerTitle: 'COMING SOON',
-      centerSubtitle: { id: 'KURASI LOGISTIK', en: 'LOGISTICS CURATION' },
-      bottomTagLeft: 'LOGISTIK ATLET',
-      bottomTagRight: { id: 'STATUS: FINALISASI', en: 'STATUS: FINALIZATION' },
+      centerTitle: 'RACEPACK KIT',
+      centerSubtitle: { id: 'STARTER KIT HARI-H', en: 'RACE-DAY STARTER KIT' },
+      bottomTagLeft: 'NDR · BIB · ASURANSI · VOUCHER',
+      bottomTagRight: { id: 'STATUS: RESMI', en: 'STATUS: OFFICIAL' },
     },
   },
 ];

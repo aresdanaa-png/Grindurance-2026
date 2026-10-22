@@ -1,11 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components/ui';
 import { useLanguage } from '@/lib/context/LanguageContext';
-import { PACK_TIERS, RPC_LOGISTICS, OFFICIAL_GEAR_ITEMS } from '@/lib/data/racepacks';
+import { PACK_TIERS, RPC_LOGISTICS, RPC_REQUIREMENTS, OFFICIAL_GEAR_ITEMS, OfficialGearItem } from '@/lib/data/racepacks';
+import SizeChartModal from '@/components/SizeChartModal';
 
 export default function RacePackSection() {
   const { t } = useLanguage();
+  const [showSizeChartModal, setShowSizeChartModal] = useState(false);
+  const [previewGear, setPreviewGear] = useState<OfficialGearItem | null>(null);
 
   return (
     <>
@@ -126,51 +130,85 @@ export default function RacePackSection() {
             ))}
           </div>
 
-          {/* LOGISTIK RACE PACK (RPC) */}
-          <div className="rounded-2xl bg-black/70 backdrop-blur-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
-            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 p-6 sm:p-8 gap-6 md:gap-0">
-              {RPC_LOGISTICS.map((rpc, idx) => (
-                <div
-                  key={rpc.id}
-                  className={`flex flex-col justify-between space-y-4 ${idx === 0 ? 'md:pr-8' : 'md:pl-8'}`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
-                        {t(rpc.tag.id, rpc.tag.en)}
-                      </span>
-                      <span
-                        className={`text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded shrink-0 ${
-                          rpc.badgeHighlight
-                            ? 'bg-[#FA6D0B]/20 text-[#FA6D0B]'
-                            : 'bg-white/10 text-white'
+          {/* LOGISTIK & REGULASI RACE PACK (RPC) */}
+          <div className="space-y-4 pt-2">
+            <div className="border-b border-white/10 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block">
+                  RACE PACK COLLECTION (RPC) // LOGISTIK RESMI
+                </span>
+                <h4 className="font-display italic text-xl sm:text-2xl font-black uppercase text-white tracking-tight mt-0.5">
+                  {t('PANDUAN & OPSI PENGAMBILAN STARTER KIT', 'STARTER KIT COLLECTION & LOGISTICS GUIDE')}
+                </h4>
+              </div>
+              <div className="flex items-center gap-2 font-mono text-[11px] text-slate-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
+                <span>{t('WAJIB MEMBAWA E-TICKET QR & KTP ASLI', 'MANDATORY E-TICKET QR & ORIGINAL ID')}</span>
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-black/70 backdrop-blur-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col">
+              {/* Dua Kolom Opsi Pengambilan */}
+              <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10 p-6 sm:p-8 gap-6 md:gap-0">
+                {RPC_LOGISTICS.map((rpc, idx) => (
+                  <div
+                    key={rpc.id}
+                    className={`flex flex-col justify-between space-y-4 ${idx === 0 ? 'md:pr-8' : 'md:pl-8'}`}
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-mono font-bold text-[#FA6D0B] uppercase tracking-wider">
+                          {t(rpc.tag.id, rpc.tag.en)}
+                        </span>
+                        <span
+                          className={`text-[10px] font-mono font-bold uppercase px-2.5 py-0.5 rounded shrink-0 ${
+                            rpc.badgeHighlight
+                              ? 'bg-[#FA6D0B]/20 text-[#FA6D0B]'
+                              : 'bg-white/10 text-white'
+                          }`}
+                        >
+                          {t(rpc.badge.id, rpc.badge.en)}
+                        </span>
+                      </div>
+                      <h4
+                        className={`font-display text-xl sm:text-2xl font-black uppercase tracking-tight ${
+                          rpc.id === 'handling' ? 'text-[#FA6D0B]' : 'text-white'
                         }`}
                       >
-                        {t(rpc.badge.id, rpc.badge.en)}
-                      </span>
+                        {t(rpc.title.id, rpc.title.en)}
+                      </h4>
+                      <p className="text-xs text-slate-300 font-mono">
+                        {t(rpc.subtitle.id, rpc.subtitle.en)}
+                      </p>
                     </div>
-                    <h4
-                      className={`font-display text-xl sm:text-2xl font-black uppercase tracking-tight ${
-                        rpc.id === 'handling' ? 'text-[#FA6D0B]' : 'text-white'
-                      }`}
-                    >
-                      {t(rpc.title.id, rpc.title.en)}
-                    </h4>
-                    <p className="text-xs text-slate-400 font-mono">
-                      {t(rpc.subtitle.id, rpc.subtitle.en)}
-                    </p>
-                  </div>
 
-                  <div className="pt-3 border-t border-white/5 space-y-2 text-xs text-slate-300 font-sans">
-                    {rpc.items.map((item, itemIdx) => (
-                      <div key={itemIdx} className="flex items-center gap-2">
-                        <span className="text-[#FA6D0B] font-bold">·</span>
-                        <span>{t(item.id, item.en)}</span>
-                      </div>
-                    ))}
+                    <div className="pt-3 border-t border-white/5 space-y-2 text-xs text-slate-300 font-sans">
+                      {rpc.items.map((item, itemIdx) => (
+                        <div key={itemIdx} className="flex items-start gap-2">
+                          <span className="text-[#FA6D0B] font-bold shrink-0 mt-0.5">·</span>
+                          <span>{t(item.id, item.en)}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
+                ))}
+              </div>
+
+              {/* Strip Ketentuan Dokumen & Kebijakan Starter Kit */}
+              <div className="border-t border-white/10 bg-black/80 px-6 sm:px-8 py-4 sm:py-5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {RPC_REQUIREMENTS.map((req) => (
+                    <div key={req.id} className="space-y-1">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#FA6D0B] block">
+                        // {t(req.label.id, req.label.en)}
+                      </span>
+                      <p className="text-[11px] text-slate-300 leading-relaxed font-sans">
+                        {t(req.description.id, req.description.en)}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
 
@@ -185,16 +223,19 @@ export default function RacePackSection() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {OFFICIAL_GEAR_ITEMS.map((gear) => (
                 <div
                   key={gear.id}
                   className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
                 >
                   <div className="space-y-4">
-                    <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-5 select-none">
+                    <div 
+                      onClick={() => gear.id === 'jersey' ? setShowSizeChartModal(true) : setPreviewGear(gear)}
+                      className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-5 select-none cursor-pointer"
+                    >
                       {gear.imageSrc ? (
-                        <div className="absolute inset-0 p-4 flex items-center justify-center">
+                        <div className="absolute inset-0 p-3 flex items-center justify-center">
                           <img
                             src={gear.imageSrc}
                             alt={t(gear.title.id, gear.title.en)}
@@ -247,13 +288,45 @@ export default function RacePackSection() {
                     </div>
                   </div>
 
-                  <div className="pt-3.5 border-t border-white/10 grid grid-cols-2 gap-2 text-[11px] font-mono">
-                    {gear.specs.map((spec, specIdx) => (
-                      <div key={specIdx} className="flex items-center gap-2 text-slate-300">
-                        <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
-                        <span>{t(spec.id, spec.en)}</span>
-                      </div>
-                    ))}
+                  <div className="pt-3.5 border-t border-white/10 space-y-3">
+                    <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
+                      {gear.specs.map((spec, specIdx) => (
+                        <div key={specIdx} className="flex items-center gap-2 text-slate-300">
+                          <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
+                          <span>{t(spec.id, spec.en)}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {gear.id === 'jersey' && (
+                      <button
+                        type="button"
+                        onClick={() => setShowSizeChartModal(true)}
+                        className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+                      >
+                        <span>{t('PANDUAN UKURAN (SIZE CHART)', 'SIZE CHART GUIDE')}</span>
+                      </button>
+                    )}
+
+                    {gear.id === 'medal' && (
+                      <button
+                        type="button"
+                        onClick={() => setPreviewGear(gear)}
+                        className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+                      >
+                        <span>{t('DETAIL RELIEF 3D MEDALI', 'VIEW 3D MEDAL RELIEF')}</span>
+                      </button>
+                    )}
+
+                    {gear.id === 'racepack' && (
+                      <button
+                        type="button"
+                        onClick={() => setPreviewGear(gear)}
+                        className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+                      >
+                        <span>{t('PREVIEW STARTER KIT (RPC)', 'VIEW RPC STARTER KIT')}</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -289,6 +362,84 @@ export default function RacePackSection() {
             </Button>
           </div>
         </div>
+
+        {/* Modal Panduan Ukuran Jersey Resmi */}
+        <SizeChartModal
+          isOpen={showSizeChartModal}
+          onClose={() => setShowSizeChartModal(false)}
+        />
+
+        {/* Modal Detail Item Gear Resmi (Lightbox) */}
+        {previewGear && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-[120] bg-black/95 flex flex-col items-center justify-center p-3 sm:p-6 backdrop-blur-md animate-fade-in-area overflow-y-auto"
+            onClick={() => setPreviewGear(null)}
+          >
+            <div
+              className="w-full max-w-2xl bg-gradient-to-b from-[#14161B] via-[#0E1014] to-[#0A0B0E] rounded-3xl p-5 sm:p-7 space-y-5 shadow-[0_30px_90px_rgba(0,0,0,0.95)] max-h-[92vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono">
+                <div>
+                  <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block">
+                    // {t(previewGear.title.id, previewGear.title.en)}
+                  </span>
+                  <span className="text-[11px] text-[#FA6D0B] uppercase tracking-wider block mt-0.5">
+                    {previewGear.visualPreview.topLeftText} · {t(previewGear.tagCategory.id, previewGear.tagCategory.en)}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPreviewGear(null)}
+                  className="px-3 py-1.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white font-mono text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
+                >
+                  ✕ TUTUP
+                </button>
+              </div>
+
+              {previewGear.imageSrc && (
+                <div className="rounded-2xl overflow-hidden bg-black flex items-center justify-center p-2 sm:p-4 shadow-inner">
+                  <img
+                    src={previewGear.imageSrc}
+                    alt={t(previewGear.title.id, previewGear.title.en)}
+                    className="w-full h-auto max-h-[52vh] object-contain rounded-xl"
+                  />
+                </div>
+              )}
+
+              <div className="space-y-3 font-sans">
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  {t(previewGear.description.id, previewGear.description.en)}
+                </p>
+
+                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 font-mono text-xs">
+                  {previewGear.specs.map((spec, sIdx) => (
+                    <div key={sIdx} className="flex items-center gap-2 text-slate-300">
+                      <span className="text-[#FA6D0B] font-bold">·</span>
+                      <span>{t(spec.id, spec.en)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
+                <span className="text-[11px] font-mono text-slate-400 uppercase">
+                  STATUS: {t(previewGear.visualPreview.bottomTagRight.id, previewGear.visualPreview.bottomTagRight.en)}
+                </span>
+                <Button
+                  href="/daftar"
+                  variant="primary"
+                  size="sm"
+                  withArrow
+                >
+                  {t('PILIH PAKET & DAFTAR', 'SELECT PACK & REGISTER')}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
     </>
   );

@@ -351,8 +351,8 @@ export const PRAEVENT_ITINERARY: PraEventItem[] = [
       en: 'RACE PACK COLLECTION (RPC) & PRE-CHECK',
     },
     description: {
-      id: 'Pengambilan perlengkapan atlet: Jersey Pollride, nomor plat sepeda waterproof, goodie bag, suplemen gel NDR, serta kartu asuransi 1 hari. Pemeriksaan awal fungsi sepeda dapat dilakukan bersama tim mekanik rekanan.',
-      en: 'Collection of athlete gear: Pollride Jersey, waterproof bike number plate, goodie bag, NDR energy gel supplements, and 1-day official accident insurance card. Pre-race bicycle safety checks available with partner mechanics.',
+      id: 'Pengambilan starter kit atlet: nomor plat sepeda waterproof #1000+, nutrisi hidrasi NDR Drinkmix Carbs 83g, voucher pemulihan ABBEY Coffee, stiker resmi GX-ID, serta kartu asuransi 1 hari. Pemeriksaan awal fungsi sepeda dapat dilakukan bersama tim mekanik rekanan.',
+      en: 'Collection of athlete starter kit: waterproof bike number plate #1000+, NDR Drinkmix Carbs 83g hydration, ABBEY Coffee recovery voucher, GX-ID official stickers, and 1-day accident insurance card. Pre-race bicycle safety checks available with partner mechanics.',
     },
     details: [
       {

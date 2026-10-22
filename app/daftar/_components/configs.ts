@@ -14,18 +14,20 @@ export interface JerseyDimension {
   chestCm: number;
   lengthCm: number;
   label: string;
+  tier: 'STANDARD' | 'UP_SIZE';
+  note: 'Standard' | 'Up Size';
 }
 
 export const JERSEY_DIMENSIONS: JerseyDimension[] = [
-  { size: 'XS', chestCm: 86, lengthCm: 60, label: 'Extra Small' },
-  { size: 'S', chestCm: 90, lengthCm: 62, label: 'Small' },
-  { size: 'M', chestCm: 96, lengthCm: 64, label: 'Medium' },
-  { size: 'L', chestCm: 100, lengthCm: 66, label: 'Large' },
-  { size: 'XL', chestCm: 104, lengthCm: 68, label: 'Extra Large' },
-  { size: '2XL', chestCm: 108, lengthCm: 70, label: 'Double Large' },
-  { size: '3XL', chestCm: 112, lengthCm: 72, label: 'Triple Large' },
-  { size: '4XL', chestCm: 116, lengthCm: 74, label: '4X Large' },
-  { size: '5XL', chestCm: 120, lengthCm: 76, label: '5X Large' },
+  { size: 'XS', chestCm: 86, lengthCm: 60, label: 'Extra Small', tier: 'STANDARD', note: 'Standard' },
+  { size: 'S', chestCm: 90, lengthCm: 62, label: 'Small', tier: 'STANDARD', note: 'Standard' },
+  { size: 'M', chestCm: 96, lengthCm: 64, label: 'Medium', tier: 'STANDARD', note: 'Standard' },
+  { size: 'L', chestCm: 100, lengthCm: 66, label: 'Large', tier: 'STANDARD', note: 'Standard' },
+  { size: 'XL', chestCm: 104, lengthCm: 68, label: 'Extra Large', tier: 'STANDARD', note: 'Standard' },
+  { size: '2XL', chestCm: 108, lengthCm: 70, label: 'Double Large (Up Size)', tier: 'UP_SIZE', note: 'Up Size' },
+  { size: '3XL', chestCm: 112, lengthCm: 72, label: 'Triple Large (Up Size)', tier: 'UP_SIZE', note: 'Up Size' },
+  { size: '4XL', chestCm: 116, lengthCm: 74, label: '4X Large (Up Size)', tier: 'UP_SIZE', note: 'Up Size' },
+  { size: '5XL', chestCm: 120, lengthCm: 76, label: '5X Large (Up Size)', tier: 'UP_SIZE', note: 'Up Size' },
 ];
 
 export function formatRupiah(amount: number): string {

@@ -357,7 +357,7 @@ export default function DaftarFormStep({
                 <p className="text-xs sm:text-sm text-slate-200 font-sans leading-relaxed">
                   {selectedCategory.id === 'VIRTUAL'
                     ? t('Medali cor logam resmi dan jersey akan dikirim via kurir DHS Logistik langsung ke alamat domisili Anda setelah verifikasi data Strava selesai. Bebas biaya handling.', 'Official medal and jersey delivered directly via DHS Logistics after Strava validation is complete. Free of handling charges.')
-                    : t('Pilih cara Anda menerima perlengkapan hari-H (nomor plat sepeda tahan air, chip timing, jersey Pollride & nutrisi balap).', 'Choose how you receive your official race pack (waterproof bike number plate, timing chip, Pollride jersey & race nutrition).')}
+                    : t('Pilih opsi pengambilan starter kit (nomor plat sepeda waterproof #1000+, nutrisi NDR Drinkmix 83g, asuransi, & voucher ABBEY). Medali finisher diserahkan saat finish < COT, jersey via PO.', 'Choose your starter kit collection option (waterproof bike plate #1000+, NDR Drinkmix 83g, insurance, & ABBEY voucher). Finisher medal awarded at finish < COT, jersey fulfilled via PO.')}
                 </p>
               </div>
 
@@ -375,7 +375,7 @@ export default function DaftarFormStep({
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
-                          {t('RPC DAY RESMI', 'OFFICIAL RPC DAY')}
+                          {t('RPC DAY RESMI (H-7)', 'OFFICIAL RPC DAY (H-7)')}
                         </span>
                         <span className="text-xs font-mono font-bold text-slate-300 uppercase">
                           {t('GRATIS (RP 0)', 'FREE (IDR 0)')}
@@ -386,7 +386,7 @@ export default function DaftarFormStep({
                       </div>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-200 mt-2 font-sans leading-relaxed">
-                      {t('ABEEY Coffee & LRT Harjamukti Cibubur (Minggu, 6 Des 2026, 10:00–17:00 WIB).', 'ABEEY Coffee & LRT Harjamukti Cibubur (Sunday, Dec 6, 2026, 10:00–17:00 WIB).')}
+                      {t('ABEEY Coffee & LRT Harjamukti Cibubur (Minggu, 6 Des 2026, 10:00–17:00 WIB). Termasuk Coaching Clinic & Technical Meeting.', 'ABEEY Coffee & LRT Harjamukti Cibubur (Sunday, Dec 6, 2026, 10:00–17:00 WIB). Includes Coaching Clinic & Technical Meeting.')}
                     </p>
                   </button>
 
@@ -402,18 +402,18 @@ export default function DaftarFormStep({
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                          {t('EKSPEDISI LOGISTIK', 'LOGISTICS EXPEDITION')}
+                          {t('LAYANAN HARI-H', 'RACE-DAY DESK')}
                         </span>
                         <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase">
                           +Rp 20.000
                         </span>
                       </div>
                       <div className="text-sm sm:text-base font-black text-white uppercase font-sans">
-                        {t('HANDLING & KIRIM RUMAH', 'HANDLING & HOME DELIVERY')}
+                        {t('PENGAMBILAN HARI-H', 'RACE-DAY MORNING PICKUP')}
                       </div>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-200 mt-2 font-sans leading-relaxed">
-                      {t('Paket race pack dikirim aman langsung ke alamat rumah Anda sebelum hari-H event.', 'Race pack safely shipped directly to your home address prior to race day.')}
+                      {t('Khusus peserta luar kota / berhalangan hadir saat RPC. Diambil di meja panitia saat registrasi ulang fajar Hari-H (13 Des 2026, 04:30–05:15 WIB).', 'For out-of-town riders or unable to attend RPC. Collected at organizer desk during race dawn re-registration (Dec 13, 2026, 04:30–05:15 WIB).')}
                     </p>
                   </button>
                 </div>
