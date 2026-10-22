@@ -322,7 +322,7 @@ function PembayaranContent() {
                   </Link>
                   <Link
                     href="/peserta"
-                    className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all text-center active:scale-95"
+                    className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all text-center active:scale-95"
                   >
                     {t('LIHAT ROSTER PESERTA RESMI', 'VIEW OFFICIAL START LIST')}
                   </Link>

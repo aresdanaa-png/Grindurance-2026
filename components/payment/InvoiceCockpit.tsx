@@ -377,53 +377,92 @@ export default function InvoiceCockpit({
         {/* QRIS Channel View */}
         {paymentMethodTab === 'qris' && (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-            <div className="md:col-span-5 flex flex-col items-center justify-center p-6 rounded-2xl bg-white text-black space-y-3 shadow-[0_0_30px_rgba(255,255,255,0.15)]">
-              <span className="font-display italic text-lg font-black uppercase tracking-wider">QRIS STANDAR NASIONAL</span>
-              {/* Simulated Clean Dynamic QRIS Matrix Box */}
-              <div className="w-56 h-56 p-3 bg-slate-50 rounded-2xl flex flex-col items-center justify-center relative shadow-inner">
-                <div className="grid grid-cols-6 gap-1 w-full h-full p-2">
-                  {Array.from({ length: 36 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className={`rounded-sm ${
-                        (i % 2 === 0 || i % 5 === 0 || i === 0 || i === 5 || i === 30 || i === 35)
-                          ? 'bg-black'
-                          : 'bg-transparent'
-                      }`}
-                    />
-                  ))}
-                </div>
-                <span className="absolute text-[11px] font-mono font-black uppercase tracking-widest bg-white px-2 py-0.5 border border-black rounded">
-                  GX-ID 2026
+            <div className="md:col-span-5 flex flex-col items-center justify-center p-6 rounded-2xl bg-[#15181E] text-white space-y-3.5 shadow-2xl">
+              <span className="font-display italic text-sm font-black uppercase tracking-wider text-white">
+                // QRIS STANDAR PEMBAYARAN NASIONAL
+              </span>
+
+              {/* Official QRIS Card */}
+              <div 
+                onClick={() => {
+                  setLightboxImageUrl('/qris.jpeg');
+                  setShowReceiptLightbox(true);
+                }}
+                className="w-full max-w-[270px] p-3.5 bg-white rounded-2xl shadow-xl flex flex-col items-center justify-center cursor-pointer group transition-transform hover:scale-[1.01]"
+              >
+                <img
+                  src="/qris.jpeg"
+                  alt="QRIS Resmi Grindurance 2026 - IKI LONDRY KIRANA"
+                  className="w-full h-auto rounded-xl object-contain"
+                />
+                <span className="text-[10px] font-mono font-bold text-slate-600 mt-2 tracking-wider uppercase text-center block">
+                  KLIK UNTUK MEMPERBESAR QRIS
                 </span>
               </div>
-              <span className="text-[10px] font-mono font-bold uppercase text-slate-700 tracking-wider">
-                NMID: ID1026048192841 · GX-ID INDONESIA
-              </span>
+
+              {/* Action Buttons for QRIS */}
+              <div className="flex items-center gap-2 w-full max-w-[270px] justify-center pt-1">
+                <a
+                  href="/qris.jpeg"
+                  download="QRIS-GRINDURANCE-2026-IKI-LONDRY.jpeg"
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-white font-mono text-[11px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer text-center"
+                >
+                  <span>SIMPAN QRIS</span>
+                  <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLightboxImageUrl('/qris.jpeg');
+                    setShowReceiptLightbox(true);
+                  }}
+                  className="py-2.5 px-3.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-slate-300 hover:text-white font-mono text-[11px] font-bold uppercase tracking-wider transition-all cursor-pointer"
+                >
+                  ZOOM
+                </button>
+              </div>
+
+              <div className="text-center space-y-0.5 pt-1">
+                <span className="text-[11px] font-mono font-bold uppercase text-[#FA6D0B] tracking-wider block">
+                  NMID: ID1026602210829
+                </span>
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">
+                  MERCHANT: IKI LONDRY KIRANA · A01
+                </span>
+              </div>
             </div>
 
             <div className="md:col-span-7 space-y-4">
               <div className="space-y-2">
                 <span className="text-xs text-[#FA6D0B] font-bold uppercase tracking-wider block">
-                  PANDUAN SCAN QRIS INSTAN:
+                  // PANDUAN SCAN QRIS INSTAN:
                 </span>
                 <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
                   {t(
-                    'Mendukung seluruh aplikasi mobile banking (BCA Mobile, Livin Mandiri, BRImo, BNI Mobile) serta e-wallet terdaftar (GoPay, OVO, Dana, ShopeePay, LinkAja). Buka aplikasi pilihan Anda, scan QR di samping, simpan bukti transfer, lalu unggah pada form di bawah.',
-                    'Compatible with all Indonesian mobile banking apps and digital wallets. Open your preferred app, scan the dynamic QR, save your payment receipt, and upload it below.'
+                    'Mendukung seluruh aplikasi mobile banking (BCA Mobile, Livin Mandiri, BRImo, BNI Mobile, Permata) serta e-wallet terdaftar (GoPay, OVO, Dana, ShopeePay, LinkAja). Buka aplikasi pilihan Anda, scan QR di samping (atau unggah dari galeri jika memakai ponsel yang sama), lalu bayar tepat sesuai nominal tagihan.',
+                    'Compatible with all Indonesian mobile banking apps and digital wallets. Open your preferred app, scan the official QR code (or upload from gallery), and transfer the exact invoice amount.'
                   )}
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-black/60 space-y-1.5 text-xs shadow-sm">
-                <div className="flex justify-between text-slate-400">
+              <div className="p-4 rounded-xl bg-black/60 space-y-2 text-xs shadow-inner">
+                <div className="flex justify-between items-center text-slate-400">
                   <span>MERCHANT RESMI:</span>
-                  <strong className="text-white">GX-ID INDONESIA / GRINDURANCE 2026</strong>
+                  <strong className="text-white font-mono font-bold">IKI LONDRY KIRANA</strong>
                 </div>
-                <div className="flex justify-between text-slate-400">
-                  <span>NOMINAL VALIDASI:</span>
-                  <strong className="text-[#FA6D0B] text-sm">{formatRupiah(localOrder.net_amount)}</strong>
+                <div className="flex justify-between items-center text-slate-400">
+                  <span>NMID RESMI:</span>
+                  <strong className="text-slate-300 font-mono">ID1026602210829</strong>
                 </div>
+                <div className="flex justify-between items-center text-slate-400 pt-1 border-t border-white/5">
+                  <span>NOMINAL SESUAI TAGIHAN:</span>
+                  <strong className="text-[#FA6D0B] font-mono font-black text-base">{formatRupiah(localOrder.net_amount)}</strong>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-white/[0.03] space-y-1 text-[11px] font-mono text-slate-400 leading-relaxed">
+                <span className="text-white font-bold block">// KONFIRMASI PEMBAYARAN:</span>
+                <span>Pastikan nama merchant tertera <strong>IKI LONDRY KIRANA</strong> pada layar konfirmasi aplikasi Anda sebelum memasukkan PIN. Setelah berhasil, simpan bukti struk dan unggah di bawah ini.</span>
               </div>
             </div>
           </div>
@@ -495,7 +534,7 @@ export default function InvoiceCockpit({
 
           {/* Alert Success / Info Message */}
           {uploadSuccessMessage && (
-            <div className="p-4 rounded-xl bg-white/[0.06] text-white text-xs border border-white/15 space-y-1">
+            <div className="p-4 rounded-xl bg-white/[0.06] text-white text-xs space-y-1 shadow-sm">
               <span className="text-[#FA6D0B] font-bold block">✓ KONFIRMASI PENGIRIMAN:</span>
               <p className="font-sans text-slate-200">{uploadSuccessMessage}</p>
             </div>
@@ -503,7 +542,7 @@ export default function InvoiceCockpit({
 
           {/* Alert Error Message */}
           {uploadError && (
-            <div className="p-4 rounded-xl bg-white/[0.06] text-[#FA6D0B] text-xs border border-[#FA6D0B]/30 space-y-1">
+            <div className="p-4 rounded-xl bg-white/[0.06] text-[#FA6D0B] text-xs space-y-1 shadow-sm">
               <span className="font-bold block">// PERINGATAN UNGGAHAN:</span>
               <p className="font-sans text-slate-200">{uploadError}</p>
             </div>
@@ -519,7 +558,7 @@ export default function InvoiceCockpit({
                       setLightboxImageUrl(localOrder.proof_of_payment_url || '');
                       setShowReceiptLightbox(true);
                     }}
-                    className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-black cursor-pointer group shrink-0 border border-white/10 hover:border-[#FA6D0B] transition-colors"
+                    className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-black cursor-pointer group shrink-0 shadow-md transition-all"
                   >
                     <img
                       src={localOrder.proof_of_payment_url || ''}
@@ -599,7 +638,7 @@ export default function InvoiceCockpit({
                       }
                     }
                   }}
-                  className="p-8 sm:p-10 rounded-2xl border-2 border-dashed border-white/20 hover:border-[#FA6D0B] bg-white/[0.02] hover:bg-white/[0.05] transition-all cursor-pointer text-center space-y-3 group"
+                  className="p-8 sm:p-10 rounded-2xl bg-white/[0.04] hover:bg-white/[0.07] transition-all cursor-pointer text-center space-y-3 group shadow-inner"
                 >
                   <div className="space-y-1">
                     <span className="font-display italic text-lg sm:text-xl font-black uppercase tracking-tight text-white group-hover:text-[#FA6D0B] transition-colors block">
@@ -612,9 +651,9 @@ export default function InvoiceCockpit({
                     </span>
                   </div>
 
-                  <div className="inline-block px-4 py-1.5 rounded-full bg-white/[0.06] text-[10px] text-slate-300 uppercase tracking-widest font-bold">
-                    OTOMATIS DIKOMPRES HINGGA ~95% LEBIH KECIL TANPA PECAH
-                  </div>
+                  <span className="font-mono text-[11px] text-slate-400 uppercase tracking-wider block">
+                    // AUTO-COMPRESS · ~95% LEBIH RINGAN (CANVAS WEBP ENGINE)
+                  </span>
                 </div>
               ) : (
                 /* Card Hasil Kompresi Instan */
@@ -666,7 +705,7 @@ export default function InvoiceCockpit({
                         setLightboxImageUrl(compressedResult.dataUrl);
                         setShowReceiptLightbox(true);
                       }}
-                      className="w-16 h-16 rounded-lg overflow-hidden bg-black shrink-0 cursor-pointer border border-white/10 hover:border-[#FA6D0B] transition-colors"
+                      className="w-16 h-16 rounded-lg overflow-hidden bg-black shrink-0 cursor-pointer shadow-md transition-all"
                     >
                       <img
                         src={compressedResult.dataUrl}
@@ -699,7 +738,7 @@ export default function InvoiceCockpit({
                       type="button"
                       disabled={isUploading}
                       onClick={() => setCompressedResult(null)}
-                      className="w-full sm:w-auto px-6 py-4 rounded-full border border-white/20 bg-white/[0.04] text-slate-300 hover:text-white hover:bg-white/10 text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer text-center"
+                      className="w-full sm:w-auto px-6 py-4 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-slate-200 hover:text-white text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer text-center"
                     >
                       PILIH ULANG GAMBAR
                     </button>
@@ -782,7 +821,7 @@ export default function InvoiceCockpit({
               onClick={() => {
                 copyToClipboard(whatsappMessageText, 'wa_message');
               }}
-              className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/[0.1] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center active:scale-95"
+              className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-white font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center active:scale-95"
             >
               {copiedField === 'wa_message'
                 ? t('TEKS PESAN TERSALIN', 'MESSAGE TEXT COPIED')
@@ -808,7 +847,7 @@ export default function InvoiceCockpit({
         </div>
 
         {!isPaid && (
-          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 font-mono text-xs text-slate-300">
+          <div className="p-3.5 rounded-xl bg-white/[0.03] font-mono text-xs text-slate-300">
             <span className="text-[#FA6D0B] font-bold block">// CATATAN REGULASI NOMOR DADA (BIB):</span>
             <span className="text-slate-400 text-[11px] font-sans">
               Nomor dada resmi BIB saat ini masih kosong/belum diterbitkan. Nomor BIB akan otomatis terisi berurutan dari urutan nomor terakhir yang terverifikasi segera setelah pembayaran Anda disetujui oleh admin panitia.
@@ -913,7 +952,7 @@ export default function InvoiceCockpit({
         <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto justify-end shrink-0">
           <Link
             href="/peserta"
-            className="w-full sm:w-auto px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center gap-1.5 text-center active:scale-95"
+            className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white transition-all flex items-center justify-center gap-1.5 text-center active:scale-95"
           >
             <span>{t('LIHAT START LIST', 'VIEW START LIST')}</span>
             <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
@@ -938,12 +977,12 @@ export default function InvoiceCockpit({
           onClick={() => setShowReceiptLightbox(false)}
         >
           <div
-            className="w-full max-w-2xl bg-[#0D0E11] rounded-2xl p-5 sm:p-6 space-y-4 shadow-[0_25px_70px_rgba(0,0,0,0.9)] border border-white/10"
+            className="w-full max-w-2xl bg-[#0D0E11] rounded-3xl p-5 sm:p-6 space-y-4 shadow-[0_25px_70px_rgba(0,0,0,0.9)]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono">
               <span className="text-xs font-bold text-white uppercase tracking-wider">
-                PRATINJAU STRUK BUKTI TRANSFER // {localOrder.order_id}
+                PRATINJAU BUKTI TRANSAKSI // {localOrder.order_id}
               </span>
               <button
                 type="button"

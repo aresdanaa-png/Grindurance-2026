@@ -139,9 +139,10 @@ export async function GET(req: Request) {
       'M': { total: 0, male: 0, female: 0 },
       'L': { total: 0, male: 0, female: 0 },
       'XL': { total: 0, male: 0, female: 0 },
-      'XXL': { total: 0, male: 0, female: 0 },
       '2XL': { total: 0, male: 0, female: 0 },
       '3XL': { total: 0, male: 0, female: 0 },
+      '4XL': { total: 0, male: 0, female: 0 },
+      '5XL': { total: 0, male: 0, female: 0 },
     };
 
     let totalJerseyCount = 0;
@@ -164,7 +165,7 @@ export async function GET(req: Request) {
         const size = (p.jersey_size || '').trim().toUpperCase();
 
         if (o.package_type === 'MEDAL_JERSEY' && size && size !== '-') {
-          const normSize = size === '2XL' ? 'XXL' : size;
+          const normSize = size === 'XXL' ? '2XL' : size;
           if (!jerseyRecap[normSize]) {
             jerseyRecap[normSize] = { total: 0, male: 0, female: 0 };
           }

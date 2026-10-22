@@ -1,8 +1,11 @@
 'use client';
 
+import { useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { PackageType, JerseySize } from '@/lib/types';
 import IndonesiaAddressSelect from '@/components/IndonesiaAddressSelect';
 import { RiderState } from './types';
+import { JERSEY_DIMENSIONS } from './configs';
 
 interface DaftarRiderFormFieldsProps {
   rider: RiderState;
@@ -25,6 +28,8 @@ export default function DaftarRiderFormFields({
   jerseySizes,
   t,
 }: DaftarRiderFormFieldsProps) {
+  const [showSizeChartModal, setShowSizeChartModal] = useState(false);
+
   return (
     <div className="rounded-2xl bg-black/60 backdrop-blur-xl p-6 sm:p-8 shadow-[0_15px_50px_rgba(0,0,0,0.5)] space-y-7">
       <div className="border-b border-white/10 pb-4">
@@ -260,28 +265,52 @@ export default function DaftarRiderFormFields({
 
       {/* Bagian 5: Ukuran Jersey Finisher (jika Paket MEDAL_JERSEY) */}
       {packageType === 'MEDAL_JERSEY' && (
-        <div className="space-y-3 pt-5 border-t border-white/10">
-          <div className="flex items-center justify-between">
-            <label className="block text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
-              {t('5. UKURAN JERSEY FINISHER · POLLRIDE AERO FIT', '5. FINISHER JERSEY SIZE · POLLRIDE AERO FIT')} <span className="text-[#FA6D0B]">*</span>
-            </label>
-            <span className="text-xs font-mono text-[#FA6D0B] uppercase font-bold">POLLRIDE OFFICIAL</span>
+        <div className="space-y-4 pt-5 border-t border-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <label className="block text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
+                {t('5. UKURAN JERSEY FINISHER · POLLRIDE AERO FIT', '5. FINISHER JERSEY SIZE · POLLRIDE AERO FIT')} <span className="text-[#FA6D0B]">*</span>
+              </label>
+              <span className="text-[11px] font-mono text-slate-400 block mt-0.5">
+                Model: Short sleeve without back pocket · Toleransi ±1–2 cm
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowSizeChartModal(true)}
+              className="px-3.5 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-[#FA6D0B] hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer shadow-sm active:scale-95"
+            >
+              <span>{t('PANDUAN UKURAN (SIZE CHART)', 'SIZE CHART GUIDE')}</span>
+              <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            </button>
           </div>
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
-            {jerseySizes.map((sz) => (
-              <button
-                type="button"
-                key={sz}
-                onClick={() => onChange({ jersey_size: sz })}
-                className={`py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black transition-all cursor-pointer shadow-md ${
-                  rider.jersey_size === sz
-                    ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-                    : 'bg-black/60 text-slate-300 hover:bg-black/80 hover:text-white'
-                }`}
-              >
-                {sz}
-              </button>
-            ))}
+
+          <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-2">
+            {jerseySizes.map((sz) => {
+              const dim = JERSEY_DIMENSIONS.find((d) => d.size === sz);
+              const isSelected = rider.jersey_size === sz;
+              return (
+                <button
+                  type="button"
+                  key={sz}
+                  onClick={() => onChange({ jersey_size: sz })}
+                  className={`py-3 px-2 rounded-xl text-center transition-all cursor-pointer shadow-md flex flex-col items-center justify-center ${
+                    isSelected
+                      ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                      : 'bg-black/60 text-slate-300 hover:bg-black/80 hover:text-white'
+                  }`}
+                >
+                  <span className="font-display italic font-black text-sm sm:text-base leading-none">
+                    {sz}
+                  </span>
+                  {dim && (
+                    <span className={`text-[10px] font-mono mt-1 ${isSelected ? 'text-black/80 font-bold' : 'text-slate-400'}`}>
+                      {dim.chestCm} cm
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -305,6 +334,78 @@ export default function DaftarRiderFormFields({
           onChange={(addr) => onChange(addr)}
         />
       </div>
+
+      {/* MODAL PANDUAN RESMI UKURAN JERSEY POLLRIDE (BORDERLESS & NATURAL) */}
+      {showSizeChartModal && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-[110] bg-black/95 flex flex-col items-center justify-center p-4 sm:p-6 backdrop-blur-md animate-fade-in-area"
+          onClick={() => setShowSizeChartModal(false)}
+        >
+          <div
+            className="w-full max-w-3xl bg-[#121418] rounded-3xl p-6 sm:p-8 space-y-6 shadow-[0_30px_90px_rgba(0,0,0,0.95)] max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-4 font-mono">
+              <div>
+                <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block">
+                  // PANDUAN UKURAN JERSEY · POLLRIDE APPAREL
+                </span>
+                <span className="text-[11px] text-[#FA6D0B] tracking-wider uppercase block mt-0.5">
+                  GX-ID OFFICIAL SHORT SLEEVE WITHOUT BACK POCKET
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSizeChartModal(false)}
+                className="px-3.5 py-1.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white font-mono text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
+              >
+                ✕ TUTUP
+              </button>
+            </div>
+
+            {/* Official Size Chart Graphic */}
+            <div className="rounded-2xl overflow-hidden bg-black flex items-center justify-center p-2 shadow-inner">
+              <img
+                src="/size-chart.jpeg"
+                alt="Size Chart Resmi Pollride Gravel Grindurance 2026"
+                className="w-full h-auto max-h-[48vh] object-contain rounded-xl"
+              />
+            </div>
+
+            {/* Dimension Breakdown Grid */}
+            <div className="space-y-3 font-mono">
+              <span className="text-xs font-bold text-white uppercase tracking-wider block">
+                TABEL SPESIFIKASI DIMENSI (SATUAN: CENTIMETER)
+              </span>
+              <div className="grid grid-cols-3 sm:grid-cols-9 gap-2 text-center text-xs">
+                {JERSEY_DIMENSIONS.map((d) => (
+                  <div
+                    key={d.size}
+                    onClick={() => {
+                      onChange({ jersey_size: d.size });
+                      setShowSizeChartModal(false);
+                    }}
+                    className={`p-2.5 rounded-xl transition-all cursor-pointer ${
+                      rider.jersey_size === d.size
+                        ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_15px_rgba(250,109,11,0.4)]'
+                        : 'bg-black/60 text-slate-300 hover:bg-white/[0.08] hover:text-white'
+                    }`}
+                  >
+                    <div className="font-display italic font-black text-sm">{d.size}</div>
+                    <div className="text-[10px] mt-1 opacity-80">Dada: {d.chestCm}</div>
+                    <div className="text-[10px] opacity-80">Pjg: {d.lengthCm}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[11px] font-sans text-slate-400 leading-relaxed pt-1">
+                *Klik salah satu ukuran di atas untuk memilih langsung. Lebar dada diukur melintang dari ketiak ke ketiak. Panjang baju diukur dari titik bahu tertinggi ke ujung bawah keliman. Toleransi konveksi ±1–2 cm.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

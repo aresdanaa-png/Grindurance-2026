@@ -202,7 +202,7 @@ export default function AdminDashboardPage() {
     text += `Total Pesanan Jersey: *${kpis.total_jersey_po || 0} PCS*\n\n`;
     text += `*RINCIAN UKURAN (SIZE BREAKDOWN):*\n`;
 
-    const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
+    const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'];
     sizes.forEach((s) => {
       const item = b[s] || { total: 0, male: 0, female: 0 };
       if (item.total > 0) {
@@ -758,7 +758,7 @@ export default function AdminDashboardPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
-                    {['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'].map((size) => {
+                    {['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'].map((size) => {
                       const item = kpis.jersey_size_breakdown?.[size] || { total: 0, male: 0, female: 0 };
                       return (
                         <tr key={size} className="hover:bg-white/[0.02]">
@@ -804,6 +804,30 @@ export default function AdminDashboardPage() {
                   <p className="text-slate-300 font-sans leading-relaxed text-[11px]">
                     Sesuai dokumen teknis panitia, pemotongan pesanan jersey untuk vendor Pollride ditutup pada <strong>10 November 2026</strong> guna memastikan seluruh race pack siap sortir pada H-7 sebelum race day 13 Desember 2026.
                   </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#0B0C0E] space-y-2 text-xs shadow-xl">
+                  <div className="flex items-center justify-between">
+                    <span className="text-white font-bold uppercase tracking-wider block">
+                      SIZE CHART RESMI POLLRIDE:
+                    </span>
+                    <a
+                      href="/size-chart.jpeg"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[#FA6D0B] hover:text-white uppercase font-bold text-[10px] flex items-center gap-1"
+                    >
+                      <span>BUKA GAMBAR</span>
+                      <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
+                    </a>
+                  </div>
+                  <div className="rounded-xl overflow-hidden bg-black/60 p-2">
+                    <img
+                      src="/size-chart.jpeg"
+                      alt="Size Chart Pollride"
+                      className="w-full h-auto max-h-36 object-contain rounded-lg"
+                    />
+                  </div>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-[#0B0C0E] space-y-2 text-xs shadow-xl">

@@ -57,7 +57,7 @@ export const SUPPORTING_PARTNERS: SponsorItem[] = [
   },
   {
     id: 'ndr',
-    name: 'NDR Energy Gel',
+    name: 'NDR Drinkmix & Energy Gel',
     logo: '/sponsors/ndr-clean.png',
   },
   {

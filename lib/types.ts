@@ -21,7 +21,7 @@ export interface Category {
 export type PackageType = 'MEDAL_ONLY' | 'MEDAL_JERSEY';
 export type PaymentStatus = 'PENDING' | 'PENDING_VERIFICATION' | 'PAID' | 'EXPIRED' | 'FAILED' | 'CANCELLED' | 'REJECTED';
 export type RiderRole = 'SINGLE' | 'PAIR_RIDER_1' | 'PAIR_RIDER_2';
-export type JerseySize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | '2XL' | '3XL';
+export type JerseySize = 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL' | '4XL' | '5XL';
 export type Gender = 'male' | 'female';
 
 export interface Order {

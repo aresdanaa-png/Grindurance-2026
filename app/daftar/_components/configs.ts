@@ -7,7 +7,26 @@ import {
 } from '@/lib/data/categories';
 import { CategoryVisual } from './types';
 
-export const JERSEY_SIZES: JerseySize[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+export const JERSEY_SIZES: JerseySize[] = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'];
+
+export interface JerseyDimension {
+  size: JerseySize;
+  chestCm: number;
+  lengthCm: number;
+  label: string;
+}
+
+export const JERSEY_DIMENSIONS: JerseyDimension[] = [
+  { size: 'XS', chestCm: 86, lengthCm: 60, label: 'Extra Small' },
+  { size: 'S', chestCm: 90, lengthCm: 62, label: 'Small' },
+  { size: 'M', chestCm: 96, lengthCm: 64, label: 'Medium' },
+  { size: 'L', chestCm: 100, lengthCm: 66, label: 'Large' },
+  { size: 'XL', chestCm: 104, lengthCm: 68, label: 'Extra Large' },
+  { size: '2XL', chestCm: 108, lengthCm: 70, label: 'Double Large' },
+  { size: '3XL', chestCm: 112, lengthCm: 72, label: 'Triple Large' },
+  { size: '4XL', chestCm: 116, lengthCm: 74, label: '4X Large' },
+  { size: '5XL', chestCm: 120, lengthCm: 76, label: '5X Large' },
+];
 
 export function formatRupiah(amount: number): string {
   return 'Rp ' + amount.toLocaleString('id-ID');

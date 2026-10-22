@@ -185,36 +185,46 @@ export default function RacePackSection() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {OFFICIAL_GEAR_ITEMS.map((gear) => (
                 <div
                   key={gear.id}
                   className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
                 >
                   <div className="space-y-4">
-                    <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-6 select-none">
-                      <div className="flex items-center justify-between w-full">
-                        <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                    <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-5 select-none">
+                      {gear.imageSrc ? (
+                        <div className="absolute inset-0 p-4 flex items-center justify-center">
+                          <img
+                            src={gear.imageSrc}
+                            alt={t(gear.title.id, gear.title.en)}
+                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center my-auto text-center space-y-1.5 z-10">
+                          <div className="font-display text-6xl sm:text-7xl font-black text-white/10 tracking-tighter group-hover:text-white/20 transition-colors leading-none">
+                            {gear.visualPreview.numberBadge}
+                          </div>
+                          <div className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+                            {gear.visualPreview.centerTitle}
+                          </div>
+                          <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#FA6D0B] font-bold">
+                            {t(gear.visualPreview.centerSubtitle.id, gear.visualPreview.centerSubtitle.en)}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="flex items-center justify-between w-full z-10">
+                        <span className="font-mono text-[11px] font-black uppercase tracking-wider text-[#FA6D0B] bg-black/70 px-2 py-0.5 rounded">
                           {gear.visualPreview.topLeftText}
                         </span>
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-400">
+                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-black/70 px-2 py-0.5 rounded">
                           {t(gear.visualPreview.topRightText.id, gear.visualPreview.topRightText.en)}
                         </span>
                       </div>
 
-                      <div className="flex flex-col items-center justify-center my-auto text-center space-y-1.5">
-                        <div className="font-display text-6xl sm:text-7xl font-black text-white/10 tracking-tighter group-hover:text-white/20 transition-colors leading-none">
-                          {gear.visualPreview.numberBadge}
-                        </div>
-                        <div className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
-                          {gear.visualPreview.centerTitle}
-                        </div>
-                        <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#FA6D0B] font-bold">
-                          {t(gear.visualPreview.centerSubtitle.id, gear.visualPreview.centerSubtitle.en)}
-                        </div>
-                      </div>
-
-                      <div className="pt-3 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                      <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-300 uppercase tracking-wider z-10 bg-black/60 -mx-5 -mb-5 px-5 py-2.5">
                         <span>{gear.visualPreview.bottomTagLeft}</span>
                         <span className="text-white font-bold">
                           {t(gear.visualPreview.bottomTagRight.id, gear.visualPreview.bottomTagRight.en)}

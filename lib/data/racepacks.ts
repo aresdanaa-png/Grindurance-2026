@@ -39,6 +39,8 @@ export interface OfficialGearItem {
   title: LocalizedText;
   description: LocalizedText;
   specs: LocalizedText[];
+  imageSrc?: string;
+  imageBackSrc?: string;
   visualPreview: {
     topLeftText: string;
     topRightText: LocalizedText;
@@ -181,7 +183,7 @@ export const RPC_LOGISTICS: RpcOption[] = [
   },
 ];
 
-// 3. 3 PRODUK RESMI (JERSEY, MEDALI, HARI-H ESSENTIALS)
+// 3. 4 PRODUK RESMI (JERSEY, MEDALI, NUTRISI NDR, HARI-H ESSENTIALS)
 export const OFFICIAL_GEAR_ITEMS: OfficialGearItem[] = [
   {
     id: 'jersey',
@@ -189,22 +191,23 @@ export const OFFICIAL_GEAR_ITEMS: OfficialGearItem[] = [
     tagCategory: { id: 'APPAREL RESMI', en: 'OFFICIAL APPAREL' },
     title: { id: 'OFFICIAL ANNIVERSARY JERSEY', en: 'OFFICIAL ANNIVERSARY JERSEY' },
     description: {
-      id: 'Material mesh bernapas berteknologi quick-dry dengan grafis kontur topografi Jonggol–Sukamakmur. Dirancang khusus untuk cuaca basah dan lembap.',
-      en: 'Breathable quick-dry mesh material with Jonggol–Sukamakmur topographic contour graphics. Engineered specifically for humid and wet conditions.',
+      id: 'Jersey balap resmi buatan Pollride Apparel dengan spesifikasi short sleeve aerodinamis tanpa saku belakang. Tersedia ukuran XS hingga 5XL.',
+      en: 'Official race jersey by Pollride Apparel with aerodynamic short sleeve cut without back pocket. Available in sizes XS to 5XL.',
     },
     specs: [
-      { id: 'Quick-Dry Mesh', en: 'Quick-Dry Mesh' },
-      { id: '3 Saku Belakang', en: '3 Rear Pockets' },
-      { id: 'Zipper YKK Lock', en: 'Zipper YKK Lock' },
-      { id: 'Garis Reflektif', en: 'Reflective Accents' },
+      { id: 'Pollride Aero Fit', en: 'Pollride Aero Fit' },
+      { id: 'Short Sleeve No Pocket', en: 'Short Sleeve No Pocket' },
+      { id: 'Size XS s/d 5XL', en: 'Sizes XS to 5XL' },
+      { id: 'Quick-Dry Breathable', en: 'Quick-Dry Breathable' },
     ],
+    imageSrc: '/size-chart.jpeg',
     visualPreview: {
-      topLeftText: 'POLLRIDE AERO FIT',
+      topLeftText: 'POLLRIDE APPAREL',
       topRightText: { id: 'EDISI 2026', en: '2026 EDITION' },
       numberBadge: '01',
-      centerTitle: 'COMING SOON',
-      centerSubtitle: { id: 'OFFICIAL DESIGN REVEAL', en: 'OFFICIAL DESIGN REVEAL' },
-      bottomTagLeft: 'APPAREL LAB',
+      centerTitle: 'POLLRIDE',
+      centerSubtitle: { id: 'OFFICIAL RACE JERSEY', en: 'OFFICIAL RACE JERSEY' },
+      bottomTagLeft: 'SIZE XS–5XL',
       bottomTagRight: { id: 'STATUS: PRODUKSI', en: 'STATUS: PRODUCTION' },
     },
   },
@@ -234,26 +237,53 @@ export const OFFICIAL_GEAR_ITEMS: OfficialGearItem[] = [
     },
   },
   {
-    id: 'essentials',
+    id: 'ndr-drinkmix',
     itemNumber: '03',
+    tagCategory: { id: 'NUTRISI ENDURANCE', en: 'ENDURANCE FUEL' },
+    title: { id: 'NDR DRINKMIX 80G HIGH CARB FUEL', en: 'NDR DRINKMIX 80G HIGH CARB FUEL' },
+    description: {
+      id: 'Bahan bakar karbohidrat konsentrasi tinggi resmi panitia (80g carbs per sachet / 320 kkal) dengan maltodekstrin, fruktosa kristalin, dan elektrolit lengkap.',
+      en: 'Official ultra-endurance high carb fuel (80g carbs per serving / 320 kcal) with maltodextrin, crystalline fructose, and complete electrolytes.',
+    },
+    specs: [
+      { id: '80g Karbohidrat Murni', en: '80g Pure Carbs' },
+      { id: '320 kkal Energi Rute', en: '320 kcal Route Energy' },
+      { id: 'Elektrolit Na, K, Mg', en: 'Electrolytes Na, K, Mg' },
+      { id: 'Ramah Lambung Isotonic', en: 'Gut-Friendly Isotonic' },
+    ],
+    imageSrc: '/sponsors/ndr-drinkmix-depan.png',
+    imageBackSrc: '/sponsors/ndr-drinkmix-belakang.png',
+    visualPreview: {
+      topLeftText: 'NDR FUEL LAB',
+      topRightText: { id: 'OFFICIAL PARTNER', en: 'OFFICIAL PARTNER' },
+      numberBadge: '03',
+      centerTitle: '80G CARBS',
+      centerSubtitle: { id: 'HIGH ENERGY DRINKMIX', en: 'HIGH ENERGY DRINKMIX' },
+      bottomTagLeft: '320 KCAL FUEL',
+      bottomTagRight: { id: 'STATUS: READY', en: 'STATUS: READY' },
+    },
+  },
+  {
+    id: 'essentials',
+    itemNumber: '04',
     tagCategory: { id: 'ESENSIAL ATLET', en: 'ATHLETE ESSENTIALS' },
     title: { id: 'PERLENGKAPAN & LAYANAN HARI-H', en: 'RACE-DAY GEAR & SERVICES' },
     description: {
-      id: 'Plat nomor sepeda tahan air, nutrisi gel energi NDR, minuman elektrolit, asuransi kecelakaan resmi, serta voucher hidangan pemulihan di ABEEY.',
-      en: 'Waterproof bike number plate, NDR energy gel nutrition, electrolyte drinks, official accident insurance, and recovery meal voucher at ABEEY.',
+      id: 'Plat nomor sepeda tahan air, asuransi kecelakaan resmi 1 hari event, serta voucher hidangan pemulihan di ABEEY Coffee & Eatery LRT Harjamukti.',
+      en: 'Waterproof bike number plate, official 1-day accident insurance, and recovery meal voucher at ABEEY Coffee & Eatery LRT Harjamukti.',
     },
     specs: [
       { id: 'Plat BIB Waterproof', en: 'Waterproof BIB Plate' },
-      { id: 'NDR Energy Gel', en: 'NDR Energy Gel' },
-      { id: 'Asuransi Resmi', en: 'Official Insurance' },
+      { id: 'Asuransi Resmi Event', en: 'Official Race Insurance' },
       { id: 'Voucher ABBEY Lounge', en: 'ABBEY Lounge Voucher' },
+      { id: 'Kupon Makan Rp 50.000*', en: 'IDR 50K Meal Coupon*' },
     ],
     visualPreview: {
       topLeftText: 'HARI-H READY',
       topRightText: { id: 'EDISI 2026', en: '2026 EDITION' },
-      numberBadge: '03',
+      numberBadge: '04',
       centerTitle: 'COMING SOON',
-      centerSubtitle: { id: 'KURASI PERLENGKAPAN', en: 'EQUIPMENT CURATION' },
+      centerSubtitle: { id: 'KURASI LOGISTIK', en: 'LOGISTICS CURATION' },
       bottomTagLeft: 'LOGISTIK ATLET',
       bottomTagRight: { id: 'STATUS: FINALISASI', en: 'STATUS: FINALIZATION' },
     },
