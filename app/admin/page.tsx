@@ -222,7 +222,7 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] font-sans selection:bg-[#FA6D0B] selection:text-black pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#0D0E11] text-[#F3F4F6] font-sans selection:bg-[#FA6D0B] selection:text-black pt-8 sm:pt-10 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8 animate-slide-up-fade">
 
         {/* Ambient Glow */}
@@ -244,13 +244,29 @@ export default function AdminDashboardPage() {
             </h1>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 self-stretch md:self-auto justify-end">
+          <div className="flex flex-wrap items-center gap-2.5 self-stretch md:self-auto justify-end">
+            <a
+              href="/admin/print-bib"
+              className="px-4 py-2.5 rounded-xl bg-[#FA6D0B] text-black hover:bg-[#e05f06] text-xs font-mono font-black uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-lg"
+            >
+              <span>CETAK PLAT BIB</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+
+            <a
+              href="/api/admin/export-roster?status=PAID"
+              className="px-4 py-2.5 rounded-xl bg-white/10 text-white hover:bg-white/20 text-xs font-mono font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5"
+            >
+              <span>EKSPOR ROSTER CSV</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#FA6D0B]" />
+            </a>
+
             <a
               href="/peserta"
               target="_blank"
               className="px-4 py-2.5 rounded-xl bg-white/[0.04] text-slate-300 hover:text-white hover:bg-white/[0.1] text-xs font-mono font-bold uppercase tracking-wider transition-colors flex items-center gap-1.5"
             >
-              <span>LIHAT ROSTER PUBLIK</span>
+              <span>ROSTER PUBLIK</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
 
@@ -259,7 +275,7 @@ export default function AdminDashboardPage() {
               onClick={handleLogout}
               className="px-4 py-2.5 rounded-xl bg-white/[0.04] text-slate-400 hover:text-white hover:bg-white/10 text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer"
             >
-              KELUAR (LOGOUT)
+              LOGOUT
             </button>
           </div>
         </div>
@@ -457,6 +473,33 @@ export default function AdminDashboardPage() {
                     {c.label}
                   </button>
                 ))}
+              </div>
+
+              {/* Contextual Filter Actions (Export CSV & Print BIB) */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/5 text-[11px]">
+                <div className="text-slate-400">
+                  Menampilkan <span className="text-white font-bold">{orders.length}</span> transaksi{' '}
+                  {statusFilter !== 'ALL' && <span className="text-[#FA6D0B]">({statusFilter})</span>}{' '}
+                  {categoryFilter !== 'ALL' && <span className="text-white">· Etape {categoryFilter}</span>}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <a
+                    href={`/api/admin/export-roster?category_id=${categoryFilter}&status=${statusFilter}`}
+                    className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white uppercase font-bold text-[10px] tracking-wider transition-colors flex items-center gap-1 border border-white/5"
+                  >
+                    <span>UNDUH CSV FILTER INI</span>
+                    <ArrowUpRight className="w-3 h-3 text-[#FA6D0B]" />
+                  </a>
+
+                  <a
+                    href={`/admin/print-bib${categoryFilter !== 'ALL' ? `?category=${categoryFilter}` : ''}`}
+                    className="px-3 py-1.5 rounded-lg bg-[#FA6D0B]/10 hover:bg-[#FA6D0B]/20 text-[#FA6D0B] uppercase font-bold text-[10px] tracking-wider transition-colors flex items-center gap-1 border border-[#FA6D0B]/20"
+                  >
+                    <span>BUKA PRINT SHEET BIB</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+                </div>
               </div>
             </div>
 

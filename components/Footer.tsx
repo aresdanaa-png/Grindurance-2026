@@ -1,11 +1,18 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 export default function Footer() {
   const { t } = useLanguage();
+  const pathname = usePathname();
+
+  // Hide footer on admin routes
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <footer className="bg-[#0B0C0E] border-t border-white/10 text-slate-400 mt-auto font-sans relative overflow-hidden">
