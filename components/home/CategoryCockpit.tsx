@@ -582,33 +582,45 @@ export default function CategoryCockpit() {
                 <div className="pt-3.5 border-t border-white/10">
 
                   {/* Row 1: Section label + Official Production Deadline Status */}
-                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 mb-3">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5 mb-3 pb-2 border-b border-white/[0.06]">
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] font-sans font-black uppercase tracking-widest text-[#FA6D0B]">
-                        {t('BIAYA PENDAFTARAN', 'REGISTRATION FEE')}
+                      <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                        {activePhase === 'EARLY_BIRD'
+                          ? 'FASE 01 // EARLY BIRD'
+                          : activePhase === 'REGULAR'
+                          ? 'FASE 02 // TARIF REGULER'
+                          : 'PENDAFTARAN DITUTUP'}
                       </span>
                       {activePhase === 'EARLY_BIRD' ? (
-                        <span className="text-[9px] font-mono font-bold uppercase text-black bg-[#FA6D0B] px-1.5 py-0.5 rounded-sm shadow-[0_0_10px_rgba(250,109,11,0.4)]">
-                          EARLY BIRD
+                        <span className="text-[9px] font-mono font-black uppercase text-black bg-[#FA6D0B] px-2 py-0.5 rounded shadow-[0_0_10px_rgba(250,109,11,0.35)]">
+                          {t('HEMAT S.D. RP 100K', 'SAVE UP TO 100K')}
                         </span>
                       ) : activePhase === 'REGULAR' ? (
-                        <span className="text-[9px] font-mono font-bold uppercase text-white bg-white/20 px-1.5 py-0.5 rounded-sm">
-                          REGULER
+                        <span className="text-[9px] font-mono font-bold uppercase text-white bg-white/15 px-2 py-0.5 rounded border border-white/10">
+                          {t('TARIF STANDAR', 'STANDARD RATE')}
                         </span>
                       ) : (
-                        <span className="text-[9px] font-mono font-bold uppercase text-slate-300 bg-white/10 border border-white/10 px-1.5 py-0.5 rounded-sm">
-                          DITUTUP
+                        <span className="text-[9px] font-mono font-bold uppercase text-slate-300 bg-white/10 border border-white/10 px-2 py-0.5 rounded">
+                          {t('KUOTA TERPENUHI', 'QUOTA FULFILLED')}
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center gap-1.5 text-[10px] font-sans font-bold text-slate-400 uppercase">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#FA6D0B] animate-pulse" />
+
+                    <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400 uppercase tracking-wider">
                       {activePhase === 'EARLY_BIRD' ? (
-                        <span>{t('EARLY BIRD BERAKHIR:', 'EARLY BIRD ENDS:')} <strong className="text-white">{t('15 NOVEMBER 2026 (23:59 WIB)', 'NOVEMBER 15, 2026 (23:59 WIB)')}</strong></span>
+                        <>
+                          <span>{t('PERIODE:', 'PERIOD:')} <strong className="text-white">1–15 NOV 2026</strong></span>
+                          <span className="text-white/20 select-none">·</span>
+                          <span>{t('REGULER MULAI:', 'REGULAR STARTS:')} <strong className="text-slate-300">16 NOV</strong></span>
+                        </>
                       ) : activePhase === 'REGULAR' ? (
-                        <span>{t('PENUTUPAN PENDAFTARAN:', 'REGISTRATION CLOSES:')} <strong className="text-white">{t('29 NOVEMBER 2026 (H-14)', 'NOVEMBER 29, 2026 (H-14)')}</strong></span>
+                        <>
+                          <span>{t('PERIODE:', 'PERIOD:')} <strong className="text-white">16–29 NOV 2026</strong></span>
+                          <span className="text-white/20 select-none">·</span>
+                          <span className="text-[#FA6D0B] font-bold">{t('CUT-OFF H-14 EVENT', 'H-14 CUT-OFF')}</span>
+                        </>
                       ) : (
-                        <span>{t('PENDAFTARAN RESMI DITUTUP:', 'REGISTRATION CLOSED:')} <strong className="text-white">{t('29 NOVEMBER 2026', 'NOVEMBER 29, 2026')}</strong></span>
+                        <span>{t('PENUTUPAN RESMI: 29 NOV 2026 (H-14)', 'OFFICIALLY CLOSED: NOV 29, 2026 (H-14)')}</span>
                       )}
                     </div>
                   </div>

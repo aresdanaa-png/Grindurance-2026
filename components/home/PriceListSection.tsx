@@ -59,24 +59,139 @@ export default function PriceListSection() {
             </p>
           </div>
 
-          {/* Phase Badge & Timeline Telemetry Indicator */}
-          <div className="flex flex-col items-start md:items-end space-y-2">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-[#FA6D0B] animate-pulse shrink-0" />
-              <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
-                {activePhase === 'EARLY_BIRD' ? (
-                  <span>{t('FASE: EARLY BIRD (1–15 NOV)', 'PHASE: EARLY BIRD (NOV 1–15)')}</span>
-                ) : activePhase === 'REGULAR' ? (
-                  <span>{t('FASE: TARIF REGULER (16–29 NOV)', 'PHASE: REGULAR RATE (NOV 16–29)')}</span>
-                ) : (
-                  <span>{t('STATUS: PENDAFTARAN DITUTUP', 'STATUS: REGISTRATION CLOSED')}</span>
-                )}
+          {/* Official Registry Status */}
+          <div className="flex flex-col items-start md:items-end space-y-1.5 shrink-0">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 font-mono text-xs uppercase tracking-wider">
+              <span className="text-[#FA6D0B] font-bold">STATUS //</span>
+              <span className="text-white font-bold">
+                {activePhase === 'EARLY_BIRD'
+                  ? t('FASE 1 AKTIF', 'PHASE 1 ACTIVE')
+                  : activePhase === 'REGULAR'
+                  ? t('FASE 2 AKTIF', 'PHASE 2 ACTIVE')
+                  : t('PENDAFTARAN DITUTUP', 'REGISTRATION CLOSED')}
               </span>
             </div>
             <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
-              {t('BATAS AKHIR: 29 NOV 2026 (23:59 WIB)', 'DEADLINE: NOV 29, 2026 (23:59 WIB)')}
+              {t('PENUTUPAN RESMI: 29 NOV 2026 (H-14)', 'OFFICIAL DEADLINE: NOV 29, 2026 (H-14)')}
             </div>
           </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* DUAL-PHASE TIMELINE & RATE STATUS (STRICT TRI-COLOR & PURE TYPOGRAPHY) */}
+        {/* ========================================================================= */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          {/* FASE 01: EARLY BIRD */}
+          <div
+            className={`rounded-2xl p-5 sm:p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${
+              activePhase === 'EARLY_BIRD'
+                ? 'bg-black/75 border border-[#FA6D0B]/60 shadow-[0_0_30px_rgba(250,109,11,0.18)]'
+                : 'bg-black/40 border border-white/10 opacity-70'
+            }`}
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-black uppercase tracking-wider text-[#FA6D0B]">
+                    FASE 01 // EARLY BIRD
+                  </span>
+                  {activePhase === 'EARLY_BIRD' ? (
+                    <span className="bg-[#FA6D0B] text-black font-mono text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-[0_0_12px_rgba(250,109,11,0.4)]">
+                      {t('SEDANG BERLANGSUNG', 'ACTIVE NOW')}
+                    </span>
+                  ) : (
+                    <span className="bg-white/10 text-slate-400 font-mono text-[9px] font-bold uppercase px-2 py-0.5 rounded border border-white/10">
+                      {t('SELESAI', 'CONCLUDED')}
+                    </span>
+                  )}
+                </div>
+                <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+                  01 – 15 NOV 2026
+                </span>
+              </div>
+
+              <div className="space-y-2 text-xs font-sans text-slate-300">
+                <div className="flex items-start gap-2">
+                  <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
+                  <span>
+                    <strong className="text-white font-semibold">{t('Hemat s.d. Rp 100.000 / peserta', 'Save up to Rp 100,000 / rider')}</strong> {t('dibandingkan tarif reguler untuk seluruh etape.', 'compared to regular tier across all stages.')}
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
+                  <span>
+                    {t('Prioritas pemilihan ukuran jersey aero resmi Pollride & kuota slot gelombang pertama.', 'Priority selection for official Pollride aero jersey sizing & wave 1 slots.')}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-3 mt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono text-slate-400">
+              <span>{t('BATAS FASE:', 'PHASE DEADLINE:')} 15 NOV 2026 · 23:59 WIB</span>
+              <span className={`font-bold uppercase ${activePhase === 'EARLY_BIRD' ? 'text-[#FA6D0B]' : 'text-slate-400'}`}>
+                {activePhase === 'EARLY_BIRD' ? t('TARIF TERENDAH AKTIF', 'LOWEST RATE ACTIVE') : t('BERAKHIR', 'ENDED')}
+              </span>
+            </div>
+          </div>
+
+          {/* FASE 02: TARIF REGULER */}
+          <div
+            className={`rounded-2xl p-5 sm:p-6 transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${
+              activePhase === 'REGULAR'
+                ? 'bg-black/75 border border-[#FA6D0B]/60 shadow-[0_0_30px_rgba(250,109,11,0.18)]'
+                : 'bg-black/40 border border-white/10'
+            }`}
+          >
+            <div className="space-y-3">
+              <div className="flex items-center justify-between gap-3 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-black uppercase tracking-wider text-white">
+                    FASE 02 // TARIF REGULER
+                  </span>
+                  {activePhase === 'REGULAR' ? (
+                    <span className="bg-[#FA6D0B] text-black font-mono text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-[0_0_12px_rgba(250,109,11,0.4)]">
+                      {t('SEDANG BERLANGSUNG', 'ACTIVE NOW')}
+                    </span>
+                  ) : activePhase === 'EARLY_BIRD' ? (
+                    <span className="bg-white/10 text-slate-300 font-mono text-[9px] font-bold uppercase px-2 py-0.5 rounded border border-white/10">
+                      {t('FASE BERIKUTNYA', 'UPCOMING')}
+                    </span>
+                  ) : (
+                    <span className="bg-white/10 text-slate-400 font-mono text-[9px] font-bold uppercase px-2 py-0.5 rounded border border-white/10">
+                      {t('DITUTUP', 'CLOSED')}
+                    </span>
+                  )}
+                </div>
+                <span className="font-mono text-xs font-bold text-slate-300 uppercase tracking-wider">
+                  16 – 29 NOV 2026
+                </span>
+              </div>
+
+              <div className="space-y-2 text-xs font-sans text-slate-300">
+                <div className="flex items-start gap-2">
+                  <span className="text-white/40 font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
+                  <span>
+                    <strong className="text-white font-semibold">{t('Tarif resmi pendaftaran standar', 'Standard official entry rate')}</strong> {t('untuk seluruh 5 kategori rute & virtual.', 'for all 5 route categories & virtual.')}
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-white/40 font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
+                  <span>
+                    {t('Penutupan mutlak H-14 (29 Nov 2026, 23:59 WIB) untuk cut-off produksi custom jersey Pollride & cetak BIB atlet.', 'Strict cut-off at H-14 (Nov 29, 2026, 23:59 WIB) for custom Pollride jerseys & athlete BIB production.')}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-3 mt-4 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono text-slate-400">
+              <span>{t('PENUTUPAN TOTAL:', 'FINAL CUT-OFF:')} 29 NOV 2026 · H-14</span>
+              <span className="text-slate-400 uppercase font-semibold">
+                {t('TIDAK ADA ON-THE-SPOT (OTS)', 'NO ON-THE-SPOT (OTS)')}
+              </span>
+            </div>
+          </div>
+
         </div>
 
         {/* ========================================================================= */}
