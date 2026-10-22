@@ -228,14 +228,14 @@ export default function AdminDashboardPage() {
         {/* Ambient Glow */}
         <div className="fixed top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[350px] bg-[radial-gradient(ellipse_at_center,rgba(250,109,11,0.12)_0%,transparent_70%)] blur-3xl pointer-events-none" />
 
-        {/* TOP COMMAND BAR */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-mono relative overflow-hidden border border-white/10">
+        {/* TOP COMMAND BAR (NATURAL BORDERLESS DESIGN) */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#121418] shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 font-mono relative overflow-hidden">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-xs">
               <span className="font-bold text-[#FA6D0B] uppercase tracking-widest">// COMMAND CENTER</span>
               <span className="text-slate-400">· GX-ID OFFICIAL 2026</span>
-              <span className="text-white/20">|</span>
-              <span className="text-white font-bold px-2 py-0.5 rounded bg-white/10 text-[10px] uppercase">
+              <span className="text-white/20">·</span>
+              <span className="text-slate-300 font-bold uppercase text-xs">
                 ADMIN: {adminUser.toUpperCase()}
               </span>
             </div>
@@ -247,7 +247,7 @@ export default function AdminDashboardPage() {
           <div className="flex flex-wrap items-center gap-2.5 self-stretch md:self-auto justify-end">
             <a
               href="/admin/print-bib"
-              className="px-4 py-2.5 rounded-xl bg-[#FA6D0B] text-black hover:bg-[#e05f06] text-xs font-mono font-black uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-lg"
+              className="px-5 py-2.5 rounded-xl bg-[#FA6D0B] text-black hover:bg-[#e05f06] text-xs font-mono font-black uppercase tracking-wider transition-colors flex items-center gap-1.5 shadow-lg"
             >
               <span>CETAK PLAT BIB</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -283,10 +283,10 @@ export default function AdminDashboardPage() {
         {/* NOTIFICATION TOAST */}
         {notification && (
           <div
-            className={`p-4 rounded-xl font-mono text-xs border flex items-center justify-between gap-3 animate-fade-in-area ${
+            className={`p-4 rounded-2xl font-mono text-xs flex items-center justify-between gap-3 shadow-xl animate-fade-in-area ${
               notification.type === 'success'
-                ? 'bg-black/90 text-white border-white/20'
-                : 'bg-black/90 text-[#FA6D0B] border-[#FA6D0B]/30'
+                ? 'bg-[#121418] text-white'
+                : 'bg-[#181310] text-[#FA6D0B]'
             }`}
           >
             <span>{notification.message}</span>
@@ -300,10 +300,10 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* 4 HERO KPI METRICS CARDS */}
+        {/* 4 HERO KPI METRICS CARDS (NATURAL BORDERLESS CARDS) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
           {/* Card 1: Total Orders */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-lg border border-white/10 space-y-1">
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#121418] shadow-xl space-y-1">
             <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest block">
               TOTAL TRANSAKSI
             </span>
@@ -315,11 +315,11 @@ export default function AdminDashboardPage() {
             </span>
           </div>
 
-          {/* Card 2: Antrean Verifikasi (Pulsing Glow jika ada antrean) */}
-          <div className={`p-5 sm:p-6 rounded-2xl backdrop-blur-xl shadow-lg border space-y-1 ${
+          {/* Card 2: Antrean Verifikasi */}
+          <div className={`p-5 sm:p-6 rounded-2xl shadow-xl space-y-1 transition-all ${
             (kpis.pending_verification || 0) > 0
-              ? 'bg-[#FA6D0B]/10 border-[#FA6D0B]/40 shadow-[0_0_30px_rgba(250,109,11,0.2)]'
-              : 'bg-black/60 border-white/10'
+              ? 'bg-[#181512] shadow-[0_0_30px_rgba(250,109,11,0.15)]'
+              : 'bg-[#121418]'
           }`}>
             <span className="text-[10px] sm:text-xs text-[#FA6D0B] uppercase tracking-widest font-bold block">
               ANTREAN STRUK (VERIF)
@@ -333,7 +333,7 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* Card 3: Omset Terverifikasi */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-lg border border-white/10 space-y-1">
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#121418] shadow-xl space-y-1">
             <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest block">
               OMSET LUNAS RESMI
             </span>
@@ -346,7 +346,7 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* Card 4: Total PO Jersey */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-lg border border-white/10 space-y-1">
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#121418] shadow-xl space-y-1">
             <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-widest block">
               TOTAL PO JERSEY
             </span>
@@ -360,7 +360,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* TAB SWITCHER */}
-        <div className="flex items-center gap-2 border-b border-white/10 pb-4 font-mono text-xs">
+        <div className="flex items-center gap-2 pb-2 font-mono text-xs">
           <button
             type="button"
             onClick={() => setActiveTab('table')}
@@ -392,15 +392,15 @@ export default function AdminDashboardPage() {
         {activeTab === 'table' && (
           <div className="space-y-6">
 
-            {/* Filter Bar & Telemetry Controls */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-black/60 backdrop-blur-xl shadow-lg border border-white/10 space-y-4 font-mono text-xs">
+            {/* Filter Bar & Telemetry Controls (Natural Borderless) */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-[#121418] shadow-xl space-y-4 font-mono text-xs">
               <form onSubmit={handleSearchSubmit} className="flex flex-col sm:flex-row gap-3">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="CARI NAMA ATLET, NO HP, ORDER ID, KODE REG, ATAU BIB..."
-                  className="flex-1 bg-black/70 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-xs"
+                  className="flex-1 bg-black/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-xs border-none"
                 />
                 <button
                   type="submit"
@@ -423,7 +423,7 @@ export default function AdminDashboardPage() {
               </form>
 
               {/* Status Filters */}
-              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5">
+              <div className="flex flex-wrap items-center gap-2 pt-2">
                 <span className="text-slate-400 font-bold uppercase text-[11px] mr-1">STATUS:</span>
                 {[
                   { key: 'ALL', label: 'SEMUA' },
@@ -448,7 +448,7 @@ export default function AdminDashboardPage() {
               </div>
 
               {/* Category Filters */}
-              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5">
+              <div className="flex flex-wrap items-center gap-2 pt-2">
                 <span className="text-slate-400 font-bold uppercase text-[11px] mr-1">ETAPE:</span>
                 {[
                   { key: 'ALL', label: 'SEMUA ETAPE' },
@@ -476,7 +476,7 @@ export default function AdminDashboardPage() {
               </div>
 
               {/* Contextual Filter Actions (Export CSV & Print BIB) */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/5 text-[11px]">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 text-[11px]">
                 <div className="text-slate-400">
                   Menampilkan <span className="text-white font-bold">{orders.length}</span> transaksi{' '}
                   {statusFilter !== 'ALL' && <span className="text-[#FA6D0B]">({statusFilter})</span>}{' '}
@@ -486,7 +486,7 @@ export default function AdminDashboardPage() {
                 <div className="flex flex-wrap items-center gap-2">
                   <a
                     href={`/api/admin/export-roster?category_id=${categoryFilter}&status=${statusFilter}`}
-                    className="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white uppercase font-bold text-[10px] tracking-wider transition-colors flex items-center gap-1 border border-white/5"
+                    className="px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white uppercase font-bold text-[10px] tracking-wider transition-colors flex items-center gap-1"
                   >
                     <span>UNDUH CSV FILTER INI</span>
                     <ArrowUpRight className="w-3 h-3 text-[#FA6D0B]" />
@@ -494,7 +494,7 @@ export default function AdminDashboardPage() {
 
                   <a
                     href={`/admin/print-bib${categoryFilter !== 'ALL' ? `?category=${categoryFilter}` : ''}`}
-                    className="px-3 py-1.5 rounded-lg bg-[#FA6D0B]/10 hover:bg-[#FA6D0B]/20 text-[#FA6D0B] uppercase font-bold text-[10px] tracking-wider transition-colors flex items-center gap-1 border border-[#FA6D0B]/20"
+                    className="px-3.5 py-1.5 rounded-lg bg-[#FA6D0B]/10 hover:bg-[#FA6D0B]/20 text-[#FA6D0B] uppercase font-bold text-[10px] tracking-wider transition-colors flex items-center gap-1"
                   >
                     <span>BUKA PRINT SHEET BIB</span>
                     <ArrowUpRight className="w-3 h-3" />
@@ -503,11 +503,11 @@ export default function AdminDashboardPage() {
               </div>
             </div>
 
-            {/* DATA TABLE CONTAINER */}
-            <div className="rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden font-mono">
+            {/* DATA TABLE CONTAINER (NATURAL BORDERLESS TABLE) */}
+            <div className="rounded-2xl bg-[#121418] shadow-2xl overflow-hidden font-mono">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-black/80 text-slate-400 uppercase tracking-wider border-b border-white/10 text-[11px]">
+                  <thead className="bg-[#0B0C0E] text-slate-400 uppercase tracking-wider text-[11px]">
                     <tr>
                       <th className="py-4 px-4">ORDER & TANGGAL</th>
                       <th className="py-4 px-4">ATLET & KONTAK</th>
@@ -533,7 +533,6 @@ export default function AdminDashboardPage() {
                         const isPendingVerif = o.payment_status === 'PENDING_VERIFICATION';
                         const isRejected = o.payment_status === 'REJECTED';
                         const participants = o.participants || [];
-                        const primary = participants[0];
 
                         return (
                           <tr
@@ -554,15 +553,15 @@ export default function AdminDashboardPage() {
                                   minute: '2-digit',
                                 })}
                               </span>
-                              <span className="inline-block text-[9px] px-1.5 py-0.5 rounded bg-white/10 text-slate-300 uppercase">
-                                {o.package_type}
+                              <span className="text-[10px] text-slate-400 font-mono block uppercase">
+                                // {o.package_type === 'MEDAL_JERSEY' ? 'MEDALI + JERSEY' : 'MEDALI SAJA'}
                               </span>
                             </td>
 
                             {/* Kolom 2: Atlet & Kontak */}
                             <td className="py-4 px-4 align-top space-y-1">
                               {participants.map((p: any, idx: number) => (
-                                <div key={p.id || idx} className="space-y-0.5 pb-1 border-b border-white/5 last:border-none">
+                                <div key={p.id || idx} className="space-y-0.5 pb-1">
                                   <span className="font-bold text-white block uppercase">
                                     {p.full_name}
                                   </span>
@@ -586,21 +585,21 @@ export default function AdminDashboardPage() {
                               </span>
                             </td>
 
-                            {/* Kolom 4: Size Jersey PO (POLLRIDE) */}
+                            {/* Kolom 4: Size Jersey PO (POLLRIDE) - Pure Typography, No Badges */}
                             <td className="py-4 px-4 align-top space-y-1">
                               {o.package_type === 'MEDAL_JERSEY' ? (
                                 participants.map((p: any, idx: number) => (
                                   <div key={p.id || idx} className="space-y-0.5">
-                                    <span className="text-[11px] font-bold text-[#FA6D0B] px-2 py-0.5 rounded bg-[#FA6D0B]/15 inline-block">
-                                      SIZE {p.jersey_size || '-'} ({p.gender === 'female' ? 'W' : 'M'})
+                                    <span className="text-[11px] font-mono font-bold text-white block">
+                                      SIZE {p.jersey_size || '-'} <span className="text-slate-400 font-normal">({p.gender === 'female' ? 'W' : 'M'})</span>
                                     </span>
-                                    <span className="text-[9px] text-slate-400 block uppercase">
-                                      POLLRIDE PO
+                                    <span className="text-[9px] text-[#FA6D0B] block font-mono uppercase">
+                                      // POLLRIDE PO
                                     </span>
                                   </div>
                                 ))
                               ) : (
-                                <span className="text-slate-400 text-[11px]">MEDAL ONLY (NO JERSEY)</span>
+                                <span className="text-slate-400 text-[11px] font-mono">// MEDAL ONLY</span>
                               )}
                             </td>
 
@@ -624,7 +623,7 @@ export default function AdminDashboardPage() {
                                     setLightboxImage(o.proof_of_payment_url);
                                     setLightboxOrder(o);
                                   }}
-                                  className="w-12 h-12 mx-auto rounded-lg overflow-hidden bg-black cursor-pointer group relative border border-white/10 hover:border-[#FA6D0B] transition-colors"
+                                  className="w-12 h-12 mx-auto rounded-xl overflow-hidden bg-black cursor-pointer group relative shadow-md hover:ring-1 hover:ring-[#FA6D0B] transition-all"
                                 >
                                   <img
                                     src={o.proof_of_payment_url}
@@ -636,8 +635,8 @@ export default function AdminDashboardPage() {
                                   </div>
                                 </div>
                               ) : (
-                                <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
-                                  BELUM DIUNGGAH
+                                <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-mono">
+                                  // BELUM UPLOAD
                                 </span>
                               )}
                             </td>
@@ -647,40 +646,40 @@ export default function AdminDashboardPage() {
                               {participants.map((p: any, idx: number) => (
                                 <div key={p.id || idx}>
                                   {isPaid && p.bib_number ? (
-                                    <span className="font-display italic font-black text-base text-[#FA6D0B] block">
+                                    <span className="font-display italic font-black text-lg text-[#FA6D0B] block">
                                       #{p.bib_number}
                                     </span>
                                   ) : (
-                                    <span className="text-[10px] text-slate-400 block uppercase">
-                                      BELUM TERBIT
+                                    <span className="text-[10px] text-slate-400 block font-mono uppercase">
+                                      // BELUM TERBIT
                                     </span>
                                   )}
                                 </div>
                               ))}
                             </td>
 
-                            {/* Kolom 8: Status & Tombol Aksi */}
+                            {/* Kolom 8: Status & Tombol Aksi - Pure Typography, No Badges */}
                             <td className="py-4 px-4 align-top text-center space-y-2">
                               {isPaid ? (
-                                <div className="space-y-1">
-                                  <span className="inline-block px-2.5 py-1 rounded-full bg-[#FA6D0B] text-black font-black text-[10px] uppercase tracking-wider">
-                                    LUNAS · RESMI
+                                <div className="space-y-0.5">
+                                  <span className="text-white font-mono font-black text-xs uppercase tracking-wider block">
+                                    // LUNAS RESMI
                                   </span>
-                                  <span className="text-[9px] text-slate-400 block">
+                                  <span className="text-[9px] text-slate-400 font-mono block">
                                     {o.raw_payload?.verified_by || 'panitia'}
                                   </span>
                                 </div>
                               ) : isPendingVerif ? (
-                                <div className="space-y-1.5 flex flex-col items-center">
-                                  <span className="inline-block px-2 py-0.5 rounded-full bg-[#FA6D0B]/20 text-[#FA6D0B] font-bold text-[10px] uppercase animate-pulse">
-                                    MENUNGGU VERIF
+                                <div className="space-y-2 flex flex-col items-center">
+                                  <span className="text-[#FA6D0B] font-mono font-bold text-xs uppercase tracking-wider block animate-pulse">
+                                    // VERIFIKASI STRUK
                                   </span>
 
                                   <button
                                     type="button"
                                     disabled={processingOrderId === o.order_id}
                                     onClick={() => handleVerifyOrder(o.order_id)}
-                                    className="w-full px-3 py-2 rounded-lg bg-[#FA6D0B] text-black font-black text-[11px] uppercase tracking-wider hover:bg-[#DE5A00] transition-colors cursor-pointer shadow-[0_0_15px_rgba(250,109,11,0.35)] disabled:opacity-50"
+                                    className="w-full px-4 py-2 rounded-xl bg-[#FA6D0B] text-black font-black text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-colors cursor-pointer shadow-[0_0_15px_rgba(250,109,11,0.35)] disabled:opacity-50"
                                   >
                                     {processingOrderId === o.order_id ? 'PROSES...' : 'VERIFIKASI'}
                                   </button>
@@ -695,8 +694,8 @@ export default function AdminDashboardPage() {
                                 </div>
                               ) : isRejected ? (
                                 <div className="space-y-0.5">
-                                  <span className="inline-block px-2 py-0.5 rounded bg-white/10 text-white font-bold text-[10px] uppercase">
-                                    DITOLAK
+                                  <span className="text-slate-400 font-mono font-bold text-xs uppercase tracking-wider block">
+                                    // DITOLAK
                                   </span>
                                   {o.admin_notes && (
                                     <span className="text-[9px] text-slate-400 block truncate max-w-[120px]" title={o.admin_notes}>
@@ -705,8 +704,8 @@ export default function AdminDashboardPage() {
                                   )}
                                 </div>
                               ) : (
-                                <span className="text-[10px] text-slate-400 uppercase block">
-                                  PENDING
+                                <span className="text-[10px] text-slate-400 font-mono uppercase block">
+                                  // MENUNGGU
                                 </span>
                               )}
                             </td>
@@ -722,11 +721,11 @@ export default function AdminDashboardPage() {
         )}
 
         {/* ========================================================================= */}
-        {/* TAB 2: REKAPITULASI PO JERSEY VENDOR (POLLRIDE APPAREL) */}
+        {/* TAB 2: REKAPITULASI PO JERSEY VENDOR (POLLRIDE APPAREL) - NATURAL BORDERLESS */}
         {/* ========================================================================= */}
         {activeTab === 'jersey_po' && (
-          <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/10 space-y-6 font-mono">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#121418] shadow-2xl space-y-6 font-mono">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2">
               <div>
                 <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-widest block">
                   // LOGISTIK VENDOR · PRODUKSI OFFICIAL RACE JERSEY
@@ -748,9 +747,9 @@ export default function AdminDashboardPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
               {/* Kolom Kiri: Tabel Matriks Ukuran */}
-              <div className="md:col-span-8 rounded-xl bg-black/70 border border-white/10 overflow-hidden">
+              <div className="md:col-span-8 rounded-2xl bg-[#0B0C0E] overflow-hidden shadow-xl">
                 <table className="w-full text-left text-xs">
-                  <thead className="bg-black/90 text-slate-400 uppercase tracking-wider border-b border-white/10 text-[11px]">
+                  <thead className="bg-black/90 text-slate-400 uppercase tracking-wider text-[11px]">
                     <tr>
                       <th className="py-3 px-4">UKURAN (SIZE)</th>
                       <th className="py-3 px-4 text-center">PRIA (MALE)</th>
@@ -778,7 +777,7 @@ export default function AdminDashboardPage() {
                         </tr>
                       );
                     })}
-                    <tr className="bg-white/[0.04] font-black border-t-2 border-white/10">
+                    <tr className="bg-white/[0.04] font-black">
                       <td className="py-4 px-4 text-white uppercase tracking-wider">
                         TOTAL KESELURUHAN PO
                       </td>
@@ -798,7 +797,7 @@ export default function AdminDashboardPage() {
 
               {/* Kolom Kanan: Panduan Regulasi Vendor */}
               <div className="md:col-span-4 space-y-4">
-                <div className="p-5 rounded-xl bg-black/70 border border-white/10 space-y-2 text-xs">
+                <div className="p-5 rounded-2xl bg-[#0B0C0E] space-y-2 text-xs shadow-xl">
                   <span className="text-[#FA6D0B] font-bold uppercase tracking-wider block">
                     BATAS WAKTU PO VENDOR (H-30):
                   </span>
@@ -807,11 +806,11 @@ export default function AdminDashboardPage() {
                   </p>
                 </div>
 
-                <div className="p-5 rounded-xl bg-black/70 border border-white/10 space-y-2 text-xs">
+                <div className="p-5 rounded-2xl bg-[#0B0C0E] space-y-2 text-xs shadow-xl">
                   <span className="text-white font-bold uppercase tracking-wider block">
                     PREVIEW TEKS WHATSAPP:
                   </span>
-                  <pre className="text-[10px] text-slate-300 font-mono whitespace-pre-wrap max-h-48 overflow-auto p-2 bg-black/50 rounded">
+                  <pre className="text-[10px] text-slate-300 font-mono whitespace-pre-wrap max-h-48 overflow-auto p-3 bg-black/50 rounded-xl">
                     {generateJerseyPoWhatsAppText()}
                   </pre>
                 </div>
@@ -834,10 +833,10 @@ export default function AdminDashboardPage() {
           }}
         >
           <div
-            className="w-full max-w-2xl bg-[#0D0E11] rounded-2xl p-5 sm:p-6 space-y-4 shadow-[0_25px_70px_rgba(0,0,0,0.9)] border border-white/10 font-mono"
+            className="w-full max-w-2xl bg-[#121418] rounded-3xl p-5 sm:p-6 space-y-4 shadow-[0_25px_70px_rgba(0,0,0,0.95)] font-mono"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-white/10 pb-3 text-xs">
+            <div className="flex items-center justify-between pb-2 text-xs">
               <div>
                 <span className="font-bold text-white uppercase block">
                   AUDIT MUTASI STRUK // {lightboxOrder.order_id}
@@ -852,22 +851,22 @@ export default function AdminDashboardPage() {
                   setLightboxImage(null);
                   setLightboxOrder(null);
                 }}
-                className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
+                className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
               >
                 ✕ TUTUP
               </button>
             </div>
 
-            <div className="max-h-[60vh] overflow-auto flex items-center justify-center bg-black/80 rounded-xl p-2">
+            <div className="max-h-[60vh] overflow-auto flex items-center justify-center bg-black/80 rounded-2xl p-2">
               <img
                 src={lightboxImage}
                 alt="Bukti Transfer Struk"
-                className="max-h-[55vh] max-w-full object-contain rounded-lg"
+                className="max-h-[55vh] max-w-full object-contain rounded-xl"
               />
             </div>
 
             {/* Tombol Aksi di Dalam Lightbox */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 border-t border-white/10">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
               <span className="text-[11px] text-slate-400">
                 Pastikan nominal, jam transfer, dan nomor rekening panitia sesuai sebelum verifikasi.
               </span>
@@ -896,10 +895,10 @@ export default function AdminDashboardPage() {
           onClick={() => setRejectModalOrder(null)}
         >
           <div
-            className="w-full max-w-md bg-[#0D0E11] rounded-2xl p-6 space-y-4 shadow-[0_25px_70px_rgba(0,0,0,0.9)] border border-white/10 font-mono"
+            className="w-full max-w-md bg-[#121418] rounded-3xl p-6 space-y-4 shadow-[0_25px_70px_rgba(0,0,0,0.95)] font-mono"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="space-y-1 border-b border-white/10 pb-3">
+            <div className="space-y-1 pb-2">
               <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
                 // TOLAK BUKTI PEMBAYARAN
               </span>
@@ -914,7 +913,7 @@ export default function AdminDashboardPage() {
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
                 rows={3}
-                className="w-full bg-black/70 rounded-xl p-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-xs"
+                className="w-full bg-black/60 rounded-xl p-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-xs border-none"
                 placeholder="Tuliskan catatan alasan penolakan..."
               />
             </div>

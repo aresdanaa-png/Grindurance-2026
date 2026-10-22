@@ -96,10 +96,12 @@ Gunakan pembatas teknis balap:
    - Contoh: `GELAP`, `SATELIT`, `RESET`, `DOWNLOAD GPX`, `TERKUNCI // H-2 (11 DES)`.
    - Menggunakan `font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-wider`.
 
-3. **Card & Panel Box**:
-   - Sudut membulat modern: `rounded-xl` atau `rounded-2xl`.
-   - Border halus `border border-white/10`.
-   - Bayangan dalam atmosfer: `shadow-[0_15px_50px_rgba(0,0,0,0.5)]`.
+3. **Card & Panel Box (Natural Borderless Aesthetic)**:
+   - **TIDAK BOLEH ADA OUTER BORDER / STROKE**: Dilarang keras menggunakan border luar (baik tipis maupun tebal, seperti `border`, `border-white/10`, dsb). Kotak dan kolom harus tampak menyatu secara alami tanpa garis tepi.
+   - Sudut membulat modern: `rounded-2xl` atau `rounded-3xl`.
+   - Kedalaman & Kontras Gelap: Latar belakang gelap bertingkat (`bg-[#121418]`, `bg-black/50`, `bg-[#0D0E11]`).
+   - Bayangan atmosfer: `shadow-[0_20px_50px_rgba(0,0,0,0.6)]`.
+   - **DILARANG MENGGUNAKAN BADGE / PILL BOX**: Jangan membungkus teks status, peran, atau metadata ke dalam kotak rounded badge. Gunakan **Tipografi Murni** dengan pemisah telemetri (`//` dan `·`) serta aksen warna teks.
 
 ---
 

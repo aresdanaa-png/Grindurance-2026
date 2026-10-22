@@ -64,11 +64,11 @@ export default function AdminLoginPage() {
           </p>
         </div>
 
-        {/* Card Formulir Login */}
-        <div className="rounded-2xl bg-black/60 backdrop-blur-2xl p-6 sm:p-8 shadow-[0_25px_60px_rgba(0,0,0,0.85)] space-y-5 border border-white/10">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono text-[11px]">
-            <span className="text-slate-400 uppercase tracking-wider">LEVEL AKSES:</span>
-            <span className="text-white font-bold px-2 py-0.5 rounded bg-white/10 uppercase">
+        {/* Card Formulir Login (Natural Borderless) */}
+        <div className="rounded-3xl bg-[#121418] p-6 sm:p-8 shadow-[0_25px_70px_rgba(0,0,0,0.9)] space-y-5">
+          <div className="flex items-center justify-between pb-2 font-mono text-xs">
+            <span className="text-slate-400 uppercase tracking-wider">// LEVEL AKSES:</span>
+            <span className="text-white font-bold uppercase tracking-wider">
               KOMITE RESMI GX-ID
             </span>
           </div>
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="panitia"
-                className="w-full bg-black/70 rounded-xl px-4 py-3 text-white text-xs sm:text-sm tracking-wider focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner"
+                className="w-full bg-black/60 rounded-xl px-4 py-3 text-white text-xs sm:text-sm tracking-wider focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner border-none"
                 required
               />
             </div>
@@ -97,14 +97,14 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full bg-black/70 rounded-xl px-4 py-3 text-white text-xs sm:text-sm tracking-wider focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner"
+                className="w-full bg-black/60 rounded-xl px-4 py-3 text-white text-xs sm:text-sm tracking-wider focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] shadow-inner border-none"
                 autoFocus
                 required
               />
             </div>
 
             {errorMessage && (
-              <div className="p-3.5 rounded-xl bg-white/[0.04] text-[#FA6D0B] text-xs font-mono border border-[#FA6D0B]/30 space-y-0.5">
+              <div className="p-4 rounded-2xl bg-[#181310] text-[#FA6D0B] text-xs font-mono space-y-0.5 shadow-lg">
                 <span className="font-bold block">// OTORISASI DITOLAK:</span>
                 <span className="text-slate-300 block">{errorMessage}</span>
               </div>

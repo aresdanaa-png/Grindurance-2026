@@ -254,7 +254,7 @@ function AdminPrintBibContent() {
             background-color: #ffffff !important;
             color: #000000 !important;
             box-shadow: none !important;
-            border: 3px solid #000000 !important;
+            border: none !important;
             page-break-inside: avoid !important;
             break-inside: avoid !important;
           }
@@ -265,13 +265,13 @@ function AdminPrintBibContent() {
         }
       `}</style>
 
-      {/* SCREEN CONTROLS / TOOLBAR (TIDAK AKAN DICETAK) */}
-      <div className="no-print border-b border-white/10 bg-[#0B0C0E]/90 backdrop-blur sticky top-0 z-30">
+      {/* SCREEN CONTROLS / TOOLBAR (TIDAK AKAN DICETAK) - NATURAL BORDERLESS */}
+      <div className="no-print bg-[#0B0C0E]/95 backdrop-blur sticky top-0 z-30 shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={() => router.push('/admin')}
-              className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-2 rounded-lg transition-colors flex items-center gap-1.5"
+              className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 hover:text-white bg-white/5 hover:bg-white/10 px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5"
             >
               ← KEMBALI KE ADMIN
             </button>
@@ -279,8 +279,8 @@ function AdminPrintBibContent() {
             <div>
               <h1 className="text-sm font-display italic uppercase tracking-wider font-bold text-white flex items-center gap-2">
                 PRINT-READY BIB SHEETS
-                <span className="text-[10px] font-mono font-black text-[#FA6D0B] bg-[#FA6D0B]/10 px-2 py-0.5 rounded">
-                  {filteredPlates.length} PLAT
+                <span className="text-xs font-mono font-bold text-[#FA6D0B]">
+                  // {filteredPlates.length} PLAT
                 </span>
               </h1>
               <p className="text-[11px] font-mono text-slate-400">
@@ -291,10 +291,10 @@ function AdminPrintBibContent() {
 
           <div className="flex flex-wrap items-center gap-2">
             {/* Mode Layout */}
-            <div className="flex items-center bg-black/60 rounded-xl p-1 border border-white/10">
+            <div className="flex items-center bg-[#121418] rounded-xl p-1 shadow-md">
               <button
                 onClick={() => setLayoutMode('A4_2_PLATES')}
-                className={`text-[11px] font-mono font-bold uppercase px-3 py-1.5 rounded-lg transition-colors ${
+                className={`text-[11px] font-mono font-bold uppercase px-3.5 py-1.5 rounded-lg transition-colors ${
                   layoutMode === 'A4_2_PLATES'
                     ? 'bg-[#FA6D0B] text-black'
                     : 'text-slate-400 hover:text-white'
@@ -304,7 +304,7 @@ function AdminPrintBibContent() {
               </button>
               <button
                 onClick={() => setLayoutMode('A5_SINGLE')}
-                className={`text-[11px] font-mono font-bold uppercase px-3 py-1.5 rounded-lg transition-colors ${
+                className={`text-[11px] font-mono font-bold uppercase px-3.5 py-1.5 rounded-lg transition-colors ${
                   layoutMode === 'A5_SINGLE'
                     ? 'bg-[#FA6D0B] text-black'
                     : 'text-slate-400 hover:text-white'
@@ -317,7 +317,7 @@ function AdminPrintBibContent() {
             {/* Ekspor CSV Cepat */}
             <a
               href="/api/admin/export-roster?status=PAID"
-              className="text-xs font-mono font-bold uppercase tracking-wider text-white bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl transition-colors flex items-center gap-1.5"
+              className="text-xs font-mono font-bold uppercase tracking-wider text-white bg-white/10 hover:bg-white/20 px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5"
             >
               UNDUH CSV ROSTER <ArrowUpRight className="w-3.5 h-3.5 text-[#FA6D0B]" />
             </a>
@@ -334,7 +334,7 @@ function AdminPrintBibContent() {
         </div>
 
         {/* Filter Bar (No Print) */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 border-t border-white/5 flex flex-wrap items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-1.5">
             {[
               { id: 'ALL', label: 'SEMUA KATEGORI' },
@@ -349,7 +349,7 @@ function AdminPrintBibContent() {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`text-[10px] font-mono font-bold uppercase px-2.5 py-1 rounded transition-colors ${
+                className={`text-[10px] font-mono font-bold uppercase px-3 py-1.5 rounded-lg transition-colors ${
                   selectedCategory === cat.id
                     ? 'bg-white text-black'
                     : 'bg-white/5 text-slate-400 hover:text-white'
@@ -366,7 +366,7 @@ function AdminPrintBibContent() {
               placeholder="Cari BIB, Nama, atau Kode..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-black/60 border border-white/10 rounded-lg px-3 py-1.5 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:border-[#FA6D0B]"
+              className="w-full bg-black/60 rounded-xl px-3.5 py-2 text-xs font-mono text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] border-none"
             />
           </div>
         </div>
@@ -382,7 +382,7 @@ function AdminPrintBibContent() {
             </p>
           </div>
         ) : filteredPlates.length === 0 ? (
-          <div className="py-20 text-center bg-[#0B0C0E] border border-white/10 rounded-2xl p-8">
+          <div className="py-20 text-center bg-[#121418] rounded-3xl p-8 shadow-xl">
             <p className="text-sm font-mono font-bold text-slate-300 uppercase mb-2">
               Tidak Ada Pelat BIB yang Cocok
             </p>
@@ -457,17 +457,17 @@ function BibPlateCard({
   const isFondo = plate.distanceKm === 100 || plate.distanceKm === 150;
 
   return (
-    <div className="print-plate-card bg-white text-black rounded-2xl p-5 sm:p-6 relative border-4 border-black overflow-hidden font-sans select-none shadow-xl">
+    <div className="print-plate-card bg-white text-black rounded-3xl p-6 sm:p-7 relative overflow-hidden font-sans select-none shadow-xl print:shadow-none print:rounded-none">
       {/* 4 LUBANG PENGAIT STANG (CABLE TIE MOUNTING HOLES) */}
-      <div className="absolute top-3 left-4 w-3.5 h-3.5 rounded-full border-2 border-slate-500 bg-slate-200 print:bg-white print:border-black" />
-      <div className="absolute top-3 right-4 w-3.5 h-3.5 rounded-full border-2 border-slate-500 bg-slate-200 print:bg-white print:border-black" />
-      <div className="absolute bottom-3 left-4 w-3.5 h-3.5 rounded-full border-2 border-slate-500 bg-slate-200 print:bg-white print:border-black" />
-      <div className="absolute bottom-3 right-4 w-3.5 h-3.5 rounded-full border-2 border-slate-500 bg-slate-200 print:bg-white print:border-black" />
+      <div className="absolute top-3.5 left-4 w-3.5 h-3.5 rounded-full bg-slate-200 print:bg-white print:border print:border-black/40" />
+      <div className="absolute top-3.5 right-4 w-3.5 h-3.5 rounded-full bg-slate-200 print:bg-white print:border print:border-black/40" />
+      <div className="absolute bottom-3.5 left-4 w-3.5 h-3.5 rounded-full bg-slate-200 print:bg-white print:border print:border-black/40" />
+      <div className="absolute bottom-3.5 right-4 w-3.5 h-3.5 rounded-full bg-slate-200 print:bg-white print:border print:border-black/40" />
 
       {/* HEADER PELAT */}
-      <div className="border-b-2 border-black pb-2.5 flex items-center justify-between">
+      <div className="border-b border-black/10 print:border-black/30 pb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded bg-black text-[#FA6D0B] print:text-black print:bg-white print:border print:border-black flex items-center justify-center font-black font-mono text-sm leading-none">
+          <div className="w-8 h-8 rounded-lg bg-black text-[#FA6D0B] print:text-black print:bg-white flex items-center justify-center font-black font-mono text-sm leading-none">
             GX
           </div>
           <div>
@@ -481,14 +481,14 @@ function BibPlateCard({
         </div>
 
         <div className="text-right">
-          <span className="text-[9px] font-mono font-black uppercase tracking-wider px-2 py-0.5 rounded bg-black text-white print:bg-white print:text-black print:border print:border-black">
-            OFFICIAL RACE PLATE
+          <span className="text-[10px] font-mono font-black uppercase tracking-widest text-slate-800">
+            // OFFICIAL RACE PLATE
           </span>
         </div>
       </div>
 
-      {/* MAIN DISPLAY: NOMOR BIB & BADGE KATEGORI */}
-      <div className="py-3 text-center">
+      {/* MAIN DISPLAY: NOMOR BIB & KATEGORI (PURE TYPOGRAPHY, NO BADGES) */}
+      <div className="py-4 text-center">
         {/* NOMOR BIB RAKSASA */}
         <div
           className={`font-black tracking-tighter text-black font-display italic leading-none my-1 ${
@@ -498,43 +498,35 @@ function BibPlateCard({
           {plate.bibNumber}
         </div>
 
-        {/* BADGE ETAPE */}
+        {/* LABEL ETAPE (PURE TYPOGRAPHY) */}
         <div className="mt-2">
-          <span
-            className={`inline-block px-3.5 py-1 text-xs font-mono font-black tracking-wider uppercase rounded ${
-              isRace || isUltra
-                ? 'bg-[#FA6D0B] text-black print:bg-black print:text-white'
-                : 'bg-black text-white print:bg-white print:text-black print:border print:border-black'
-            }`}
-          >
-            {plate.categoryName}
+          <span className="text-xs font-mono font-black tracking-widest uppercase text-slate-900">
+            // {plate.categoryName}
           </span>
         </div>
       </div>
 
       {/* FOOTER PELAT: DATA RIDER, MEDIS & QR CHECK-IN */}
-      <div className="border-t-2 border-black pt-2.5 flex items-end justify-between gap-3">
+      <div className="border-t border-black/10 print:border-black/30 pt-3 flex items-end justify-between gap-3">
         {/* Kolom Informasi Rider */}
-        <div className="space-y-0.5 max-w-[260px]">
+        <div className="space-y-0.5 max-w-[280px]">
           <div className="text-base font-black uppercase text-black truncate font-sans tracking-tight">
             {plate.fullName}
           </div>
-          <div className="text-[11px] font-mono font-bold text-slate-700 truncate">
+          <div className="text-[11px] font-mono font-bold text-slate-600 truncate">
             {plate.communityChapter}
           </div>
 
-          {/* Baris Informasi Medis & Darurat */}
-          <div className="flex flex-wrap items-center gap-1 pt-1 text-[10px] font-mono font-bold">
-            <span className="bg-slate-100 border border-black px-1.5 py-0.2 text-black">
-              GOL: {plate.bloodType}
-            </span>
-            <span className="bg-slate-100 border border-black px-1.5 py-0.2 text-black">
-              ICE: {plate.emergencyPhone}
-            </span>
+          {/* Baris Informasi Medis & Darurat (Pure Typography) */}
+          <div className="text-[11px] font-mono font-bold text-slate-800 pt-1 flex flex-wrap items-center gap-1.5">
+            <span>GOL DARAH: {plate.bloodType}</span>
+            <span className="text-slate-400">·</span>
+            <span>ICE: {plate.emergencyPhone}</span>
             {plate.riderRole !== 'SINGLE' && (
-              <span className="bg-black text-white px-1.5 py-0.2 text-[9px]">
-                {plate.riderRole === 'PAIR_RIDER_1' ? 'PAIR 1' : 'PAIR 2'}
-              </span>
+              <>
+                <span className="text-slate-400">·</span>
+                <span>{plate.riderRole === 'PAIR_RIDER_1' ? 'PAIR 1' : 'PAIR 2'}</span>
+              </>
             )}
           </div>
         </div>
@@ -545,10 +537,10 @@ function BibPlateCard({
             <img
               src={qrUrl}
               alt={`QR-${plate.bibNumber}`}
-              className="w-14 h-14 rounded border-2 border-black p-0.5 bg-white mx-auto"
+              className="w-14 h-14 rounded-lg bg-white mx-auto shadow-sm"
             />
           ) : (
-            <div className="w-14 h-14 rounded border-2 border-slate-300 bg-slate-100 animate-pulse mx-auto" />
+            <div className="w-14 h-14 rounded-lg bg-slate-100 animate-pulse mx-auto" />
           )}
           <span className="text-[8px] font-mono font-bold uppercase block text-slate-600 mt-0.5">
             {plate.registrationCode}

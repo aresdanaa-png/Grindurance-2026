@@ -86,19 +86,19 @@ export default function BibCard({
 
   return (
     <div className="space-y-4 max-w-md mx-auto">
-      {/* KARTU NOMOR BIB BALAP (SIMULASI PLAT TAHAN AIR 1:1) */}
+      {/* KARTU NOMOR BIB BALAP (NATURAL BORDERLESS DESIGN) */}
       <div
         ref={cardRef}
-        className="bg-white text-slate-950 rounded-3xl p-6 sm:p-7 shadow-[0_20px_60px_rgba(0,0,0,0.8)] relative border-4 border-slate-950 overflow-hidden font-sans select-none"
+        className="bg-white text-slate-950 rounded-3xl p-6 sm:p-7 shadow-[0_25px_70px_rgba(0,0,0,0.9)] relative overflow-hidden font-sans select-none"
       >
         {/* 4 Lubang Pengait Plat Sepeda (Simulasi Mounting Holes) */}
-        <div className="absolute top-3 left-4 w-3.5 h-3.5 rounded-full border-2 border-slate-400 bg-slate-200" />
-        <div className="absolute top-3 right-4 w-3.5 h-3.5 rounded-full border-2 border-slate-400 bg-slate-200" />
-        <div className="absolute bottom-3 left-4 w-3.5 h-3.5 rounded-full border-2 border-slate-400 bg-slate-200" />
-        <div className="absolute bottom-3 right-4 w-3.5 h-3.5 rounded-full border-2 border-slate-400 bg-slate-200" />
+        <div className="absolute top-3.5 left-4 w-3.5 h-3.5 rounded-full bg-slate-200" />
+        <div className="absolute top-3.5 right-4 w-3.5 h-3.5 rounded-full bg-slate-200" />
+        <div className="absolute bottom-3.5 left-4 w-3.5 h-3.5 rounded-full bg-slate-200" />
+        <div className="absolute bottom-3.5 right-4 w-3.5 h-3.5 rounded-full bg-slate-200" />
 
         {/* HEADER KARTU */}
-        <div className="border-b-2 border-slate-950 pb-3 flex items-center justify-between">
+        <div className="border-b border-slate-950/10 pb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-slate-950 text-[#FA6D0B] flex items-center justify-center font-black font-mono text-xs">
               GX
@@ -113,13 +113,13 @@ export default function BibCard({
             </div>
           </div>
           <div className="text-right">
-            <span className="text-[10px] font-mono font-black uppercase tracking-wider px-2 py-0.5 rounded bg-slate-950 text-white">
-              GX-ID OFFICIAL
+            <span className="text-[10px] font-mono font-black uppercase tracking-widest text-slate-900">
+              // OFFICIAL GX-ID
             </span>
           </div>
         </div>
 
-        {/* NOMOR DADA BESAR (MAIN BIB DISPLAY) */}
+        {/* NOMOR DADA BESAR (MAIN BIB DISPLAY - PURE TYPOGRAPHY) */}
         <div className="py-4 text-center">
           <div
             className={`font-black tracking-tighter text-slate-950 font-display italic ${
@@ -131,38 +131,36 @@ export default function BibCard({
             {bibNumber}
           </div>
 
-          {/* Label Kategori Jarak */}
+          {/* Label Kategori Jarak (Pure Typography) */}
           <div className="mt-1">
-            <span
-              className={`inline-block px-4 py-1 text-xs font-mono font-black tracking-wider uppercase ${getCategoryColor()}`}
-            >
-              {categoryName} {distanceKm > 0 ? `· ${distanceKm} KM` : ''}
+            <span className="text-xs font-mono font-black tracking-widest uppercase text-slate-900">
+              // {categoryName} {distanceKm > 0 ? `· ${distanceKm} KM` : ''}
             </span>
           </div>
         </div>
 
         {/* IDENTITAS RIDER & DETAIL */}
-        <div className="border-t-2 border-slate-950 pt-3 flex items-center justify-between gap-3">
-          <div className="space-y-0.5 max-w-[240px]">
+        <div className="border-t border-slate-950/10 pt-3 flex items-center justify-between gap-3">
+          <div className="space-y-0.5 max-w-[250px]">
             <div className="text-base font-black uppercase text-slate-950 truncate font-sans">
               {fullName}
             </div>
-            <div className="text-[11px] font-mono font-bold text-slate-700 truncate">
+            <div className="text-[11px] font-mono font-bold text-slate-600 truncate">
               {communityChapter}
             </div>
-            <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[10px] font-mono font-bold text-slate-600">
-              <span className="bg-slate-100 border border-slate-300 px-1.5 py-0.5">
-                {t('GOL', 'BLOOD')}: {bloodType}
-              </span>
+            <div className="text-[11px] font-mono font-bold text-slate-800 pt-1 flex flex-wrap items-center gap-1.5">
+              <span>{t('GOL', 'BLOOD')}: {bloodType}</span>
               {medicalNotes && medicalNotes !== 'Tidak Ada' && medicalNotes !== 'None' && (
-                <span className="bg-slate-200 text-black border border-slate-400 px-1.5 py-0.5 truncate max-w-[120px]" title={medicalNotes}>
-                  {t('MEDIS', 'ALERT')}: {medicalNotes}
-                </span>
+                <>
+                  <span className="text-slate-400">·</span>
+                  <span title={medicalNotes}>{t('MEDIS', 'ALERT')}: {medicalNotes}</span>
+                </>
               )}
               {riderRole !== 'SINGLE' && (
-                <span className="bg-black text-white px-1.5 py-0.5">
-                  {riderRole === 'PAIR_RIDER_1' ? 'PAIR 1' : 'PAIR 2'}
-                </span>
+                <>
+                  <span className="text-slate-400">·</span>
+                  <span>{riderRole === 'PAIR_RIDER_1' ? 'PAIR 1' : 'PAIR 2'}</span>
+                </>
               )}
             </div>
           </div>
