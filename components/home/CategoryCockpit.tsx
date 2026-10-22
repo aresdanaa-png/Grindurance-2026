@@ -783,7 +783,7 @@ export default function CategoryCockpit() {
                       href="/#daftar-harga"
                       className="text-[10px] font-mono font-bold text-[#FA6D0B] hover:text-white uppercase tracking-wider flex items-center gap-1 transition-colors"
                     >
-                      <span>{t('Lihat Tabel Biaya Lengkap', 'View Full Price Table')}</span>
+                      <span>{t('Lihat Paket Pendaftaran Resmi', 'View Official Entry Packages')}</span>
                       <ArrowUpRight className="w-3 h-3 stroke-[2.5]" />
                     </Link>
                   </div>

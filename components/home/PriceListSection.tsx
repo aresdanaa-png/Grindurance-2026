@@ -48,7 +48,7 @@ export default function PriceListSection() {
             </div>
             
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white tracking-tight">
-              {t('TABEL BIAYA LENGKAP', 'COMPLETE PRICE MATRIX')}
+              {t('PAKET PENDAFTARAN RESMI', 'OFFICIAL ENTRY PACKAGES')}
             </h2>
             
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl font-medium leading-relaxed">
