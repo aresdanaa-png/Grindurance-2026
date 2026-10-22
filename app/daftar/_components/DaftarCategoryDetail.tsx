@@ -553,7 +553,7 @@ export default function DaftarCategoryDetail({
           <button
             type="button"
             onClick={onBack}
-            className="w-full sm:w-auto px-6 py-3.5 sm:py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white hover:border-white/40 hover:bg-white/[0.08] transition-all cursor-pointer text-center active:scale-95 whitespace-nowrap"
+            className="w-full sm:w-auto px-6 py-3.5 sm:py-4 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white transition-all cursor-pointer text-center active:scale-95 whitespace-nowrap"
           >
             {t('← KEMBALI', '← BACK')}
           </button>

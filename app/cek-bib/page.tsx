@@ -65,7 +65,7 @@ export default function CekBibPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('Nomor BIB (misal 1001), Kode Registrasi, atau Nama...', 'BIB number (e.g. 1001), Registration Code, or Name...')}
-            className="w-full pl-5 pr-32 py-4 rounded-xl bg-black/60 border border-white/20 text-white font-mono text-sm sm:text-base focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-500 shadow-2xl transition-all"
+            className="w-full pl-5 pr-32 py-4 rounded-xl bg-black/60 text-white font-mono text-sm sm:text-base focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-500 shadow-2xl transition-all"
           />
           <button
             type="submit"
@@ -127,7 +127,7 @@ export default function CekBibPage() {
                       registrationCode={p.registration_code}
                     />
                   ) : (
-                    <div className="max-w-md mx-auto rounded-2xl bg-black/75 backdrop-blur-xl p-6 sm:p-7 text-center space-y-3.5 shadow-[0_20px_60px_rgba(0,0,0,0.7)] font-mono border border-white/10">
+                    <div className="max-w-md mx-auto rounded-3xl bg-black/80 backdrop-blur-xl p-6 sm:p-7 text-center space-y-3.5 shadow-[0_20px_60px_rgba(0,0,0,0.7)] font-mono">
                       <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
                         // {p.order?.payment_status === 'PENDING_VERIFICATION' ? t('BUKTI DIUNGGAH · MENUNGGU VERIFIKASI', 'PROOF UPLOADED · AWAITING VERIFICATION') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
                       </span>

@@ -234,7 +234,7 @@ export default function IndonesiaAddressSelect({
               value={value.province_id}
               onChange={handleProvinceChange}
               disabled={loadingProvinces}
-              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-50 pr-8 transition-all cursor-pointer"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 text-white text-sm font-mono focus:ring-1 focus:ring-[#FA6D0B] shadow-inner focus:outline-none appearance-none disabled:opacity-50 pr-8 transition-all cursor-pointer"
             >
               <option value="">{loadingProvinces ? t('MEMUAT...', 'LOADING...') : t('PILIH PROVINSI', 'SELECT PROVINCE')}</option>
               {provinces.map((prov) => (
@@ -258,7 +258,7 @@ export default function IndonesiaAddressSelect({
               value={value.regency_id}
               onChange={handleRegencyChange}
               disabled={!value.province_id || loadingRegencies}
-              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 text-white text-sm font-mono focus:ring-1 focus:ring-[#FA6D0B] shadow-inner focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
             >
               <option value="">
                 {!value.province_id
@@ -288,7 +288,7 @@ export default function IndonesiaAddressSelect({
               value={value.district_id}
               onChange={handleDistrictChange}
               disabled={!value.regency_id || loadingDistricts}
-              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 text-white text-sm font-mono focus:ring-1 focus:ring-[#FA6D0B] shadow-inner focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
             >
               <option value="">
                 {!value.regency_id
@@ -318,7 +318,7 @@ export default function IndonesiaAddressSelect({
               value={value.village_id}
               onChange={handleVillageChange}
               disabled={!value.district_id || loadingVillages}
-              className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
+              className="w-full px-4 py-3.5 rounded-xl bg-black/60 text-white text-sm font-mono focus:ring-1 focus:ring-[#FA6D0B] shadow-inner focus:outline-none appearance-none disabled:opacity-40 disabled:cursor-not-allowed pr-8 transition-all cursor-pointer"
             >
               <option value="">
                 {!value.district_id
@@ -350,7 +350,7 @@ export default function IndonesiaAddressSelect({
             value={value.address_detail}
             onChange={(e) => onChange({ ...value, address_detail: e.target.value })}
             placeholder={t('Cth: Jl. Raya Jonggol No. 88 RT 02/05, Samping Indomaret', 'E.g., 88 Jonggol Main St, Near Community Center')}
-            className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-500 transition-all"
+            className="w-full px-4 py-3.5 rounded-xl bg-black/60 text-white text-sm font-mono focus:ring-1 focus:ring-[#FA6D0B] shadow-inner focus:outline-none placeholder:text-slate-500 transition-all"
           />
         </div>
 
@@ -366,7 +366,7 @@ export default function IndonesiaAddressSelect({
             value={value.postal_code}
             onChange={(e) => onChange({ ...value, postal_code: e.target.value.replace(/\D/g, '') })}
             placeholder={t('Cth: 16830', 'E.g. 16830')}
-            className="w-full px-4 py-3.5 rounded-xl bg-black/60 border border-white/20 text-white text-sm font-mono focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] focus:outline-none placeholder:text-slate-500 transition-all"
+            className="w-full px-4 py-3.5 rounded-xl bg-black/60 text-white text-sm font-mono focus:ring-1 focus:ring-[#FA6D0B] shadow-inner focus:outline-none placeholder:text-slate-500 transition-all"
           />
         </div>
       </div>

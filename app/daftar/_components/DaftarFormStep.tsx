@@ -130,7 +130,7 @@ export default function DaftarFormStep({
         <button
           type="button"
           onClick={onBackToSelect}
-          className="px-7 sm:px-8 py-3.5 rounded-full border border-white/20 bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:border-[#FA6D0B] hover:bg-[#FA6D0B]/10 transition-all cursor-pointer self-start lg:self-center shrink-0"
+          className="px-7 sm:px-8 py-3.5 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white transition-all cursor-pointer self-start lg:self-center shrink-0 active:scale-95"
         >
           {t('GANTI KATEGORI', 'CHANGE CATEGORY')}
         </button>
@@ -442,12 +442,12 @@ export default function DaftarFormStep({
                       value={promoCodeInput}
                       onChange={(e) => setPromoCodeInput(e.target.value.toUpperCase())}
                       placeholder={t('MASUKKAN KODE PROMO', 'ENTER PROMO CODE')}
-                      className="flex-1 px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base uppercase placeholder:text-slate-500 outline-none transition-all"
+                      className="flex-1 px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base uppercase placeholder:text-slate-500 outline-none transition-all shadow-inner"
                     />
                     <button
                       type="button"
                       onClick={handleApplyPromo}
-                      className="px-6 py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase tracking-wider bg-[#FA6D0B] text-black hover:bg-orange-400 border border-[#FA6D0B] transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                      className="px-6 py-3.5 sm:py-4 rounded-xl text-xs sm:text-sm font-mono font-black uppercase tracking-wider bg-[#FA6D0B] text-black hover:bg-[#DE5A00] transition-all cursor-pointer whitespace-nowrap active:scale-95 shadow-md"
                     >
                       {t('TERAPKAN', 'APPLY')}
                     </button>
@@ -660,7 +660,7 @@ export default function DaftarFormStep({
             <button
               type="button"
               onClick={onBackToDetail}
-              className="w-full sm:w-auto text-center px-7 py-4 rounded-full border border-white/20 bg-white/[0.04] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white hover:border-[#FA6D0B] hover:bg-[#FA6D0B]/10 transition-all cursor-pointer whitespace-nowrap active:scale-95"
+              className="w-full sm:w-auto text-center px-7 py-4 rounded-full bg-white/[0.08] hover:bg-white/[0.14] text-xs sm:text-sm font-mono font-bold uppercase tracking-wider text-slate-200 hover:text-white transition-all cursor-pointer whitespace-nowrap active:scale-95"
             >
               {t('← DETAIL', '← DETAILS')}
             </button>

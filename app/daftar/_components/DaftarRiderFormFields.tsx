@@ -57,7 +57,7 @@ export default function DaftarRiderFormFields({
               value={rider.full_name}
               onChange={(e) => onChange({ full_name: e.target.value })}
               placeholder={t('Nama Lengkap Atlet', 'Athlete Full Name')}
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
 
@@ -72,7 +72,7 @@ export default function DaftarRiderFormFields({
               value={rider.nik}
               onChange={(e) => onChange({ nik: e.target.value.replace(/\D/g, '') })}
               placeholder="3201012345670001"
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
 
@@ -83,7 +83,7 @@ export default function DaftarRiderFormFields({
             <select
               value={rider.religion}
               onChange={(e) => onChange({ religion: e.target.value })}
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base transition-all outline-none cursor-pointer"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base transition-all outline-none cursor-pointer"
             >
               <option value="Islam" className="bg-[#15171C]">Islam</option>
               <option value="Kristen Protestan" className="bg-[#15171C]">Kristen Protestan</option>
@@ -142,7 +142,7 @@ export default function DaftarRiderFormFields({
               required
               value={rider.birth_date}
               onChange={(e) => onChange({ birth_date: e.target.value })}
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base transition-all outline-none"
             />
           </div>
 
@@ -153,7 +153,7 @@ export default function DaftarRiderFormFields({
             <select
               value={rider.blood_type}
               onChange={(e) => onChange({ blood_type: e.target.value })}
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base transition-all outline-none cursor-pointer"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base transition-all outline-none cursor-pointer"
             >
               <option value="A" className="bg-[#15171C]">A</option>
               <option value="B" className="bg-[#15171C]">B</option>
@@ -172,7 +172,7 @@ export default function DaftarRiderFormFields({
               value={rider.medical_notes}
               onChange={(e) => onChange({ medical_notes: e.target.value })}
               placeholder={t('Asma, Alergi Obat, dsb (Opsional)', 'Asthma, Drug Allergy, etc (Optional)')}
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
         </div>
@@ -194,7 +194,7 @@ export default function DaftarRiderFormFields({
               value={rider.email}
               onChange={(e) => onChange({ email: e.target.value })}
               placeholder="atlet@domain.com"
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
 
@@ -208,7 +208,7 @@ export default function DaftarRiderFormFields({
               value={rider.phone_number}
               onChange={(e) => onChange({ phone_number: e.target.value })}
               placeholder="08123456789"
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
 
@@ -222,7 +222,7 @@ export default function DaftarRiderFormFields({
               value={rider.emergency_contact_name}
               onChange={(e) => onChange({ emergency_contact_name: e.target.value })}
               placeholder={t('Keluarga / Kerabat', 'Family / Relative')}
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
 
@@ -236,7 +236,7 @@ export default function DaftarRiderFormFields({
               value={rider.emergency_contact_phone}
               onChange={(e) => onChange({ emergency_contact_phone: e.target.value })}
               placeholder="08xxxxxxxxxx"
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function DaftarRiderFormFields({
               value={rider.community_chapter}
               onChange={(e) => onChange({ community_chapter: e.target.value })}
               placeholder={t('Contoh: GX-ID Bogor, Gravel Jakarta, dsb', 'E.g., GX-ID Bogor, Gravel Jakarta, etc.')}
-              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 border border-white/20 focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
+              className="w-full px-4 py-3.5 sm:py-4 rounded-xl bg-black/60 focus:ring-1 focus:ring-[#FA6D0B] shadow-inner text-white font-mono text-sm sm:text-base placeholder:text-slate-500 transition-all outline-none"
             />
           </div>
         </div>

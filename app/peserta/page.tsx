@@ -251,7 +251,7 @@ export default function PesertaPage() {
                 placeholder={t('Cari No. BIB (#1001), Nama Atlet, atau Chapter...', 'Search BIB No, Rider Name, or Chapter...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-black/60 backdrop-blur-xl border border-white/20 rounded-xl px-5 py-3.5 text-xs sm:text-sm font-mono text-white placeholder-slate-500 focus:outline-none focus:border-[#FA6D0B] focus:ring-1 focus:ring-[#FA6D0B] transition-colors shadow-inner"
+                className="w-full bg-black/60 backdrop-blur-xl rounded-xl px-5 py-3.5 text-xs sm:text-sm font-mono text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#FA6D0B] transition-colors shadow-inner"
               />
               {searchQuery && (
                 <button
@@ -411,7 +411,7 @@ export default function PesertaPage() {
                         <button
                           type="button"
                           onClick={() => setSelectedRiderForBib(rider)}
-                          className="px-3.5 py-1.5 rounded-lg border border-white/20 hover:border-[#FA6D0B] hover:text-[#FA6D0B] hover:bg-[#FA6D0B]/15 text-slate-300 text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm"
+                          className="px-3.5 py-1.5 rounded-lg bg-white/[0.08] hover:bg-[#FA6D0B] hover:text-black text-slate-300 text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer shadow-sm active:scale-95"
                         >
                           {t('LIHAT PLAT', 'VIEW PLATE')}
                         </button>
@@ -432,7 +432,7 @@ export default function PesertaPage() {
               <button
                 type="button"
                 onClick={() => setSelectedRiderForBib(null)}
-                className="absolute top-4 right-4 px-3 py-1 font-mono text-xs uppercase font-bold text-slate-400 hover:text-white border border-white/20 rounded bg-black cursor-pointer transition-colors"
+                className="absolute top-4 right-4 px-3.5 py-1.5 font-mono text-xs uppercase font-bold text-slate-400 hover:text-white rounded-xl bg-white/[0.08] hover:bg-white/[0.15] cursor-pointer transition-colors"
               >
                 [X]
               </button>
