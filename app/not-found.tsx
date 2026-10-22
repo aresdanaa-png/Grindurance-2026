@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { Button } from '@/components/ui';
 
 export default function NotFound() {
   return (
@@ -16,13 +15,15 @@ export default function NotFound() {
         </p>
       </div>
 
-      <Link
+      <Button
         href="/"
-        className="px-8 py-3.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-[#DE5A00] transition-all flex items-center gap-2 shadow-[0_0_25px_rgba(250,109,11,0.35)]"
+        variant="primary"
+        size="lg"
+        withArrow
+        className="font-mono text-xs"
       >
-        <span>KEMBALI KE BASECAMP</span>
-        <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-      </Link>
+        KEMBALI KE BASECAMP
+      </Button>
     </div>
   );
 }

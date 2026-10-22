@@ -596,7 +596,7 @@ export default function CategoryCockpit() {
                           REGULER
                         </span>
                       ) : (
-                        <span className="text-[9px] font-mono font-bold uppercase text-white bg-red-950/80 px-1.5 py-0.5 rounded-sm">
+                        <span className="text-[9px] font-mono font-bold uppercase text-slate-300 bg-white/10 border border-white/10 px-1.5 py-0.5 rounded-sm">
                           DITUTUP
                         </span>
                       )}

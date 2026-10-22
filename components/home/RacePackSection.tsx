@@ -1,7 +1,6 @@
 'use client';
 
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { Button } from '@/components/ui';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import { PACK_TIERS, RPC_LOGISTICS, OFFICIAL_GEAR_ITEMS } from '@/lib/data/racepacks';
 
@@ -269,13 +268,15 @@ export default function RacePackSection() {
                 )}
               </p>
             </div>
-            <Link
+            <Button
               href="/daftar"
-              className="px-8 py-3.5 rounded-full text-xs font-sans font-black uppercase tracking-wider text-black bg-[#FA6D0B] hover:bg-white transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap shrink-0 shadow-[0_0_25px_rgba(250,109,11,0.35)]"
+              variant="primary"
+              size="lg"
+              withArrow
+              className="shrink-0"
             >
-              <span>{t('PILIH PAKET & DAFTAR', 'SELECT PACK & REGISTER')}</span>
-              <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-            </Link>
+              {t('PILIH PAKET & DAFTAR', 'SELECT PACK & REGISTER')}
+            </Button>
           </div>
         </div>
       </section>
