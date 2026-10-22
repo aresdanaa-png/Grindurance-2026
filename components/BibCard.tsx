@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import QRCode from 'qrcode';
 import { toPng } from 'html-to-image';
+import { Button } from '@/components/ui';
 import { useLanguage } from '@/lib/context/LanguageContext';
 
 interface BibCardProps {
@@ -187,14 +188,18 @@ export default function BibCard({
       </div>
 
       {/* TOMBOL UNDUH GAMBAR HIGH-RESOLUTION */}
-      <button
-        type="button"
-        disabled={downloading}
+      <Button
+        variant="primary"
+        size="lg"
+        fullWidth
+        isLoading={downloading}
         onClick={handleDownload}
-        className="w-full py-4 rounded-full font-mono font-black text-xs uppercase tracking-wider bg-[#FA6D0B] text-black hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(250,109,11,0.4)] hover:-translate-y-0.5 active:scale-95 disabled:opacity-50"
+        className="font-mono font-black text-xs tracking-wider"
       >
-        <span>{downloading ? t('MENYIAPKAN GAMBAR HD...', 'PREPARING HD IMAGE...') : t('UNDUH KARTU BIB RESMI (GAMBAR PNG)', 'DOWNLOAD OFFICIAL BIB CARD (PNG)')}</span>
-      </button>
+        {downloading
+          ? t('MENYIAPKAN GAMBAR HD...', 'PREPARING HD IMAGE...')
+          : t('UNDUH KARTU BIB RESMI (GAMBAR PNG)', 'DOWNLOAD OFFICIAL BIB CARD (PNG)')}
+      </Button>
     </div>
   );
 }

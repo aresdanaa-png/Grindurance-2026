@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
+import { Button } from '@/components/ui';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import { 
   RACEDAY_ITINERARY, 
@@ -75,13 +74,15 @@ export default function TimelineSection() {
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
-              <Link
+              <Button
                 href="/peraturan"
-                className="px-5 py-2.5 rounded-full border border-white/15 hover:border-[#FA6D0B]/50 text-xs font-mono font-bold uppercase tracking-wider text-slate-300 hover:text-white bg-white/[0.03] hover:bg-white/[0.06] transition-all flex items-center gap-2"
+                variant="secondary"
+                size="sm"
+                withArrow
+                className="font-mono text-xs font-bold"
               >
-                <span>ATHLETE GUIDE PDF</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#FA6D0B]" />
-              </Link>
+                ATHLETE GUIDE PDF
+              </Button>
             </div>
           </div>
 
@@ -142,14 +143,15 @@ export default function TimelineSection() {
                 </div>
               </div>
 
-              <button
-                type="button"
+              <Button
+                variant="primary"
+                size="sm"
+                withArrow
                 onClick={() => setIsExpanded(true)}
-                className="shrink-0 px-6 py-3 rounded-full bg-[#FA6D0B] text-black font-bold uppercase tracking-wider text-xs hover:bg-[#DE5A00] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_25px_rgba(250,109,11,0.4)] active:scale-95 group"
+                className="shrink-0"
               >
-                <span>{t('BUKA RUNDOWN LENGKAP & MATRIKS', 'EXPAND FULL RUNDOWN & MATRIX')}</span>
-                <ArrowUpRight className="w-4 h-4 stroke-[2.5] text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
+                {t('BUKA RUNDOWN LENGKAP & MATRIKS', 'EXPAND FULL RUNDOWN & MATRIX')}
+              </Button>
             </div>
           )}
 
