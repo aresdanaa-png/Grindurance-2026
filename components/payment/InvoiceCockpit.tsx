@@ -1,11 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import BibCard from '@/components/BibCard';
 import { Category, Order, Participant } from '@/lib/types';
+import {
+  compressPaymentReceipt,
+  formatBytes,
+  CompressionResult,
+} from '@/lib/utils/imageCompressor';
 import {
   generateInvoiceWhatsAppMessage,
   generatePaymentSuccessWhatsAppMessage,
@@ -18,6 +23,7 @@ interface InvoiceCockpitProps {
   participants: Participant[];
   onSimulateSuccess?: () => void;
   isSimulating?: boolean;
+  onProofUploaded?: (updatedOrder: Order) => void;
   showCategoryPresetSwitcher?: boolean;
   onSelectCategoryPreset?: (presetKey: string) => void;
   selectedCategoryPresetKey?: string;
@@ -39,6 +45,7 @@ export default function InvoiceCockpit({
   participants,
   onSimulateSuccess,
   isSimulating = false,
+  onProofUploaded,
   showCategoryPresetSwitcher = false,
   onSelectCategoryPreset,
   selectedCategoryPresetKey,
@@ -46,8 +53,24 @@ export default function InvoiceCockpit({
   onResetStatus,
 }: InvoiceCockpitProps) {
   const { t } = useLanguage();
+  const [localOrder, setLocalOrder] = useState<Order>(order);
   const [paymentMethodTab, setPaymentMethodTab] = useState<'qris' | 'bank'>('qris');
   const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  // Upload & Compression State
+  const [compressedResult, setCompressedResult] = useState<CompressionResult | null>(null);
+  const [isCompressing, setIsCompressing] = useState<boolean>(false);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadSuccessMessage, setUploadSuccessMessage] = useState<string | null>(null);
+  const [isChangeReceiptMode, setIsChangeReceiptMode] = useState<boolean>(false);
+  const [showReceiptLightbox, setShowReceiptLightbox] = useState<boolean>(false);
+  const [lightboxImageUrl, setLightboxImageUrl] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setLocalOrder(order);
+  }, [order]);
 
   const formatRupiah = (val: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -64,12 +87,14 @@ export default function InvoiceCockpit({
     setTimeout(() => setCopiedField(null), 2000);
   };
 
-  const isPaid = order.payment_status === 'PAID';
+  const isPaid = localOrder.payment_status === 'PAID';
+  const isPendingVerification = localOrder.payment_status === 'PENDING_VERIFICATION';
+  const hasUploadedProof = Boolean(localOrder.proof_of_payment_url);
   const primaryParticipant = participants[0];
 
   const directPaymentUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/pembayaran?code=${primaryParticipant?.registration_code || order.order_id}`
-    : `/pembayaran?code=${primaryParticipant?.registration_code || order.order_id}`;
+    ? `${window.location.origin}/pembayaran?code=${primaryParticipant?.registration_code || localOrder.order_id}`
+    : `/pembayaran?code=${primaryParticipant?.registration_code || localOrder.order_id}`;
 
   const eticketUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/cek-bib?query=${primaryParticipant?.bib_number || primaryParticipant?.registration_code || ''}`
@@ -78,13 +103,13 @@ export default function InvoiceCockpit({
   const whatsappMessageText = primaryParticipant
     ? isPaid
       ? generatePaymentSuccessWhatsAppMessage({
-          order,
+          order: localOrder,
           category,
           participant: primaryParticipant,
           eticketUrl,
         })
       : generateInvoiceWhatsAppMessage({
-          order,
+          order: localOrder,
           category,
           participant: primaryParticipant,
           directPaymentUrl,
@@ -94,6 +119,80 @@ export default function InvoiceCockpit({
   const whatsappDirectUrl = primaryParticipant
     ? createWhatsAppDirectUrl(primaryParticipant.phone_number || '', whatsappMessageText)
     : '#';
+
+  // Handle File Selection with Client-Side Compression
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadError(null);
+    setUploadSuccessMessage(null);
+    setIsCompressing(true);
+
+    try {
+      const result = await compressPaymentReceipt(file, {
+        maxWidth: 1200,
+        maxHeight: 1600,
+        quality: 0.75,
+        mimeType: 'image/webp',
+      });
+      setCompressedResult(result);
+    } catch (err: any) {
+      setUploadError(err.message || 'Gagal memproses dan mengompres file.');
+      setCompressedResult(null);
+    } finally {
+      setIsCompressing(false);
+    }
+  };
+
+  // Submit Uploaded Compressed Proof to Server
+  const handleSubmitProof = async () => {
+    if (!compressedResult) return;
+
+    setIsUploading(true);
+    setUploadError(null);
+    setUploadSuccessMessage(null);
+
+    try {
+      const res = await fetch('/api/payment/upload-proof', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          order_id: localOrder.order_id || localOrder.id,
+          image_data: compressedResult.dataUrl,
+          file_name: compressedResult.file.name,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Gagal mengunggah bukti transfer.');
+      }
+
+      // Update state order lokal
+      const updated: Order = {
+        ...localOrder,
+        payment_status: 'PENDING_VERIFICATION',
+        proof_of_payment_url: data.proof_url || compressedResult.dataUrl,
+      };
+
+      setLocalOrder(updated);
+      setIsChangeReceiptMode(false);
+      setCompressedResult(null);
+      setUploadSuccessMessage('Bukti transfer berhasil diunggah! Menunggu verifikasi admin panitia.');
+
+      if (onProofUploaded) {
+        onProofUploaded(updated);
+      }
+    } catch (err: any) {
+      setUploadError(err.message || 'Terjadi gangguan saat mengunggah bukti.');
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto space-y-8 animate-slide-up-fade relative">
@@ -141,12 +240,20 @@ export default function InvoiceCockpit({
 
         <div className="flex flex-wrap items-center justify-center gap-3 font-mono text-xs uppercase tracking-widest relative z-10">
           <span className="text-slate-400">STATUS:</span>
-          <span className={`px-3 py-1 rounded-full font-black text-xs ${
-            isPaid
-              ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
-              : 'bg-[#FA6D0B]/20 text-[#FA6D0B] animate-pulse shadow-[0_0_15px_rgba(250,109,11,0.25)]'
-          }`}>
-            {isPaid ? t('LUNAS · TERDAFTAR RESMI', 'PAID · OFFICIALLY REGISTERED') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
+          <span
+            className={`px-3 py-1 rounded-full font-black text-xs ${
+              isPaid
+                ? 'bg-[#FA6D0B] text-black shadow-[0_0_20px_rgba(250,109,11,0.5)]'
+                : isPendingVerification
+                ? 'bg-[#FA6D0B]/20 text-[#FA6D0B] animate-pulse shadow-[0_0_15px_rgba(250,109,11,0.25)]'
+                : 'bg-white/10 text-white'
+            }`}
+          >
+            {isPaid
+              ? t('LUNAS · TERDAFTAR RESMI', 'PAID · OFFICIALLY REGISTERED')
+              : isPendingVerification
+              ? t('MENUNGGU VERIFIKASI ADMIN', 'AWAITING ADMIN VERIFICATION')
+              : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
           </span>
           <span className="text-white/20 select-none hidden sm:inline">·</span>
           <span className="text-slate-400">
@@ -160,10 +267,10 @@ export default function InvoiceCockpit({
 
         <div className="inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-white/[0.07] font-mono text-xs sm:text-sm text-slate-200 relative z-10 shadow-inner">
           <span className="text-slate-400 font-bold uppercase">{t('BOOKING ID:', 'BOOKING ID:')}</span>
-          <span className="text-[#FA6D0B] font-black tracking-widest text-sm sm:text-base">{order.order_id}</span>
+          <span className="text-[#FA6D0B] font-black tracking-widest text-sm sm:text-base">{localOrder.order_id}</span>
           <button
             type="button"
-            onClick={() => copyToClipboard(order.order_id, 'booking_id')}
+            onClick={() => copyToClipboard(localOrder.order_id, 'booking_id')}
             className="text-[10px] text-white hover:text-[#FA6D0B] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
           >
             {copiedField === 'booking_id' ? t('DISALIN', 'COPIED') : t('SALIN', 'COPY')}
@@ -181,7 +288,7 @@ export default function InvoiceCockpit({
         <div className="space-y-3.5 text-xs sm:text-sm">
           <div className="flex justify-between text-slate-300">
             <span>{t('TIKET KATEGORI RESMI:', 'OFFICIAL CATEGORY TICKET:')}</span>
-            <span className="font-bold text-white">{formatRupiah(order.gross_amount)}</span>
+            <span className="font-bold text-white">{formatRupiah(localOrder.gross_amount)}</span>
           </div>
 
           {participants.some((p) => p.has_meal_coupon) && (
@@ -201,10 +308,10 @@ export default function InvoiceCockpit({
             </div>
           )}
 
-          {(order.discount_promo || 0) > 0 && (
+          {(localOrder.discount_promo || 0) > 0 && (
             <div className="flex justify-between text-[#FA6D0B] font-bold">
               <span>{t('DISKON KODE PROMO KOMUNITAS:', 'COMMUNITY PROMO CODE DISCOUNT:')}</span>
-              <span>- {formatRupiah(order.discount_promo || 0)}</span>
+              <span>- {formatRupiah(localOrder.discount_promo || 0)}</span>
             </div>
           )}
 
@@ -214,16 +321,16 @@ export default function InvoiceCockpit({
                 {t('TOTAL TRANSFER WAJIB:', 'TOTAL AMOUNT DUE:')}
               </span>
               <span className="text-xs text-slate-400 font-sans">
-                {t('Transfer sesuai nominal persis untuk verifikasi otomatis sistem.', 'Transfer the exact amount for automated system verification.')}
+                {t('Transfer sesuai nominal persis untuk verifikasi mutasi oleh admin panitia.', 'Transfer the exact amount for committee account verification.')}
               </span>
             </div>
             <div className="text-left sm:text-right">
               <span className="font-display italic text-4xl sm:text-5xl font-black text-[#FA6D0B] block tracking-tight">
-                {formatRupiah(order.net_amount)}
+                {formatRupiah(localOrder.net_amount)}
               </span>
               <button
                 type="button"
-                onClick={() => copyToClipboard(order.net_amount.toString(), 'nominal')}
+                onClick={() => copyToClipboard(localOrder.net_amount.toString(), 'nominal')}
                 className="text-xs font-mono text-slate-300 hover:text-white uppercase font-bold tracking-wider mt-1.5 transition-colors cursor-pointer"
               >
                 {copiedField === 'nominal' ? t('NOMINAL DISALIN', 'AMOUNT COPIED') : t('SALIN NOMINAL', 'COPY AMOUNT')}
@@ -239,7 +346,7 @@ export default function InvoiceCockpit({
           <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
             {t('METODE PEMBAYARAN RESMI', 'OFFICIAL PAYMENT METHOD')}
           </span>
-          
+
           {/* Method Switcher Tabs */}
           <div className="flex items-center gap-2 text-xs">
             <button
@@ -302,8 +409,8 @@ export default function InvoiceCockpit({
                 </span>
                 <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
                   {t(
-                    'Mendukung seluruh aplikasi mobile banking (BCA Mobile, Livin Mandiri, BRImo, BNI Mobile) serta e-wallet terdaftar (GoPay, OVO, Dana, ShopeePay, LinkAja). Buka aplikasi pilihan Anda, pilih scan QRIS, dan konfirmasi nominal tepat.',
-                    'Compatible with all Indonesian mobile banking apps and digital wallets. Open your preferred app, scan the dynamic QR above, and confirm exact amount.'
+                    'Mendukung seluruh aplikasi mobile banking (BCA Mobile, Livin Mandiri, BRImo, BNI Mobile) serta e-wallet terdaftar (GoPay, OVO, Dana, ShopeePay, LinkAja). Buka aplikasi pilihan Anda, scan QR di samping, simpan bukti transfer, lalu unggah pada form di bawah.',
+                    'Compatible with all Indonesian mobile banking apps and digital wallets. Open your preferred app, scan the dynamic QR, save your payment receipt, and upload it below.'
                   )}
                 </p>
               </div>
@@ -315,7 +422,7 @@ export default function InvoiceCockpit({
                 </div>
                 <div className="flex justify-between text-slate-400">
                   <span>NOMINAL VALIDASI:</span>
-                  <strong className="text-[#FA6D0B] text-sm">{formatRupiah(order.net_amount)}</strong>
+                  <strong className="text-[#FA6D0B] text-sm">{formatRupiah(localOrder.net_amount)}</strong>
                 </div>
               </div>
             </div>
@@ -328,7 +435,7 @@ export default function InvoiceCockpit({
             <div className="p-6 rounded-2xl bg-black/55 backdrop-blur-xl hover:bg-black/75 transition-all space-y-3 shadow-lg relative overflow-hidden group">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-slate-300 uppercase tracking-widest">BCA (BANK CENTRAL ASIA)</span>
-                <span className="text-[10px] text-[#FA6D0B] font-bold px-2 py-0.5 rounded bg-[#FA6D0B]/10 border border-[#FA6D0B]/20">AUTO-CHECK</span>
+                <span className="text-[10px] text-white font-bold px-2 py-0.5 rounded bg-white/10">TRANSFER REK</span>
               </div>
               <div className="text-2xl sm:text-3xl font-black text-white tracking-widest font-mono">8831 2948 20</div>
               <div className="text-xs text-slate-300 font-sans">A.N. GX-ID INDONESIA · GRINDURANCE</div>
@@ -344,7 +451,7 @@ export default function InvoiceCockpit({
             <div className="p-6 rounded-2xl bg-black/55 backdrop-blur-xl hover:bg-black/75 transition-all space-y-3 shadow-lg relative overflow-hidden group">
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-slate-300 uppercase tracking-widest">BANK MANDIRI</span>
-                <span className="text-[10px] text-[#FA6D0B] font-bold px-2 py-0.5 rounded bg-[#FA6D0B]/10 border border-[#FA6D0B]/20">AUTO-CHECK</span>
+                <span className="text-[10px] text-white font-bold px-2 py-0.5 rounded bg-white/10">TRANSFER REK</span>
               </div>
               <div className="text-2xl sm:text-3xl font-black text-white tracking-widest font-mono">133 00 2819 4021</div>
               <div className="text-xs text-slate-300 font-sans">A.N. PANITIA GRINDURANCE 2026</div>
@@ -359,6 +466,260 @@ export default function InvoiceCockpit({
           </div>
         )}
       </div>
+
+      {/* ========================================================================= */}
+      {/* SECTION UNGGAH BUKTI TRANSFER & VERIFIKASI ADMIN (FASE 1) */}
+      {/* ========================================================================= */}
+      {!isPaid && (
+        <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] space-y-6 font-mono relative overflow-hidden">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+            <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-widest">
+              // BUKTI TRANSFER RESMI · VERIFIKASI ADMIN PANITIA
+            </span>
+            <span className="text-[11px] text-slate-400 uppercase tracking-wider">
+              {isPendingVerification ? 'STATUS: MENUNGGU VERIFIKASI ADMIN' : 'STATUS: MENUNGGU UNGGAHAN'}
+            </span>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="font-display italic text-2xl sm:text-3xl font-black text-white uppercase tracking-tight">
+              {t('UNGGAH BUKTI PEMBAYARAN (KOMPRESI OTOMATIS)', 'UPLOAD PAYMENT PROOF (AUTO-COMPRESSED)')}
+            </h3>
+            <p className="font-sans text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+              {t(
+                'Unggah tangkapan layar (screenshot) struk transfer bank atau bukti transaksi QRIS Anda. Foto bukti akan dikompres secara otomatis di browser Anda menjadi ultra-ringan (~60–120 KB) agar cepat dikirim dan langsung diperiksa oleh admin.',
+                'Upload a screenshot of your bank transfer receipt or QRIS transaction confirmation. The file is automatically compressed in your browser down to ~60–120 KB before transmission.'
+              )}
+            </p>
+          </div>
+
+          {/* Alert Success / Info Message */}
+          {uploadSuccessMessage && (
+            <div className="p-4 rounded-xl bg-white/[0.06] text-white text-xs border border-white/15 space-y-1">
+              <span className="text-[#FA6D0B] font-bold block">✓ KONFIRMASI PENGIRIMAN:</span>
+              <p className="font-sans text-slate-200">{uploadSuccessMessage}</p>
+            </div>
+          )}
+
+          {/* Alert Error Message */}
+          {uploadError && (
+            <div className="p-4 rounded-xl bg-white/[0.06] text-[#FA6D0B] text-xs border border-[#FA6D0B]/30 space-y-1">
+              <span className="font-bold block">// PERINGATAN UNGGAHAN:</span>
+              <p className="font-sans text-slate-200">{uploadError}</p>
+            </div>
+          )}
+
+          {/* KONDISI A: SUDAH ADA BUKTI TERUNGGAH & TIDAK SEDANG DALAM MODE GANTI */}
+          {hasUploadedProof && !isChangeReceiptMode && (
+            <div className="p-5 rounded-2xl bg-black/70 space-y-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div
+                    onClick={() => {
+                      setLightboxImageUrl(localOrder.proof_of_payment_url || '');
+                      setShowReceiptLightbox(true);
+                    }}
+                    className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-black cursor-pointer group shrink-0 border border-white/10 hover:border-[#FA6D0B] transition-colors"
+                  >
+                    <img
+                      src={localOrder.proof_of_payment_url || ''}
+                      alt="Bukti Transfer Terunggah"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                    />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent flex items-center justify-center text-[9px] text-white font-bold uppercase transition-all">
+                      LIHAT
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <span className="text-[10px] text-[#FA6D0B] font-bold tracking-widest uppercase block">
+                      BUKTI DITERIMA DI SISTEM PANITIA
+                    </span>
+                    <span className="text-white font-bold text-xs sm:text-sm block">
+                      {localOrder.order_id} · TERTANGGAL {new Date().toLocaleDateString('id-ID')}
+                    </span>
+                    <p className="text-[11px] text-slate-400 font-sans leading-relaxed">
+                      Bukti transfer tersimpan. Admin panitia akan memeriksa kecocokan mutasi dan menerbitkan nomor BIB resmi.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2 self-stretch md:self-auto justify-end">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLightboxImageUrl(localOrder.proof_of_payment_url || '');
+                      setShowReceiptLightbox(true);
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-white/[0.06] text-white hover:bg-white/[0.12] text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
+                  >
+                    ZOOM STRUK
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsChangeReceiptMode(true);
+                      setCompressedResult(null);
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-white/[0.06] text-slate-300 hover:text-white hover:bg-white/[0.12] text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
+                  >
+                    UNGGAH ULANG BUKTI LAIN
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* KONDISI B: BELUM ADA BUKTI ATAU SEDANG DALAM MODE GANTI */}
+          {(!hasUploadedProof || isChangeReceiptMode) && (
+            <div className="space-y-4">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+                id="receipt-file-input"
+              />
+
+              {!compressedResult ? (
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const droppedFile = e.dataTransfer.files?.[0];
+                    if (droppedFile) {
+                      const input = fileInputRef.current;
+                      if (input) {
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(droppedFile);
+                        input.files = dataTransfer.files;
+                        handleFileChange({ target: input } as any);
+                      }
+                    }
+                  }}
+                  className="p-8 sm:p-10 rounded-2xl border-2 border-dashed border-white/20 hover:border-[#FA6D0B] bg-white/[0.02] hover:bg-white/[0.05] transition-all cursor-pointer text-center space-y-3 group"
+                >
+                  <div className="space-y-1">
+                    <span className="font-display italic text-lg sm:text-xl font-black uppercase tracking-tight text-white group-hover:text-[#FA6D0B] transition-colors block">
+                      {isCompressing
+                        ? 'SEDANG MENGOMPRES GAMBAR (CANVAS ENGINE)...'
+                        : 'KLIK ATAU TARIK STRUK BUKTI TRANSFER KE SINI'}
+                    </span>
+                    <span className="text-xs text-slate-400 font-mono tracking-wider uppercase block">
+                      MENDUKUNG FORMAT: JPG · PNG · WEBP (MAKSIMAL 15 MB)
+                    </span>
+                  </div>
+
+                  <div className="inline-block px-4 py-1.5 rounded-full bg-white/[0.06] text-[10px] text-slate-300 uppercase tracking-widest font-bold">
+                    OTOMATIS DIKOMPRES HINGGA ~95% LEBIH KECIL TANPA PECAH
+                  </div>
+                </div>
+              ) : (
+                /* Card Hasil Kompresi Instan */
+                <div className="p-6 rounded-2xl bg-black/70 space-y-5">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-white/10 pb-3">
+                    <span className="text-xs font-bold text-[#FA6D0B] uppercase tracking-wider">
+                      // HASIL KOMPRESI KLIEN SIAP KIRIM
+                    </span>
+                    <span className="text-[10px] text-white px-2.5 py-0.5 rounded bg-white/10 font-bold uppercase">
+                      WEBP ULTRA-RINGAN
+                    </span>
+                  </div>
+
+                  {/* Telemetri Hasil Kompresi */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                    <div className="p-3 rounded-xl bg-white/[0.04] space-y-0.5">
+                      <span className="text-slate-400 text-[10px] uppercase tracking-wider block">UKURAN ASLI</span>
+                      <strong className="text-white font-mono block">
+                        {formatBytes(compressedResult.originalSizeBytes)}
+                      </strong>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/[0.04] space-y-0.5">
+                      <span className="text-slate-400 text-[10px] uppercase tracking-wider block">TERKOMPRES</span>
+                      <strong className="text-[#FA6D0B] font-mono block">
+                        {formatBytes(compressedResult.compressedSizeBytes)}
+                      </strong>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/[0.04] space-y-0.5">
+                      <span className="text-slate-400 text-[10px] uppercase tracking-wider block">EFISIENSI</span>
+                      <strong className="text-white font-mono block">
+                        −{compressedResult.reductionPercentage}% LEBIH CEPAT
+                      </strong>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/[0.04] space-y-0.5">
+                      <span className="text-slate-400 text-[10px] uppercase tracking-wider block">DIMENSI</span>
+                      <strong className="text-slate-300 font-mono block">
+                        {compressedResult.width} × {compressedResult.height} PX
+                      </strong>
+                    </div>
+                  </div>
+
+                  {/* Pratinjau Gambar Terkompresi */}
+                  <div className="flex items-center gap-4 p-3 rounded-xl bg-black/50">
+                    <div
+                      onClick={() => {
+                        setLightboxImageUrl(compressedResult.dataUrl);
+                        setShowReceiptLightbox(true);
+                      }}
+                      className="w-16 h-16 rounded-lg overflow-hidden bg-black shrink-0 cursor-pointer border border-white/10 hover:border-[#FA6D0B] transition-colors"
+                    >
+                      <img
+                        src={compressedResult.dataUrl}
+                        alt="Preview Terkompres"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="space-y-0.5 text-xs">
+                      <span className="text-white font-bold block">{compressedResult.file.name}</span>
+                      <span className="text-slate-400 text-[11px] block">
+                        Klik thumbnail untuk melihat struk ukuran penuh sebelum dikirim.
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Tombol Aksi Upload */}
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                    <button
+                      type="button"
+                      disabled={isUploading}
+                      onClick={handleSubmitProof}
+                      className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#FA6D0B] text-black font-mono font-black text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-all cursor-pointer shadow-[0_0_20px_rgba(250,109,11,0.35)] active:scale-95 text-center disabled:opacity-50"
+                    >
+                      {isUploading
+                        ? t('MENGUNGGAH BUKTI TERKOMPRESI...', 'UPLOADING COMPRESSED PROOF...')
+                        : t('KIRIM BUKTI PEMBAYARAN SEKARANG', 'SUBMIT PAYMENT PROOF NOW')}
+                    </button>
+
+                    <button
+                      type="button"
+                      disabled={isUploading}
+                      onClick={() => setCompressedResult(null)}
+                      className="w-full sm:w-auto px-6 py-4 rounded-full border border-white/20 bg-white/[0.04] text-slate-300 hover:text-white hover:bg-white/10 text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer text-center"
+                    >
+                      PILIH ULANG GAMBAR
+                    </button>
+
+                    {hasUploadedProof && (
+                      <button
+                        type="button"
+                        onClick={() => setIsChangeReceiptMode(false)}
+                        className="text-xs text-slate-400 hover:text-white underline uppercase tracking-wider text-center py-2"
+                      >
+                        Batal
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 1-Click WhatsApp Direct Dispatch & Message Simulator Card */}
       {primaryParticipant && (
@@ -438,15 +799,28 @@ export default function InvoiceCockpit({
             {t('KARTU BIB DIGITAL ATLET TERDAFTAR', 'OFFICIAL DIGITAL ATHLETE RACE BIB')}
           </span>
           <span className="text-xs text-[#FA6D0B] uppercase tracking-widest font-bold">
-            {isPaid ? t('LUNAS · READY RPC', 'PAID · READY FOR RPC') : t('RESERVASI TERKUNCI', 'RESERVATION LOCKED')}
+            {isPaid
+              ? t('LUNAS · READY RPC', 'PAID · READY FOR RPC')
+              : isPendingVerification
+              ? t('MENUNGGU VERIFIKASI ADMIN', 'AWAITING ADMIN VERIFICATION')
+              : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
           </span>
         </div>
+
+        {!isPaid && (
+          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 font-mono text-xs text-slate-300">
+            <span className="text-[#FA6D0B] font-bold block">// CATATAN REGULASI NOMOR DADA (BIB):</span>
+            <span className="text-slate-400 text-[11px] font-sans">
+              Nomor dada resmi BIB saat ini masih kosong/belum diterbitkan. Nomor BIB akan otomatis terisi berurutan dari urutan nomor terakhir yang terverifikasi segera setelah pembayaran Anda disetujui oleh admin panitia.
+            </span>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {participants.map((p) => (
             <BibCard
               key={p.id || p.registration_code}
-              bibNumber={p.bib_number || 'PENDING'}
+              bibNumber={isPaid && p.bib_number ? p.bib_number : 'BELUM TERBIT'}
               fullName={p.full_name}
               categoryName={category.name}
               distanceKm={category.distance_km}
@@ -505,20 +879,9 @@ export default function InvoiceCockpit({
         </div>
       )}
 
-      {/* Action & Simulation Bar */}
+      {/* Action Bar */}
       <div className="p-6 sm:p-8 rounded-2xl bg-black/60 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.7)] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono relative overflow-hidden">
-        {!isPaid ? (
-          onSimulateSuccess && (
-            <button
-              type="button"
-              disabled={isSimulating}
-              onClick={onSimulateSuccess}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#FA6D0B]/15 text-[#FA6D0B] hover:bg-[#FA6D0B] hover:text-black font-bold uppercase tracking-wider text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap shadow-[0_0_20px_rgba(250,109,11,0.2)] hover:shadow-[0_0_25px_rgba(250,109,11,0.5)]"
-            >
-              {isSimulating ? t('MEMPROSES VERIFIKASI...', 'PROCESSING...') : t('SIMULASI PEMBAYARAN BERHASIL (SANDBOX)', 'SIMULATE PAYMENT SUCCESS (SANDBOX)')}
-            </button>
-          )
-        ) : (
+        {isPaid ? (
           <div className="flex items-center gap-3">
             <span className="text-xs text-[#FA6D0B] font-bold uppercase tracking-wider">
               ✓ {t('PEMBAYARAN TERVERIFIKASI SISTEM · TIKET VALID', 'PAYMENT CONFIRMED · VALID RACE PASS')}
@@ -531,6 +894,18 @@ export default function InvoiceCockpit({
               >
                 ({t('Reset ke Pending', 'Reset to Pending')})
               </button>
+            )}
+          </div>
+        ) : (
+          <div className="text-xs text-slate-300">
+            {isPendingVerification ? (
+              <span className="text-[#FA6D0B] font-bold block">
+                // MENUNGGU VERIFIKASI ADMIN · STRUK TELAH DIUNGGAH
+              </span>
+            ) : (
+              <span className="text-slate-400 block">
+                // MENUNGGU TRANSFER & UNGGAH BUKTI PEMBAYARAN
+              </span>
             )}
           </div>
         )}
@@ -553,6 +928,47 @@ export default function InvoiceCockpit({
           </Link>
         </div>
       </div>
+
+      {/* LIGHTBOX MODAL UNTUK PREVIEW STRUK / BUKTI TRANSFER */}
+      {showReceiptLightbox && lightboxImageUrl && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center p-4 sm:p-6 backdrop-blur-md animate-fade-in-area"
+          onClick={() => setShowReceiptLightbox(false)}
+        >
+          <div
+            className="w-full max-w-2xl bg-[#0D0E11] rounded-2xl p-5 sm:p-6 space-y-4 shadow-[0_25px_70px_rgba(0,0,0,0.9)] border border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono">
+              <span className="text-xs font-bold text-white uppercase tracking-wider">
+                PRATINJAU STRUK BUKTI TRANSFER // {localOrder.order_id}
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowReceiptLightbox(false)}
+                className="px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
+              >
+                ✕ TUTUP
+              </button>
+            </div>
+
+            <div className="max-h-[70vh] overflow-auto flex items-center justify-center bg-black/80 rounded-xl p-2">
+              <img
+                src={lightboxImageUrl}
+                alt="Bukti Transfer Penuh"
+                className="max-h-[65vh] max-w-full object-contain rounded-lg"
+              />
+            </div>
+
+            <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
+              <span>{category.name} · {formatRupiah(localOrder.net_amount)}</span>
+              <span className="text-[#FA6D0B] font-bold">GX-ID OFFICIAL AUDIT</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

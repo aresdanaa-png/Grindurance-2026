@@ -19,9 +19,9 @@ export interface Category {
 }
 
 export type PackageType = 'MEDAL_ONLY' | 'MEDAL_JERSEY';
-export type PaymentStatus = 'PENDING' | 'PAID' | 'EXPIRED' | 'FAILED' | 'CANCELLED';
+export type PaymentStatus = 'PENDING' | 'PENDING_VERIFICATION' | 'PAID' | 'EXPIRED' | 'FAILED' | 'CANCELLED' | 'REJECTED';
 export type RiderRole = 'SINGLE' | 'PAIR_RIDER_1' | 'PAIR_RIDER_2';
-export type JerseySize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL';
+export type JerseySize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | '2XL' | '3XL';
 export type Gender = 'male' | 'female';
 
 export interface Order {
@@ -41,8 +41,14 @@ export interface Order {
   qris_url?: string | null;
   snap_token?: string | null;
   payment_url?: string | null;
+  proof_of_payment_url?: string | null;
   paid_at?: string | null;
+  verified_at?: string | null;
+  verified_by?: string | null;
+  admin_notes?: string | null;
+  raw_payload?: any;
   created_at: string;
+  updated_at?: string;
 }
 
 export interface Participant {

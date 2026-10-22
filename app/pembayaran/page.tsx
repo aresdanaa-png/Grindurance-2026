@@ -330,7 +330,7 @@ function PembayaranContent() {
               </div>
             )}
 
-            {/* Render InvoiceCockpit jika Status PENDING */}
+            {/* Render InvoiceCockpit */}
             <InvoiceCockpit
               order={activeOrder}
               category={activeCategory || {
@@ -353,6 +353,7 @@ function PembayaranContent() {
               participants={activeParticipants}
               onSimulateSuccess={handleSimulateSuccess}
               isSimulating={isSimulating}
+              onProofUploaded={(updatedOrder) => setActiveOrder(updatedOrder)}
             />
 
           </div>

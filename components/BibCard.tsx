@@ -121,7 +121,13 @@ export default function BibCard({
 
         {/* NOMOR DADA BESAR (MAIN BIB DISPLAY) */}
         <div className="py-4 text-center">
-          <div className="text-7xl sm:text-8xl font-black tracking-tighter text-slate-950 font-display italic">
+          <div
+            className={`font-black tracking-tighter text-slate-950 font-display italic ${
+              typeof bibNumber === 'number' || (!isNaN(Number(bibNumber)) && Number(bibNumber) > 0)
+                ? 'text-7xl sm:text-8xl'
+                : 'text-2xl sm:text-3xl py-4 uppercase tracking-wider'
+            }`}
+          >
             {bibNumber}
           </div>
 

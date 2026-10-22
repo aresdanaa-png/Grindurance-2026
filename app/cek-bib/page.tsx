@@ -127,20 +127,33 @@ export default function CekBibPage() {
                       registrationCode={p.registration_code}
                     />
                   ) : (
-                    <div className="max-w-md mx-auto rounded-2xl bg-gradient-to-br from-[#FA6D0B]/10 via-black/70 to-black/85 backdrop-blur-xl p-6 sm:p-7 text-center space-y-3 shadow-[0_20px_60px_rgba(250,109,11,0.2)] font-mono">
+                    <div className="max-w-md mx-auto rounded-2xl bg-black/75 backdrop-blur-xl p-6 sm:p-7 text-center space-y-3.5 shadow-[0_20px_60px_rgba(0,0,0,0.7)] font-mono border border-white/10">
                       <span className="font-mono text-xs font-bold text-[#FA6D0B] uppercase tracking-wider block">
-                        {t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
+                        // {p.order?.payment_status === 'PENDING_VERIFICATION' ? t('BUKTI DIUNGGAH · MENUNGGU VERIFIKASI', 'PROOF UPLOADED · AWAITING VERIFICATION') : t('MENUNGGU PEMBAYARAN', 'PAYMENT PENDING')}
                       </span>
                       <h4 className="font-display italic text-2xl font-black text-white uppercase tracking-tight">{p.full_name}</h4>
                       <p className="text-xs text-slate-300">
                         {t('Kode:', 'Code:')} <span className="font-bold text-white">{p.registration_code}</span> | {t('Kategori:', 'Category:')} <span className="text-white font-bold">{p.category?.name}</span>
                       </p>
                       <p className="text-xs text-slate-300 leading-relaxed font-sans pt-1">
-                        {t(
-                          `Tagihan sebesar Rp ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} belum terverifikasi lunas sehingga nomor BIB belum diterbitkan.`,
-                          `Invoice of IDR ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} is not yet confirmed, so BIB number has not been generated.`
-                        )}
+                        {p.order?.payment_status === 'PENDING_VERIFICATION'
+                          ? t(
+                              'Bukti transfer telah diunggah dan sedang dalam antrean verifikasi mutasi oleh admin panitia. Nomor dada (BIB) resmi akan terisi otomatis setelah disetujui.',
+                              'Payment proof has been submitted and is currently in queue for admin verification. The official BIB will be issued upon approval.'
+                            )
+                          : t(
+                              `Tagihan sebesar Rp ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} belum diverifikasi sehingga nomor BIB belum diterbitkan.`,
+                              `Invoice of IDR ${Number(p.order?.net_amount || 0).toLocaleString('id-ID')} is not yet verified, so BIB number has not been generated.`
+                            )}
                       </p>
+                      <div className="pt-2">
+                        <a
+                          href={`/pembayaran?code=${p.registration_code}`}
+                          className="inline-block px-5 py-2.5 rounded-full bg-[#FA6D0B] text-black font-mono font-bold text-xs uppercase tracking-wider hover:bg-[#DE5A00] transition-colors"
+                        >
+                          {p.order?.payment_status === 'PENDING_VERIFICATION' ? t('PANTAU STATUS TAGIHAN', 'TRACK INVOICE STATUS') : t('BAYAR SEKARANG', 'PAY NOW')}
+                        </a>
+                      </div>
                     </div>
                   )}
                 </div>

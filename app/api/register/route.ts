@@ -153,7 +153,7 @@ export async function POST(req: Request) {
       .from('orders')
       .insert({
         order_id,
-        category_id: effectiveCategoryId,
+        category_id: category.id,
         package_type,
         gross_amount,
         discount_meal_coupon,
@@ -210,7 +210,7 @@ export async function POST(req: Request) {
       blood_type: rider.blood_type || '-',
       medical_notes: rider.medical_notes || null,
       community_chapter: rider.community_chapter || 'Umum',
-      category_id,
+      category_id: category.id,
       jersey_size: package_type === 'MEDAL_JERSEY' ? rider.jersey_size : '-',
       has_meal_coupon: hasCoupon,
       status: 'REGISTERED',
