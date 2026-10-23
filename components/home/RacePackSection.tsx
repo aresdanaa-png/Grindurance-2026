@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Button } from '@/components/ui';
 import { useLanguage } from '@/lib/context/LanguageContext';
 import { PACK_TIERS, RPC_LOGISTICS, RPC_REQUIREMENTS, OFFICIAL_GEAR_ITEMS, OfficialGearItem } from '@/lib/data/racepacks';
@@ -8,8 +9,27 @@ import SizeChartModal from '@/components/SizeChartModal';
 
 export default function RacePackSection() {
   const { t } = useLanguage();
+  const [mounted, setMounted] = useState(false);
   const [showSizeChartModal, setShowSizeChartModal] = useState(false);
   const [previewGear, setPreviewGear] = useState<OfficialGearItem | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!previewGear) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setPreviewGear(null);
+    };
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [previewGear]);
 
   return (
     <>
@@ -314,7 +334,7 @@ export default function RacePackSection() {
                         onClick={() => setPreviewGear(gear)}
                         className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
                       >
-                        <span>{t('DETAIL RELIEF 3D MEDALI', 'VIEW 3D MEDAL RELIEF')}</span>
+                        <span>{t('PERBESAR FOTO MEDALI', 'ENLARGE MEDAL PHOTO')}</span>
                       </button>
                     )}
 
@@ -324,7 +344,7 @@ export default function RacePackSection() {
                         onClick={() => setPreviewGear(gear)}
                         className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
                       >
-                        <span>{t('PREVIEW STARTER KIT (RPC)', 'VIEW RPC STARTER KIT')}</span>
+                        <span>{t('PERBESAR FOTO STARTER KIT', 'ENLARGE STARTER KIT PHOTO')}</span>
                       </button>
                     )}
                   </div>
@@ -369,76 +389,43 @@ export default function RacePackSection() {
           onClose={() => setShowSizeChartModal(false)}
         />
 
-        {/* Modal Detail Item Gear Resmi (Lightbox) */}
-        {previewGear && (
+        {/* Modal Perbesar Gambar Gear Resmi (Pure Image Zoom Lightbox Only) */}
+        {mounted && previewGear && previewGear.imageSrc && createPortal(
           <div
             role="dialog"
             aria-modal="true"
-            className="fixed inset-0 z-[120] bg-black/95 flex flex-col items-center justify-center p-3 sm:p-6 backdrop-blur-md animate-fade-in-area overflow-y-auto"
+            aria-label={t(previewGear.title.id, previewGear.title.en)}
+            className="fixed inset-0 z-[9999] bg-black/95 flex flex-col items-center justify-center p-3 sm:p-6 backdrop-blur-md animate-fade-in-area cursor-zoom-out"
             onClick={() => setPreviewGear(null)}
           >
             <div
-              className="w-full max-w-2xl bg-gradient-to-b from-[#14161B] via-[#0E1014] to-[#0A0B0E] rounded-3xl p-5 sm:p-7 space-y-5 shadow-[0_30px_90px_rgba(0,0,0,0.95)] max-h-[92vh] overflow-y-auto"
+              className="relative max-w-4xl w-full flex flex-col items-center justify-center cursor-default space-y-3"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between border-b border-white/10 pb-3 font-mono">
-                <div>
-                  <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider block">
-                    // {t(previewGear.title.id, previewGear.title.en)}
-                  </span>
-                  <span className="text-[11px] text-[#FA6D0B] uppercase tracking-wider block mt-0.5">
-                    {previewGear.visualPreview.topLeftText} · {t(previewGear.tagCategory.id, previewGear.tagCategory.en)}
-                  </span>
-                </div>
+              <div className="w-full flex items-center justify-between pb-3 border-b border-white/10 font-mono">
+                <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                  // {t(previewGear.title.id, previewGear.title.en)}
+                </span>
                 <button
                   type="button"
                   onClick={() => setPreviewGear(null)}
-                  className="px-3 py-1.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white font-mono text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-white hover:text-black font-mono text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer select-none"
+                  aria-label="Tutup preview gambar"
                 >
                   ✕ TUTUP
                 </button>
               </div>
 
-              {previewGear.imageSrc && (
-                <div className="rounded-2xl overflow-hidden bg-black flex items-center justify-center p-2 sm:p-4 shadow-inner">
-                  <img
-                    src={previewGear.imageSrc}
-                    alt={t(previewGear.title.id, previewGear.title.en)}
-                    className="w-full h-auto max-h-[52vh] object-contain rounded-xl"
-                  />
-                </div>
-              )}
-
-              <div className="space-y-3 font-sans">
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {t(previewGear.description.id, previewGear.description.en)}
-                </p>
-
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10 font-mono text-xs">
-                  {previewGear.specs.map((spec, sIdx) => (
-                    <div key={sIdx} className="flex items-center gap-2 text-slate-300">
-                      <span className="text-[#FA6D0B] font-bold">·</span>
-                      <span>{t(spec.id, spec.en)}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
-                <span className="text-[11px] font-mono text-slate-400 uppercase">
-                  STATUS: {t(previewGear.visualPreview.bottomTagRight.id, previewGear.visualPreview.bottomTagRight.en)}
-                </span>
-                <Button
-                  href="/daftar"
-                  variant="primary"
-                  size="sm"
-                  withArrow
-                >
-                  {t('PILIH PAKET & DAFTAR', 'SELECT PACK & REGISTER')}
-                </Button>
+              <div className="w-full flex items-center justify-center p-2 sm:p-4 rounded-2xl bg-[#0D0E11]/90 shadow-[0_30px_90px_rgba(0,0,0,0.95)]">
+                <img
+                  src={previewGear.imageSrc}
+                  alt={t(previewGear.title.id, previewGear.title.en)}
+                  className="w-auto h-auto max-w-full max-h-[82vh] object-contain rounded-xl select-none"
+                />
               </div>
             </div>
-          </div>
+          </div>,
+          document.body
         )}
       </section>
     </>
