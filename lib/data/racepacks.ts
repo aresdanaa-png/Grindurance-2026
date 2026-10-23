@@ -287,7 +287,7 @@ export const OFFICIAL_GEAR_ITEMS: OfficialGearItem[] = [
       { id: 'Asuransi Kecelakaan 1 Hari', en: '1-Day Accident Insurance' },
       { id: 'Voucher ABBEY Coffee & Stiker', en: 'ABBEY Coffee Voucher & Stickers' },
     ],
-    imageSrc: '/racepacks/racepack-bundle.webp',
+    imageSrc: '/racepacks/starter-kit.webp',
     visualPreview: {
       topLeftText: 'PENGAMBILAN RPC',
       topRightText: { id: 'STARTER PACK', en: 'STARTER PACK' },
