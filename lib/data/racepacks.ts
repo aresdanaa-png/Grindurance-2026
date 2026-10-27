@@ -165,10 +165,10 @@ export interface RpcRequirement {
 export const RPC_LOGISTICS: RpcOption[] = [
   {
     id: 'pickup',
-    tag: { id: 'PENGAMBILAN MANDIRI (H-7)', en: 'IN-PERSON PICKUP (H-7)' },
+    tag: { id: 'PENGAMBILAN MANDIRI & PRA-EVENT (H-6)', en: 'IN-PERSON PICKUP & PRE-EVENT (D-6)' },
     badge: { id: 'GRATIS (RP 0)', en: 'FREE (IDR 0)' },
     badgeHighlight: false,
-    title: { id: 'MINGGU, 6 DESEMBER 2026', en: 'SUNDAY, DEC 6, 2026' },
+    title: { id: 'MINGGU, 13 DESEMBER 2026', en: 'SUNDAY, DEC 13, 2026' },
     subtitle: { id: 'ABBEY Coffee & Eatery · Stasiun LRT Harjamukti Cibubur · 10:00–17:00 WIB', en: 'ABBEY Coffee & Eatery · Harjamukti LRT Station Cibubur · 10:00–17:00 WIB' },
     items: [
       { id: 'Pengambilan Starter Kit (Plat BIB #1000+, Nutrisi NDR, Asuransi, Voucher ABBEY)', en: 'Starter Kit collection (BIB Plate #1000+, NDR Nutrition, Insurance, ABBEY Voucher)' },
@@ -181,10 +181,10 @@ export const RPC_LOGISTICS: RpcOption[] = [
     tag: { id: 'LAYANAN MEJA HARI-H', en: 'RACE-DAY DESK SERVICE' },
     badge: { id: '+RP 20.000 / PESERTA', en: '+IDR 20,000 / RIDER' },
     badgeHighlight: true,
-    title: { id: 'MINGGU, 13 DESEMBER 2026', en: 'SUNDAY, DEC 13, 2026' },
+    title: { id: 'SABTU, 19 DESEMBER 2026', en: 'SATURDAY, DEC 19, 2026' },
     subtitle: { id: 'Meja Khusus Registrasi Ulang Subuh di Venue Start · 04:30–05:15 WIB', en: 'Dedicated Dawn Re-Registration Desk at Start Venue · 04:30–05:15 WIB' },
     items: [
-      { id: 'Khusus peserta berdomisili luar kota atau berhalangan hadir saat RPC H-7', en: 'Specifically for out-of-town riders or unable to attend H-7 RPC Day' },
+      { id: 'Khusus peserta berdomisili luar kota atau berhalangan hadir saat RPC 13 Des', en: 'Specifically for out-of-town riders or unable to attend Dec 13 RPC Day' },
       { id: 'Starter Kit disiapkan khusus di meja check-in fajar sebelum pelepasan start', en: 'Starter Kit staged at dawn check-in desk prior to wave dispatch' },
       { id: 'Dipilih langsung saat registrasi online dengan handling fee resmi Rp 20.000', en: 'Selected during online registration with official IDR 20,000 handling fee' },
     ],

@@ -79,7 +79,7 @@ export default function CategoryCockpit() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/[0.06] pb-3 sm:pb-4">
             <div className="space-y-3">
               <span className="text-sm sm:text-base md:text-lg font-black text-[#FA6D0B] uppercase tracking-widest block font-mono">
-                70 — 200 KM CHALLENGE
+                70+ KM UP TO 200+ KM CHALLENGE
               </span>
               <div className="relative w-full max-w-[340px] sm:max-w-[440px] md:max-w-[520px] lg:max-w-[580px] group">
                 {/* Subtle ambient backlight glow in brand orange */}
@@ -861,9 +861,9 @@ export default function CategoryCockpit() {
                 </span>
                 <div className="text-xs sm:text-[13px] text-slate-300 font-medium leading-relaxed">
                   {currentCategory.isRace ? (
-                    <span>{t('Wajib mengaktifkan Live Tracking via ', 'Mandatory Live Tracking via ')}<strong>RaceRoute.id / Traccar</strong>{t('. Perebutan Podium Resmi Top 3 (Putra, Putri & Tim Tandem Pair Mix). Format balap kompetitif tercepat.', '. Top 3 Official Podium contest (Men, Women & Pair Mix Tandem Teams). Fastest competitive race format.')}</span>
+                    <span>{t('Wajib mengaktifkan Live Tracking resmi via ', 'Mandatory Official Live Tracking via ')}<strong>RaceRoute.id</strong>{t('. Perebutan Podium Resmi Top 3 (Putra, Putri & Tim Tandem Pair Mix). Format balap kompetitif tercepat.', '. Top 3 Official Podium contest (Men, Women & Pair Mix Tandem Teams). Fastest competitive race format.')}</span>
                   ) : (currentCategory.id === '150' || currentCategory.id === '200') ? (
-                    <span>{t('Wajib menyelesaikan ', 'Mandatory ')}<strong>{t('Prolog 30 km mandiri (03:00–05:00 WIB)', '30 km self-start prologue (03:00–05:00 WIB)')}</strong>{t(' sebelum registrasi start. Wajib istirahat ', ' before morning staging. Mandatory ')}<strong>{t('Pitstop 30 Menit di CP#4', '30-Minute Pitstop at CP#4')}</strong>{t(' (penalti 300% jika melanggar). Wajib wet lube & ban 35–40mm.', ' (300% penalty for violations). Wet lube & 35–40mm tires required.')}</span>
+                    <span>{t('Wajib menyelesaikan ', 'Mandatory ')}<strong>{t('Prolog 30 km mandiri (03:00–05:00 WIB)', '30 km self-start prologue (03:00–05:00 WIB)')}</strong>{t(' sebelum registrasi start. Wajib istirahat ', ' before morning staging. Mandatory ')}<strong>{t('Pitstop Wajib 30 Menit (TBA)', 'Mandatory 30-Minute Pitstop (TBA)')}</strong>{t(' (penalti 300% jika melanggar). Wajib wet lube & ban 35–40mm.', ' (300% penalty for violations). Wet lube & 35–40mm tires required.')}</span>
                   ) : currentCategory.id === 'VIRTUAL' ? (
                     <span>{t('Khusus domisili luar Jabodetabek. Wajib rekaman outdoor satelit murni via ', 'Exclusive for riders domiciled outside Greater Jakarta (Jabodetabek). Genuine outdoor GPS recording required via ')}<strong>Strava / Komoot</strong>{t('. Sinkronisasi otomatis Strava Webhook, medali resmi dikirim via DHS Logistik.', '. Automated Strava Webhook sync, official medal dispatched via DHS Logistics.')}</span>
                   ) : (

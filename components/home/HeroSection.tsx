@@ -8,11 +8,11 @@ export default function HeroSection() {
   const { t } = useLanguage();
 
   const mobileTickerItems = [
-    t('MINGGU, 13 DESEMBER 2026', 'SUNDAY, 13 DECEMBER 2026'),
+    t('SABTU, 19 DESEMBER 2026', 'SATURDAY, 19 DECEMBER 2026'),
     'START & FINISH: ABBEY COFFEE LRT HARJAMUKTI',
     'CIBUBUR — JONGGOL — SENTUL',
     'SELF-SUPPORTED · RAIN SEASON CHALLENGE',
-    '70K · 100K · 120K · 150K · 200K · VIRTUAL',
+    '70+K · 100+K · 120+K · 150+K · 200+K · VIRTUAL',
     t('MEAL VOUCHER ABEEY: 120K, 150K, 200K & WANITA', 'ABEEY MEAL VOUCHER: 120K, 150K, 200K & FEMALE'),
     '19 REGIONAL CHAPTERS GX-ID',
   ];
@@ -72,7 +72,7 @@ export default function HeroSection() {
             </div>
             {/* Tagline right below the title (Compact & Sleek) */}
             <h2 className="mt-1 font-display text-[9.5px] sm:text-[10px] font-black uppercase tracking-wider text-slate-200 italic text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] leading-tight">
-              UN-SUPPORTED RAIN SEASON CHALLENGE <span className="text-[#FA6D0B] font-black">·</span> 70–200 KM
+              UN-SUPPORTED RAIN SEASON CHALLENGE <span className="text-[#FA6D0B] font-black">·</span> 70+ KM UP TO 200+ KM
             </h2>
           </div>
 
@@ -115,10 +115,10 @@ export default function HeroSection() {
                     {t('OFFICIAL RACE DATE', 'OFFICIAL RACE DATE')}
                   </span>
                   <span className="font-display text-[13px] font-black uppercase text-white italic tracking-wide leading-tight block">
-                    {t('13 DESEMBER 2026', '13 DECEMBER 2026')}
+                    {t('19 DESEMBER 2026', '19 DECEMBER 2026')}
                   </span>
                   <span className="text-[8px] font-mono text-slate-400 uppercase tracking-wider block mt-0.5 leading-none">
-                    {t('MINGGU KE-2 · 05:30 WIB', 'WEEK 2 · 05:30 WIB')}
+                    {t('SABTU · 05:30 WIB', 'SATURDAY · 05:30 WIB')}
                   </span>
                 </div>
 
@@ -199,7 +199,7 @@ export default function HeroSection() {
           {/* 2. Tagline & Narrative Subtext */}
           <div className="space-y-2 max-w-4xl text-left w-full">
             <h2 className="font-display text-xl md:text-2xl lg:text-3xl text-white font-extrabold uppercase tracking-wider italic whitespace-nowrap leading-tight">
-              UN-SUPPORTED RAIN SEASON CHALLENGE <span className="text-[#FA6D0B] font-black">·</span> 70–200 KM
+              UN-SUPPORTED RAIN SEASON CHALLENGE <span className="text-[#FA6D0B] font-black">·</span> 70+ KM UP TO 200+ KM
             </h2>
             <p className="text-sm md:text-base text-slate-300 leading-relaxed font-normal max-w-2xl">
               {t(
@@ -237,7 +237,7 @@ export default function HeroSection() {
             <div className="animate-marquee flex items-center whitespace-nowrap text-[13px] font-semibold tracking-widest uppercase text-slate-300">
               {/* Set 1 */}
               <div className="flex items-center">
-                <span>{t('MINGGU, 13 DESEMBER 2026 (MINGGU KE-2)', 'SUNDAY, 13 DECEMBER 2026 (WEEK 2)')}</span>
+                <span>{t('SABTU, 19 DESEMBER 2026', 'SATURDAY, 19 DECEMBER 2026')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>START &amp; FINISH: ABBEY COFFEE &amp; LRT HARJAMUKTI CIBUBUR</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
@@ -245,7 +245,7 @@ export default function HeroSection() {
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>FORMAT: SELF-SUPPORTED · RAIN SEASON CHALLENGE</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
-                <span>{t('KATEGORI: 70 FUN GRAVEL · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA', 'CATEGORIES: 70 FUN GRAVEL · 100 FONDO · 120 (RACE) · 150 GRAND FONDO · 200 ULTRA')}</span>
+                <span>{t('KATEGORI: 70+ FUN GRAVEL · 100+ FONDO · 120+ (RACE) · 150+ GRAND FONDO · 200+ ULTRA', 'CATEGORIES: 70+ FUN GRAVEL · 100+ FONDO · 120+ (RACE) · 150+ GRAND FONDO · 200+ ULTRA')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
                 <span>{t('VIRTUAL RIDE NASIONAL: STRAVA GPS AUTO-VALIDATION', 'NATIONWIDE VIRTUAL RIDE: STRAVA GPS AUTO-VALIDATION')}</span>
                 <span className="mx-8 lg:mx-12 text-[#FA6D0B] font-bold select-none">·</span>
@@ -269,10 +269,10 @@ export default function HeroSection() {
               {/* Segment 1: Waktu & Tanggal Gelaran Resmi */}
               <div className="pr-4 md:pr-10 lg:pr-14 flex flex-col justify-center">
                 <span className="text-xs font-mono font-bold text-[#FA6D0B] uppercase tracking-widest block leading-none mb-1.5">
-                  {t('OFFICIAL RACE DATE · MINGGU KE-2', 'OFFICIAL RACE DATE · WEEK 2')}
+                  {t('OFFICIAL RACE DATE · SABTU', 'OFFICIAL RACE DATE · SATURDAY')}
                 </span>
                 <span className="font-display text-2xl lg:text-4xl font-black uppercase text-white italic tracking-wider leading-tight block">
-                  {t('MINGGU, 13 DESEMBER 2026', 'SUNDAY, 13 DECEMBER 2026')}
+                  {t('SABTU, 19 DESEMBER 2026', 'SATURDAY, 19 DECEMBER 2026')}
                 </span>
               </div>
 

@@ -126,14 +126,14 @@ Gunakan pembatas teknis balap:
 ## 8. Protokol Rilis & Penguncian Berkas GPX (H-2 Lock Protocol)
 
 1. **Jadwal Penguncian Resmi**:
-   - Tanggal Event: **Minggu, 13 Desember 2026**.
-   - Waktu Buka Kunci: **Jumat, 11 Desember 2026, 00:00 WIB (H-2)**.
+   - Tanggal Event: **Sabtu, 19 Desember 2026**.
+   - Waktu Buka Kunci: **Kamis, 17 Desember 2026, 00:00 WIB (H-2)**.
    - Konstanta terpusat di `lib/data/categories.ts`:
-     - `EVENT_DATE_ISO = '2026-12-13T00:00:00+07:00'`
-     - `GPX_UNLOCK_DATE_ISO = '2026-12-11T00:00:00+07:00'`
+     - `EVENT_DATE_ISO = '2026-12-19T00:00:00+07:00'`
+     - `GPX_UNLOCK_DATE_ISO = '2026-12-17T00:00:00+07:00'`
      - Helper: `isGpxDownloadLocked(): boolean` (mendukung override URL pengujian `?unlock_gpx=1`).
 2. **Aturan UI Tombol GPX**:
-   - Sebelum H-2: Tombol bertuliskan `TERKUNCI // H-2 (11 DES)` (pill berlatar `bg-white/[0.08]` border `border-white/20`).
+   - Sebelum H-2: Tombol bertuliskan `TERKUNCI // H-2 (17 DES)` (pill berlatar `bg-white/[0.08]` border `border-white/20`).
    - Mengklik tombol membuka **Modal Dialog Protokol Navigasi**:
      - 100% *pure typography*, tanpa icon gembok/alert.
      - Penjelasan alasan keselamatan: Finalisasi survei keselamatan rute (*safety reconnaissance*) oleh tim marshal, pemeriksaan kondisi makadam musim hujan, dan izin sterilisasi lintasan.
@@ -227,7 +227,7 @@ Saat membangun atau merevisi halaman lain, terapkan aturan spesifik berikut:
   - Lebar ban minimum 35mm (rekomendasi 38–45c).
   - Lampu depan ganda & lampu belakang merah non-flashing.
   - Kit tubeless plug / ban dalam cadangan & pelumas rantai basah (*wet lube*).
-- Sistem penalti waktu, aturan pitstop netral wajib (CP#6), dan geofencing tracking.
+- Sistem penalti waktu, aturan pitstop netral wajib (TBA), dan geofencing tracking.
 
 ### E. Halaman Peserta & Checkpoint Tracking (`/peserta`, `/checkpoint`)
 - Tabel data telemetri atlet resmi terverifikasi.

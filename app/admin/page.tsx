@@ -802,7 +802,7 @@ export default function AdminDashboardPage() {
                     BATAS WAKTU PO VENDOR (H-30):
                   </span>
                   <p className="text-slate-300 font-sans leading-relaxed text-[11px]">
-                    Sesuai dokumen teknis panitia, pemotongan pesanan jersey untuk vendor Pollride ditutup pada <strong>10 November 2026</strong> guna memastikan seluruh race pack siap sortir pada H-7 sebelum race day 13 Desember 2026.
+                    Sesuai dokumen teknis panitia, pemotongan pesanan jersey untuk vendor Pollride ditutup pada <strong>10 November 2026</strong> guna memastikan seluruh race pack siap sortir pada H-7 sebelum race day 19 Desember 2026.
                   </p>
                 </div>
 

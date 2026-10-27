@@ -22,12 +22,12 @@ export async function POST(req: Request) {
     const body: RegistrationPayload = await req.json();
     const { category_id, package_type, rpc_method, promo_code, rider_1, rider_2, waiver_agreed } = body;
 
-    // 0. Verifikasi Penutupan Pendaftaran (H-14 sebelum event / 29 November 2026 23:59:59 WIB)
+    // 0. Verifikasi Penutupan Pendaftaran (H-14 sebelum event / 5 Desember 2026 23:59:59 WIB)
     const activePhase = getActivePricingPhase();
     if (activePhase === 'CLOSED') {
       return NextResponse.json(
         { 
-          error: 'Pendaftaran resmi Grindurance 2026 telah ditutup pada 29 November 2026 pukul 23:59 WIB (H-14 sebelum race day 13 Desember 2026). Registrasi tidak dapat diproses.' 
+          error: 'Pendaftaran resmi Grindurance 2026 telah ditutup pada 5 Desember 2026 pukul 23:59 WIB (H-14 sebelum race day 19 Desember 2026). Registrasi tidak dapat diproses.' 
         },
         { status: 400 }
       );

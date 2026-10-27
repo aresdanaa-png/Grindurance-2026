@@ -84,13 +84,13 @@ export default function DaftarCategorySelect({
           </span>
           <div>
             <div className="font-mono text-xs sm:text-sm text-white font-bold leading-tight">
-              {activePhase === 'CLOSED' && t('Pendaftaran Resmi Ditutup pada 29 November 2026 pukul 23:59 WIB', 'Official Registration Closed on Nov 29, 2026 at 23:59 WIB')}
-              {activePhase === 'REGULAR' && t('Periode Reguler · Penutupan Pendaftaran: Minggu, 29 November 2026 (23:59 WIB)', 'Regular Period · Closes Sunday, Nov 29, 2026 (23:59 WIB)')}
+              {activePhase === 'CLOSED' && t('Pendaftaran Resmi Ditutup pada 5 Desember 2026 pukul 23:59 WIB', 'Official Registration Closed on Dec 5, 2026 at 23:59 WIB')}
+              {activePhase === 'REGULAR' && t('Periode Reguler · Penutupan Pendaftaran: Sabtu, 5 Desember 2026 (23:59 WIB)', 'Regular Period · Closes Saturday, Dec 5, 2026 (23:59 WIB)')}
               {activePhase === 'EARLY_BIRD' && t('Tarif Early Bird Aktif Hingga: Minggu, 15 November 2026 (23:59 WIB)', 'Early Bird Active Until: Sunday, Nov 15, 2026 (23:59 WIB)')}
             </div>
             <div className="font-mono text-[11px] text-slate-400 mt-0.5">
               {activePhase === 'CLOSED' && t('H-14 sebelum Hari-H untuk finalisasi race pack & asuransi peserta.', 'H-14 pre-event for race pack finalization & athlete insurance.')}
-              {activePhase === 'REGULAR' && t('Penutupan resmi tepat 2 minggu sebelum event (Minggu, 13 Desember 2026).', 'Officially closes 2 weeks prior to event date (Sunday, Dec 13, 2026).')}
+              {activePhase === 'REGULAR' && t('Penutupan resmi tepat 2 minggu sebelum event (Sabtu, 19 Desember 2026).', 'Officially closes 2 weeks prior to event date (Saturday, Dec 19, 2026).')}
               {activePhase === 'EARLY_BIRD' && t('Go-live 1 November · Hemat hingga Rp 150.000 dibanding tarif reguler.', 'Go-live Nov 1 · Save up to IDR 150,000 compared to regular tier.')}
             </div>
           </div>
@@ -99,12 +99,12 @@ export default function DaftarCategorySelect({
         <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] sm:text-xs text-slate-300 pt-2 md:pt-0 border-t md:border-t-0 border-white/10 shrink-0">
           <div className="flex items-center gap-1.5">
             <span className="text-[#FA6D0B] font-bold">RACE DAY:</span>
-            <span className="text-white font-bold">13 DESEMBER 2026</span>
+            <span className="text-white font-bold">19 DESEMBER 2026</span>
           </div>
           <span className="text-white/20 select-none">·</span>
           <div className="flex items-center gap-1.5">
             <span className="text-slate-400">PENUTUPAN:</span>
-            <span className="text-[#FA6D0B] font-bold">29 NOV 2026</span>
+            <span className="text-[#FA6D0B] font-bold">5 DES 2026</span>
           </div>
         </div>
       </div>

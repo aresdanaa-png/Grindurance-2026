@@ -78,7 +78,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[#FA6D0B] font-bold">DATE:</span>
-                <span className="text-slate-300">{t('Minggu, 13 Desember 2026 (Minggu Ke-2)', 'Sunday, 13 December 2026 (Week 2)')}</span>
+                <span className="text-slate-300">{t('Sabtu, 19 Desember 2026', 'Saturday, 19 December 2026')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[#FA6D0B] font-bold">COMMUNITY:</span>
@@ -129,7 +129,7 @@ export default function Footer() {
               <li>
                 <Link href="/checkpoint" className="hover:text-[#FA6D0B] transition-colors flex items-center justify-between">
                   <span>{t('Kalkulator Pitstop 300%', '300% Pitstop Calculator')}</span>
-                  <span className="text-[10px] text-slate-500">CP#4 / CP#6</span>
+                  <span className="text-[10px] text-slate-500">30 MIN (TBA)</span>
                 </Link>
               </li>
               <li className="pt-1">

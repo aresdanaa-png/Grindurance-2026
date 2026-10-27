@@ -386,7 +386,7 @@ export default function DaftarFormStep({
                       </div>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-200 mt-2 font-sans leading-relaxed">
-                      {t('ABEEY Coffee & LRT Harjamukti Cibubur (Minggu, 6 Des 2026, 10:00–17:00 WIB). Termasuk Coaching Clinic & Technical Meeting.', 'ABEEY Coffee & LRT Harjamukti Cibubur (Sunday, Dec 6, 2026, 10:00–17:00 WIB). Includes Coaching Clinic & Technical Meeting.')}
+                      {t('ABEEY Coffee & LRT Harjamukti Cibubur (Minggu, 13 Des 2026, 10:00–17:00 WIB). Termasuk Coaching Clinic & Technical Meeting.', 'ABEEY Coffee & LRT Harjamukti Cibubur (Sunday, Dec 13, 2026, 10:00–17:00 WIB). Includes Coaching Clinic & Technical Meeting.')}
                     </p>
                   </button>
 
@@ -413,7 +413,7 @@ export default function DaftarFormStep({
                       </div>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-200 mt-2 font-sans leading-relaxed">
-                      {t('Khusus peserta luar kota / berhalangan hadir saat RPC. Diambil di meja panitia saat registrasi ulang fajar Hari-H (13 Des 2026, 04:30–05:15 WIB).', 'For out-of-town riders or unable to attend RPC. Collected at organizer desk during race dawn re-registration (Dec 13, 2026, 04:30–05:15 WIB).')}
+                      {t('Khusus peserta luar kota / berhalangan hadir saat RPC. Diambil di meja panitia saat registrasi ulang fajar Hari-H (Sabtu, 19 Des 2026, 04:30–05:15 WIB).', 'For out-of-town riders or unable to attend RPC. Collected at organizer desk during race dawn re-registration (Saturday, Dec 19, 2026, 04:30–05:15 WIB).')}
                     </p>
                   </button>
                 </div>

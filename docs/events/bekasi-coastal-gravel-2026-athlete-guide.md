@@ -28,7 +28,7 @@ source: Athlete Guide PDF (43 halaman)
 | Cut Off Time final | **21:00 WIB** |
 | Gaya event | **Unsupported** (mandiri, dilarang support car/crew) |
 | Navigasi | **Wajib** cyclocomp atau HP dengan **Komoot** (file GPX) |
-| Live tracking & CP | **Wajib** install **RaceRoute.ID** + **Traccar Client** |
+| Live tracking & CP | **Wajib** install **RaceRoute.ID** (aplikasi tracking resmi) |
 | Pitstop wajib | Min **30 menit**. CP #6 untuk 50+/80+, CP #4 untuk 100+/150+ |
 | Awarding | **Hanya kategori 100K** |
 | WA darurat medis | **0815 1965 6133** (RS Hermina Bekasi) |
@@ -251,12 +251,12 @@ Platform live tracking berbasis GPS untuk gravel, bikepacking, ultra cycling, tr
 
 Manfaat: live tracking real-time (untuk keluarga, tim, panitia), validasi otomatis check-in Start/Finish/CP via geofencing, koordinasi panitia-marshal-medis, pengalaman interaktif bagi komunitas.
 
-**Setup (pakai Traccar Client)**
-1. Download **Traccar Client** (Android: Google Play, iOS: App Store).
+**Setup Live Tracking (RaceRoute.ID)**
+1. Gunakan aplikasi live tracking resmi yang ditentukan panitia.
 2. Buka app, masuk **Settings**.
-3. Isi **Server URL** dengan alamat dari panitia. URL ini **unik per peserta** dan dikirim **via email (blasting)**. Contoh `http://demo.traccar.org:5055` di panduan hanyalah **contoh**, bukan URL asli.
+3. Isi konfigurasi server sesuai petunjuk resmi dari panitia (dikirim via email blasting).
 4. Aktifkan **Continuous tracking** (ON) agar lokasi terkirim real-time.
-5. App menampilkan **Device identifier** unik. Panitia biasanya memakainya untuk menghubungkan akun Anda ke sistem live tracking.
+5. App menampilkan **Device identifier** unik untuk menghubungkan akun Anda ke sistem live tracking.
 
 Fitur lain: presisi tinggi + hemat baterai, **Offline Smart Buffering** (koordinat disimpan lokal saat sinyal hilang, dikirim otomatis saat sinyal kembali). Panduan interaktif: **raceroute.id**.
 
@@ -513,6 +513,6 @@ Ini bukan koreksi resmi, hanya hal yang terlihat tidak sinkron di PDF. Konfirmas
 5. **Jumlah anggota & chapter:** "25 kota dan wilayah" (hal. 1) vs "22 Chapter/Region" (hal. 30). Facebook Group: 55.000 (hal. 31) vs 50.000 (hal. 32). Market Place: 34.000 vs 30.000. Instagram: 4.000 vs 5.000. Strava: 4.500 vs 4.300.
 6. **Hal. 7 vs 17:** checklist menyebut "lampu depan minimal 2" untuk 100+/150+, tapi hal. 6 hanya mewajibkan lampu depan dan belakang.
 7. **Rundown race day:** "11:30-21:00 Finisher Arrival" mulai sebelum awarding (16:00-18:00), dan jam di ambulans #1 vs #2 menyebut CP yang berbeda untuk pengawalan akhir.
-8. **Placeholder URL Traccar:** `demo.traccar.org:5055` hanya contoh gambar. URL asli dikirim panitia via email.
+8. **Placeholder Server Tracking:** URL konfigurasi asli dikirim panitia via email.
 9. **Sponsor:** profil BOISTOIS ditulis "BOISTOIS" di teks tetapi logo/label "BSTS".
 10. **Teks rusak di PDF** (karakter aneh seperti "â€”") sudah dibersihkan menjadi tanda hubung (—) di versi ini.

@@ -55,7 +55,7 @@ Dokumen ini berfungsi sebagai **penjaga konteks (guardrails)** agar pengerjaan t
   - [x] Checklist keselamatan teknis: Helm CE/CPSC, Lampu Depan Ganda (>500lm), Lampu Belakang Ganda (merah steady), Rompi Reflektif (EN ISO 20471), Tool Kit, Rekomendasi Ban (min 38c, optimal 45c), Kontak Darurat SPGDT RS Hermina Cibubur.
   - [x] Terbitkan Izin Masuk Garis Start (*Wave Start Clearance*).
 - [x] **3.2 Modul Pencatatan Pitstop & Penalti 300% (`/checkpoint`):**
-  - [x] Kalkulasi waktu istirahat wajib minimal 30 menit di CP#4 Jonggol / CP#6 Sodong.
+  - [x] Kalkulasi waktu istirahat wajib minimal 30 menit di titik checkpoint pitstop resmi (TBA).
   - [x] Deteksi otomatis keberangkatan dini dan penalti 300% dari sisa waktu yang dilanggar.
 
 ---

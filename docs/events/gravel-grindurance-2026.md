@@ -17,7 +17,7 @@
 | Kategori | 60, 80, 120, 150, 200 km |
 | Target peserta offline | 300–500 orang |
 | Format tambahan | **Virtual Ride** nasional (validasi otomatis via Strava/Komoot) |
-| Tracking | RaceRoute.id + Traccar Client, geofencing checkpoint |
+| Tracking | RaceRoute.id, geofencing checkpoint |
 | Tema | Mandiri (un-supported), musim hujan, ESG |
 
 ---
@@ -117,7 +117,7 @@ Ekspektasi: **lumpur tebal, licin, risiko hipotermia**. Panitia wajib menerbitka
 ### Smart Geofencing Checkpoint
 - Tidak ada stempel/kertas manual.
 - Aplikasi **RaceRoute.id** wajib untuk kategori **120, 150, 200 km**.
-- Ponsel menjalankan **Traccar Client**; saat masuk radius geofence (contoh **50 m** dari pusat pos), server mencatat timestamp otomatis.
+- Ponsel menjalankan aplikasi tracking resmi; saat masuk radius geofence (contoh **50 m** dari pusat pos), server mencatat timestamp otomatis.
 - **Offline buffering**: data disimpan lokal saat tidak ada sinyal, dikirim otomatis saat konektivitas kembali.
 - Peta pantau publik: **Live Tracking Board**.
 
@@ -242,7 +242,7 @@ Virtual Ride (via Strava webhook):
   - Terima jika: distance >= minimum, elevation_gain >= minimum, avg_speed >= minimum
   - Terima → generate e-certificate + push alamat ke vendor logistik
 
-Tracking (RaceRoute.id + Traccar):
+Tracking (RaceRoute.id):
   - Masuk radius geofence → catat timestamp
   - Data offline di-cache lokal, kirim saat online
 ```

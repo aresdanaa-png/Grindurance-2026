@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(
         {
           error: 'FILE_LOCKED_UNTIL_H2',
-          message: 'File GPX resmi dikunci hingga H-2 (11 Desember 2026, 00:00 WIB) untuk finalisasi rute dan safety reconnaissance.',
+          message: 'File GPX resmi dikunci hingga H-2 (17 Desember 2026, 00:00 WIB) untuk finalisasi rute dan safety reconnaissance.',
           unlockDate: GPX_UNLOCK_DATE_ISO,
           category,
         },

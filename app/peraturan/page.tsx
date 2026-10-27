@@ -71,25 +71,32 @@ export default function PeraturanPage() {
 
           {/* Telemetry Metric Strip */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 font-mono text-xs">
-            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all">
+            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all flex flex-col justify-between min-h-[78px]">
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#FA6D0B]/5 rounded-full blur-xl pointer-events-none" />
               <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">SUPPORT FORMAT</span>
               <strong className="text-white text-sm sm:text-base font-bold uppercase mt-1 block">UNSUPPORTED</strong>
             </div>
-            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all">
+            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all flex flex-col justify-between min-h-[78px]">
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#FA6D0B]/5 rounded-full blur-xl pointer-events-none" />
               <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">PENALTI MAKSIMUM</span>
               <strong className="text-white text-sm sm:text-base font-bold uppercase mt-1 block">300% / DSQ SEKETIKA</strong>
             </div>
-            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all">
+            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all flex flex-col justify-between min-h-[78px]">
               <div className="absolute top-0 right-0 w-24 h-24 bg-[#FA6D0B]/5 rounded-full blur-xl pointer-events-none" />
               <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">SPESIFIKASI BAN</span>
               <strong className="text-[#FA6D0B] text-sm sm:text-base font-bold uppercase mt-1 block">MIN 35C TUBELESS</strong>
             </div>
-            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all">
+            <div className="p-4 rounded-xl bg-black/60 backdrop-blur-xl shadow-lg relative overflow-hidden group transition-all flex flex-col justify-between min-h-[78px]">
               <div className="absolute top-0 right-0 w-24 h-24 bg-white/[0.03] rounded-full blur-xl pointer-events-none" />
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">TIM MEDIS SPGDT</span>
-              <strong className="text-white text-sm sm:text-base font-bold uppercase mt-1 block">24H FREE EVACUATION</strong>
+              <div>
+                <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-bold">TIM MEDIS SPGDT</span>
+                <strong className="text-white text-xs sm:text-sm font-bold uppercase mt-1 block leading-tight">
+                  FREE EVACUATION
+                </strong>
+              </div>
+              <span className="text-[9px] text-[#FA6D0B] font-mono tracking-tight block mt-0.5">
+                (Subject to Sponsor / TBA)
+              </span>
             </div>
           </div>
         </div>
@@ -313,8 +320,8 @@ export default function PeraturanPage() {
               </h2>
               <p className="mt-3 text-sm sm:text-base text-slate-300 font-sans leading-relaxed max-w-4xl">
                 {t(
-                  'Penalti dihitung oleh panitia melalui verifikasi rekaman GPX, catatan waktu scan barcode tiap pos checkpoint, dan sistem LiveTracking Traccar. Seluruh penalti waktu akan ditambahkan langsung ke waktu tempuh resmi atlet.',
-                  'Penalties are computed by the commissaire desk auditing GPX activity files, geofence checkpoints, and Traccar live telemetry logs. Time penalties are directly added to the rider’s official elapsed time.'
+                  'Penalti dihitung oleh panitia melalui verifikasi rekaman GPX, catatan waktu scan barcode tiap pos checkpoint, dan sistem Live Tracking resmi. Seluruh penalti waktu akan ditambahkan langsung ke waktu tempuh resmi atlet.',
+                  'Penalties are computed by the commissaire desk auditing GPX activity files, geofence checkpoints, and official live telemetry logs. Time penalties are directly added to the rider’s official elapsed time.'
                 )}
               </p>
             </div>
@@ -353,7 +360,7 @@ export default function PeraturanPage() {
                       </span>
                     </td>
                     <td className="py-4 px-4 sm:px-6 text-slate-300 font-sans text-xs leading-relaxed">
-                      {t('Wajib jeda netral min. 30 menit di pos nutrisi (CP#4 / CP#6). Mangkir dikenai denda 3x lipat.', 'Mandatory 30-min neutral rest break. Skipping or under-timing incurs a 3x surcharge penalty.')}
+                      {t('Wajib jeda netral min. 30 menit di checkpoint / pos pitstop resmi (TBA). Mangkir dikenai denda 3x lipat.', 'Mandatory 30-min neutral rest break at designated official checkpoint (TBA). Skipping or under-timing incurs a 3x surcharge penalty.')}
                     </td>
                   </tr>
                   <tr className="hover:bg-white/[0.04] transition-colors">
@@ -366,7 +373,7 @@ export default function PeraturanPage() {
                       </span>
                     </td>
                     <td className="py-4 px-4 sm:px-6 text-slate-300 font-sans text-xs leading-relaxed">
-                      {t('Tidak ada log barcode scan atau geofencing Traccar di titik pos terkait.', 'Missing timestamp verification or geofence breadcrumb at designated checkpoint.')}
+                      {t('Tidak ada log barcode scan atau geofencing di titik pos terkait.', 'Missing timestamp verification or geofence breadcrumb at designated checkpoint.')}
                     </td>
                   </tr>
                   <tr className="hover:bg-white/[0.04] transition-colors">
@@ -712,12 +719,12 @@ export default function PeraturanPage() {
 
             <div>
               <h2 className="font-display italic text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
-                {t('TIM MEDIS SPGDT & EVAKUASI RESMI BEBAS BIAYA', 'OFFICIAL SPGDT PARAMEDICS & FREE EVACUATION')}
+                {t('TIM MEDIS SPGDT & SISTEM EVAKUASI', 'OFFICIAL SPGDT PARAMEDICS & EVACUATION')}
               </h2>
               <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed font-sans max-w-4xl">
                 {t(
-                  'Ambulans mobile berfasilitas Advance Life Support dan tim paramedis sepeda motor trail bersiaga di koridor Jonggol & Sukamakmur. Evakuasi medis darurat di rute perlombaan untuk atlet terdaftar resmi adalah BEBAS BIAYA (GRATIS).',
-                  'Mobile Advance Life Support ambulances and dirt-bike paramedic teams patrol the Jonggol & Sukamakmur corridors. Emergency route evacuation for registered riders is completely FREE OF CHARGE.'
+                  'Ambulans mobile berfasilitas Advance Life Support dan tim paramedis sepeda motor trail bersiaga di koridor Jonggol & Sukamakmur. Layanan evakuasi gratis (Free Evacuation) bersifat tentatif mengikuti konfirmasi sponsor resmi (Subject to Sponsor / TBA — to be advised).',
+                  'Mobile Advance Life Support ambulances and dirt-bike paramedic teams patrol the Jonggol & Sukamakmur corridors. Emergency Free Evacuation service is tentative subject to official sponsor partnership (Subject to Sponsor / TBA — to be advised).'
                 )}
               </p>
             </div>

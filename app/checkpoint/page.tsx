@@ -9,7 +9,7 @@ export default function CheckpointPage() {
   const { t } = useLanguage();
   const [bibNumber, setBibNumber] = useState('2001');
   const [riderName, setRiderName] = useState('Bagus Setyawan (Ultra Gravel 200)');
-  const [selectedCp, setSelectedCp] = useState('CP#4'); // CP#4 Jonggol
+  const [selectedCp, setSelectedCp] = useState('CP_A');
   const [actualRestMinutes, setActualRestMinutes] = useState(18);
 
   const MANDATORY_REST_MIN = 30;
@@ -34,8 +34,8 @@ export default function CheckpointPage() {
           </h1>
           <p className="text-sm sm:text-base text-slate-300 mt-3 max-w-3xl leading-relaxed font-sans">
             {t(
-              'Implementasi aturan resmi GX-ID: Istirahat wajib minimal 30 menit di CP#4 (Jonggol) / CP#6 (Sodong). Pelanggaran keberangkatan dini dikenakan penalti 300% dari sisa waktu istirahat yang tidak dipenuhi.',
-              'Official GX-ID rule implementation: Mandatory 30-minute rest at CP#4 (Jonggol) / CP#6 (Sodong). Early departure incurs a 300% penalty on the unfulfilled mandatory dwell time.'
+              'Implementasi aturan resmi GX-ID: Istirahat wajib minimal 30 menit di titik checkpoint pitstop resmi (TBA). Pelanggaran keberangkatan dini dikenakan penalti 300% dari sisa waktu istirahat yang tidak dipenuhi.',
+              'Official GX-ID rule implementation: Mandatory 30-minute rest at designated official checkpoint pitstop (TBA). Early departure incurs a 300% penalty on the unfulfilled mandatory dwell time.'
             )}
           </p>
         </div>
@@ -58,30 +58,30 @@ export default function CheckpointPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 font-mono">
               <button
                 type="button"
-                onClick={() => setSelectedCp('CP#4')}
+                onClick={() => setSelectedCp('CP_A')}
                 className={`p-4 rounded-xl text-left transition-all cursor-pointer shadow-lg ${
-                  selectedCp === 'CP#4'
+                  selectedCp === 'CP_A'
                     ? 'bg-black/90 ring-2 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.25)]'
                     : 'bg-black/40 hover:bg-black/60'
                 }`}
               >
-                <span className="text-[10px] text-slate-400 block tracking-wider uppercase font-bold">KM 82.5 · LOOP TENGGARA</span>
-                <span className="text-sm sm:text-base font-bold text-white block mt-0.5 uppercase">CP#4 JONGGOL (CIMENYAN)</span>
+                <span className="text-[10px] text-slate-400 block tracking-wider uppercase font-bold">{t('LOKASI RESMI (TBA)', 'OFFICIAL LOCATION (TBA)')}</span>
+                <span className="text-sm sm:text-base font-bold text-white block mt-0.5 uppercase">{t('POS PITSTOP RESMI A', 'OFFICIAL PITSTOP A')}</span>
                 <span className="text-xs text-[#FA6D0B] font-bold mt-1 block uppercase">{t('Kategori 120, 150, 200 km', 'Categories 120, 150, 200 km')}</span>
               </button>
 
               <button
                 type="button"
-                onClick={() => setSelectedCp('CP#6')}
+                onClick={() => setSelectedCp('CP_B')}
                 className={`p-4 rounded-xl text-left transition-all cursor-pointer shadow-lg ${
-                  selectedCp === 'CP#6'
+                  selectedCp === 'CP_B'
                     ? 'bg-black/90 ring-2 ring-[#FA6D0B] shadow-[0_0_25px_rgba(250,109,11,0.25)]'
                     : 'bg-black/40 hover:bg-black/60'
                 }`}
               >
-                <span className="text-[10px] text-slate-400 block tracking-wider uppercase font-bold">KM 45.0 · SODONG SPRINGS</span>
-                <span className="text-sm sm:text-base font-bold text-white block mt-0.5 uppercase">CP#6 SODONG / CILEUNGSI</span>
-                <span className="text-xs text-[#FA6D0B] font-bold mt-1 block uppercase">{t('Kategori 60, 100 km', 'Categories 60, 100 km')}</span>
+                <span className="text-[10px] text-slate-400 block tracking-wider uppercase font-bold">{t('LOKASI RESMI (TBA)', 'OFFICIAL LOCATION (TBA)')}</span>
+                <span className="text-sm sm:text-base font-bold text-white block mt-0.5 uppercase">{t('POS PITSTOP RESMI B', 'OFFICIAL PITSTOP B')}</span>
+                <span className="text-xs text-[#FA6D0B] font-bold mt-1 block uppercase">{t('Kategori 70, 100 km', 'Categories 70, 100 km')}</span>
               </button>
             </div>
 
@@ -212,7 +212,8 @@ export default function CheckpointPage() {
               <button
                 type="button"
                 onClick={() => {
-                  alert(t(`Log Pitstop tercatat: BIB #${bibNumber} di ${selectedCp} dengan penalti +${penaltyMinutes} menit tersimpan.`, `Pitstop Log recorded: BIB #${bibNumber} at ${selectedCp} with +${penaltyMinutes} mins penalty saved.`));
+                  const cpName = selectedCp === 'CP_A' ? t('Pos Pitstop A (TBA)', 'Pitstop Station A (TBA)') : t('Pos Pitstop B (TBA)', 'Pitstop Station B (TBA)');
+                  alert(t(`Log Pitstop tercatat: BIB #${bibNumber} di ${cpName} dengan penalti +${penaltyMinutes} menit tersimpan.`, `Pitstop Log recorded: BIB #${bibNumber} at ${cpName} with +${penaltyMinutes} mins penalty saved.`));
                 }}
                 className="w-full py-4 rounded-full bg-[#FA6D0B] hover:bg-[#DE5A00] text-black font-sans font-black text-xs uppercase tracking-wider transition-all cursor-pointer shadow-[0_0_20px_rgba(250,109,11,0.35)] hover:-translate-y-0.5 active:scale-95"
               >

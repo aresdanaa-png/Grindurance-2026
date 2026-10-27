@@ -94,17 +94,17 @@ export const EARLY_BIRD_END_DATE_ISO = '2026-11-15T23:59:59+07:00';
 // 3. Tarif Reguler aktif mulai: 16 November 2026, 00:00:00 WIB
 export const REGULAR_START_DATE_ISO = '2026-11-16T00:00:00+07:00';
 
-// 4. Penutupan Pendaftaran: Tepat 2 minggu sebelum event (13 Des - 14 hari) = 29 November 2026, 23:59:59 WIB
-export const REGISTRATION_CLOSE_DATE_ISO = '2026-11-29T23:59:59+07:00';
+// 4. Penutupan Pendaftaran: Tepat 2 minggu sebelum event (19 Des - 14 hari) = 5 Desember 2026, 23:59:59 WIB
+export const REGISTRATION_CLOSE_DATE_ISO = '2026-12-05T23:59:59+07:00';
 
-// 5. Race Pack Collection (RPC H-7): 6 Desember 2026
-export const RPC_DATE_ISO = '2026-12-06T00:00:00+07:00';
+// 5. Coaching Clinic, RPC & TM (Pra-Event): 13 Desember 2026
+export const RPC_DATE_ISO = '2026-12-13T00:00:00+07:00';
 
-// 6. Protokol Rilis GPX (H-2): 11 Desember 2026, 00:00:00 WIB
-export const GPX_UNLOCK_DATE_ISO = '2026-12-11T00:00:00+07:00';
+// 6. Protokol Rilis GPX (H-2): 17 Desember 2026, 00:00:00 WIB
+export const GPX_UNLOCK_DATE_ISO = '2026-12-17T00:00:00+07:00';
 
-// 7. Hari-H Race Day: Minggu, 13 Desember 2026
-export const EVENT_DATE_ISO = '2026-12-13T00:00:00+07:00';
+// 7. Hari-H Race Day: Sabtu, 19 Desember 2026
+export const EVENT_DATE_ISO = '2026-12-19T00:00:00+07:00';
 
 export type PricingPhase = 'EARLY_BIRD' | 'REGULAR' | 'CLOSED';
 
@@ -338,8 +338,8 @@ export const CATEGORIES: CategoryData[] = [
     tagEng: 'RECREATION & BEGINNER',
     format: 'Fun Gravel / Non-Kompetitif',
     formatEng: 'Fun Gravel / Non-Competitive',
-    specialRules: 'Ramah Sepeda Lipat (Seli), Hybrid & Pemula · Tanpa Tekanan Berlebih · Pitstop Wajib 30 Min (CP#6)',
-    specialRulesEng: 'Folding Bike Friendly, Hybrid & Beginners · No Excessive Pressure · Mandatory 30-Min Pitstop (CP#6)',
+    specialRules: 'Ramah Sepeda Lipat (Seli), Hybrid & Pemula · Tanpa Tekanan Berlebih · Pitstop Wajib 30 Min (TBA)',
+    specialRulesEng: 'Folding Bike Friendly, Hybrid & Beginners · No Excessive Pressure · Mandatory 30-Min Pitstop (TBA)',
     photo: '/categories/cat_60_funride.jpg',
     priceMedal: 'Rp 150.000',
     priceJersey: 'Rp 250.000',
@@ -357,7 +357,7 @@ export const CATEGORIES: CategoryData[] = [
     stations: [
       { km: 'KM 0', name: 'Start ABBEY Coffee & LRT', nameEng: 'Start ABBEY Coffee & LRT', type: 'START', desc: 'Pelepasan 07:00 WIB', descEng: '07:00 WIB Wave Dispatch' },
       { km: 'KM 28', name: 'WS#1 Pasir Angin (Refill Air)', nameEng: 'WS#1 Pasir Angin (Water Refill)', type: 'WS', desc: 'Water station mandiri', descEng: 'Self-service water station' },
-      { km: 'KM 42', name: 'CP#6 Pitstop Wajib 30 Menit', nameEng: 'CP#6 Mandatory 30-Min Pitstop', type: 'PITSTOP', desc: 'Jeda netral nutrisi & istirahat', descEng: 'Neutral nutrition & rest break' },
+      { km: 'KM 42', name: 'Pitstop Wajib 30 Menit (TBA)', nameEng: 'Mandatory 30-Min Pitstop (TBA)', type: 'PITSTOP', desc: 'Jeda netral nutrisi & istirahat', descEng: 'Neutral nutrition & rest break' },
       { km: 'KM 70', name: 'Finish Lounge ABBEY Coffee', nameEng: 'Finish Lounge ABBEY Coffee', type: 'FINISH', desc: 'Pengambilan medali finisher (69,9 km)', descEng: 'Official medal collection (69.9 km)' },
     ],
   },
@@ -399,7 +399,7 @@ export const CATEGORIES: CategoryData[] = [
     stations: [
       { km: 'KM 0', name: 'Start ABEEY Coffee', nameEng: 'Start ABEEY Coffee', type: 'START', desc: 'Pelepasan 07:00 WIB', descEng: '07:00 WIB Wave Dispatch' },
       { km: 'KM 38', name: 'WS#1 Persawahan Cileungsi', nameEng: 'WS#1 Cileungsi Rice Fields', type: 'WS', desc: 'Water station mandiri', descEng: 'Self-service water station' },
-      { km: 'KM 65', name: 'CP#6 Pitstop Wajib 30 Menit (Sodong)', nameEng: 'CP#6 Mandatory 30-Min Pitstop (Sodong)', type: 'PITSTOP', desc: 'Makadam & jeda netral nutrisi', descEng: 'Macadam & neutral nutrition break' },
+      { km: 'KM 65', name: 'Pitstop Wajib 30 Menit (TBA)', nameEng: 'Mandatory 30-Min Pitstop (TBA)', type: 'PITSTOP', desc: 'Makadam & jeda netral nutrisi', descEng: 'Macadam & neutral nutrition break' },
       { km: 'KM 82', name: 'WS#2 Klapanunggal Ridge', nameEng: 'WS#2 Klapanunggal Ridge', type: 'WS', desc: 'Titik hidrasi bukit', descEng: 'Hilltop hydration point' },
       { km: 'KM 101', name: 'Finish Lounge ABEEY', nameEng: 'ABEEY Finish Lounge', type: 'FINISH', desc: 'Finisher celebration', descEng: 'Finisher celebration' },
     ],
@@ -445,9 +445,9 @@ export const CATEGORIES: CategoryData[] = [
     surfaceBreakdown: { asphalt: '45%', gravel: '40%', unpaved: '15%' },
     stations: [
       { km: 'KM 0', name: 'Start Wave 2 (06:00 WIB)', nameEng: 'Start Wave 2 (06:00 WIB)', type: 'START', desc: 'Timing gate aktivasi', descEng: 'Timing gate activation' },
-      { km: 'KM 42', name: 'CP#1 Jonggol Ridge', nameEng: 'CP#1 Jonggol Ridge', type: 'CP', desc: 'Geofencing check', descEng: 'Geofencing verification' },
+      { km: 'KM 42', name: 'Checkpoint Geofencing (TBA)', nameEng: 'Geofencing Checkpoint (TBA)', type: 'CP', desc: 'Geofencing check', descEng: 'Geofencing verification' },
       { km: 'KM 78', name: 'KOM Tanjakan Sukamakmur', nameEng: 'KOM Sukamakmur Climb', type: 'KOM', desc: 'Puncak tanjakan +1.760m', descEng: 'Summit climb +1,760m' },
-      { km: 'KM 102', name: 'CP#4 Pitstop Wajib 30 Menit', nameEng: 'CP#4 Mandatory 30-Min Pitstop', type: 'PITSTOP', desc: 'Wajib jeda rest & nutrisi', descEng: 'Mandatory rest & nutrition break' },
+      { km: 'KM 102', name: 'Pitstop Wajib 30 Menit (TBA)', nameEng: 'Mandatory 30-Min Pitstop (TBA)', type: 'PITSTOP', desc: 'Wajib jeda rest & nutrisi', descEng: 'Mandatory rest & nutrition break' },
       { km: 'KM 120', name: 'Podium Gate ABEEY', nameEng: 'ABEEY Podium Gate', type: 'FINISH', desc: 'Awarding podium Top 3', descEng: 'Top 3 Podium Awarding' },
     ],
   },
@@ -489,9 +489,9 @@ export const CATEGORIES: CategoryData[] = [
     stations: [
       { km: 'SEBELUM START', name: 'Prolog 30 km Mandiri Peserta', nameEng: '30 km Self-Prologue', type: 'START', desc: 'Validasi log GPS Strava', descEng: 'Strava GPS log verification' },
       { km: 'KM 0', name: 'Wave Start ABEEY (05:30 WIB)', nameEng: 'Wave Start ABEEY (05:30 WIB)', type: 'START', desc: 'Pelepasan fajar', descEng: 'Dawn wave dispatch' },
-      { km: 'KM 50', name: 'CP#1 Jonggol Rural', nameEng: 'CP#1 Jonggol Rural', type: 'CP', desc: 'Pos verifikasi', descEng: 'Verification checkpoint' },
+      { km: 'KM 50', name: 'Checkpoint Verifikasi (TBA)', nameEng: 'Verification Checkpoint (TBA)', type: 'CP', desc: 'Pos verifikasi', descEng: 'Verification checkpoint' },
       { km: 'KM 88', name: 'KOM Sukamakmur Summit', nameEng: 'KOM Sukamakmur Summit', type: 'KOM', desc: 'Puncak elevasi 680m MDPL', descEng: 'Summit elevation 680m MDPL' },
-      { km: 'KM 122', name: 'CP#4 Pitstop Wajib 30 Menit', nameEng: 'CP#4 Mandatory 30-Min Pitstop', type: 'PITSTOP', desc: 'Penalti 300% jika dilewati', descEng: '300% penalty if skipped' },
+      { km: 'KM 122', name: 'Pitstop Wajib 30 Menit (TBA)', nameEng: 'Mandatory 30-Min Pitstop (TBA)', type: 'PITSTOP', desc: 'Penalti 300% jika dilewati', descEng: '300% penalty if skipped' },
       { km: 'KM 150', name: 'Finisher Gate ABEEY', nameEng: 'ABEEY Finisher Gate', type: 'FINISH', desc: 'Penyerahan medali', descEng: 'Official medal presentation' },
     ],
   },
@@ -533,10 +533,10 @@ export const CATEGORIES: CategoryData[] = [
     stations: [
       { km: 'SEBELUM START', name: 'Prolog 30 km Mandiri Subuh', nameEng: 'Dawn 30 km Self-Prologue', type: 'START', desc: 'Validasi GPS scrutineering', descEng: 'GPS Scrutineering Validation' },
       { km: 'KM 0', name: 'Wave Start ABEEY (05:30 WIB)', nameEng: 'Wave Start ABEEY (05:30 WIB)', type: 'START', desc: 'Pelepasan fajar ultra', descEng: 'Ultra dawn wave dispatch' },
-      { km: 'KM 62', name: 'CP#2 Jonggol Cimenyan', nameEng: 'CP#2 Jonggol Cimenyan', type: 'CP', desc: 'Pos verifikasi geofencing', descEng: 'Geofencing check' },
+      { km: 'KM 62', name: 'Checkpoint Verifikasi (TBA)', nameEng: 'Verification Checkpoint (TBA)', type: 'CP', desc: 'Pos verifikasi geofencing', descEng: 'Geofencing check' },
       { km: 'KM 110', name: 'Tanjakan Utama (8.87 km @ 7%)', nameEng: 'Main Summit (8.87 km @ 7%)', type: 'KOM', desc: 'Puncak 1.110 m MDPL', descEng: 'Peak 1,110 m MDPL' },
-      { km: 'KM 145', name: 'CP#4 Pitstop Wajib 30 Menit', nameEng: 'CP#4 Mandatory 30-Min Pitstop', type: 'PITSTOP', desc: 'Jeda istirahat & nutrisi', descEng: 'Rest & nutrition break' },
-      { km: 'KM 175', name: 'CP#6 Night Navigation Check', nameEng: 'CP#6 Night Navigation Check', type: 'CP', desc: 'Cek lampu ganda & rompi reflektif', descEng: 'Dual light & reflective vest check' },
+      { km: 'KM 145', name: 'Pitstop Wajib 30 Menit (TBA)', nameEng: 'Mandatory 30-Min Pitstop (TBA)', type: 'PITSTOP', desc: 'Jeda istirahat & nutrisi', descEng: 'Rest & nutrition break' },
+      { km: 'KM 175', name: 'Checkpoint Night Nav (TBA)', nameEng: 'Night Navigation Checkpoint (TBA)', type: 'CP', desc: 'Cek lampu ganda & rompi reflektif', descEng: 'Dual light & reflective vest check' },
       { km: 'KM 200', name: 'Legend Finisher Gate ABEEY', nameEng: 'ABEEY Legend Finisher Gate', type: 'FINISH', desc: 'COT 17 Jam dari start', descEng: 'Official 17-Hour COT' },
     ],
   },

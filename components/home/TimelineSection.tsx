@@ -94,7 +94,7 @@ export default function TimelineSection() {
               </span>
               <span className="text-white/20 select-none">·</span>
               <span className="text-white font-bold">
-                6 &amp; 13 DESEMBER 2026
+                13 &amp; 19 DESEMBER 2026
               </span>
               <span className="text-white/20 select-none hidden sm:inline">·</span>
               <span className="text-slate-300">
@@ -169,7 +169,7 @@ export default function TimelineSection() {
                       : 'text-slate-400 hover:text-white border-transparent'
                   }`}
                 >
-                  <span>{t('RACE DAY (13 DES 2026)', 'RACE DAY (DEC 13, 2026)')}</span>
+                  <span>{t('RACE DAY (19 DES 2026)', 'RACE DAY (DEC 19, 2026)')}</span>
                   <span className="text-slate-500 font-normal ml-2">· 03:00–21:00 WIB</span>
                 </button>
 
@@ -182,7 +182,7 @@ export default function TimelineSection() {
                       : 'text-slate-400 hover:text-white border-transparent'
                   }`}
                 >
-                  <span>{t('RPC & PRA-EVENT (6 DES 2026)', 'RPC & PRE-EVENT (DEC 6, 2026)')}</span>
+                  <span>{t('COACHING, RPC & TM (13 DES 2026)', 'COACHING, RPC & TM (DEC 13, 2026)')}</span>
                   <span className="text-slate-500 font-normal ml-2">· RPC, CLINIC &amp; TM</span>
                 </button>
 
@@ -208,8 +208,8 @@ export default function TimelineSection() {
                     <div>
                       <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
                         {t(
-                          'VENUE UTAMA: ABBEY COFFEE & EATERY, HARJAMUKTI — MINGGU, 13 DESEMBER 2026',
-                          'MAIN VENUE: ABBEY COFFEE & EATERY, HARJAMUKTI — SUNDAY, DECEMBER 13, 2026'
+                          'VENUE UTAMA: ABBEY COFFEE & EATERY, HARJAMUKTI — SABTU, 19 DESEMBER 2026',
+                          'MAIN VENUE: ABBEY COFFEE & EATERY, HARJAMUKTI — SATURDAY, DECEMBER 19, 2026'
                         )}
                       </span>
                       <span className="text-[11px] text-slate-400">
@@ -342,8 +342,8 @@ export default function TimelineSection() {
                       <div>
                         <span className="text-xs font-mono font-bold text-white uppercase tracking-wider block">
                           {t(
-                            'H-7 (6 HARI SEBELUM EVENT): MINGGU, 6 DESEMBER 2026 · ABEEY COFFEE CIBUBUR',
-                            'D-7 (6 DAYS BEFORE RACE): SUNDAY, DEC 6, 2026 · ABEEY COFFEE CIBUBUR'
+                            'H-6 (PRA-EVENT RESMI): MINGGU, 13 DESEMBER 2026 · ABEEY COFFEE CIBUBUR',
+                            'D-6 (OFFICIAL PRE-EVENT): SUNDAY, DEC 13, 2026 · ABEEY COFFEE CIBUBUR'
                           )}
                         </span>
                         <span className="text-[11px] text-slate-400">

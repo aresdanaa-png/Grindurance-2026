@@ -101,7 +101,8 @@ Kode Voucher: *${voucherCode}*
 
 📍 *STAGING ARENA & VENUE START:*
 ABEEY Coffee & Eatery, Stasiun LRT Harjamukti, Cibubur.
-Jadwal Race: Minggu, 13 Desember 2026
+Jadwal Race: Sabtu, 19 Desember 2026
+Coaching Clinic, RPC & TM: Minggu, 13 Desember 2026
 
 Sampai jumpa di arena balap!
 *Komite Balap GX-ID (Gravel & Ultra Cycling Indonesia)*`;

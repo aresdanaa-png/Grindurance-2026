@@ -139,7 +139,7 @@ Semua input text, select, dan radio harus berkarakter industrial:
   </div>
   <div className="flex justify-between items-center">
     <span className="text-slate-400">{t('Status Live Tracking:', 'Live Tracking Status:')}</span>
-    <span className="text-white font-semibold">WAJIB AKTIF (TRACCAR)</span>
+    <span className="text-white font-semibold">WAJIB AKTIF (LIVE TRACKING)</span>
   </div>
 </div>
 ```

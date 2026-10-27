@@ -53,7 +53,7 @@ export interface WaveMatrixRow {
   rowHighlight?: boolean;
 }
 
-// 1. DATA JADWAL RACE DAY (13 DESEMBER 2026)
+// 1. DATA JADWAL RACE DAY (19 DESEMBER 2026)
 export const RACEDAY_ITINERARY: TimelineItineraryItem[] = [
   {
     id: 'prologue',
@@ -194,7 +194,7 @@ export const RACEDAY_ITINERARY: TimelineItineraryItem[] = [
       },
       {
         label: 'PITSTOP',
-        value: { id: 'WAJIB 30 MENIT (CP#4)', en: 'MANDATORY 30 MIN (CP#4)' },
+        value: { id: 'WAJIB 30 MENIT (TBA)', en: 'MANDATORY 30 MIN (TBA)' },
         highlight: false,
       },
     ],
@@ -248,16 +248,16 @@ export const RACEDAY_ITINERARY: TimelineItineraryItem[] = [
     },
     badgeHighlight: true,
     locationTag: {
-      id: 'CP#4 / CP#6 JONGGOL',
-      en: 'CP#4 / CP#6 JONGGOL',
+      id: 'CHECKPOINT RESMI (TBA)',
+      en: 'OFFICIAL CHECKPOINT (TBA)',
     },
     title: {
       id: 'MANDATORY 30-MIN NEUTRALIZED PITSTOP · SMART GEOFENCING',
       en: 'MANDATORY 30-MIN NEUTRALIZED PITSTOP · SMART GEOFENCING',
     },
     description: {
-      id: 'Seluruh peserta wajib mengambil jeda istirahat minimal 30 menit tanpa bergerak yang terverifikasi sensor smart geofencing dan scan barcode: di CP#4 untuk kategori 120, 150, dan 200 km, serta di CP#6 untuk kategori 70 Fun Gravel dan 100 Fondo.',
-      en: 'All riders must observe a mandatory stationary rest break of at least 30 minutes verified by smart geofencing and barcode scan: at CP#4 for 120, 150, and 200 km, and at CP#6 for 70 Fun Gravel and 100 Fondo.',
+      id: 'Seluruh peserta wajib mengambil jeda istirahat minimal 30 menit tanpa bergerak yang terverifikasi sensor smart geofencing dan scan barcode di titik checkpoint resmi yang ditentukan panitia (titik pos pitstop resmi akan diumumkan kemudian/TBA).',
+      en: 'All riders must observe a mandatory stationary rest break of at least 30 minutes verified by smart geofencing and barcode scan at the designated official checkpoint (pitstop station location TBA).',
     },
     note: {
       label: {
@@ -337,7 +337,7 @@ export const RACEDAY_ITINERARY: TimelineItineraryItem[] = [
   },
 ];
 
-// 2. DATA PRA-EVENT & RPC (6 DESEMBER 2026)
+// 2. DATA PRA-EVENT: COACHING, RPC & TM (13 DESEMBER 2026)
 export const PRAEVENT_ITINERARY: PraEventItem[] = [
   {
     id: 'rpc-collection',
@@ -461,7 +461,7 @@ export const WAVE_MATRIX_ROWS: WaveMatrixRow[] = [
     prologue: { id: 'Wajib 30 KM (03:00–05:00)', en: 'Mandatory 30 KM (03:00–05:00)' },
     prologueHighlight: true,
     cot: { id: '17 Jam (22:30 WIB)', en: '17 Hours (22:30 WIB)' },
-    pitstop: { id: 'Wajib 30 Min (CP#4)', en: 'Mandatory 30 Min (CP#4)' },
+    pitstop: { id: 'Wajib 30 Min (TBA)', en: 'Mandatory 30 Min (TBA)' },
     lighting: { id: '2 Depan (400+ lm) + Rompi EN ISO', en: '2 Front (400+ lm) + EN ISO Vest' },
     nature: { id: 'Tantangan Mandiri Ultra', en: 'Ultra Self-Challenge' },
   },
@@ -473,7 +473,7 @@ export const WAVE_MATRIX_ROWS: WaveMatrixRow[] = [
     prologue: { id: 'Wajib 30 KM (03:00–05:00)', en: 'Mandatory 30 KM (03:00–05:00)' },
     prologueHighlight: true,
     cot: { id: '15 Jam (20:30 WIB)', en: '15 Hours (20:30 WIB)' },
-    pitstop: { id: 'Wajib 30 Min (CP#4)', en: 'Mandatory 30 Min (CP#4)' },
+    pitstop: { id: 'Wajib 30 Min (TBA)', en: 'Mandatory 30 Min (TBA)' },
     lighting: { id: '2 Depan (400+ lm) + Rompi EN ISO', en: '2 Front (400+ lm) + EN ISO Vest' },
     nature: { id: 'Grand Fondo', en: 'Grand Fondo' },
   },
@@ -485,7 +485,7 @@ export const WAVE_MATRIX_ROWS: WaveMatrixRow[] = [
     prologue: { id: 'Tidak Ada', en: 'None' },
     prologueHighlight: false,
     cot: { id: '11 Jam (17:00 WIB)', en: '11 Hours (17:00 WIB)' },
-    pitstop: { id: 'Wajib 30 Min (CP#4)', en: 'Mandatory 30 Min (CP#4)' },
+    pitstop: { id: 'Wajib 30 Min (TBA)', en: 'Mandatory 30 Min (TBA)' },
     lighting: { id: 'Min 1 Depan + Belakang Aktif', en: 'Min 1 Front + Active Rear' },
     nature: { id: 'KOMPETITIF (PODIUM TOP 3)', en: 'COMPETITIVE (TOP 3 PODIUM)' },
     isCompetitive: true,
@@ -499,7 +499,7 @@ export const WAVE_MATRIX_ROWS: WaveMatrixRow[] = [
     prologue: { id: 'Tidak Ada', en: 'None' },
     prologueHighlight: false,
     cot: { id: '9.5 Jam (16:30 WIB)', en: '9.5 Hours (16:30 WIB)' },
-    pitstop: { id: 'Wajib 30 Min (CP#6)', en: 'Mandatory 30 Min (CP#6)' },
+    pitstop: { id: 'Wajib 30 Min (TBA)', en: 'Mandatory 30 Min (TBA)' },
     lighting: { id: 'Rekomendasi Senja/Siang', en: 'Recommended Dusk/Daylight' },
     nature: { id: 'Fondo / Rekreasi', en: 'Fondo / Recreational' },
   },
@@ -511,7 +511,7 @@ export const WAVE_MATRIX_ROWS: WaveMatrixRow[] = [
     prologue: { id: 'Tidak Ada', en: 'None' },
     prologueHighlight: false,
     cot: { id: '7 Jam (14:00 WIB)', en: '7 Hours (14:00 WIB)' },
-    pitstop: { id: 'Wajib 30 Min (CP#6)', en: 'Mandatory 30 Min (CP#6)' },
+    pitstop: { id: 'Wajib 30 Min (TBA)', en: 'Mandatory 30 Min (TBA)' },
     lighting: { id: 'Standar Reflektor/Lampu', en: 'Standard Reflectors/Lights' },
     nature: { id: 'Parade Festival', en: 'Festival Parade' },
   },

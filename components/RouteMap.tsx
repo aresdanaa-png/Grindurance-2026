@@ -383,9 +383,9 @@ export default function RouteMap({
             type="button"
             onClick={() => setShowLockModal(true)}
             className="px-2.5 py-1 rounded-lg text-[9px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-black/85 hover:bg-white/10 border border-white/10 hover:border-[#FA6D0B] backdrop-blur-md transition-all cursor-pointer shadow-lg active:scale-95 whitespace-nowrap"
-            title={t('File GPX dikunci hingga H-2 (11 Des 2026, 00:00 WIB)', 'GPX file locked until D-2 (11 Dec 2026, 00:00 WIB)')}
+            title={t('File GPX dikunci hingga H-2 (17 Des 2026, 00:00 WIB)', 'GPX file locked until D-2 (17 Dec 2026, 00:00 WIB)')}
           >
-            {t('TERKUNCI · H-2 (11 DES)', 'LOCKED · D-2 (11 DEC)')}
+            {t('TERKUNCI · H-2 (17 DES)', 'LOCKED · D-2 (17 DEC)')}
           </button>
         ) : (
           <a
@@ -658,11 +658,11 @@ export default function RouteMap({
               </div>
               <div className="flex justify-between items-center text-slate-400">
                 <span>{t('JADWAL RILIS:', 'RELEASE SCHEDULE:')}</span>
-                <span className="text-white font-bold">JUMAT, 11 DESEMBER 2026 · 00:00 WIB</span>
+                <span className="text-white font-bold">KAMIS, 17 DESEMBER 2026 · 00:00 WIB</span>
               </div>
               <div className="flex justify-between items-center text-slate-400">
                 <span>{t('RACE DAY:', 'RACE DAY:')}</span>
-                <span className="text-white font-bold">MINGGU, 13 DESEMBER 2026</span>
+                <span className="text-white font-bold">SABTU, 19 DESEMBER 2026</span>
               </div>
               <div className="flex justify-between items-center text-slate-400">
                 <span>{t('KATEGORI:', 'CATEGORY:')}</span>
