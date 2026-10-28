@@ -270,10 +270,13 @@ export default function DaftarRiderFormFields({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <label className="block text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
-                {t('5. UKURAN JERSEY FINISHER · POLLRIDE AERO FIT', '5. FINISHER JERSEY SIZE · POLLRIDE AERO FIT')} <span className="text-[#FA6D0B]">*</span>
+                {t('5. PILIHAN & UKURAN JERSEY FINISHER · POLLRIDE', '5. FINISHER JERSEY STYLE & SIZE · POLLRIDE')} <span className="text-[#FA6D0B]">*</span>
               </label>
               <span className="text-[11px] font-mono text-slate-400 block mt-0.5">
-                Model: Short sleeve without back pocket · Toleransi ±1–2 cm
+                {t(
+                  'Pola aerodinamis tanpa saku belakang buatan Pollride Apparel · Toleransi ±1–2 cm',
+                  'Aerodynamic cut without back pocket by Pollride Apparel · Tolerance ±1–2 cm'
+                )}
               </span>
             </div>
             <button
@@ -284,6 +287,76 @@ export default function DaftarRiderFormFields({
               <span>{t('PANDUAN UKURAN (SIZE CHART)', 'SIZE CHART GUIDE')}</span>
               <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
+          </div>
+
+          {/* Opsi Model Lengan: Pendek (Standar) vs Panjang (+Rp 40.000) */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-[11px] font-mono">
+              <span className="text-slate-300 font-bold uppercase tracking-wider">
+                {t('// MODEL POTONGAN LENGAN', '// SLEEVE CUT STYLE')}
+              </span>
+              <span className="text-[#FA6D0B] font-bold">
+                {rider.jersey_sleeve === 'LONG'
+                  ? t('+RP 40.000 / JERSEY (ADD-ON)', '+IDR 40,000 / JERSEY (ADD-ON)')
+                  : t('TERMASUK DALAM PAKET (STANDAR)', 'INCLUDED IN PACKAGE (STANDARD)')}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => onChange({ jersey_sleeve: 'SHORT' })}
+                className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                  (rider.jersey_sleeve || 'SHORT') === 'SHORT'
+                    ? 'bg-[#FA6D0B]/15 border-[#FA6D0B] text-white shadow-[0_0_15px_rgba(250,109,11,0.25)]'
+                    : 'bg-black/60 border-white/10 text-slate-400 hover:text-white hover:border-white/20'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">
+                    {t('LENGAN PENDEK (SHORT SLEEVE)', 'SHORT SLEEVE (STANDARD)')}
+                  </span>
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                    (rider.jersey_sleeve || 'SHORT') === 'SHORT'
+                      ? 'bg-[#FA6D0B] text-black font-black'
+                      : 'bg-white/10 text-slate-300'
+                  }`}>
+                    {t('STANDAR', 'STANDARD')}
+                  </span>
+                </div>
+                <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono">
+                  <span className="text-slate-400">{t('Aerodinamis & Sejuk', 'Aerodynamic & Cool')}</span>
+                  <span className="text-[#FA6D0B] font-bold">{t('Sudah Termasuk (+Rp 0)', 'Included (+IDR 0)')}</span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => onChange({ jersey_sleeve: 'LONG' })}
+                className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
+                  rider.jersey_sleeve === 'LONG'
+                    ? 'bg-[#FA6D0B]/15 border-[#FA6D0B] text-white shadow-[0_0_15px_rgba(250,109,11,0.25)]'
+                    : 'bg-black/60 border-white/10 text-slate-400 hover:text-white hover:border-white/20'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">
+                    {t('LENGAN PANJANG (LONG SLEEVE)', 'LONG SLEEVE (UPGRADE)')}
+                  </span>
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                    rider.jersey_sleeve === 'LONG'
+                      ? 'bg-[#FA6D0B] text-black font-black'
+                      : 'bg-[#FA6D0B]/20 text-[#FA6D0B]'
+                  }`}>
+                    +RP 40.000
+                  </span>
+                </div>
+                <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono">
+                  <span className="text-slate-400">{t('Proteksi Cuaca & Ranting', 'Trail & Sun Protection')}</span>
+                  <span className="text-[#FA6D0B] font-bold">+Rp 40.000</span>
+                </div>
+              </button>
+            </div>
           </div>
 
           {/* Opsi Ukuran Terbagi Bersih per Tier (Ringkas & Ergonomis di Mobile) */}

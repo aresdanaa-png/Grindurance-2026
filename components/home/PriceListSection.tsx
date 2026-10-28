@@ -72,7 +72,7 @@ export default function PriceListSection() {
               <th scope="col" className="py-4 px-4 sm:px-5 whitespace-nowrap">
                 <div className="flex flex-col">
                   <span className="text-[#FA6D0B] font-bold">{t('PAKET MEDAL + JERSEY', 'MEDAL + JERSEY PACKAGE')}</span>
-                  <span className="text-[10px] text-slate-400 font-normal">+ Pollride Aero Jersey</span>
+                  <span className="text-[10px] text-slate-400 font-normal">{t('+ Jersey Pendek (Panjang +40rb)', '+ Short Jersey (Long +40K)')}</span>
                 </div>
               </th>
               <th scope="col" className="py-4 px-4 sm:px-5 whitespace-nowrap">
@@ -387,7 +387,7 @@ export default function PriceListSection() {
           <div className="bg-white/[0.02] border-t border-white/10 px-6 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] font-mono text-slate-400">
             <span className="flex items-center gap-2">
               <span className="text-[#FA6D0B] font-bold">// PROTOKOL LOGISTIK:</span>
-              <span>{t('Pendaftaran resmi ditutup mutlak H-14 (29 Nov 2026, 23:59 WIB) untuk finalisasi asuransi & produksi jersey Pollride.', 'Official registration closes at H-14 (Nov 29, 2026, 23:59 WIB) for insurance & Pollride jersey production.')}</span>
+              <span>{t('Pendaftaran resmi ditutup mutlak H-14 (29 Nov 2026, 23:59 WIB) untuk finalisasi asuransi & produksi jersey Pollride (Lengan Pendek standar, upgrade Lengan Panjang +Rp 40.000).', 'Official registration closes at H-14 (Nov 29, 2026, 23:59 WIB) for insurance & Pollride jersey production (Short Sleeve standard, Long Sleeve upgrade +IDR 40K).')}</span>
             </span>
             <span className="text-slate-500 uppercase tracking-wider shrink-0">
               {t('TERBUKA SEMUA MERK SEPEDA', 'OPEN TO ALL BIKE BRANDS')}

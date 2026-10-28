@@ -72,6 +72,7 @@ export default function RegistrationPage() {
     medical_notes: '',
     community_chapter: 'GX-ID Jabodetabek',
     jersey_size: 'L' as JerseySize,
+    jersey_sleeve: 'SHORT',
   });
 
   // Input Rider 2 (Jika Pair)
@@ -99,6 +100,7 @@ export default function RegistrationPage() {
     medical_notes: '',
     community_chapter: 'GX-ID Jabodetabek',
     jersey_size: 'M' as JerseySize,
+    jersey_sleeve: 'SHORT',
   });
 
   // Waiver & Submission State
@@ -304,10 +306,14 @@ export default function RegistrationPage() {
       : selectedCategory.price_medal_only
     : 0;
 
+  const jerseyUpgradeFee = packageType === 'MEDAL_JERSEY'
+    ? ((rider1.jersey_sleeve === 'LONG' ? 40000 : 0) + (selectedCategory?.is_pair && rider2.jersey_sleeve === 'LONG' ? 40000 : 0))
+    : 0;
+
   const rpcHandlingFee = (rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL') ? 20000 : 0;
   const promoDiscount = appliedPromo ? appliedPromo.discount : 0;
   const hasMealCouponPerk = isEligibleForMealCoupon();
-  const netPrice = Math.max(0, basePrice + rpcHandlingFee - promoDiscount);
+  const netPrice = Math.max(0, basePrice + jerseyUpgradeFee + rpcHandlingFee - promoDiscount);
 
   const handleSelectToDetail = (cat: Category) => {
     if (cat.id === '120') {
@@ -529,6 +535,7 @@ export default function RegistrationPage() {
             netPrice={netPrice}
             promoDiscount={promoDiscount}
             rpcHandlingFee={rpcHandlingFee}
+            jerseyUpgradeFee={jerseyUpgradeFee}
             jerseySizes={JERSEY_SIZES}
             race120SingleConfig={race120SingleConfig}
             race120PairConfig={race120PairConfig}

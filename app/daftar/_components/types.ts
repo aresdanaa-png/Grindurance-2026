@@ -36,6 +36,7 @@ export interface RiderState {
   medical_notes: string;
   community_chapter: string;
   jersey_size: JerseySize;
+  jersey_sleeve?: 'SHORT' | 'LONG';
 }
 
 export interface PromoState {

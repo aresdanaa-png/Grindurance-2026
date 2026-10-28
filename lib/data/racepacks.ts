@@ -41,6 +41,7 @@ export interface OfficialGearItem {
   specs: LocalizedText[];
   imageSrc?: string;
   imageBackSrc?: string;
+  imageLongSrc?: string;
   visualPreview: {
     topLeftText: string;
     topRightText: LocalizedText;
@@ -111,14 +112,14 @@ export const PACK_TIERS: PackTierItem[] = [
     priceTag: { id: 'MULAI +RP 50.000 / PAX', en: 'FROM +IDR 50,000 / PAX' },
     title: { id: 'PAKET MEDAL & JERSEY RESMI', en: 'OFFICIAL MEDAL & JERSEY PACKAGE' },
     description: {
-      id: 'Paket lengkap terfavorit. Mendapatkan seluruh starter kit Race Pack dan Medali Finisher (< COT) ditambah Official Anniversary Aero Jersey buatan Pollride (Pre-Order).',
-      en: 'Top-favorite complete package. Includes all Race Pack starter items and Finisher Medal (< COT) plus Official Anniversary Aero Jersey by Pollride (Pre-Order).',
+      id: 'Paket lengkap terfavorit. Mendapatkan seluruh starter kit Race Pack dan Medali Finisher (< COT) ditambah Official Anniversary Aero Jersey buatan Pollride (Pre-Order / Lengan Pendek standar, opsi upgrade Lengan Panjang +Rp 40.000).',
+      en: 'Top-favorite complete package. Includes all Race Pack starter items and Finisher Medal (< COT) plus Official Anniversary Aero Jersey by Pollride (Pre-Order / Standard Short Sleeve, Long Sleeve upgrade +IDR 40K).',
     },
     inclusions: [
       {
         text: {
-          id: 'Official Anniversary Aero Jersey by Pollride (Pre-Order / Bundel Resmi)',
-          en: 'Official Anniversary Aero Jersey by Pollride (Pre-Order / Official Bundle)',
+          id: 'Official Anniversary Aero Jersey by Pollride (Lengan Pendek standar · Upgrade Lengan Panjang +Rp 40.000)',
+          en: 'Official Anniversary Aero Jersey by Pollride (Standard Short Sleeve · Long Sleeve upgrade +IDR 40K)',
         },
         isBold: true,
       },
@@ -224,26 +225,27 @@ export const OFFICIAL_GEAR_ITEMS: OfficialGearItem[] = [
     id: 'jersey',
     itemNumber: '01',
     tagCategory: { id: 'APPAREL RESMI (PO / ADD-ON)', en: 'OFFICIAL APPAREL (PO / ADD-ON)' },
-    title: { id: 'OFFICIAL ANNIVERSARY JERSEY', en: 'OFFICIAL ANNIVERSARY JERSEY' },
+    title: { id: 'OFFICIAL TOPOGRAPHIC JERSEY', en: 'OFFICIAL TOPOGRAPHIC JERSEY' },
     description: {
-      id: 'Jersey balap resmi buatan Pollride Apparel dengan pola aerodinamis short sleeve tanpa saku belakang. Jersey didapatkan melalui sistem Pre-Order (PO) atau memilih Paket Medal & Jersey. Saat ini desain resmi masih dalam tahap finalisasi.',
-      en: 'Official race jersey by Pollride Apparel with aerodynamic short sleeve cut without back pocket. Available via Pre-Order (PO) or Medal & Jersey package. Currently in final official design phase.',
+      id: 'Jersey balap resmi buatan Pollride Apparel dengan motif topografi oranye gradien edisi perayaan GX-ID. Hadir dalam satu frame terpadu: pilihan Lengan Pendek (aerodinamis) & Lengan Panjang (proteksi ekstra). Didapatkan via Pre-Order (PO) atau memilih Paket Medal & Jersey.',
+      en: 'Official race jersey by Pollride Apparel featuring topographic orange gradient artwork. Integrated into one preview frame: Short Sleeve (aerodynamic) & Long Sleeve (extra protection). Available via Pre-Order (PO) or Medal & Jersey package.',
     },
     specs: [
-      { id: 'Pre-Order / Bundel Jersey', en: 'Pre-Order / Jersey Bundle' },
-      { id: 'Pollride Aero Fit (No Pocket)', en: 'Pollride Aero Fit (No Pocket)' },
-      { id: 'Size XS s/d 5XL', en: 'Sizes XS to 5XL' },
+      { id: 'Lengan Pendek (Standar) & Panjang (+Rp 40.000)', en: 'Short Sleeve (Standard) & Long Sleeve (+IDR 40K)' },
+      { id: 'Tampak Depan & Belakang', en: 'Front & Back View' },
+      { id: 'Size XS s/d 5XL (Pollride Aero Fit)', en: 'Sizes XS to 5XL (Pollride Aero Fit)' },
       { id: 'Quick-Dry Breathable Fabric', en: 'Quick-Dry Breathable Fabric' },
     ],
-    // Dikosongkan sesuai permintaan karena masih tahap desain
+    imageSrc: '/racepacks/jersey-short-sleeve.webp',
+    imageLongSrc: '/racepacks/jersey-long-sleeve.webp',
     visualPreview: {
       topLeftText: 'POLLRIDE APPAREL',
-      topRightText: { id: 'TAHAP DESAIN', en: 'DESIGN STAGE' },
+      topRightText: { id: 'DESAIN RESMI 2026', en: 'OFFICIAL 2026 DESIGN' },
       numberBadge: '01',
-      centerTitle: 'COMING SOON',
-      centerSubtitle: { id: 'TAHAP FINALISASI DESAIN', en: 'DESIGN FINALIZATION' },
+      centerTitle: 'TOPOGRAPHIC JERSEY',
+      centerSubtitle: { id: 'LENGAN PENDEK & PANJANG', en: 'SHORT & LONG SLEEVE' },
       bottomTagLeft: 'PRE-ORDER (PO) · SIZE XS–5XL',
-      bottomTagRight: { id: 'STATUS: TAHAP DESAIN', en: 'STATUS: IN DESIGN' },
+      bottomTagRight: { id: 'TAMPAK DEPAN & BELAKANG', en: 'FRONT & BACK VIEW' },
     },
   },
   {

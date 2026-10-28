@@ -22,6 +22,7 @@ export type PackageType = 'MEDAL_ONLY' | 'MEDAL_JERSEY';
 export type PaymentStatus = 'PENDING' | 'PENDING_VERIFICATION' | 'PAID' | 'EXPIRED' | 'FAILED' | 'CANCELLED' | 'REJECTED';
 export type RiderRole = 'SINGLE' | 'PAIR_RIDER_1' | 'PAIR_RIDER_2';
 export type JerseySize = 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL' | '4XL' | '5XL';
+export type JerseySleeveType = 'SHORT' | 'LONG';
 export type Gender = 'male' | 'female';
 
 export interface Order {
@@ -114,6 +115,7 @@ export interface RiderFormData {
   medical_notes: string;
   community_chapter: string;
   jersey_size: JerseySize;
+  jersey_sleeve?: JerseySleeveType;
 }
 
 export interface RegistrationPayload {

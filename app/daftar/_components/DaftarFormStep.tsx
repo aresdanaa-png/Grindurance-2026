@@ -35,6 +35,7 @@ interface DaftarFormStepProps {
   netPrice: number;
   promoDiscount: number;
   rpcHandlingFee: number;
+  jerseyUpgradeFee?: number;
   jerseySizes: JerseySize[];
   race120SingleConfig: Category;
   race120PairConfig: Category;
@@ -74,6 +75,7 @@ export default function DaftarFormStep({
   netPrice,
   promoDiscount,
   rpcHandlingFee,
+  jerseyUpgradeFee,
   jerseySizes,
   race120SingleConfig,
   race120PairConfig,
@@ -311,7 +313,17 @@ export default function DaftarFormStep({
                 <div className="pt-4 border-t border-white/10 space-y-3 text-sm sm:text-base text-white font-sans font-medium">
                   <div className="flex items-start gap-2.5 font-bold text-white">
                     <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
-                    <span>{selectedCategory.is_pair ? t('2x Official Anniversary Aero Jersey by Pollride (Senilai Rp 700.000)', '2x Official Anniversary Aero Jersey by Pollride (IDR 700K Value)') : t('Official Anniversary Aero Jersey by Pollride (Senilai Rp 350.000)', 'Official Anniversary Aero Jersey by Pollride (IDR 350K Value)')}</span>
+                    <span>
+                      {selectedCategory.is_pair
+                        ? t(
+                            '2x Official Anniversary Aero Jersey by Pollride (Lengan Pendek standar · Upgrade Lengan Panjang +Rp 40.000 / jersey)',
+                            '2x Official Anniversary Aero Jersey by Pollride (Standard Short Sleeve · Long Sleeve upgrade +IDR 40K / jersey)'
+                          )
+                        : t(
+                            'Official Anniversary Aero Jersey by Pollride (Lengan Pendek standar · Upgrade Lengan Panjang +Rp 40.000)',
+                            'Official Anniversary Aero Jersey by Pollride (Standard Short Sleeve · Long Sleeve upgrade +IDR 40K)'
+                          )}
+                    </span>
                   </div>
                   <div className="flex items-start gap-2.5">
                     <span className="text-[#FA6D0B] font-bold text-base leading-none shrink-0 select-none mt-0.5">·</span>
@@ -635,6 +647,14 @@ export default function DaftarFormStep({
             </div>
             <div className="text-xs sm:text-sm font-mono text-slate-200 mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
               <span>{packageType === 'MEDAL_JERSEY' ? t('Paket Medal + Jersey', 'Medal + Jersey Package') : t('Paket Medal Saja', 'Medal Only Package')}</span>
+              {packageType === 'MEDAL_JERSEY' && typeof jerseyUpgradeFee === 'number' && jerseyUpgradeFee > 0 && (
+                <>
+                  <span className="text-white/30 font-bold select-none">·</span>
+                  <span className="text-[#FA6D0B] font-bold">
+                    +{formatRupiah(jerseyUpgradeFee)} ({selectedCategory.is_pair ? t('Add-on Lengan Panjang Tim', 'Team Long Sleeve Add-on') : t('Add-on Lengan Panjang', 'Long Sleeve Add-on')})
+                  </span>
+                </>
+              )}
               {rpcMethod === 'HANDLING' && selectedCategory?.id !== 'VIRTUAL' && (
                 <>
                   <span className="text-white/30 font-bold select-none">·</span>

@@ -12,6 +12,7 @@ export default function RacePackSection() {
   const [mounted, setMounted] = useState(false);
   const [showSizeChartModal, setShowSizeChartModal] = useState(false);
   const [previewGear, setPreviewGear] = useState<OfficialGearItem | null>(null);
+  const [jerseySleeve, setJerseySleeve] = useState<'short' | 'long'>('short');
 
   useEffect(() => {
     setMounted(true);
@@ -244,112 +245,177 @@ export default function RacePackSection() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {OFFICIAL_GEAR_ITEMS.map((gear) => (
-                <div
-                  key={gear.id}
-                  className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
-                >
-                  <div className="space-y-4">
-                    <div 
-                      onClick={() => gear.id === 'jersey' ? setShowSizeChartModal(true) : setPreviewGear(gear)}
-                      className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-5 select-none cursor-pointer"
-                    >
-                      {gear.imageSrc ? (
-                        <div className="absolute inset-0 p-3 flex items-center justify-center">
-                          <img
-                            src={gear.imageSrc}
-                            alt={t(gear.title.id, gear.title.en)}
-                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                          />
+              {OFFICIAL_GEAR_ITEMS.map((gear) => {
+                const isJersey = gear.id === 'jersey';
+                const currentImgSrc = isJersey
+                  ? (jerseySleeve === 'short' ? gear.imageSrc : (gear.imageLongSrc || gear.imageSrc))
+                  : gear.imageSrc;
+
+                return (
+                  <div
+                    key={gear.id}
+                    className="rounded-2xl bg-black/60 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between space-y-5 transition-all duration-300 group shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+                  >
+                    <div className="space-y-4">
+                      {/* PREVIEW FRAME */}
+                      <div 
+                        onClick={() => setPreviewGear(gear)}
+                        className="relative aspect-square w-full rounded-xl overflow-hidden bg-black/40 transition-all duration-300 flex flex-col justify-between p-5 select-none cursor-pointer"
+                      >
+                        {/* Gear Image Display */}
+                        {currentImgSrc ? (
+                          <div className={`absolute inset-0 p-3 flex items-center justify-center ${isJersey ? 'pt-12 pb-10' : ''}`}>
+                            <img
+                              src={currentImgSrc}
+                              alt={t(gear.title.id, gear.title.en)}
+                              key={isJersey ? jerseySleeve : gear.id}
+                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 animate-fade-in-area"
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center my-auto text-center space-y-1.5 z-10">
+                            <div className="font-display text-6xl sm:text-7xl font-black text-white/10 tracking-tighter group-hover:text-white/20 transition-colors leading-none">
+                              {gear.visualPreview.numberBadge}
+                            </div>
+                            <div className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+                              {gear.visualPreview.centerTitle}
+                            </div>
+                            <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#FA6D0B] font-bold">
+                              {t(gear.visualPreview.centerSubtitle.id, gear.visualPreview.centerSubtitle.en)}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Top Header inside Frame */}
+                        {isJersey ? (
+                          <div className="flex items-center justify-between w-full z-20 gap-2">
+                            <span className="font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#FA6D0B] bg-black/80 px-2 py-1 rounded backdrop-blur-md">
+                              {gear.visualPreview.topLeftText}
+                            </span>
+                            {/* 1 Frame Sleeve Toggle */}
+                            <div 
+                              className="flex items-center rounded-lg bg-black/90 p-0.5 border border-white/10 shadow-lg backdrop-blur-md"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <button
+                                type="button"
+                                onClick={() => setJerseySleeve('short')}
+                                className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                                  jerseySleeve === 'short'
+                                    ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_10px_rgba(250,109,11,0.5)]'
+                                    : 'text-slate-400 hover:text-white'
+                                }`}
+                              >
+                                {t('PENDEK', 'SHORT')}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setJerseySleeve('long')}
+                                className={`px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                                  jerseySleeve === 'long'
+                                    ? 'bg-[#FA6D0B] text-black font-black shadow-[0_0_10px_rgba(250,109,11,0.5)]'
+                                    : 'text-slate-400 hover:text-white'
+                                }`}
+                              >
+                                {t('PANJANG', 'LONG')}
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-between w-full z-10">
+                            <span className="font-mono text-[11px] font-black uppercase tracking-wider text-[#FA6D0B] bg-black/70 px-2 py-0.5 rounded">
+                              {gear.visualPreview.topLeftText}
+                            </span>
+                            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-black/70 px-2 py-0.5 rounded">
+                              {t(gear.visualPreview.topRightText.id, gear.visualPreview.topRightText.en)}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Bottom Tag inside Frame */}
+                        <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-300 uppercase tracking-wider z-10 bg-black/80 -mx-5 -mb-5 px-5 py-2.5 backdrop-blur-md">
+                          <span>
+                            {isJersey
+                              ? (jerseySleeve === 'short'
+                                  ? t('PENDEK · DEPAN & BELAKANG', 'SHORT · FRONT & BACK')
+                                  : t('PANJANG · DEPAN & BELAKANG', 'LONG · FRONT & BACK'))
+                              : gear.visualPreview.bottomTagLeft}
+                          </span>
+                          <span className="text-white font-bold">
+                            {isJersey
+                              ? t('KLIK UNTUK ZOOM', 'CLICK TO ZOOM')
+                              : t(gear.visualPreview.bottomTagRight.id, gear.visualPreview.bottomTagRight.en)}
+                          </span>
                         </div>
-                      ) : (
-                        <div className="flex flex-col items-center justify-center my-auto text-center space-y-1.5 z-10">
-                          <div className="font-display text-6xl sm:text-7xl font-black text-white/10 tracking-tighter group-hover:text-white/20 transition-colors leading-none">
-                            {gear.visualPreview.numberBadge}
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider">
+                          <span className="text-slate-400">{gear.itemNumber}</span>
+                          <span className="text-white/30 font-normal select-none">·</span>
+                          <span className="text-[#FA6D0B]">{t(gear.tagCategory.id, gear.tagCategory.en)}</span>
+                        </div>
+                        <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
+                          {t(gear.title.id, gear.title.en)}
+                        </h3>
+                        <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                          {t(gear.description.id, gear.description.en)}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="pt-3.5 border-t border-white/10 space-y-3">
+                      <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
+                        {gear.specs.map((spec, specIdx) => (
+                          <div key={specIdx} className="flex items-center gap-2 text-slate-300">
+                            <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
+                            <span>{t(spec.id, spec.en)}</span>
                           </div>
-                          <div className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
-                            {gear.visualPreview.centerTitle}
-                          </div>
-                          <div className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-[#FA6D0B] font-bold">
-                            {t(gear.visualPreview.centerSubtitle.id, gear.visualPreview.centerSubtitle.en)}
-                          </div>
+                        ))}
+                      </div>
+
+                      {gear.id === 'jersey' && (
+                        <div className="space-y-2">
+                          <button
+                            type="button"
+                            onClick={() => setPreviewGear(gear)}
+                            className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+                          >
+                            <span>{t('PERBESAR DESAIN JERSEY', 'ENLARGE JERSEY DESIGN')}</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setShowSizeChartModal(true)}
+                            className="w-full py-2 px-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-300 hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 border border-white/5"
+                          >
+                            <span>{t('PANDUAN UKURAN (SIZE CHART)', 'SIZE CHART GUIDE')}</span>
+                          </button>
                         </div>
                       )}
 
-                      <div className="flex items-center justify-between w-full z-10">
-                        <span className="font-mono text-[11px] font-black uppercase tracking-wider text-[#FA6D0B] bg-black/70 px-2 py-0.5 rounded">
-                          {gear.visualPreview.topLeftText}
-                        </span>
-                        <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-300 bg-black/70 px-2 py-0.5 rounded">
-                          {t(gear.visualPreview.topRightText.id, gear.visualPreview.topRightText.en)}
-                        </span>
-                      </div>
+                      {gear.id === 'medal' && (
+                        <button
+                          type="button"
+                          onClick={() => setPreviewGear(gear)}
+                          className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+                        >
+                          <span>{t('PERBESAR FOTO MEDALI', 'ENLARGE MEDAL PHOTO')}</span>
+                        </button>
+                      )}
 
-                      <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-300 uppercase tracking-wider z-10 bg-black/60 -mx-5 -mb-5 px-5 py-2.5">
-                        <span>{gear.visualPreview.bottomTagLeft}</span>
-                        <span className="text-white font-bold">
-                          {t(gear.visualPreview.bottomTagRight.id, gear.visualPreview.bottomTagRight.en)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <div className="flex items-center gap-2 text-[11px] font-mono font-bold uppercase tracking-wider">
-                        <span className="text-slate-400">{gear.itemNumber}</span>
-                        <span className="text-white/30 font-normal select-none">·</span>
-                        <span className="text-[#FA6D0B]">{t(gear.tagCategory.id, gear.tagCategory.en)}</span>
-                      </div>
-                      <h3 className="font-display text-xl font-black uppercase text-white tracking-tight leading-snug">
-                        {t(gear.title.id, gear.title.en)}
-                      </h3>
-                      <p className="text-xs text-slate-300 leading-relaxed font-sans">
-                        {t(gear.description.id, gear.description.en)}
-                      </p>
+                      {gear.id === 'racepack' && (
+                        <button
+                          type="button"
+                          onClick={() => setPreviewGear(gear)}
+                          className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
+                        >
+                          <span>{t('PERBESAR FOTO STARTER KIT', 'ENLARGE STARTER KIT PHOTO')}</span>
+                        </button>
+                      )}
                     </div>
                   </div>
-
-                  <div className="pt-3.5 border-t border-white/10 space-y-3">
-                    <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
-                      {gear.specs.map((spec, specIdx) => (
-                        <div key={specIdx} className="flex items-center gap-2 text-slate-300">
-                          <span className="text-[#FA6D0B] text-sm leading-none shrink-0 select-none">·</span>
-                          <span>{t(spec.id, spec.en)}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {gear.id === 'jersey' && (
-                      <button
-                        type="button"
-                        onClick={() => setShowSizeChartModal(true)}
-                        className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
-                      >
-                        <span>{t('PANDUAN UKURAN (SIZE CHART)', 'SIZE CHART GUIDE')}</span>
-                      </button>
-                    )}
-
-                    {gear.id === 'medal' && (
-                      <button
-                        type="button"
-                        onClick={() => setPreviewGear(gear)}
-                        className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
-                      >
-                        <span>{t('PERBESAR FOTO MEDALI', 'ENLARGE MEDAL PHOTO')}</span>
-                      </button>
-                    )}
-
-                    {gear.id === 'racepack' && (
-                      <button
-                        type="button"
-                        onClick={() => setPreviewGear(gear)}
-                        className="w-full py-2 px-3 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-[#FA6D0B] hover:text-black font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-1.5 active:scale-95 shadow-sm"
-                      >
-                        <span>{t('PERBESAR FOTO STARTER KIT', 'ENLARGE STARTER KIT PHOTO')}</span>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -390,7 +456,7 @@ export default function RacePackSection() {
         />
 
         {/* Modal Perbesar Gambar Gear Resmi (Pure Image Zoom Lightbox Only) */}
-        {mounted && previewGear && previewGear.imageSrc && createPortal(
+        {mounted && previewGear && createPortal(
           <div
             role="dialog"
             aria-modal="true"
@@ -399,30 +465,90 @@ export default function RacePackSection() {
             onClick={() => setPreviewGear(null)}
           >
             <div
-              className="relative max-w-4xl w-full flex flex-col items-center justify-center cursor-default space-y-3"
+              className="relative max-w-5xl w-full flex flex-col items-center justify-center cursor-default space-y-3"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="w-full flex items-center justify-between pb-3 border-b border-white/10 font-mono">
-                <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
-                  // {t(previewGear.title.id, previewGear.title.en)}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setPreviewGear(null)}
-                  className="px-3.5 py-1.5 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-white hover:text-black font-mono text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer select-none"
-                  aria-label="Tutup preview gambar"
-                >
-                  ✕ TUTUP
-                </button>
+              <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-white/10 font-mono gap-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                    // {t(previewGear.title.id, previewGear.title.en)}
+                  </span>
+                  {previewGear.id === 'jersey' && (
+                    <>
+                      <span className="text-white/20 select-none">·</span>
+                      <span className="text-xs font-bold text-[#FA6D0B] uppercase">
+                        {jerseySleeve === 'short' ? t('LENGAN PENDEK', 'SHORT SLEEVE') : t('LENGAN PANJANG', 'LONG SLEEVE')}
+                      </span>
+                    </>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto">
+                  {previewGear.id === 'jersey' && (
+                    <div className="flex items-center rounded-xl bg-black/80 p-1 border border-white/10">
+                      <button
+                        type="button"
+                        onClick={() => setJerseySleeve('short')}
+                        className={`px-3 py-1 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                          jerseySleeve === 'short'
+                            ? 'bg-[#FA6D0B] text-black font-black'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {t('LENGAN PENDEK', 'SHORT SLEEVE')}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setJerseySleeve('long')}
+                        className={`px-3 py-1 rounded-lg text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                          jerseySleeve === 'long'
+                            ? 'bg-[#FA6D0B] text-black font-black'
+                            : 'text-slate-400 hover:text-white'
+                        }`}
+                      >
+                        {t('LENGAN PANJANG', 'LONG SLEEVE')}
+                      </button>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => setPreviewGear(null)}
+                    className="px-3.5 py-1.5 rounded-xl bg-white/[0.08] hover:bg-[#FA6D0B] text-white hover:text-black font-mono text-xs uppercase font-bold tracking-wider transition-colors cursor-pointer select-none"
+                    aria-label="Tutup preview gambar"
+                  >
+                    ✕ TUTUP
+                  </button>
+                </div>
               </div>
 
               <div className="w-full flex items-center justify-center p-2 sm:p-4 rounded-2xl bg-[#0D0E11]/90 shadow-[0_30px_90px_rgba(0,0,0,0.95)]">
                 <img
-                  src={previewGear.imageSrc}
+                  src={
+                    previewGear.id === 'jersey'
+                      ? (jerseySleeve === 'short' ? '/racepacks/jersey-short-sleeve.png' : '/racepacks/jersey-long-sleeve.png')
+                      : (previewGear.imageSrc || '')
+                  }
                   alt={t(previewGear.title.id, previewGear.title.en)}
-                  className="w-auto h-auto max-w-full max-h-[82vh] object-contain rounded-xl select-none"
+                  className="w-auto h-auto max-w-full max-h-[78vh] object-contain rounded-xl select-none"
                 />
               </div>
+
+              {previewGear.id === 'jersey' && (
+                <div className="w-full flex flex-col sm:flex-row items-center justify-between text-[11px] font-mono text-slate-400 gap-2 px-1">
+                  <span>{t('MOTIF TOPOGRAFI RESMI · TAMPAK DEPAN & BELAKANG · POLLRIDE APPAREL', 'OFFICIAL TOPOGRAPHIC ARTWORK · FRONT & BACK VIEW · POLLRIDE APPAREL')}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPreviewGear(null);
+                      setShowSizeChartModal(true);
+                    }}
+                    className="text-[#FA6D0B] hover:underline uppercase font-bold cursor-pointer"
+                  >
+                    {t('// BUKA PANDUAN UKURAN (SIZE CHART)', '// OPEN SIZE CHART')}
+                  </button>
+                </div>
+              )}
             </div>
           </div>,
           document.body

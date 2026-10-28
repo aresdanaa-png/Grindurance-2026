@@ -100,7 +100,19 @@ export async function POST(req: Request) {
     // Canonical price calculation according to active phase (Early Bird vs Regular)
     const prices = getPricesForCategory(effectiveCategoryId, activePhase);
     const base_amount = package_type === 'MEDAL_JERSEY' ? prices.jersey : prices.medal;
-    const gross_amount = base_amount + rpc_handling_fee;
+
+    // Add-on Upgrade Lengan Panjang: +Rp 40.000 per rider yang memilih LONG jika paket MEDAL_JERSEY
+    let jersey_upgrade_fee = 0;
+    if (package_type === 'MEDAL_JERSEY') {
+      if (rider_1.jersey_sleeve === 'LONG') {
+        jersey_upgrade_fee += 40000;
+      }
+      if (category.is_pair && rider_2 && rider_2.jersey_sleeve === 'LONG') {
+        jersey_upgrade_fee += 40000;
+      }
+    }
+
+    const gross_amount = base_amount + rpc_handling_fee + jersey_upgrade_fee;
 
     // 3. Hitung Hak Entitlement Meal Voucher Abeey sesuai aturan resmi terbaru:
     // "Sudah termasuk meal voucher Abeey untuk 120km, 150km & 200km & semua peserta perempuan."
@@ -211,7 +223,9 @@ export async function POST(req: Request) {
       medical_notes: rider.medical_notes || null,
       community_chapter: rider.community_chapter || 'Umum',
       category_id: category.id,
-      jersey_size: package_type === 'MEDAL_JERSEY' ? rider.jersey_size : '-',
+      jersey_size: package_type === 'MEDAL_JERSEY'
+        ? `${rider.jersey_size} (${rider.jersey_sleeve === 'LONG' ? 'Lengan Panjang' : 'Lengan Pendek'})`
+        : '-',
       has_meal_coupon: hasCoupon,
       status: 'REGISTERED',
       prologue_status: category.prologue_required_km > 0 ? 'WAITING_VERIFICATION' : 'NOT_REQUIRED',
