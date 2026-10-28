@@ -92,8 +92,8 @@ export const PACK_TIERS: PackTierItem[] = [
       },
       {
         text: {
-          id: 'Race Pack: Voucher Pemulihan ABBEY Coffee & Stiker GX-ID',
-          en: 'Race Pack: ABBEY Coffee Recovery Voucher & GX-ID Stickers',
+          id: 'Race Pack: Voucher Pemulihan ABEEY Coffee & Stiker GX-ID',
+          en: 'Race Pack: ABEEY Coffee Recovery Voucher & GX-ID Stickers',
         },
       },
     ],
@@ -142,8 +142,8 @@ export const PACK_TIERS: PackTierItem[] = [
       },
       {
         text: {
-          id: 'Race Pack: Asuransi 1 Hari, Voucher ABBEY Coffee, & Stiker GX-ID',
-          en: 'Race Pack: 1-Day Insurance, ABBEY Coffee Voucher, & GX-ID Stickers',
+          id: 'Race Pack: Asuransi 1 Hari, Voucher ABEEY Coffee, & Stiker GX-ID',
+          en: 'Race Pack: 1-Day Insurance, ABEEY Coffee Voucher, & GX-ID Stickers',
         },
       },
     ],
@@ -169,9 +169,9 @@ export const RPC_LOGISTICS: RpcOption[] = [
     badge: { id: 'GRATIS (RP 0)', en: 'FREE (IDR 0)' },
     badgeHighlight: false,
     title: { id: 'MINGGU, 13 DESEMBER 2026', en: 'SUNDAY, DEC 13, 2026' },
-    subtitle: { id: 'ABBEY Coffee & Eatery · Stasiun LRT Harjamukti Cibubur · 10:00–17:00 WIB', en: 'ABBEY Coffee & Eatery · Harjamukti LRT Station Cibubur · 10:00–17:00 WIB' },
+    subtitle: { id: 'ABEEY Coffee & Eatery · Stasiun LRT Harjamukti Cibubur · 10:00–17:00 WIB', en: 'ABEEY Coffee & Eatery · Harjamukti LRT Station Cibubur · 10:00–17:00 WIB' },
     items: [
-      { id: 'Pengambilan Starter Kit (Plat BIB #1000+, Nutrisi NDR, Asuransi, Voucher ABBEY)', en: 'Starter Kit collection (BIB Plate #1000+, NDR Nutrition, Insurance, ABBEY Voucher)' },
+      { id: 'Pengambilan Starter Kit (Plat BIB #1000+, Nutrisi NDR, Asuransi, Voucher ABEEY)', en: 'Starter Kit collection (BIB Plate #1000+, NDR Nutrition, Insurance, ABEEY Voucher)' },
       { id: 'Akses Coaching Clinic Navigasi Gravel & Strategi Ban (11:00 WIB)', en: 'Access to Gravel Navigation & Tire Strategy Clinic (11:00 WIB)' },
       { id: 'Pengarahan Teknis Rute Final & Regulasi Safety di Technical Meeting (14:00 WIB)', en: 'Final Route & Safety Briefing at Official Technical Meeting (14:00 WIB)' },
     ],
@@ -278,14 +278,14 @@ export const OFFICIAL_GEAR_ITEMS: OfficialGearItem[] = [
     tagCategory: { id: 'RACE PACK STARTER KIT', en: 'RACE PACK STARTER KIT' },
     title: { id: 'OFFICIAL RACE PACK STARTER KIT', en: 'OFFICIAL RACE PACK STARTER KIT' },
     description: {
-      id: 'Paket starter kit yang diambil saat pengambilan Race Pack (RPC). Mencakup nutrisi hidrasi NDR Drinkmix Carbs 80g, plat nomor sepeda waterproof #1000+ dengan kabel ties, asuransi kecelakaan 1 hari event, voucher pemulihan ABBEY Coffee, dan stiker resmi GX-ID. Tidak memuat medali (diberikan saat finish < COT) maupun jersey (dipesan via PO).',
-      en: 'Official starter kit collected during Race Pack Collection (RPC). Includes NDR Drinkmix Carbs 80g nutrition, waterproof bike plate #1000+ with zip ties, 1-day accident insurance, ABBEY Coffee recovery voucher, and official GX-ID stickers. Excludes medal (awarded at finish < COT) and jersey (pre-ordered via PO).',
+      id: 'Paket starter kit yang diambil saat pengambilan Race Pack (RPC). Mencakup nutrisi hidrasi NDR Drinkmix Carbs 80g, plat nomor sepeda waterproof #1000+ dengan kabel ties, asuransi kecelakaan 1 hari event, voucher pemulihan ABEEY Coffee, dan stiker resmi GX-ID. Tidak memuat medali (diberikan saat finish < COT) maupun jersey (dipesan via PO).',
+      en: 'Official starter kit collected during Race Pack Collection (RPC). Includes NDR Drinkmix Carbs 80g nutrition, waterproof bike plate #1000+ with zip ties, 1-day accident insurance, ABEEY Coffee recovery voucher, and official GX-ID stickers. Excludes medal (awarded at finish < COT) and jersey (pre-ordered via PO).',
     },
     specs: [
       { id: 'Nutrisi NDR Drinkmix 80g', en: 'NDR Drinkmix 80g Nutrition' },
       { id: 'Plat BIB Sepeda Waterproof', en: 'Waterproof Bike BIB Plate' },
       { id: 'Asuransi Kecelakaan 1 Hari', en: '1-Day Accident Insurance' },
-      { id: 'Voucher ABBEY Coffee & Stiker', en: 'ABBEY Coffee Voucher & Stickers' },
+      { id: 'Voucher ABEEY Coffee & Stiker', en: 'ABEEY Coffee Voucher & Stickers' },
     ],
     imageSrc: '/racepacks/starter-kit.webp',
     visualPreview: {
